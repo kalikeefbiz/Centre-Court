@@ -149,7 +149,7 @@ export class Match {
     const error =
       this.server === 1 ? PRESETS[this.difficulty].error * 0.7 : Math.abs(power - 0.65) * 0.8;
     const target = vec(
-      targetSign * (2.0 + aim * 1.55 * s) + this.random.range(-error, error),
+      targetSign * 2.0 + aim * 1.55 + this.random.range(-error, error),
       COURT.radius,
       -s * (4.0 + power * 1.2),
     );

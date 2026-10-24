@@ -392,3 +392,15 @@ describe('full-match playability', () => {
     expect(m.score.winner).toBe(0);
   });
 });
+
+describe('serve aiming consistency', () => {
+  it('maps right aim to the right in world space on the deuce court', () => {
+    const launch = (aim: number) => {
+      const m = new Match();
+      m.start('normal', 'short');
+      m.tick(FIXED_DT, { ...idleControls(), release: true, power: 0.65, aim });
+      return m.ball.velocity.x;
+    };
+    expect(launch(1)).toBeGreaterThan(launch(-1));
+  });
+});

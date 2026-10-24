@@ -2,6 +2,8 @@
 
 Verification date: **2026-10-24 (UTC)**. Repository: `kalikeefbiz/Centre-Court`.
 
+Local results: **24 simulation tests passed; 5 browser checks passed, 1 CDP-only WebKit case explicitly skipped; production build passed; production dependency audit found zero vulnerabilities.**
+
 ## Automated simulation coverage
 
 `npm test` runs the production core modules, not a parallel implementation of the rules. The suite covers:
