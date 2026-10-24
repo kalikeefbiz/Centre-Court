@@ -8,7 +8,7 @@ test('production pixels show textured Kira in a match through both shipped camer
   test.setTimeout(120000);
   await page.setViewportSize({ width: 1280, height: 900 });
   const engine = info.project.name === 'desktop-chromium' ? 'chromium' : 'webkit';
-  const directory = resolve('dist/verification/kira-hotfix');
+  const directory = resolve('dist/verification/goal-002c');
   mkdirSync(directory, { recursive: true });
   await page.goto('/?debug');
   await expect(page.locator('#play')).toBeEnabled({ timeout: 45000 });
@@ -36,6 +36,8 @@ test('production pixels show textured Kira in a match through both shipped camer
     expect(s.kira.racketAttached).toBe(true);
     expect(s.presentation.temporaryHumanCount).toBe(0);
     expect(s.phase).toBe('serve');
+    expect(s.royalBall.visible).toBe(true);
+    expect(s.royalBall.textured).toBe(true);
     await page.screenshot({ path: resolve(directory, `${engine}-${mode}.png`) });
     const p = s.presentation.screen;
     await page.screenshot({
@@ -50,7 +52,7 @@ test('production pixels show textured Kira in a match through both shipped camer
       resolve(directory, 'evidence.json'),
       JSON.stringify(
         {
-          release: 'KIRA-002.1',
+          release: 'GOAL-002C',
           build: audit[0].build,
           screenshots: 'Actual production match, original gameplay cameras',
           audits: audit,

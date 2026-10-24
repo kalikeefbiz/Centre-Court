@@ -65,14 +65,13 @@ test('renders a playable court, serves, pauses, switches camera, restarts and re
 test('practice, shot selection, movement and resize remain usable', async ({ page }, info) => {
   await page.locator('#practice').click();
   await expect(page.locator('#score-description')).toContainText('PRACTICE');
-  await page.locator('#slice').click();
-  await expect(page.locator('#shot-name')).toHaveText('SLICE');
-  await page.locator('#lob').click();
-  await expect(page.locator('#shot-name')).toHaveText('LOB');
-  await page.locator('#lob').click();
-  await expect(page.locator('#shot-name')).toHaveText('SHOT');
-  await page.locator('#aim-left').click();
-  await expect(page.locator('#aim-left')).toHaveClass(/selected/);
+  await page.locator('#shot-intent').click();
+  await expect(page.locator('#shot-intent')).toHaveText('SLICE ↻');
+  await page.locator('#shot-intent').click();
+  await expect(page.locator('#shot-intent')).toHaveText('LOB ↻');
+  await page.locator('#shot-intent').click();
+  await expect(page.locator('#shot-name')).toHaveText('HIT');
+  await page.keyboard.press('KeyJ');
   if (info.project.name === 'desktop-chromium') {
     await page.keyboard.down('Space');
     await page.waitForTimeout(600);
@@ -120,6 +119,8 @@ test('independent trusted touch pointers move and charge together', async ({
   await page.keyboard.up('Space');
   const cdp = await context.newCDPSession(page);
   await cdp.send('Emulation.setTouchEmulationEnabled', { enabled: true, maxTouchPoints: 2 });
+  await expect(page.locator('#joystick')).toBeVisible();
+  await expect(page.locator('#shot-button')).toBeVisible();
   const j = (await page.locator('#joystick').boundingBox())!,
     s = (await page.locator('#shot-button').boundingBox())!;
   const a = { x: j.x + 12, y: j.y + j.height / 2, id: 1 },
@@ -160,19 +161,20 @@ for (const mode of ['broadcast', 'behind']) {
       await touch('touchEnd', [right]);
     };
     await touch('touchStart', [left]);
-    await tapWithLeftHeld('#slice');
-    await expect(page.locator('#shot-name')).toHaveText('SLICE');
-    await tapWithLeftHeld('#lob');
-    await expect(page.locator('#shot-name')).toHaveText('LOB');
-    await tapWithLeftHeld('#aim-right');
-    await expect.poll(async () => (await snap(page)).input.aim).toBe(0.9);
+    await tapWithLeftHeld('#shot-intent');
+    await expect(page.locator('#shot-intent')).toHaveText('SLICE ↻');
+    await tapWithLeftHeld('#shot-intent');
+    await expect(page.locator('#shot-intent')).toHaveText('LOB ↻');
+
     const r = (await page.locator('#shot-button').boundingBox())!;
     const right = { x: r.x + r.width / 2, y: r.y + r.height / 2, id: 22 };
     await touch('touchStart', [left, right]);
     await expect.poll(async () => (await snap(page)).input.charging).toBe(true);
     // Captured touches retain ownership even when dragged over another control.
-    const dragged = { ...right, x: left.x, y: left.y };
+    const dragged = { ...right, x: right.x - 70, y: right.y - 40 };
     await touch('touchMove', [left, dragged]);
+    await expect.poll(async () => (await snap(page)).input.aim).toBeLessThan(-0.5);
+    expect((await snap(page)).input.x).toBeLessThan(-0.5);
     await touch('touchEnd', [left]);
     await expect.poll(async () => (await snap(page)).input.x).toBe(0);
     expect((await snap(page)).input.charging).toBe(true);
