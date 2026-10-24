@@ -41,7 +41,7 @@ const updateCamera = () => {
 };
 updateCamera();
 const start = (practice: boolean) => {
-  if (scene.kira.status !== 'ready') return;
+  if (scene.kira.status !== 'ready' || scene.royalBall.status !== 'ready') return;
   $('help').hidden = true;
   input.clear();
   clock.reset();
@@ -92,16 +92,17 @@ window.addEventListener('blur', interrupt);
 window.addEventListener('pagehide', interrupt);
 $('court').addEventListener('webglcontextlost', interrupt);
 const renderUI = () => {
-  const ready = scene.kira.status === 'ready';
+  const ready = scene.kira.status === 'ready' && scene.royalBall.status === 'ready';
+  const failed = scene.kira.status === 'error' || scene.royalBall.status === 'error';
   $<HTMLButtonElement>('play').disabled = !ready;
   $<HTMLButtonElement>('practice').disabled = !ready;
   $('athlete-status').hidden = ready;
-  $('asset-retry').hidden = scene.kira.status !== 'error';
+  $('asset-retry').hidden = !failed;
   setText(
     'athlete-status',
-    scene.kira.status === 'error'
-      ? 'Kira could not load. Check your connection and retry.'
-      : 'Loading Kira and her racket…',
+    failed
+      ? 'Kira or Royal Rally ball could not load. Check your connection and retry.'
+      : 'Loading Kira, racket and Royal Rally ball…',
   );
   $('menu').hidden = match.phase !== 'menu';
   $('menu-note').hidden = match.phase !== 'menu';
@@ -146,7 +147,7 @@ scene.app.on('update', (dt: number) => {
     match.tick(step, input.controls);
     input.controls.release = false;
   });
-  scene.render(match, Math.min(dt, 0.1), input.charging);
+  scene.render(match, Math.min(dt, 0.1), input.charging, input.controls.shot);
   renderUI();
 });
 $('loading').remove();
@@ -157,10 +158,11 @@ if (new URLSearchParams(location.search).has('debug'))
     value: {
       snapshot: () => ({
         build: __BUILD_ID__,
-        release: 'KIRA-002.1',
+        release: 'GOAL-002C',
         presentation: scene.playerPresentation(),
         phase: match.phase,
         kira: scene.kira.snapshot(),
+        royalBall: scene.royalBall.snapshot(),
         contact: match.players[0].contact
           ? { ...match.players[0].contact, position: { ...match.players[0].contact.position } }
           : null,

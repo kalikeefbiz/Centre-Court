@@ -14,9 +14,9 @@
 ## Input and gameplay
 
 - [ ] Move in all eight directions. Release joystick outside its bounds; athlete stops without drift.
-- [ ] Hold joystick with left thumb while charging/releasing SHOT with right thumb. No lost pointer or page scroll.
-- [ ] Release outside SHOT; verify the swing still fires once. Cancel a gesture; no unintended shot or stuck charge.
-- [ ] Toggle left/right aim, slice and lob. Toggle selected shot off; drive returns. Observe visibly different trajectories.
+- [ ] Hold joystick with left thumb while charging/releasing HIT with right thumb. No lost pointer or page scroll.
+- [ ] Release outside HIT; verify the swing still fires once. Cancel a gesture; no unintended shot or stuck charge.
+- [ ] Hold HIT and drag left/right and up/down. Cycle STANDARD ↻ through slice/lob/standard. Observe visibly different trajectories.
 - [ ] Use light, medium and full charge. Timing/accuracy and contact/miss feedback are readable.
 - [ ] Play several actual rallies by moving into range and releasing beside the ball; no automatic player returns.
 - [ ] Approach the net for a volley; serve cannot be volleyed before its bounce.
@@ -50,7 +50,7 @@ Record each failure with reproduction steps and a screenshot/video. Do not mark 
 
 Run in Broadcast and Behind player, in portrait and landscape:
 
-- Hold left thumb on the joystick continuously; tap Slice, Lob and each aim arrow with the right thumb. Each should update immediately without stopping movement or toggling twice.
+- Hold left thumb on the joystick continuously; cycle STANDARD ↻, then charge HIT and drag its aim with the right thumb. Each should update immediately without stopping movement or toggling twice.
 - With movement held, hold Shot, drag outside its boundary and release: movement must continue and exactly one shot should execute.
 - Hold both controls, then lift the joystick thumb first: charge must continue. Release Shot to execute.
 - Drag joystick over other controls: it must remain movement input until released.
@@ -60,7 +60,17 @@ Run in Broadcast and Behind player, in portrait and landscape:
 
 - On a fresh load and a cached reload, confirm the pink character and pink/black racket appear with textures (the temporary opponent should remain).
 - In each camera, watch idle, low joystick movement, full-speed movement, charge, release, return, pause/resume, point reset and match restart. Check for pose snaps, detached racket, foot sliding and texture corruption.
-- Inspect the right-hand grip through the full swing; report any floating, wrong rotation, open fingers or body intersections. The supplied motion has no dedicated serve/backhand/lob variants.
+- Inspect the right-hand grip through the full swing; report any floating, wrong rotation, open fingers or body intersections. Confirm the dedicated serve, forehand, two-handed backhand, volley and overhead motions are distinct. Review medium-confidence slice/lob mappings against the inspection sheets.
 - Check ball/string contact at serve, forehand, backhand-side reaches, slices, lobs, volleys and low/high or stretched returns. Report any visible snap from the short visual contact correction.
 - Complete and restart a quick match, then play 10 minutes in both orientations. Record device/iOS, loading time, perceived input latency, frame stability, heat, memory reloads and battery behavior.
 - Interrupt while Kira is charging or swinging (Control Center, app switch, lock, incoming call); resume and confirm both animation and input recover without a phantom shot.
+
+## GOAL 002C acceptance additions
+
+- [ ] Confirm Pink Valkyrie (white/pink outfit and pink hair), the separate pink/black racket, and red/lime Royal Rally ball load on fresh and cached production visits.
+- [ ] Tap HIT twice as separate quick shots; no double-tap power behavior. Compare with capped full hold/release.
+- [ ] Hold continuous left-thumb movement while the right thumb charges, drags direction/depth and releases outside HIT. Repeat lifting either thumb first, canceling either touch and rotating.
+- [ ] Intercept on each side after bounce, then before bounce at the net. Confirm sided groundstrokes and compact volleys, dedicated serve and descending overhead. Slice/lob should happen only when selected.
+- [ ] Observe hand grip, ball/string gap, root stability and open fingers at low/high/stretched contact; review the 30 fps calibration frame estimates and medium-confidence mappings.
+- [ ] Judge regulation ball readability in both cameras, especially portrait, bright daylight and Low Power Mode. Do not increase geometry size without reviewing the approved scale.
+- [ ] Record download time, memory pressure, heat and sustained frame pacing over ten minutes.

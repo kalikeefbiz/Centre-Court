@@ -3,6 +3,7 @@ import { Match } from '../core/match';
 import { COURT, type Vec } from '../core/court';
 import { CameraRig } from '../core/camera';
 import { predict } from '../core/ball';
+import { RoyalBall } from './royal-ball';
 import { Kira } from './kira';
 
 export class Scene {
@@ -11,6 +12,7 @@ export class Scene {
   rig: CameraRig;
   kira: Kira;
   private ball: pc.Entity;
+  royalBall: RoyalBall;
   private playerShadow: pc.Entity;
   private ballShadow: pc.Entity;
   private landing: pc.Entity;
@@ -72,7 +74,8 @@ export class Scene {
     this.athletes[0].root.enabled = false;
     this.playerShadow = this.shadow('Kira ground shadow', 1.05);
     this.kira = new Kira(this.app);
-    this.ball = this.shape('sphere', 'Ball', '#e4ff67', [0, 2, 0], [0.34, 0.34, 0.34], false, true);
+    this.royalBall = new RoyalBall(this.app);
+    this.ball = this.royalBall.root;
     this.ballShadow = this.shadow('Ball ground shadow', 0.5);
     this.landing = this.ring('Predicted first bounce', '#d5ef95', 0.34, 0.018);
     this.landing.setLocalPosition(0, 0.03, 0);
@@ -151,11 +154,11 @@ export class Scene {
   }
   private buildArena() {
     this.shape('box', 'Arena floor', '#172e32', [0, -0.22, 0], [65, 0.3, 75]);
-    this.shape('box', 'Runoff surface', '#356e70', [0, -0.055, 0], [19, 0.12, 35]);
-    this.shape('box', 'Playing surface', '#397c80', [0, 0.008, 0], [10.97, 0.025, 23.77]);
-    this.shape('box', 'Singles interior', '#438b8d', [0, 0.023, 0], [8.23, 0.012, 23.77]);
+    this.shape('box', 'Runoff surface', '#356e70', [0, -0.105, 0], [19, 0.12, 35]);
+    this.shape('box', 'Playing surface', '#397c80', [0, -0.042, 0], [10.97, 0.025, 23.77]);
+    this.shape('box', 'Singles interior', '#438b8d', [0, -0.027, 0], [8.23, 0.012, 23.77]);
     const line = (x: number, z: number, w: number, d: number) =>
-      this.shape('box', 'Court line', '#eaf1e5', [x, 0.041, z], [w, 0.018, d]);
+      this.shape('box', 'Court line', '#eaf1e5', [x, -0.009, z], [w, 0.018, d]);
     for (const x of [-5.485, -4.115, 4.115, 5.485]) line(x, 0, 0.05, 23.82);
     for (const z of [-11.885, 11.885]) {
       line(0, z, 11.02, 0.05);
@@ -317,8 +320,8 @@ export class Scene {
   resize() {
     this.app.resizeCanvas();
   }
-  render(match: Match, dt: number, charging = false) {
-    this.kira.update(match, dt, charging);
+  render(match: Match, dt: number, charging = false, intent: 'drive' | 'slice' | 'lob' = 'drive') {
+    this.kira.update(match, dt, charging, intent);
     const menu = match.phase === 'menu';
     const p = match.ball.position;
     if (menu) {
@@ -331,9 +334,10 @@ export class Scene {
     const c = this.rig;
     this.camera.setPosition(c.position.x, c.position.y, c.position.z);
     this.camera.lookAt(c.target.x, c.target.y, c.target.z);
-    const offset = this.kira.ballOffset();
+    const offset = this.kira.ballOffset(p);
     this.ball.setPosition(p.x + offset.x, p.y + offset.y, p.z + offset.z);
-    this.ball.enabled = !menu;
+    this.ball.enabled = !menu && this.royalBall.status === 'ready';
+    if (match.ball.active && match.phase === 'rally') this.ball.rotate(dt * 200, dt * 130, 0);
     this.ballShadow.setPosition(p.x, 0.065, p.z);
     this.ballShadow.setLocalScale(0.42 + p.y * 0.035, 0.018, 0.42 + p.y * 0.035);
     this.ballShadow.enabled = !menu;

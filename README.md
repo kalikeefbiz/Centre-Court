@@ -1,4 +1,4 @@
-# Centre Court · GOAL 001B + 002
+# Centre Court · GOAL 002C
 
 A playable mobile-first 3D arcade singles tennis foundation by **BlackHouse**, built with PlayCanvas and TypeScript. Kira uses the owner-supplied rigged character and separate racket GLBs. The AI opponent retains its temporary model.
 
@@ -23,9 +23,9 @@ npm run preview      # serve the production build locally
 ## Play
 
 - **Desktop:** WASD / arrows move. Hold Space or left mouse on the court to charge, then release beside the ball to swing. J/L or mouse position aim left/right; I/K adjust depth. 1 drive, 2 slice, 3 lob. Escape pauses; C changes camera.
-- **Touch:** left joystick moves. Hold/release SHOT with the right thumb. Aim arrows toggle direction; Slice/Lob toggle the selected shot. Movement and shots accept independent pointers.
-- **Serve:** hold/release SHOT or Space. The game chooses the correct serving position and service box. Aim and power still affect the serve. The 70% charge mark is a useful starting point.
-- Forehand/backhand and volley are contextual. A release opens a 250 ms swing window; the ball must be within 1.75 m and at a playable height. Contact near waist height with balanced positioning improves accuracy. There is limited lateral footwork assistance, never automatic returns.
+- **Touch:** left joystick moves. Tap HIT for a quick shot; hold to charge, drag horizontally to aim and vertically for depth, then release. One STANDARD ↻ selector cycles standard / slice / lob. Movement and shots accept independent pointers.
+- **Serve:** tap or hold/release HIT or Space. The game chooses the correct serving position and service box. Aim and power still affect the serve. The 70% charge mark is a useful starting point.
+- Forehand/backhand and volley are contextual. A release opens a 250 ms swing window; the ball must be within the stroke’s contact zone (ground 1.35 m, volley 1.30 m, overhead 1.25 m) and at a playable height. Contact near waist height with balanced positioning improves accuracy. There is limited lateral footwork assistance, never automatic returns.
 - **Quick set:** one set, first to two games, win by two; seven-point tiebreak at 2–2. **Standard:** best of three six-game sets, seven-point tiebreak at 6–6. All tiebreaks require two clear points. **Practice:** endless rallies without scoring.
 - Pause offers resume, restart, and menu. Camera preference persists locally. Backgrounding pauses play and requires an explicit resume.
 
@@ -45,7 +45,7 @@ npm run preview      # serve the production build locally
 
 Core modules have no PlayCanvas or DOM runtime dependency. Camera storage is injected. Identical seed and fixed-step commands reproduce a match. The renderer never changes the ball, scoring, AI or match state. AI uses the same reach checks, launch physics, movement bounds and court rules as the player.
 
-World +Y is up; +Z is the human end. The singles court is **8.23 × 23.77 m**; service lines are 6.4 m from the net. The ball's arcade collision radius is 0.12 m, displayed at 0.17 m for visibility. A ball touching a boundary counts as in. Net height rises from 0.914 m at centre to 1.07 m near the posts.
+World +Y is up; +Z is the human end. The singles court is **8.23 × 23.77 m**; service lines are 6.4 m from the net. Royal Rally’s visual diameter is 0.067 m; the separate simulation sphere has radius 0.0335 m. Court paint tops meet the physics ground plane at Y=0. A ball touching a boundary counts as in. Net height rises from 0.914 m at centre to 1.07 m near the posts.
 
 ## State and rules
 
@@ -63,14 +63,16 @@ Pages is configured to use GitHub Actions.
 
 Subsequent releases: commit and push to `main`, inspect the **Verify and deploy Centre Court** Actions run, then open the published URL. Never commit `node_modules/` or `dist/`. The package lockfile is committed for reproducible installs.
 
-## Known limitations
+## GOAL 002C production integration
 
-See [docs/LIMITATIONS.md](docs/LIMITATIONS.md). The existing arcade ball/contact tolerances are preserved. Kira has four supplied clips; the tennis motion is reused for all shot types, with configurable contact synchronization. Actual iPhone Safari compatibility and sustained device performance remain unverified until the manual checklist is run on hardware. No multiplayer, customization, monetization, tournaments or progression is implemented.
+Pink Valkyrie replaces Pink Rebel; the old GLB remains in `public/assets/characters/kira/` for rollback. The 74-joint skeleton, 15,399 vertices, 13,296 triangles and all 13 clips are preserved. See [animation identification](docs/GOAL-002C-ANIMATIONS.md) for exact IDs, durations, confidence and contact frames, plus rendered inspection sheets. Runtime clips are indexed semantically, never by their source order.
 
-## Kira assets and animation
+`src/core/hitting.ts` selects sided forehand/backhand, compact volley, overhead, serve and deliberate slice/lob intents. Gameplay stays authoritative: a release opens a 250 ms contact window. The renderer seeks to the event’s calibrated contact frame and plays a nonlooping follow-through. Movement remains under the original fixed-step controller. Root travel is canceled, and a bounded arm-only correction helps bring the racket to contact without moving the athlete’s feet. The first rendered contact shows the calibrated pose and ball at the recorded contact (with at most 18 cm string-bed correction), then blends onto the current simulation position over 65 ms; it does not move the collision sphere. Stretched contacts can still show a gap. The right-hand racket socket uses the updated skeleton and retains the separate production racket.
 
-Original uploads are served once from `public/assets/characters/kira/` and `public/assets/equipment/rackets/`. Embedded textures, PBR materials, 44-joint skeleton and character proportions are preserved. `src/render/athlete-config.ts` holds clip mappings, grip transforms, racket scale, contact frame and playback/blend timings. `src/render/kira.ts` loads both GLBs, blends locomotion and swing states, removes horizontal animation root travel, and attaches the racket to `mixamorig:RightHand`. The human placeholder is never created. Play and Practice wait until the textured Kira body and racket reach a rendered frame; errors block starting and offer a retry.
+Royal Rally is the supplied 3D mesh and all three original PBR material maps, optimized to 512 px. The character maps are 1024 px. [Optimization report](docs/asset-optimization.json) records hashes, bytes and dimensions; tests verify every nonimage buffer and material definition against the uploaded originals. `python tools/optimize-assets.py` reproduces the derivatives (requires Pillow). No replacement model or reference-image sprite is used.
 
-Gameplay emits read-only contact records at the existing immediate ball launch. Rendering seeks to the custom clip’s contact frame in the same update, then plays follow-through. An 80 ms visual ball offset starts the displayed shot at the strings and decays onto the unchanged simulated trajectory. It does not change timing windows, aim, speed, rules or AI. This is presentation synchronization, not racket-mesh collision or reach IK; see the visual limitations.
+Both assets are mandatory. Failed loads block match start and offer retry. The AI, camera rig, scoring and match lifecycle remain the existing foundation; GOAL 003 and GOAL 004 have not begun.
 
-The GOAL 002 rendering hotfix removes the silent substitute player and updates the menu. See [root cause and verification](docs/KIRA-HOTFIX.md). Production screenshots are published at [the visual evidence gallery](https://kalikeefbiz.github.io/Centre-Court/verification/kira-hotfix/). `release.json` and opt-in diagnostics identify the exact build; GLB requests include an asset-content revision.
+[Current limitations](docs/LIMITATIONS.md), [verification and evidence](docs/VERIFICATION.md), and [physical iPhone acceptance](docs/IPHONE-CHECKLIST.md) document the remaining checks. Actual iPhone Safari compatibility and sustained device performance remain unverified until hardware acceptance. Older Kira integration/hotfix documents describe the previous release and are historical.
+
+Production evidence: https://kalikeefbiz.github.io/Centre-Court/verification/goal-002c/ . `release.json` identifies the exact build; GLB requests include a content revision across character, racket and ball.

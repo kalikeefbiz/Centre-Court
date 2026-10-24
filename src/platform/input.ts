@@ -18,6 +18,8 @@ export class Input {
   private joyPointer: number | null = null;
   private shotPointer: number | null = null;
   private mouseAim = 0;
+  private dragStart = { x: 0, y: 0 };
+  private dragDepth = 0;
   private chargeOwner: number | 'keyboard' | null = null;
   constructor(
     canvas: HTMLCanvasElement,
@@ -76,15 +78,31 @@ export class Input {
     const button = document.querySelector<HTMLElement>('#shot-button')!;
     button.addEventListener('pointerdown', (e) => {
       if (this.shotPointer !== null || !this.enabled) return;
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
       this.shotPointer = e.pointerId;
+      this.dragStart = { x: e.clientX, y: e.clientY };
+      this.mouseAim = 0;
+      this.dragDepth = 0;
       capture(button, e);
       this.begin(e.pointerId);
       e.preventDefault();
+    });
+    button.addEventListener('pointermove', (e) => {
+      if (e.pointerId !== this.shotPointer || e.pointerId !== this.chargeOwner) return;
+      const width = button.getBoundingClientRect().width;
+      this.mouseAim = clamp((e.clientX - this.dragStart.x) / (width * 0.65), -1, 1);
+      this.dragDepth = clamp((this.dragStart.y - e.clientY) / (width * 0.8), -1, 1);
     });
     button.addEventListener('pointerup', (e) => {
       if (e.pointerId === this.shotPointer) {
         this.shotPointer = null;
         this.release(e.pointerId);
+      }
+    });
+    button.addEventListener('click', (e) => {
+      if (e.detail === 0 && !this.charging) {
+        this.begin('keyboard');
+        this.release('keyboard');
       }
     });
     const cancelShot = (e: PointerEvent) => {
@@ -110,17 +128,10 @@ export class Input {
         if (this.enabled && e.detail === 0) action();
       });
     };
-    for (const shot of ['slice', 'lob'] as const)
-      select(shot, () => {
-        this.controls.shot = this.controls.shot === shot ? 'drive' : shot;
-      });
-    for (const [id, aim] of [
-      ['aim-left', -0.9],
-      ['aim-right', 0.9],
-    ] as const)
-      select(id, () => {
-        this.mouseAim = this.mouseAim === aim ? 0 : aim;
-      });
+    select('shot-intent', () => {
+      const modes = ['drive', 'slice', 'lob'] as const;
+      this.controls.shot = modes[(modes.indexOf(this.controls.shot) + 1) % modes.length];
+    });
     canvas.addEventListener('pointermove', (e) => {
       if (e.pointerType === 'mouse' && this.enabled)
         this.mouseAim = clamp((e.clientX / innerWidth - 0.5) * 2.8, -1, 1);
@@ -159,11 +170,11 @@ export class Input {
       this.held = 0;
       return;
     }
-    this.controls.power = clamp(this.held / 1.05, 0.12, 1);
+    this.controls.power = clamp(0.45 + (Math.max(0, this.held - 0.15) / 1.05) * 0.55, 0.45, 1);
     this.controls.release = true;
   }
   sample(dt: number) {
-    if (this.charging) this.held += dt;
+    if (this.charging) this.held = Math.min(1.2, this.held + dt);
     const key = (...codes: string[]) => (codes.some((c) => this.keys.has(c)) ? 1 : 0);
     this.controls.x = clamp(
       this.joy.x + key('KeyD', 'ArrowRight') - key('KeyA', 'ArrowLeft'),
@@ -172,16 +183,16 @@ export class Input {
     );
     this.controls.z = clamp(this.joy.z + key('KeyS', 'ArrowDown') - key('KeyW', 'ArrowUp'), -1, 1);
     this.controls.aim = this.keys.has('KeyJ') ? -0.9 : this.keys.has('KeyL') ? 0.9 : this.mouseAim;
-    this.controls.depth = key('KeyI') - key('KeyK');
+    this.controls.depth = clamp(this.dragDepth + key('KeyI') - key('KeyK'), -1, 1);
     document.querySelector('#shot-button')!.classList.toggle('charging', this.charging);
     document.querySelector<HTMLElement>('#power-fill')!.style.width =
       `${clamp(this.held / 1.05, 0, 1) * 100}%`;
-    document.querySelector('#shot-name')!.textContent =
-      this.controls.shot === 'drive' ? 'SHOT' : this.controls.shot.toUpperCase();
-    for (const shot of ['slice', 'lob'])
-      document.querySelector('#' + shot)!.classList.toggle('selected', this.controls.shot === shot);
-    document.querySelector('#aim-left')!.classList.toggle('selected', this.controls.aim < -0.1);
-    document.querySelector('#aim-right')!.classList.toggle('selected', this.controls.aim > 0.1);
+    document.querySelector('#shot-name')!.textContent = 'HIT';
+    document.querySelector('#aim-feedback')!.textContent = this.charging
+      ? `${this.controls.aim < -0.15 ? '←' : this.controls.aim > 0.15 ? '→' : '↑'} ${this.controls.depth > 0.2 ? 'DEEP' : this.controls.depth < -0.2 ? 'SHORT' : 'AIM'} · ${Math.round((0.45 + (Math.max(0, this.held - 0.15) / 1.05) * 0.55) * 100)}%`
+      : 'TAP · HOLD · DRAG';
+    document.querySelector('#shot-intent')!.textContent =
+      this.controls.shot === 'drive' ? 'STANDARD ↻' : this.controls.shot.toUpperCase() + ' ↻';
   }
   clear() {
     this.keys.clear();
@@ -194,6 +205,10 @@ export class Input {
     this.controls.release = false;
     this.controls.x = 0;
     this.controls.z = 0;
+    this.mouseAim = 0;
+    this.dragDepth = 0;
+    this.controls.aim = 0;
+    this.controls.depth = 0;
     document.querySelector<HTMLElement>('#stick')!.style.transform = '';
   }
 }

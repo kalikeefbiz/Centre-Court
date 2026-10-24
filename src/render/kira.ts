@@ -1,8 +1,10 @@
 import * as pc from 'playcanvas';
+import { selectStroke } from '../core/hitting';
+import { ANIMATIONS } from './animation-registry';
 import type { Match } from '../core/match';
 import { KIRA, locomotionState, type AthleteState } from './athlete-config';
 
-function load(app: pc.Application, path: string): Promise<pc.ContainerResource> {
+export function load(app: pc.Application, path: string): Promise<pc.ContainerResource> {
   return new Promise((resolve, reject) => {
     const url = new URL(import.meta.env.BASE_URL + path, document.baseURI);
     url.searchParams.set('v', __KIRA_ASSET_REVISION__);
@@ -33,6 +35,8 @@ export class Kira {
   private racket!: pc.Entity;
   private state: AthleteState = 'Idle';
   private lastContact = -1;
+  private contactError = 0;
+  private contactOrigin = new pc.Vec3();
   private contactPose: {
     id: number;
     state: string;
@@ -41,6 +45,7 @@ export class Kira {
     head: number[];
   } | null = null;
   private lastDistance = 0;
+  private previous = { x: 0, z: 11 };
   private lastSwing = 0;
   private swingTime = 0;
   private contactOffset = new pc.Vec3();
@@ -90,7 +95,13 @@ export class Kira {
     this.racket.setLocalPosition(...KIRA.racketPosition);
     this.model.addComponent('anim', { activate: true });
     for (const { state, track } of tracks)
-      this.model.anim!.assignAnimation(state, track, undefined, 1, state !== 'Swing');
+      this.model.anim!.assignAnimation(
+        state,
+        track,
+        undefined,
+        1,
+        ANIMATIONS[state as AthleteState].loop,
+      );
     // Advance explicitly after fixed-step gameplay, so a contact seek is evaluated
     // in the same rendered frame and pause freezes the skeleton as well as the ball.
     this.model.anim!.playing = false;
@@ -145,37 +156,78 @@ export class Kira {
     this.model.setLocalPosition(-p.x, 0, -p.z);
   }
   private clearWrist(dt: number) {
-    const carry = this.state !== 'Swing' || this.swingTime > KIRA.followThroughWristTime;
+    const carry = !('contact' in ANIMATIONS[this.state]);
     const target = carry ? 1 : 0;
     this.wristWeight += (target - this.wristWeight) * (dt === 0 ? 1 : 1 - Math.exp(-dt * 30));
     this.wrist.slerp(pc.Quat.IDENTITY, this.carryWrist, this.wristWeight);
     this.hand.setLocalRotation(this.hand.getLocalRotation().clone().mul(this.wrist));
   }
+  private alignContact(target: pc.Vec3, weight = 1) {
+    // Bounded arm-only CCD: keep gameplay feet fixed and preserve the source stroke.
+    // Each joint can adjust at most 25 degrees from its evaluated source pose.
+    for (const name of ['mixamorig:RightForeArm', 'mixamorig:RightArm']) {
+      const joint = this.model.findByName(name)!;
+      const origin = joint.getPosition();
+      const from = this.head().sub(origin),
+        to = target.clone().sub(origin);
+      const angle = Math.acos(
+        Math.max(-1, Math.min(1, from.clone().normalize().dot(to.clone().normalize()))),
+      );
+      if (angle < 0.001) continue;
+      const delta = new pc.Quat().setFromDirections(from.normalize(), to.normalize());
+      const bounded = new pc.Quat().slerp(
+        pc.Quat.IDENTITY,
+        delta,
+        Math.min(1, 0.4363 / angle) * weight,
+      );
+      joint.setRotation(bounded.mul(joint.getRotation().clone()));
+    }
+  }
   private head() {
     return this.racket.getWorldTransform().transformPoint(new pc.Vec3(...KIRA.sweetSpot));
   }
-  update(match: Match, dt: number, charging: boolean) {
+  update(match: Match, dt: number, charging: boolean, intent: 'drive' | 'slice' | 'lob' = 'drive') {
     if (this.status !== 'ready') return;
     const athlete = match.players[0];
     this.root.setPosition(athlete.position.x, 0, athlete.position.z);
     if (match.phase === 'paused' || match.phase === 'result') return;
+    const dx = athlete.position.x - this.previous.x,
+      dz = athlete.position.z - this.previous.z;
+    this.previous = { ...athlete.position };
     const speed = Math.max(0, athlete.distance - this.lastDistance) / Math.max(dt, 0.001);
     this.lastDistance = athlete.distance;
+    const moving = locomotionState(speed, dx, dz);
+    const context = selectStroke({
+      player: athlete.position,
+      ball: match.ball.position,
+      velocity: match.ball.velocity,
+      side: 0,
+      bounces: match.bounces,
+      intent,
+      serving: match.phase === 'serve' && match.server === 0,
+    });
     const contact = athlete.contact;
     if (contact && contact.id !== this.lastContact) {
       this.lastContact = contact.id;
-      this.state = 'Swing';
-      this.layer.transition('Swing', 0);
-      const contactTime = athlete.stroke === 'SERVE' ? KIRA.serveContactTime : KIRA.contactTime;
-      this.swingTime = contactTime + contact.age * KIRA.swingSpeed;
+      this.state = contact.stroke;
+      const animation = ANIMATIONS[contact.stroke];
+      this.layer.transition(this.state, 0);
+      this.swingTime = animation.contact;
       this.layer.activeStateCurrentTime = this.swingTime;
-      this.model.anim!.update(0);
+      this.model.anim!.update(0.000001);
       this.clearWrist(0);
       this.inPlace();
+      this.alignContact(new pc.Vec3(contact.position.x, contact.position.y, contact.position.z));
+      this.contactError = this.head().distance(
+        new pc.Vec3(contact.position.x, contact.position.y, contact.position.z),
+      );
       this.contactOffset
         .copy(this.head())
         .sub(new pc.Vec3(contact.position.x, contact.position.y, contact.position.z));
-      this.contactAge = contact.age;
+      if (this.contactOffset.length() > KIRA.maxVisualCorrection)
+        this.contactOffset.normalize().mulScalar(KIRA.maxVisualCorrection);
+      this.contactAge = 0;
+      this.contactOrigin.set(contact.position.x, contact.position.y, contact.position.z);
       this.contactPose = {
         id: contact.id,
         state: this.layer.activeState,
@@ -192,41 +244,54 @@ export class Kira {
         this.contactOffset.set(0, 0, 0);
         this.swingTime = 0;
         this.lastSwing = 0;
-        this.transition(locomotionState(speed));
+        this.transition(moving);
       }
-      if (athlete.swing > this.lastSwing + 0.05 && (!contact || contact.age > 0.3)) {
-        this.transition('Swing');
-        this.swingTime = KIRA.windupTime;
+      if (athlete.swing > this.lastSwing + 0.05 && (!contact || contact.age > 0.4)) {
+        this.transition(context);
+        this.swingTime = ANIMATIONS[context].prepare;
         this.layer.activeStateCurrentTime = this.swingTime;
       }
       if (charging && (!contact || contact.age > 0.4)) {
+        // Lateral/full movement remains independent of stationary preparation.
         if (speed < 0.15) {
-          this.transition('Swing');
-          this.swingTime = KIRA.windupTime;
+          this.transition(context);
+          this.swingTime = ANIMATIONS[context].prepare;
           this.layer.activeStateCurrentTime = this.swingTime;
-          this.model.anim!.update(dt);
+          this.model.anim!.update(0);
         } else {
-          this.transition(locomotionState(speed));
+          this.transition(moving);
           this.model.anim!.update(dt);
         }
-      } else if (this.state === 'Swing') {
-        this.swingTime += dt * KIRA.swingSpeed;
-        this.model.anim!.update(dt * KIRA.swingSpeed);
-        if (this.swingTime >= KIRA.followThroughEnd) this.transition(locomotionState(speed));
       } else {
-        this.transition(locomotionState(speed));
-        this.model.anim!.update(dt);
+        const animation = ANIMATIONS[this.state];
+        if ('contact' in animation) {
+          this.swingTime += dt * KIRA.swingSpeed;
+          this.model.anim!.update(dt * KIRA.swingSpeed);
+          if (this.swingTime >= animation.end) this.transition(moving);
+        } else {
+          this.transition(moving);
+          this.model.anim!.update(dt);
+        }
       }
       this.clearWrist(dt);
       this.inPlace();
+      if (contact && contact.age < 0.12)
+        this.alignContact(
+          new pc.Vec3(contact.position.x, contact.position.y, contact.position.z),
+          Math.max(0, 1 - contact.age / 0.12),
+        );
     }
     this.lastSwing = athlete.swing;
   }
-  ballOffset() {
+  ballOffset(position: { x: number; y: number; z: number }) {
     // Short presentation correction makes the unchanged ballistic shot originate
     // at the strings, rather than moving collision geometry or delaying input.
     const t = Math.max(0, 1 - this.contactAge / KIRA.visualContactSeconds);
-    return this.contactOffset.clone().mulScalar(t * t);
+    return this.contactOrigin
+      .clone()
+      .add(this.contactOffset)
+      .sub(new pc.Vec3(position.x, position.y, position.z))
+      .mulScalar(t * t);
   }
   snapshot() {
     const visibility = {
@@ -261,6 +326,7 @@ export class Kira {
         ? { ...this.contactPose, head: [...this.contactPose.head] }
         : null,
       contactId: this.lastContact,
+      contactError: this.contactError,
       contactAge: this.contactAge,
     };
   }

@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
+import { ANIMATIONS } from '../src/render/animation-registry';
 import { KIRA, locomotionState } from '../src/render/athlete-config';
 import { FIXED_DT, idleControls, Match } from '../src/core/match';
 
@@ -13,20 +14,21 @@ function glb(path: string) {
   return { b, json };
 }
 describe('authoritative production GLBs', () => {
-  it('contains Kira’s original skeleton, all four clips and embedded PBR textures', () => {
+  it('contains Kira’s updated skeleton, all thirteen clips and embedded PBR textures', () => {
     const { b, json: g } = glb(KIRA.characterUrl);
     expect(createHash('sha256').update(b).digest('hex')).toBe(
-      '815275554eb626e45cdc0e11f9984165cc6caf18d38a67123cbd3e2b74648858',
+      'ce2272d87a84bb08be0a765ae35354fac1e505a854b0807ed5cc8323b67a237f',
     );
     expect(g.animations.map((a: any) => a.name).sort()).toEqual(Object.values(KIRA.clips).sort());
-    expect(g.skins[0].joints).toHaveLength(44);
+    expect(g.skins[0].joints).toHaveLength(74);
     const hand = g.nodes.findIndex((n: any) => n.name === KIRA.hand);
     expect(g.skins[0].joints).toContain(hand);
     for (const a of g.animations) {
       expect(a.channels.some((c: any) => c.target.node === hand)).toBe(true);
       const duration = Math.max(...a.samplers.map((s: any) => g.accessors[s.input].max[0]));
       expect(duration).toBeGreaterThan(0.6);
-      if (a.name === KIRA.clips.Swing) expect(duration).toBeGreaterThan(KIRA.followThroughEnd);
+      const semantic = Object.values(ANIMATIONS).find((x) => x.clip === a.name)!;
+      if ('contact' in semantic) expect(duration).toBeGreaterThan(semantic.end);
     }
     expect(g.images).toHaveLength(3);
     expect(g.images.every((i: any) => i.bufferView !== undefined && !i.uri)).toBe(true);
@@ -41,7 +43,7 @@ describe('authoritative production GLBs', () => {
     expect(g.skins).toBeUndefined();
   });
   it('maps stationary, gentle and full movement to distinct clips', () => {
-    expect([0, 1.5, 6.3].map(locomotionState)).toEqual(['Idle', 'Walk', 'Run']);
+    expect([0, 1.5, 6.3].map((s) => locomotionState(s))).toEqual(['Idle', 'Walk', 'Run']);
   });
 });
 describe('presentation contact events preserve gameplay', () => {
@@ -87,4 +89,33 @@ describe('presentation contact events preserve gameplay', () => {
     expect(m.contacts).toBe(1);
     expect(m.players[0].contact!.id).toBe(id);
   });
+});
+
+describe('GOAL 002C optimized source integrity', () => {
+  for (const path of [
+    KIRA.characterUrl,
+    'assets/balls/royal-rally/Meshy_AI_Royal_Rally_1024220842_texture.glb',
+  ])
+    it(`preserves nonimage buffers and PBR material design: ${path}`, () => {
+      const source = readFileSync(path);
+      const { b: runtime, json: g } = glb(path);
+      const n = source.readUInt32LE(12),
+        original = JSON.parse(source.toString('utf8', 20, 20 + n));
+      const raw = source.subarray(28 + n),
+        optimized = runtime.subarray(28 + runtime.readUInt32LE(12));
+      const images = new Set(original.images.map((i: any) => i.bufferView));
+      original.bufferViews.forEach((v: any, i: number) => {
+        if (images.has(i)) return;
+        const w = g.bufferViews[i];
+        expect(
+          Buffer.compare(
+            raw.subarray(v.byteOffset ?? 0, (v.byteOffset ?? 0) + v.byteLength),
+            optimized.subarray(w.byteOffset, w.byteOffset + w.byteLength),
+          ),
+        ).toBe(0);
+      });
+      expect(g.materials).toEqual(original.materials);
+      expect(g.animations).toEqual(original.animations);
+      expect(runtime.length).toBeLessThan(source.length);
+    });
 });

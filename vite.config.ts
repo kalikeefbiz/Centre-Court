@@ -4,13 +4,14 @@ import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 const buildId = execFileSync('git', ['rev-parse', 'HEAD']).toString().trim();
 const assetRevision = createHash('sha256')
-  .update(
-    readFileSync('public/assets/characters/kira/Meshy_AI_Pink_Rebel_Arena_All_Animations.glb'),
-  )
+  .update(readFileSync('public/assets/characters/kira/Meshy_AI_Pink_Valkyrie_All_Animations.glb'))
   .update(
     readFileSync(
       'public/assets/equipment/rackets/Meshy_AI_Pink_and_Black_Tennis_1024095819_texture.glb',
     ),
+  )
+  .update(
+    readFileSync('public/assets/balls/royal-rally/Meshy_AI_Royal_Rally_1024220842_texture.glb'),
   )
   .digest('hex')
   .slice(0, 16);
@@ -27,7 +28,7 @@ export default defineConfig({
         this.emitFile({
           type: 'asset',
           fileName: 'release.json',
-          source: JSON.stringify({ release: 'KIRA-002.1', commit: buildId, assetRevision }),
+          source: JSON.stringify({ release: 'GOAL-002C', commit: buildId, assetRevision }),
         });
       },
     },

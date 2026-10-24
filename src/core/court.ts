@@ -6,7 +6,7 @@ export const COURT = Object.freeze({
   service: 6.4,
   netCentre: 0.914,
   netEdge: 1.07,
-  radius: 0.12,
+  radius: 0.0335,
 });
 export type Side = 0 | 1;
 export const sign = (side: Side) => (side === 0 ? 1 : -1);

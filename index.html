@@ -56,7 +56,7 @@
       <div id="menu-note">
         <span class="court-badge">HARD COURT</span>
         <p>KIRA TAKES THE COURT</p>
-        <small>Pink rebel. Real competition.</small>
+        <small>Pink Valkyrie. Real competition.</small>
       </div>
       <section id="hud" hidden>
         <div class="scoreboard">
@@ -89,16 +89,9 @@
             <span>MOVE</span>
           </div>
           <div class="shot-controls">
-            <div class="aim-row">
-              <button id="aim-left" aria-label="Aim left">↖</button><span id="aim-label">AIM</span
-              ><button id="aim-right" aria-label="Aim right">↗</button>
-            </div>
-            <div class="shot-row">
-              <button id="slice" data-shot="slice">SLICE</button
-              ><button id="lob" data-shot="lob">LOB</button>
-            </div>
-            <button id="shot-button" aria-label="Hold to charge shot and release to swing">
-              <span id="shot-name">SHOT</span><small>HOLD / RELEASE</small>
+            <button id="shot-intent" aria-label="Cycle shot intent: standard, slice, lob">STANDARD ↻</button>
+            <button id="shot-button" aria-label="Tap to hit; hold to charge, drag to aim, release to swing">
+              <span id="shot-name">HIT</span><small id="aim-feedback">TAP · HOLD · DRAG</small>
             </button>
             <div class="power-track"><i id="power-fill"></i><span></span></div>
           </div>
@@ -135,13 +128,12 @@
             and the landing ring.
           </p>
           <p>
-            <b>Hold, then release.</b> Space, the court with a mouse, or SHOT charges power. Release
+            <b>Hold, then release.</b> Tap HIT for a standard shot. Hold HIT, Space, or the court with a mouse to charge power. Release
             when the ball is beside your athlete. Aim for the marked 70% power zone.
           </p>
           <p>
-            <b>Place your return.</b> J / L or ↖ / ↗ aim left / right. I / K change depth on
-            desktop. Mouse position across the court sets aim. Select 1 Drive, 2 Slice, or 3 Lob; on
-            touch tap Slice or Lob to toggle.
+            <b>Place your return.</b> Drag from HIT to aim left / right and up / down for depth. J / L aim on desktop. I / K change depth on
+            desktop. Mouse position across the court sets aim. Select 1 Drive, 2 Slice, or 3 Lob; on touch tap STANDARD ↻ to cycle standard, slice and lob. Forehand and backhand are automatic.
           </p>
           <p>
             <b>Serve diagonally.</b> Hold and release to serve. Two faults lose the point. A net
@@ -155,7 +147,7 @@
         </div>
       </section>
       <footer id="footer">
-        <span>BLACKHOUSE®</span><span>BUILT FOR THE GAME.</span><span>KIRA v0.2.1</span>
+        <span>BLACKHOUSE®</span><span>BUILT FOR THE GAME.</span><span>GOAL 002C</span>
       </footer>
     </div>
     <div id="loading">CENTRE COURT<span>PREPARING YOUR COURT…</span></div>

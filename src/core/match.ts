@@ -1,3 +1,4 @@
+import { selectStroke, inContactZone, CONTACT, type Stroke } from './hitting';
 import { Ball, type Shot } from './ball';
 import { chooseShot, intercept, PRESETS, type Difficulty } from './ai';
 import {
@@ -16,6 +17,7 @@ import { Score, type MatchLength } from './scoring';
 export type Phase = 'menu' | 'serve' | 'rally' | 'pointOver' | 'paused' | 'result';
 export interface ShotContact {
   id: number;
+  stroke: Stroke;
   position: Vec;
   age: number;
 }
@@ -123,7 +125,7 @@ export class Match {
     this.ball.velocity = vec();
     this.announce(
       this.server === 0
-        ? `${this.fault ? 'SECOND' : 'FIRST'} SERVE · HOLD & RELEASE SHOT`
+        ? `${this.fault ? 'SECOND' : 'FIRST'} SERVE · TAP OR HOLD HIT`
         : `OPPONENT · ${this.fault ? 'SECOND' : 'FIRST'} SERVE`,
     );
   }
@@ -155,9 +157,10 @@ export class Match {
     this.aiThink = 0;
     this.aiWillMiss = this.random.next() < PRESETS[this.difficulty].miss;
   }
-  private recordContact(side: Side) {
+  private recordContact(side: Side, stroke: Stroke) {
     this.players[side].contact = {
       id: ++this.contactSequence,
+      stroke,
       position: { ...this.ball.position },
       age: 0,
     };
@@ -173,7 +176,7 @@ export class Match {
       -s * (4.0 + power * 1.2),
     );
     // A real launch from the held ball at the server's racket, followed by continuous integration.
-    this.recordContact(this.server);
+    this.recordContact(this.server, 'Serve');
     this.ball.launch(target, 'serve', power);
     this.phase = 'rally';
     this.serveFlight = true;
@@ -254,7 +257,14 @@ export class Match {
       return false;
     const p = this.players[side].position,
       b = this.ball.position;
-    return b.y > 0.3 && b.y < 2.9 && Math.hypot(p.x - b.x, p.z - b.z) < 1.75;
+    return inContactZone({
+      player: p,
+      ball: b,
+      velocity: this.ball.velocity,
+      side,
+      bounces: this.bounces,
+      intent: side === 0 ? (this.swingShot as Controls['shot']) : 'drive',
+    });
   }
   private hit(side: Side, shot: Shot, power: number, aim: number, depth: number) {
     const p = this.players[side],
@@ -280,7 +290,15 @@ export class Match {
             : 7.3 + power * 3.5 + depth * 1.6) +
       this.random.range(-error, error);
     const volley = this.bounces === 0 && shot === 'drive';
-    this.recordContact(side);
+    const stroke = selectStroke({
+      player: p.position,
+      ball: b,
+      velocity: this.ball.velocity,
+      side,
+      bounces: this.bounces,
+      intent: shot as Controls['shot'],
+    });
+    this.recordContact(side, stroke);
     this.ball.launch(vec(targetX, COURT.radius, targetZ), volley ? 'volley' : shot, power);
     this.bounces = 0;
     this.lastHitter = side;
@@ -288,13 +306,7 @@ export class Match {
     this.contacts++;
     this.react();
     p.swing = 0.38;
-    p.stroke = volley
-      ? 'VOLLEY'
-      : shot === 'drive'
-        ? b.x > p.position.x
-          ? 'FOREHAND'
-          : 'BACKHAND'
-        : shot.toUpperCase();
+    p.stroke = stroke.replace(/([a-z])([A-Z])/g, '$1 $2').toUpperCase();
     if (side === 0) {
       this.timing = quality > 0.78 ? 'CLEAN CONTACT' : quality > 0.5 ? 'GOOD CONTACT' : 'STRETCHED';
       this.feedbackTime = 1.2;
@@ -334,7 +346,7 @@ export class Match {
     )
       this.move(0, clamp((b.x - user.x) * 1.5, -1, 1), 0, 1.8, dt);
     if (c.release) {
-      this.swingWindow = 0.25;
+      this.swingWindow = CONTACT.inputWindow;
       this.swingPower = c.power;
       this.swingAim = c.aim;
       this.swingDepth = c.depth;

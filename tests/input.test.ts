@@ -51,9 +51,14 @@ const moveAndCharge = () => {
 describe('independent input owners', () => {
   it('selects and aims from pointerdown while movement remains held, ignoring synthesized click', () => {
     touch('#joystick', 'pointerdown', 1);
-    touch('#slice', 'pointerdown', 2);
-    send(controls.get('#slice')!, 'click', { detail: 1 });
-    touch('#aim-right', 'pointerdown', 2);
+    touch('#shot-intent', 'pointerdown', 2);
+    send(controls.get('#shot-intent')!, 'click', { detail: 1 });
+    touch('#shot-button', 'pointerdown', 2);
+    send(controls.get('#shot-button')!, 'pointermove', {
+      pointerId: 2,
+      clientX: 58.5,
+      clientY: 30,
+    });
     input.sample(0.1);
     expect(input.controls.shot).toBe('slice');
     expect(input.controls.aim).toBe(0.9);
@@ -105,5 +110,40 @@ describe('independent input owners', () => {
     expect(input.controls.x).toBe(0);
     send(window, 'keyup', { code: 'Space' });
     expect(input.controls.release).toBe(false);
+  });
+});
+
+describe('HIT gestures', () => {
+  it('keeps an independent movement thumb while dragging aim and depth then releasing', () => {
+    moveAndCharge();
+    send(controls.get('#shot-button')!, 'pointermove', { pointerId: 2, clientX: 65, clientY: -30 });
+    input.sample(0.1);
+    expect(input.controls.x).toBe(-1);
+    expect(input.controls.aim).toBe(1);
+    expect(input.controls.depth).toBe(1);
+    touch('#shot-button', 'pointerup', 2);
+    expect(input.controls.release).toBe(true);
+    expect(input.controls.power).toBeGreaterThan(0.45);
+    input.sample(0);
+    expect(input.controls.x).toBe(-1);
+  });
+  it('caps long holds and treats repeated taps as independent standard shots', () => {
+    touch('#shot-button', 'pointerdown', 2);
+    input.sample(20);
+    expect(input.held).toBe(1.2);
+    touch('#shot-button', 'pointerup', 2);
+    expect(input.controls.power).toBe(1);
+    input.controls.release = false;
+    touch('#shot-button', 'pointerdown', 3);
+    touch('#shot-button', 'pointerup', 3);
+    expect(input.controls.power).toBe(0.45);
+    expect(input.controls.shot).toBe('drive');
+  });
+  it('cycles tactical intent using a single selector without duplicate synthesized clicks', () => {
+    for (const expected of ['slice', 'lob', 'drive']) {
+      touch('#shot-intent', 'pointerdown', 3);
+      send(controls.get('#shot-intent')!, 'click', { detail: 1 });
+      expect(input.controls.shot).toBe(expected);
+    }
   });
 });

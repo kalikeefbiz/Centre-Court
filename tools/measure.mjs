@@ -1,2 +1,19 @@
-import {chromium} from 'playwright';
-const b=await chromium.launch({headless:true,args:['--use-gl=angle','--use-angle=swiftshader']});const p=await b.newPage({viewport:{width:260,height:300}});await p.goto('http://localhost:5173/inspect.html');await p.waitForFunction(()=>window.inspect);const a=await p.evaluate(()=>window.inspect.names);for(let i=2;i<10;i++){console.log(i,await p.evaluate(([n,t])=>window.inspect.pose(n,t,0),[a[i],[28,30,29,29,26,46,27,37][i-2]/30]));}await b.close();
+import { chromium } from 'playwright';
+const b = await chromium.launch({
+  headless: true,
+  args: ['--use-gl=angle', '--use-angle=swiftshader'],
+});
+const p = await b.newPage({ viewport: { width: 260, height: 300 } });
+await p.goto('http://localhost:5173/inspect.html');
+await p.waitForFunction(() => window.inspect);
+const a = await p.evaluate(() => window.inspect.names);
+for (let i = 2; i < 10; i++) {
+  console.log(
+    i,
+    await p.evaluate(
+      ([n, t]) => window.inspect.pose(n, t, 0),
+      [a[i], [28, 30, 29, 29, 26, 46, 27, 37][i - 2] / 30],
+    ),
+  );
+}
+await b.close();

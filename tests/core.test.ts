@@ -98,7 +98,7 @@ describe('continuous ballistic simulation', () => {
   it('lands at its requested target with bounded fixed-step integration error', () => {
     const b = new Ball();
     b.position = vec(0, 1.2, 10);
-    b.launch(vec(2, 0.12, -9), 'drive', 0.7);
+    b.launch(vec(2, COURT.radius, -9), 'drive', 0.7);
     let landed;
     for (let i = 0; i < 600 && !landed; i++)
       landed = b.step(FIXED_DT).find((e) => e.type === 'bounce');
@@ -119,13 +119,13 @@ describe('continuous ballistic simulation', () => {
     const heights = ['drive', 'slice', 'lob'].map((shot) => {
       const b = new Ball();
       b.position = vec(0, 1.2, 10);
-      b.launch(vec(0, 0.12, -9), shot as 'drive' | 'slice' | 'lob');
+      b.launch(vec(0, COURT.radius, -9), shot as 'drive' | 'slice' | 'lob');
       return Math.max(...predict(b).map((p) => p.position.y));
     });
     expect(heights[2]).toBeGreaterThan(heights[0] * 1.6);
     expect(heights[1]).not.toBeCloseTo(heights[0], 1);
     const b = new Ball();
-    b.position = vec(0, 0.13, 5);
+    b.position = vec(0, COURT.radius + 0.01, 5);
     b.velocity = vec(2, -5, -2);
     b.active = true;
     b.step(FIXED_DT);
@@ -136,7 +136,7 @@ describe('continuous ballistic simulation', () => {
   });
   it('predicts with an independent copy', () => {
     const b = new Ball();
-    b.launch(vec(-2, 0.12, -4), 'serve');
+    b.launch(vec(-2, COURT.radius, -4), 'serve');
     const before = JSON.stringify(b);
     expect(predict(b).length).toBeGreaterThan(100);
     expect(JSON.stringify(b)).toBe(before);
@@ -180,7 +180,7 @@ describe('match transitions and recovery', () => {
       m.phase = 'rally';
       m.serveFlight = true;
       m.ball.active = true;
-      m.ball.position = vec(3, 0.13, -4);
+      m.ball.position = vec(3, COURT.radius + 0.01, -4);
       m.ball.velocity = vec(0, -2, 0);
       m.tick(FIXED_DT, idleControls());
     };
@@ -203,7 +203,7 @@ describe('match transitions and recovery', () => {
     m.serveFlight = true;
     m.ball.active = true;
     m.ball.netTouched = true;
-    m.ball.position = vec(-2, 0.13, -4);
+    m.ball.position = vec(-2, COURT.radius + 0.01, -4);
     m.ball.velocity = vec(0, -2, 0);
     m.tick(FIXED_DT, idleControls());
     expect(m.notice).toContain('LET');
@@ -223,7 +223,7 @@ describe('match transitions and recovery', () => {
       m.lastHitter = 0;
       m.bounces = bounces;
       m.ball.active = true;
-      m.ball.position = vec(x, 0.13, -5);
+      m.ball.position = vec(x, COURT.radius + 0.01, -5);
       m.ball.velocity = vec(0, -2, 0);
       m.tick(FIXED_DT, idleControls());
       expect(m.score.points[winner]).toBe(1);
@@ -238,7 +238,7 @@ describe('match transitions and recovery', () => {
     m.lastHitter = 1;
     m.bounces = 1;
     m.ball.active = true;
-    m.ball.position = vec(0, 0.13, 5);
+    m.ball.position = vec(0, COURT.radius + 0.01, 5);
     m.ball.velocity = vec(0, -2, 0);
     m.tick(FIXED_DT, idleControls());
     expect(m.score.points).toEqual([0, 0]);
@@ -286,7 +286,7 @@ describe('AI and camera', () => {
   it('predicts legal interception positions and uses bounded difficulty speeds', () => {
     const b = new Ball();
     b.position = vec(0, 1.4, 9);
-    b.launch(vec(-2, 0.12, -10), 'drive');
+    b.launch(vec(-2, COURT.radius, -10), 'drive');
     const p = intercept(b, vec(0, 0, -10), PRESETS.normal.speed, false);
     expect(p.z).toBeLessThan(0);
     expect(Math.abs(p.x)).toBeLessThan(6.7);
