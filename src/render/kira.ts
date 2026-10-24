@@ -209,6 +209,9 @@ export class Kira {
     const contact = athlete.contact;
     if (contact && contact.id !== this.lastContact) {
       this.lastContact = contact.id;
+      // Render the contact's athlete and ball at the same fixed-step timestamp.
+      // Following frames resume the live movement position; gameplay never waits.
+      this.root.setPosition(contact.athletePosition.x, 0, contact.athletePosition.z);
       this.state = contact.stroke;
       const animation = ANIMATIONS[contact.stroke];
       this.layer.transition(this.state, 0);

@@ -356,12 +356,14 @@ describe('full-match playability', () => {
             (s) =>
               s.position.z > 0.5 &&
               s.position.z < 15 &&
-              s.position.y > 0.5 &&
-              s.position.y < 2.4 &&
+              s.position.y > 0.65 &&
+              s.position.y < 1.85 &&
               (!m.serveFlight || s.bounced) &&
               Math.hypot(s.position.x - p.x, s.position.z - p.z) < 6.3 * s.time + 1.3,
           );
-          target = hit?.position ?? p;
+          target = hit
+            ? { ...hit.position, x: hit.position.x - 0.45, z: hit.position.z + 0.45 }
+            : p;
         }
         const dx = target.x - p.x,
           dz = target.z - p.z,

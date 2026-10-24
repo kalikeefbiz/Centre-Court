@@ -18,6 +18,7 @@ export type Phase = 'menu' | 'serve' | 'rally' | 'pointOver' | 'paused' | 'resul
 export interface ShotContact {
   id: number;
   stroke: Stroke;
+  athletePosition: Vec;
   position: Vec;
   age: number;
 }
@@ -161,6 +162,7 @@ export class Match {
     this.players[side].contact = {
       id: ++this.contactSequence,
       stroke,
+      athletePosition: { ...this.players[side].position },
       position: { ...this.ball.position },
       age: 0,
     };
@@ -257,6 +259,8 @@ export class Match {
       return false;
     const p = this.players[side].position,
       b = this.ball.position;
+    // GOAL 002C calibrates the playable athlete; preserve the existing opponent.
+    if (side === 1) return b.y > 0.3 && b.y < 2.9 && Math.hypot(p.x - b.x, p.z - b.z) < 1.75;
     return inContactZone({
       player: p,
       ball: b,

@@ -30,7 +30,7 @@ export function selectStroke(c: HitContext): Stroke {
 }
 export const CONTACT = Object.freeze({
   inputWindow: 0.25, // buffered release, never an automatic swing
-  ground: { radius: 1.35, minHeight: 0.3, maxHeight: 1.95 },
+  ground: { radius: 1.25, minHeight: 0.6, maxHeight: 1.95 },
   volley: { radius: 1.3, minHeight: 0.4, maxHeight: 2.05 },
   overhead: { radius: 1.25, minHeight: 1.9, maxHeight: 2.65 },
 });
@@ -42,7 +42,7 @@ export function inContactZone(c: HitContext, stroke = selectStroke(c)) {
   return (
     forward > -0.25 &&
     forward < 1.25 &&
-    c.ball.y >= zone.minHeight &&
+    c.ball.y >= (c.intent === 'slice' ? 0.3 : zone.minHeight) &&
     c.ball.y <= zone.maxHeight &&
     Math.hypot(c.ball.x - c.player.x, c.ball.z - c.player.z) < zone.radius
   );
