@@ -45,3 +45,13 @@
 - [ ] Inspect remote Safari console for runtime errors, duplicate listeners or growing GPU/memory use after five restarts.
 
 Record each failure with reproduction steps and a screenshot/video. Do not mark hardware compatibility as passed until these checks are completed on named devices.
+
+## GOAL 001B multitouch retest
+
+Run in Broadcast and Behind player, in portrait and landscape:
+
+- Hold left thumb on the joystick continuously; tap Slice, Lob and each aim arrow with the right thumb. Each should update immediately without stopping movement or toggling twice.
+- With movement held, hold Shot, drag outside its boundary and release: movement must continue and exactly one shot should execute.
+- Hold both controls, then lift the joystick thumb first: charge must continue. Release Shot to execute.
+- Drag joystick over other controls: it must remain movement input until released.
+- While both are held, switch apps, open Control Center, lock/unlock or rotate the phone; return and resume. No stuck movement, phantom shot or retained charge should occur. New touches must work immediately.

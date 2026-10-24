@@ -133,3 +133,83 @@ test('independent trusted touch pointers move and charge together', async ({
   await expect(page.locator('#shot-button')).not.toHaveClass(/charging/);
   await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
 });
+
+for (const mode of ['broadcast', 'behind']) {
+  test(`secondary touch selects and aims while moving in ${mode}`, async ({
+    page,
+    context,
+  }, info) => {
+    test.skip(info.project.name !== 'desktop-chromium', 'Trusted multitouch requires CDP.');
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.locator('#practice').click();
+    if (mode === 'behind') await page.locator('#camera-button').click();
+    const cdp = await context.newCDPSession(page);
+    await cdp.send('Emulation.setTouchEmulationEnabled', { enabled: true, maxTouchPoints: 3 });
+    await expect(page.locator('#joystick')).toBeVisible();
+    const box = (await page.locator('#joystick').boundingBox())!;
+    const left = { x: box.x + 12, y: box.y + box.height / 2, id: 11 };
+    const touch = async (
+      type: 'touchStart' | 'touchEnd' | 'touchMove' | 'touchCancel',
+      touchPoints: { x: number; y: number; id: number }[],
+    ) => cdp.send('Input.dispatchTouchEvent', { type, touchPoints });
+    const tapWithLeftHeld = async (id: string) => {
+      const r = (await page.locator(id).boundingBox())!;
+      const right = { x: r.x + r.width / 2, y: r.y + r.height / 2, id: 22 };
+      await touch('touchStart', [left, right]);
+      await touch('touchEnd', [right]);
+    };
+    await touch('touchStart', [left]);
+    await tapWithLeftHeld('#slice');
+    await expect(page.locator('#shot-name')).toHaveText('SLICE');
+    await tapWithLeftHeld('#lob');
+    await expect(page.locator('#shot-name')).toHaveText('LOB');
+    await tapWithLeftHeld('#aim-right');
+    await expect.poll(async () => (await snap(page)).input.aim).toBe(0.9);
+    const r = (await page.locator('#shot-button').boundingBox())!;
+    const right = { x: r.x + r.width / 2, y: r.y + r.height / 2, id: 22 };
+    await touch('touchStart', [left, right]);
+    await expect.poll(async () => (await snap(page)).input.charging).toBe(true);
+    // Captured touches retain ownership even when dragged over another control.
+    const dragged = { ...right, x: left.x, y: left.y };
+    await touch('touchMove', [left, dragged]);
+    await touch('touchEnd', [left]);
+    await expect.poll(async () => (await snap(page)).input.x).toBe(0);
+    expect((await snap(page)).input.charging).toBe(true);
+    await touch('touchEnd', []);
+    await expect.poll(async () => (await snap(page)).contacts).toBe(1);
+    expect((await snap(page)).input.charging).toBe(false);
+    expect((await snap(page)).camera).toBe(mode);
+  });
+}
+
+test('pointer cancellation and interruptions clear only the owned inputs', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.locator('#practice').click();
+  await expect(page.locator('#joystick')).toBeVisible();
+  const j = page.locator('#joystick'),
+    s = page.locator('#shot-button');
+  const box = (await j.boundingBox())!;
+  await j.dispatchEvent('pointerdown', {
+    pointerId: 31,
+    pointerType: 'touch',
+    clientX: box.x + 10,
+    clientY: box.y + box.height / 2,
+  });
+  await s.dispatchEvent('pointerdown', { pointerId: 32, pointerType: 'touch' });
+  await s.dispatchEvent('pointercancel', { pointerId: 99, pointerType: 'touch' });
+  await expect.poll(async () => (await snap(page)).input.charging).toBe(true);
+  await s.dispatchEvent('pointercancel', { pointerId: 32, pointerType: 'touch' });
+  await expect.poll(async () => (await snap(page)).input.charging).toBe(false);
+  await expect.poll(async () => (await snap(page)).input.x).toBeLessThan(-0.5);
+  expect((await snap(page)).contacts).toBe(0);
+  await s.dispatchEvent('pointerdown', { pointerId: 33, pointerType: 'touch' });
+  await j.dispatchEvent('lostpointercapture', { pointerId: 31, pointerType: 'touch' });
+  await expect.poll(async () => (await snap(page)).input.x).toBe(0);
+  expect((await snap(page)).input.charging).toBe(true);
+  await page.evaluate(() => window.dispatchEvent(new Event('blur')));
+  await expect(page.locator('#pause')).toBeVisible();
+  expect((await snap(page)).input.charging).toBe(false);
+  await page.locator('#resume').click();
+  await s.dispatchEvent('pointerup', { pointerId: 33, pointerType: 'touch' });
+  expect((await snap(page)).contacts).toBe(0);
+});

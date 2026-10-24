@@ -144,6 +144,7 @@ if (new URLSearchParams(location.search).has('debug'))
     value: {
       snapshot: () => ({
         phase: match.phase,
+        input: { ...input.controls, charging: input.charging, held: input.held },
         ball: { ...match.ball.position },
         velocity: { ...match.ball.velocity },
         players: match.players.map((p) => ({ ...p.position })),

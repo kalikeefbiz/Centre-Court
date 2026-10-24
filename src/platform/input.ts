@@ -18,6 +18,7 @@ export class Input {
   private joyPointer: number | null = null;
   private shotPointer: number | null = null;
   private mouseAim = 0;
+  private chargeOwner: number | 'keyboard' | null = null;
   constructor(
     canvas: HTMLCanvasElement,
     private onPause: () => void,
@@ -32,14 +33,14 @@ export class Input {
       if (e.code === 'Escape') onPause();
       if (e.code === 'KeyC') onCamera();
       if (!this.enabled) return;
-      if (e.code === 'Space') this.begin();
+      if (e.code === 'Space') this.begin('keyboard');
       if (e.code === 'Digit1') this.controls.shot = 'drive';
       if (e.code === 'Digit2') this.controls.shot = 'slice';
       if (e.code === 'Digit3') this.controls.shot = 'lob';
     });
     window.addEventListener('keyup', (e) => {
       this.keys.delete(e.code);
-      if (e.code === 'Space') this.release();
+      if (e.code === 'Space') this.release('keyboard');
     });
     const joystick = document.querySelector<HTMLElement>('#joystick')!;
     const updateJoy = (e: PointerEvent) => {
@@ -53,7 +54,7 @@ export class Input {
         `translate(${this.joy.x * radius}px,${this.joy.z * radius}px)`;
     };
     joystick.addEventListener('pointerdown', (e) => {
-      if (this.joyPointer !== null) return;
+      if (this.joyPointer !== null || !this.enabled) return;
       this.joyPointer = e.pointerId;
       capture(joystick, e);
       updateJoy(e);
@@ -77,32 +78,47 @@ export class Input {
       if (this.shotPointer !== null || !this.enabled) return;
       this.shotPointer = e.pointerId;
       capture(button, e);
-      this.begin();
+      this.begin(e.pointerId);
       e.preventDefault();
     });
     button.addEventListener('pointerup', (e) => {
       if (e.pointerId === this.shotPointer) {
         this.shotPointer = null;
-        this.release();
+        this.release(e.pointerId);
       }
     });
-    const cancelShot = () => {
-      this.shotPointer = null;
-      this.charging = false;
+    const cancelShot = (e: PointerEvent) => {
+      if (e.pointerId === this.shotPointer) this.shotPointer = null;
+      if (e.pointerId === this.chargeOwner) {
+        this.chargeOwner = null;
+        this.charging = false;
+        this.held = 0;
+      }
     };
     button.addEventListener('pointercancel', cancelShot);
-    button.addEventListener('lostpointercapture', () => {
-      if (this.shotPointer !== null) cancelShot();
-    });
+    button.addEventListener('lostpointercapture', cancelShot);
+    // A secondary touch does not reliably synthesize a click on iOS. Act on
+    // pointerdown; keep detail=0 clicks for keyboard/assistive activation only.
+    const select = (id: string, action: () => void) => {
+      const element = document.querySelector<HTMLElement>('#' + id)!;
+      element.addEventListener('pointerdown', (e) => {
+        if (!this.enabled || (e.pointerType === 'mouse' && e.button !== 0)) return;
+        e.preventDefault();
+        action();
+      });
+      element.addEventListener('click', (e) => {
+        if (this.enabled && e.detail === 0) action();
+      });
+    };
     for (const shot of ['slice', 'lob'] as const)
-      document.querySelector('#' + shot)!.addEventListener('click', () => {
+      select(shot, () => {
         this.controls.shot = this.controls.shot === shot ? 'drive' : shot;
       });
     for (const [id, aim] of [
       ['aim-left', -0.9],
       ['aim-right', 0.9],
     ] as const)
-      document.querySelector('#' + id)!.addEventListener('click', () => {
+      select(id, () => {
         this.mouseAim = this.mouseAim === aim ? 0 : aim;
       });
     canvas.addEventListener('pointermove', (e) => {
@@ -112,25 +128,32 @@ export class Input {
     canvas.addEventListener('pointerdown', (e) => {
       if (e.pointerType === 'mouse' && e.button === 0 && this.enabled) {
         capture(canvas, e);
-        this.begin();
+        this.begin(e.pointerId);
       }
     });
     canvas.addEventListener('pointerup', (e) => {
-      if (e.pointerType === 'mouse') this.release();
+      if (e.pointerType === 'mouse') this.release(e.pointerId);
     });
     canvas.addEventListener('pointercancel', cancelShot);
+    canvas.addEventListener('lostpointercapture', cancelShot);
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) this.clear();
+    });
+    window.addEventListener('pagehide', () => this.clear());
     window.addEventListener('blur', () => this.clear());
     window.addEventListener('contextmenu', (e) => {
       if (this.enabled) e.preventDefault();
     });
   }
-  private begin() {
+  private begin(owner: number | 'keyboard') {
     if (!this.enabled || this.charging) return;
+    this.chargeOwner = owner;
     this.charging = true;
     this.held = 0;
   }
-  private release() {
-    if (!this.charging || !this.enabled) return;
+  private release(owner: number | 'keyboard') {
+    if (owner !== this.chargeOwner || !this.charging || !this.enabled) return;
+    this.chargeOwner = null;
     this.charging = false;
     this.controls.power = clamp(this.held / 1.05, 0.12, 1);
     this.controls.release = true;
@@ -160,6 +183,7 @@ export class Input {
     this.keys.clear();
     this.joy = { x: 0, z: 0 };
     this.charging = false;
+    this.chargeOwner = null;
     this.held = 0;
     this.shotPointer = null;
     this.joyPointer = null;
