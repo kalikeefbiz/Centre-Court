@@ -18,6 +18,7 @@ export class Scene {
   private trailClock = 0;
   private predictionClock = 0;
   private courtBatch: number;
+  private athleteBatch: number;
   private materials = new Map<string, pc.StandardMaterial>();
   constructor(public canvas: HTMLCanvasElement) {
     this.app = new pc.Application(canvas, {
@@ -37,6 +38,7 @@ export class Scene {
     this.app.scene.fog.start = 48;
     this.app.scene.fog.end = 105;
     this.courtBatch = this.app.batcher!.addGroup('Arena static', false, 100)!.id;
+    this.athleteBatch = this.app.batcher!.addGroup('Athletes dynamic', true, 50)!.id;
     this.camera = new pc.Entity('Single active rendering camera');
     this.camera.addComponent('camera', {
       clearColor: new pc.Color(0.055, 0.105, 0.12),
@@ -117,7 +119,7 @@ export class Scene {
       material: this.material(color, unlit),
       castShadows: false,
       receiveShadows: false,
-      batchGroupId: batch ? this.courtBatch : -1,
+      batchGroupId: batch ? this.courtBatch : parent ? this.athleteBatch : -1,
     });
     e.setLocalPosition(p[0], p[1], p[2]);
     e.setLocalScale(s[0], s[1], s[2]);
@@ -134,6 +136,7 @@ export class Scene {
     });
     e.addComponent('render', {
       meshInstances: [new pc.MeshInstance(mesh, this.material(color, true))],
+      batchGroupId: parent ? this.athleteBatch : -1,
       castShadows: false,
     });
     (parent ?? this.app.root).addChild(e);

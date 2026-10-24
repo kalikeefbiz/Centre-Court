@@ -22,6 +22,8 @@ test('renders a playable court, serves, pauses, switches camera, restarts and re
   await page.locator('#play').click();
   await expect(page.locator('#hud')).toBeVisible();
   expect((await snap(page)).activeCameras).toBe(1);
+  await expect.poll(async () => (await snap(page)).drawCalls).toBeGreaterThan(0);
+  expect((await snap(page)).drawCalls).toBeLessThan(80);
   if (info.project.name === 'mobile-webkit') {
     await page
       .locator('#shot-button')
@@ -127,7 +129,7 @@ test('independent trusted touch pointers move and charge together', async ({
   await page.waitForTimeout(350);
   await expect(page.locator('#shot-button')).toHaveClass(/charging/);
   await expect.poll(async () => (await snap(page)).players[0].x).toBeLessThan(before - 0.4);
-  await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [a] });
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [b] });
   await expect(page.locator('#shot-button')).not.toHaveClass(/charging/);
   await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
 });
