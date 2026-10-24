@@ -1,0 +1,133 @@
+import { test, expect, type Page } from '@playwright/test';
+const snap = (page: Page) =>
+  page.evaluate(() =>
+    (
+      window as unknown as { centreCourt: { snapshot: () => Record<string, any> } }
+    ).centreCourt.snapshot(),
+  );
+test.beforeEach(async ({ page }) => {
+  await page.goto('/?debug');
+  await expect(page.locator('#loading')).toHaveCount(0);
+  await page.evaluate(async () => {
+    await document.fonts.ready;
+  });
+});
+test('renders a playable court, serves, pauses, switches camera, restarts and returns to menu', async ({
+  page,
+}, info) => {
+  const errors: string[] = [];
+  page.on('pageerror', (e) => errors.push(e.message));
+  await expect(page.locator('h1')).toContainText('THE COURT.');
+  await page.screenshot({ path: `test-results/${info.project.name}-menu.png` });
+  await page.locator('#play').click();
+  await expect(page.locator('#hud')).toBeVisible();
+  expect((await snap(page)).activeCameras).toBe(1);
+  if (info.project.name === 'mobile-webkit') {
+    await page
+      .locator('#shot-button')
+      .dispatchEvent('pointerdown', { pointerId: 1, pointerType: 'touch' });
+    await page.waitForTimeout(650);
+    await page
+      .locator('#shot-button')
+      .dispatchEvent('pointerup', { pointerId: 1, pointerType: 'touch' });
+  } else {
+    await page.keyboard.down('Space');
+    await page.waitForTimeout(650);
+    await page.keyboard.up('Space');
+  }
+  await expect.poll(async () => Number((await snap(page)).contacts)).toBeGreaterThanOrEqual(1);
+  await page.locator('#pause-button').click();
+  await expect(page.locator('#pause')).toBeVisible();
+  const paused = await snap(page);
+  await page.waitForTimeout(300);
+  expect((await snap(page)).ball).toEqual(paused.ball);
+  await page.locator('#resume').click();
+  await expect(page.locator('#pause')).toBeHidden();
+  await page.locator('#camera-button').click();
+  expect((await snap(page)).camera).toBe('behind');
+  expect((await snap(page)).activeCameras).toBe(1);
+  await page.screenshot({ path: `test-results/${info.project.name}-game.png` });
+  await page.locator('#pause-button').click();
+  await page.locator('#restart-pause').click();
+  expect((await snap(page)).phase).toBe('serve');
+  expect((await snap(page)).totalPoints).toBe(0);
+  await page.locator('#pause-button').click();
+  await page.locator('#menu-pause').click();
+  await expect(page.locator('#menu')).toBeVisible();
+  await page.reload();
+  await expect(page.locator('#loading')).toHaveCount(0);
+  expect((await snap(page)).camera).toBe('behind');
+  expect(errors).toEqual([]);
+});
+test('practice, shot selection, movement and resize remain usable', async ({ page }, info) => {
+  await page.locator('#practice').click();
+  await expect(page.locator('#score-description')).toContainText('PRACTICE');
+  await page.locator('#slice').click();
+  await expect(page.locator('#shot-name')).toHaveText('SLICE');
+  await page.locator('#lob').click();
+  await expect(page.locator('#shot-name')).toHaveText('LOB');
+  await page.locator('#lob').click();
+  await expect(page.locator('#shot-name')).toHaveText('SHOT');
+  await page.locator('#aim-left').click();
+  await expect(page.locator('#aim-left')).toHaveClass(/selected/);
+  if (info.project.name === 'desktop-chromium') {
+    await page.keyboard.down('Space');
+    await page.waitForTimeout(600);
+    await page.keyboard.up('Space');
+    await page.keyboard.down('KeyA');
+    await expect.poll(async () => (await snap(page)).players[0].x).toBeLessThan(1.2);
+    await page.keyboard.up('KeyA');
+  } else {
+    const shot = page.locator('#shot-button');
+    await shot.dispatchEvent('pointerdown', { pointerId: 2, pointerType: 'touch' });
+    await page.waitForTimeout(600);
+    await shot.dispatchEvent('pointerup', { pointerId: 2, pointerType: 'touch' });
+    const joystick = page.locator('#joystick'),
+      box = (await joystick.boundingBox())!;
+    await joystick.dispatchEvent('pointerdown', {
+      pointerId: 3,
+      pointerType: 'touch',
+      clientX: box.x + 10,
+      clientY: box.y + box.height / 2,
+    });
+    await expect.poll(async () => (await snap(page)).players[0].x).toBeLessThan(1.2);
+    await joystick.dispatchEvent('pointerup', { pointerId: 3, pointerType: 'touch' });
+  }
+  await page.setViewportSize({ width: 844, height: 390 });
+  await page.waitForTimeout(300);
+  await expect(page.locator('#shot-button')).toBeInViewport();
+  await expect(page.locator('#joystick')).toBeInViewport();
+  await page.screenshot({ path: `test-results/${info.project.name}-landscape.png` });
+  await page.evaluate(() => window.dispatchEvent(new Event('blur')));
+  await expect(page.locator('#pause')).toBeVisible();
+});
+
+test('independent trusted touch pointers move and charge together', async ({
+  page,
+  context,
+}, info) => {
+  test.skip(
+    info.project.name !== 'desktop-chromium',
+    'CDP touch injection is Chromium-only; WebKit uses pointer-event coverage.',
+  );
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.locator('#practice').click();
+  await page.keyboard.down('Space');
+  await page.waitForTimeout(600);
+  await page.keyboard.up('Space');
+  const cdp = await context.newCDPSession(page);
+  await cdp.send('Emulation.setTouchEmulationEnabled', { enabled: true, maxTouchPoints: 2 });
+  const j = (await page.locator('#joystick').boundingBox())!,
+    s = (await page.locator('#shot-button').boundingBox())!;
+  const a = { x: j.x + 12, y: j.y + j.height / 2, id: 1 },
+    b = { x: s.x + s.width / 2, y: s.y + s.height / 2, id: 2 };
+  const before = (await snap(page)).players[0].x;
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [a] });
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [a, b] });
+  await page.waitForTimeout(350);
+  await expect(page.locator('#shot-button')).toHaveClass(/charging/);
+  await expect.poll(async () => (await snap(page)).players[0].x).toBeLessThan(before - 0.4);
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [a] });
+  await expect(page.locator('#shot-button')).not.toHaveClass(/charging/);
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+});

@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#101e23" />
+    <meta
+      name="description"
+      content="Centre Court by BlackHouse. Play arcade singles tennis against AI in your browser."
+    />
+    <title>Centre Court — BlackHouse</title>
+  </head>
+  <body>
+    <canvas id="court" aria-label="Centre Court 3D tennis court"></canvas>
+    <div id="app">
+      <header class="topbar">
+        <a class="brand" href="#" id="home-link"
+          ><span class="brand-icon">Ⅱ</span> CENTRE COURT <small>BY BLACKHOUSE</small></a
+        >
+        <div class="top-right">
+          <span class="live-label"><i></i> COURT 01</span
+          ><button id="camera-button" class="icon-button" aria-label="Switch camera">
+            ▣ <span>Broadcast</span></button
+          ><button id="pause-button" class="icon-button" aria-label="Pause match">Ⅱ</button>
+        </div>
+      </header>
+      <section id="menu" class="panel menu-panel">
+        <div class="eyebrow"><span class="tiny-line"></span> BLACKHOUSE SPORTS · GOAL 001</div>
+        <h1>OWN<br />THE <em>COURT.</em></h1>
+        <p class="intro">
+          Every point is yours to earn.<br />Step into a singles match built for the next rally.
+        </p>
+        <div class="options">
+          <label
+            >OPPONENT<select id="difficulty">
+              <option value="easy">Easy · Find your rhythm</option>
+              <option value="normal" selected>Normal · Rise to the challenge</option>
+              <option value="hard">Hard · Leave nothing behind</option>
+            </select></label
+          ><label
+            >MATCH FORMAT<select id="length">
+              <option value="short">Quick set · First to 2 games</option>
+              <option value="standard">Standard · Best of 3 sets</option>
+            </select></label
+          >
+        </div>
+        <button id="play" class="primary">PLAY MATCH <span>↗</span></button
+        ><button id="practice" class="secondary">PRACTICE MODE <span>→</span></button>
+        <div class="menu-foot">
+          <span>01 / SINGLES</span><button id="help-button">HOW TO PLAY ↗</button>
+        </div>
+      </section>
+      <div id="menu-note">
+        <span class="court-badge">HARD COURT</span>
+        <p>THE FOUNDATION SERIES</p>
+        <small>Temporary athletes. Real competition.</small>
+      </div>
+      <section id="hud" hidden>
+        <div class="scoreboard">
+          <div class="score-head">
+            <span>SINGLES <b id="difficulty-label">NORMAL</b></span
+            ><span>SETS&nbsp; GAMES&nbsp; PTS</span>
+          </div>
+          <div class="score-row you">
+            <span><i id="serve-you" class="serve-dot"></i> YOU</span>
+            <div>
+              <b id="sets-you">0</b><b id="games-you">0</b><strong id="points-you">0</strong>
+            </div>
+          </div>
+          <div class="score-row">
+            <span><i id="serve-ai" class="serve-dot"></i> OPPONENT</span>
+            <div><b id="sets-ai">0</b><b id="games-ai">0</b><strong id="points-ai">0</strong></div>
+          </div>
+          <div id="score-description">DEUCE COURT</div>
+        </div>
+        <div class="rally-badge"><span id="rally-count">0</span><small>RALLY</small></div>
+        <div id="announcement" role="status" aria-live="polite">FIRST SERVE</div>
+        <div id="timing-feedback"></div>
+        <div id="desktop-hint">
+          WASD MOVE <span>·</span> HOLD SPACE / RELEASE TO HIT <span>·</span> J L AIM
+          <span>·</span> 1 DRIVE &nbsp; 2 SLICE &nbsp; 3 LOB
+        </div>
+        <div id="touch-controls">
+          <div id="joystick" role="group" aria-label="Movement joystick">
+            <div id="stick"></div>
+            <span>MOVE</span>
+          </div>
+          <div class="shot-controls">
+            <div class="aim-row">
+              <button id="aim-left" aria-label="Aim left">↖</button><span id="aim-label">AIM</span
+              ><button id="aim-right" aria-label="Aim right">↗</button>
+            </div>
+            <div class="shot-row">
+              <button id="slice" data-shot="slice">SLICE</button
+              ><button id="lob" data-shot="lob">LOB</button>
+            </div>
+            <button id="shot-button" aria-label="Hold to charge shot and release to swing">
+              <span id="shot-name">SHOT</span><small>HOLD / RELEASE</small>
+            </button>
+            <div class="power-track"><i id="power-fill"></i><span></span></div>
+          </div>
+        </div>
+      </section>
+      <section id="pause" class="modal-wrap" hidden>
+        <div class="modal">
+          <div class="eyebrow">TAKE A BREATH</div>
+          <h2>Play paused.</h2>
+          <p>Your court will be right here.</p>
+          <button id="resume" class="primary">RESUME MATCH <span>→</span></button
+          ><button id="restart-pause" class="secondary">RESTART MATCH</button
+          ><button id="menu-pause" class="text-button">RETURN TO MENU</button>
+        </div>
+      </section>
+      <section id="results" class="modal-wrap" hidden>
+        <div class="modal">
+          <div class="eyebrow">MATCH COMPLETE</div>
+          <h2 id="result-title">Court conquered.</h2>
+          <p id="result-score"></p>
+          <div class="result-stat">
+            <span>LONGEST RALLY</span><strong id="best-rally">0</strong>
+          </div>
+          <button id="restart" class="primary">PLAY AGAIN <span>↗</span></button
+          ><button id="menu-result" class="secondary">RETURN TO MENU</button>
+        </div>
+      </section>
+      <section id="help" class="modal-wrap" hidden>
+        <div class="modal help-modal">
+          <div class="eyebrow">FIND YOUR RHYTHM</div>
+          <h2>Make the next shot.</h2>
+          <p>
+            <b>Move into range.</b> Use WASD / arrows, or the left joystick. Track the ball’s shadow
+            and the landing ring.
+          </p>
+          <p>
+            <b>Hold, then release.</b> Space, the court with a mouse, or SHOT charges power. Release
+            when the ball is beside your athlete. Aim for the marked 70% power zone.
+          </p>
+          <p>
+            <b>Place your return.</b> J / L or ↖ / ↗ aim left / right. I / K change depth on
+            desktop. Mouse position across the court sets aim. Select 1 Drive, 2 Slice, or 3 Lob; on
+            touch tap Slice or Lob to toggle.
+          </p>
+          <p>
+            <b>Serve diagonally.</b> Hold and release to serve. Two faults lose the point. A net
+            cord landing in the correct box is a let. Lines are in.
+          </p>
+          <p class="muted">
+            Quick set: first to 2 games, win by 2, tiebreak at 2–2. Standard: best of 3 sets,
+            tiebreak at 6–6. Practice runs endless rallies. Escape pauses. C changes camera.
+          </p>
+          <button id="help-close" class="primary">LET’S PLAY <span>→</span></button>
+        </div>
+      </section>
+      <footer id="footer">
+        <span>BLACKHOUSE®</span><span>BUILT FOR THE GAME.</span><span>FOUNDATION v0.1</span>
+      </footer>
+    </div>
+    <div id="loading">CENTRE COURT<span>PREPARING YOUR COURT…</span></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
