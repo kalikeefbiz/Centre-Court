@@ -76,7 +76,7 @@ export class Scene {
     this.kira = new Kira(this.app);
     this.royalBall = new RoyalBall(this.app);
     this.ball = this.royalBall.root;
-    this.ballShadow = this.shadow('Ball ground shadow', 0.5);
+    this.ballShadow = this.shadow('Ball ground shadow', 0.075);
     this.landing = this.ring('Predicted first bounce', '#d5ef95', 0.34, 0.018);
     this.landing.setLocalPosition(0, 0.03, 0);
     for (let i = 0; i < 6; i++)
@@ -338,8 +338,8 @@ export class Scene {
     this.ball.setPosition(p.x + offset.x, p.y + offset.y, p.z + offset.z);
     this.ball.enabled = !menu && this.royalBall.status === 'ready';
     if (match.ball.active && match.phase === 'rally') this.ball.rotate(dt * 200, dt * 130, 0);
-    this.ballShadow.setPosition(p.x, 0.065, p.z);
-    this.ballShadow.setLocalScale(0.42 + p.y * 0.035, 0.018, 0.42 + p.y * 0.035);
+    this.ballShadow.setPosition(p.x, 0.006, p.z);
+    this.ballShadow.setLocalScale(0.075 + p.y * 0.012, 0.004, 0.075 + p.y * 0.012);
     this.ballShadow.enabled = !menu;
     this.playerShadow.setPosition(match.players[0].position.x, 0.06, match.players[0].position.z);
     this.playerShadow.enabled = this.kira.status === 'ready';

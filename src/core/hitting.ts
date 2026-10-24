@@ -45,6 +45,6 @@ export function inContactZone(c: HitContext, stroke = selectStroke(c)) {
     c.ball.y >= (c.intent === 'slice' ? 0.3 : zone.minHeight) &&
     c.ball.y <= zone.maxHeight &&
     Math.hypot(c.ball.x - c.player.x, c.ball.z - c.player.z) <
-      Math.min(zone.radius, c.ball.y < 0.65 ? 0.95 : zone.radius)
+      Math.min(zone.radius, c.ball.y < 0.65 ? 0.65 : zone.radius)
   );
 }

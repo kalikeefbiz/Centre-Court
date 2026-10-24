@@ -43,7 +43,7 @@ describe('contextual tennis strokes', () => {
     expect(inContactZone({ ...context, ball: vec(3, 1, 8) })).toBe(false);
     expect(inContactZone({ ...context, ball: vec(0.4, 0.2, 8) })).toBe(false);
     expect(inContactZone({ ...context, ball: vec(0.5, 1.1, 8.8) })).toBe(false);
-    expect(inContactZone({ ...context, ball: vec(0.5, 0.4, 7.7) })).toBe(true);
+    expect(inContactZone({ ...context, ball: vec(0.4, 0.4, 7.7) })).toBe(true);
     expect(inContactZone({ ...context, ball: vec(1.1, 0.4, 7.7) })).toBe(false);
     expect(context).toEqual(before);
   });
