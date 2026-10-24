@@ -8,6 +8,7 @@ const snap = (page: Page) =>
 test.beforeEach(async ({ page }) => {
   await page.goto('/?debug');
   await expect(page.locator('#loading')).toHaveCount(0);
+  await expect.poll(async () => (await snap(page)).kira.status, { timeout: 30000 }).toBe('ready');
   await page.evaluate(async () => {
     await document.fonts.ready;
   });

@@ -3,11 +3,13 @@ import { Match } from '../core/match';
 import { COURT, type Vec } from '../core/court';
 import { CameraRig } from '../core/camera';
 import { predict } from '../core/ball';
+import { Kira } from './kira';
 
 export class Scene {
   app: pc.Application;
   camera: pc.Entity;
   rig: CameraRig;
+  kira: Kira;
   private ball: pc.Entity;
   private ballShadow: pc.Entity;
   private landing: pc.Entity;
@@ -68,6 +70,7 @@ export class Scene {
       this.buildAthlete('#e9f4ed', '#f07845'),
       this.buildAthlete('#f17b4c', '#1c363d'),
     ];
+    this.kira = new Kira(this.app, this.athletes[0].root);
     this.ball = this.shape('sphere', 'Ball', '#e4ff67', [0, 2, 0], [0.34, 0.34, 0.34], false, true);
     this.ballShadow = this.shadow('Ball ground shadow', 0.5);
     this.landing = this.ring('Predicted first bounce', '#d5ef95', 0.34, 0.018);
@@ -295,10 +298,14 @@ export class Scene {
     }
     return { root, arm, legs, shadow: this.shadow('Athlete shadow', 1.05) };
   }
+  ballPresentation() {
+    return this.ball.getPosition().toArray();
+  }
   resize() {
     this.app.resizeCanvas();
   }
-  render(match: Match, dt: number) {
+  render(match: Match, dt: number, charging = false) {
+    this.kira.update(match, dt, charging);
     const menu = match.phase === 'menu';
     const p = match.ball.position;
     if (menu) {
@@ -311,7 +318,8 @@ export class Scene {
     const c = this.rig;
     this.camera.setPosition(c.position.x, c.position.y, c.position.z);
     this.camera.lookAt(c.target.x, c.target.y, c.target.z);
-    this.ball.setPosition(p.x, p.y, p.z);
+    const offset = this.kira.ballOffset();
+    this.ball.setPosition(p.x + offset.x, p.y + offset.y, p.z + offset.z);
     this.ball.enabled = !menu;
     this.ballShadow.setPosition(p.x, 0.065, p.z);
     this.ballShadow.setLocalScale(0.42 + p.y * 0.035, 0.018, 0.42 + p.y * 0.035);

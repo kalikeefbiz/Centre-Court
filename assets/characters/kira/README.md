@@ -1,3 +1,3 @@
-# Kira assets
+# Character asset
 
-Upload `Meshy_AI_Pink_Rebel_Arena_All_Animations.glb` here. This is the rigged, textured character including animation clips.
+The authoritative conversation upload is integrated under `public/assets/characters/kira/`. The GLB is copied unchanged, including embedded textures. See [integration notes](../../../docs/KIRA-INTEGRATION.md).

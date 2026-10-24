@@ -1,4 +1,6 @@
-# GOAL 001 verification record
+# Verification record
+
+Current milestone: GOAL 001B + 002. See the GOAL 001B and GOAL 002 sections below for this run; the original foundation record is retained for history.
 
 Verification date: **2026-10-24 (UTC)**. Repository: `kalikeefbiz/Centre-Court`.
 
@@ -45,11 +47,11 @@ The GitHub Actions workflow repeats automated verification before deployment. De
 
 No physical iPhone testing was performed. [IPHONE-CHECKLIST.md](IPHONE-CHECKLIST.md) records the required hardware checks. Sustained frame rate, battery/thermal behavior, actual iOS multi-touch latency, browser chrome and safe areas remain unverified until that checklist is run on named devices.
 
-## GitHub verification and deployment blocker
+## Historical GitHub deployment blocker (subsequently resolved)
 
 The [CI run for d00dfc0](https://github.com/kalikeefbiz/Centre-Court/actions/runs/40086254166) passed its complete **verify** job (core tests, strict build and browser suite). The subsequent deployment job failed at Pages activation: `Create Pages site failed: Resource not accessible by integration` (HTTP 403). A direct Pages activation request using the available credential returned the same error. The repository reports `has_pages: false`; a live preview is therefore not claimed.
 
-The remaining account action is to open [repository Settings → Pages](https://github.com/kalikeefbiz/Centre-Court/settings/pages), set the build source to **GitHub Actions**, then rerun the failed deployment job (or the latest workflow). The intended address is https://kalikeefbiz.github.io/Centre-Court/. Source, locked dependencies, a tested production build and the deployment workflow are all ready; no additional game implementation is needed to clear this permission blocker.
+The account action at that time was to open [repository Settings → Pages](https://github.com/kalikeefbiz/Centre-Court/settings/pages), set the build source to **GitHub Actions**, then rerun the failed deployment job (or the latest workflow). The intended address is https://kalikeefbiz.github.io/Centre-Court/. During GOAL 002, the Pages API confirmed `build_type: workflow`; the owner had cleared this activation blocker.
 
 ## GOAL 001B — independent mobile pointers
 
@@ -58,3 +60,11 @@ Shot type and aim now activate on `pointerdown`, including secondary touches whi
 Regression coverage adds trusted Chromium multitouch selection/aim/charge while moving in both cameras, both release orders, captured boundary crossing, unrelated/owned cancellation, capture loss and blur/resume. WebKit covers the pointer-event cancellation path; CDP-only cases are explicitly skipped there. The simulation and camera systems are unchanged from the tested foundation.
 
 GOAL 001B gate: **24/24 simulation tests, production build, and 9/9 applicable browser checks passed** (3 Chromium-CDP-only checks skipped on WebKit). The cancellation assertion was rerun on both engines after changing it to wait for the next sampled input frame. Browser libraries were extracted outside the repository as described above. No physical iPhone validation was performed in this run.
+
+## GOAL 002 verification scope
+
+The actual supplied GLBs are shipped unchanged and are parsed by the asset tests and loaded by PlayCanvas in browser tests. The character has four clips and 44 joints; six embedded 2048×2048 texture maps are loaded once across the two containers. Source content uses approximately 128 MiB of uncompressed RGBA texture storage with mipmaps (driver format can vary); no second character texture set is cloned. The browser suite waits for asset readiness before timing input checks. Software-rendered local checks allow longer loading/expectation timeouts than the original primitive-only scene.
+
+See [KIRA-INTEGRATION.md](KIRA-INTEGRATION.md) for calibration and visual limits. Existing full-match human-win/AI-win, scoring, restart and deterministic camera/core checks remain enabled. Physical iPhone timing, GPU memory and thermal behavior remain open.
+
+GOAL 002 final local gate: **34/34 unit tests passed** (24 original gameplay tests, 5 GLB/contact tests, 5 input ownership tests), **15/15 applicable browser checks passed** with 3 CDP-only WebKit skips, strict TypeScript/production build passed, and `npm audit --omit=dev` reported **0 vulnerabilities**. The full production browser run completed in 4.5 minutes on the software-rendered cloud executor. Both actual assets loaded and animated in Chromium and WebKit; each missing-asset path retained playable fallback controls. Close-up pose inspection covered ready, walking, running, backswing, contact and follow-through. The additional input tests caught and guard charge release while gameplay is disabled between points.

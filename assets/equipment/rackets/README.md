@@ -1,3 +1,3 @@
-# Racket assets
+# Racket asset
 
-Upload `Meshy_AI_Pink_and_Black_Tennis_1024095819_texture.glb` here. This is the separate textured racket model.
+The authoritative conversation upload is integrated under `public/assets/equipment/rackets/`. The GLB is copied unchanged, including embedded textures. See [integration notes](../../../docs/KIRA-INTEGRATION.md).

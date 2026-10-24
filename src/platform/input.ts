@@ -152,9 +152,13 @@ export class Input {
     this.held = 0;
   }
   private release(owner: number | 'keyboard') {
-    if (owner !== this.chargeOwner || !this.charging || !this.enabled) return;
+    if (owner !== this.chargeOwner || !this.charging) return;
     this.chargeOwner = null;
     this.charging = false;
+    if (!this.enabled) {
+      this.held = 0;
+      return;
+    }
     this.controls.power = clamp(this.held / 1.05, 0.12, 1);
     this.controls.release = true;
   }

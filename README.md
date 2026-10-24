@@ -1,8 +1,8 @@
-# Centre Court · GOAL 001
+# Centre Court · GOAL 001B + 002
 
-A playable mobile-first 3D arcade singles tennis foundation by **BlackHouse**, built with PlayCanvas and TypeScript. Temporary humanoids and generic rackets only; Kira and her racket are not included.
+A playable mobile-first 3D arcade singles tennis foundation by **BlackHouse**, built with PlayCanvas and TypeScript. Kira uses the owner-supplied rigged character and separate racket GLBs. The AI opponent retains its temporary model.
 
-**Intended GitHub Pages address (activation pending):** https://kalikeefbiz.github.io/Centre-Court/
+**GitHub Pages:** https://kalikeefbiz.github.io/Centre-Court/
 
 ## Run, build, verify
 
@@ -39,7 +39,7 @@ npm run preview      # serve the production build locally
 | `src/core/match.ts`     | 120 Hz match state machine, contact validation, athlete movement, point resolution, pause/resume         |
 | `src/core/ai.ts`        | Difficulty presets, interception search and contextual shot selection                                    |
 | `src/core/camera.ts`    | Smoothed camera rig and resilient local preference storage                                               |
-| `src/render/scene.ts`   | One PlayCanvas camera, batched arena, temporary humanoids, shadows, ball and landing cue                 |
+| `src/render/scene.ts`   | One PlayCanvas camera, batched arena, Kira, temporary AI, shadows, ball and landing cue                  |
 | `src/platform/input.ts` | Keyboard, mouse, multi-pointer joystick, charge/release and aiming                                       |
 | `src/main.ts`           | Composition, UI binding, browser lifecycle and fixed-step scheduling                                     |
 
@@ -59,16 +59,16 @@ Simulation uses an accumulator at 120 Hz with floating-point tolerance, a maximu
 
 GitHub Pages serves the Vite `dist/` artifact, with relative asset URLs for repository subpaths. `.github/workflows/pages.yml` runs core tests, TypeScript/build and Chromium/WebKit checks before deployment. Pull requests verify without publishing. Pushes to `main` publish via the `github-pages` environment. Failed verification prevents deployment.
 
-One-time repository setup (the available integration currently returns HTTP 403 for this action):
-
-```sh
-gh api --method POST repos/kalikeefbiz/Centre-Court/pages -f build_type=workflow
-```
-
-If the API returns HTTP 403, open **Settings → Pages → Build and deployment → Source → GitHub Actions** using the repository owner account, then rerun the failed deployment job. The available integration cannot perform this initial activation. No live preview is claimed until activation and deployment succeed.
+Pages is configured to use GitHub Actions.
 
 Subsequent releases: commit and push to `main`, inspect the **Verify and deploy Centre Court** Actions run, then open the published URL. Never commit `node_modules/` or `dist/`. The package lockfile is committed for reproducible installs.
 
 ## Known limitations
 
-See [docs/LIMITATIONS.md](docs/LIMITATIONS.md). This is the foundation milestone, with deliberately temporary visuals and arcade ball/contact tolerances. Actual iPhone Safari compatibility and sustained device performance remain unverified until the manual checklist is run on hardware. No multiplayer, customization, monetization, tournaments or progression is implemented.
+See [docs/LIMITATIONS.md](docs/LIMITATIONS.md). The existing arcade ball/contact tolerances are preserved. Kira has four supplied clips; the tennis motion is reused for all shot types, with configurable contact synchronization. Actual iPhone Safari compatibility and sustained device performance remain unverified until the manual checklist is run on hardware. No multiplayer, customization, monetization, tournaments or progression is implemented.
+
+## Kira assets and animation
+
+Original uploads are served once from `public/assets/characters/kira/` and `public/assets/equipment/rackets/`. Embedded textures, PBR materials, 44-joint skeleton and character proportions are preserved. `src/render/athlete-config.ts` holds clip mappings, grip transforms, racket scale, contact frame and playback/blend timings. `src/render/kira.ts` loads both GLBs, blends locomotion and swing states, removes horizontal animation root travel, and attaches the racket to `mixamorig:RightHand`. Asset errors keep the temporary player playable.
+
+Gameplay emits read-only contact records at the existing immediate ball launch. Rendering seeks to the custom clip’s contact frame in the same update, then plays follow-through. An 80 ms visual ball offset starts the displayed shot at the strings and decays onto the unchanged simulated trajectory. It does not change timing windows, aim, speed, rules or AI. This is presentation synchronization, not racket-mesh collision or reach IK; see the visual limitations.

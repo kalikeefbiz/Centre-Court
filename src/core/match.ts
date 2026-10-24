@@ -14,7 +14,13 @@ import {
 } from './court';
 import { Score, type MatchLength } from './scoring';
 export type Phase = 'menu' | 'serve' | 'rally' | 'pointOver' | 'paused' | 'result';
+export interface ShotContact {
+  id: number;
+  position: Vec;
+  age: number;
+}
 export interface Athlete {
+  contact: ShotContact | null;
   position: Vec;
   swing: number;
   stroke: string;
@@ -44,6 +50,7 @@ export class Match {
   score = new Score();
   ball = new Ball();
   players: Athlete[] = [0, 1].map((i) => ({
+    contact: null,
     position: vec(0, 0, i === 0 ? 11 : -11),
     swing: 0,
     stroke: 'READY',
@@ -67,6 +74,7 @@ export class Match {
   timing = '';
   feedbackTime = 0;
   pointWinner: Side | null = null;
+  private contactSequence = 0;
   private swingWindow = 0;
   private swingPower = 0.5;
   private swingAim = 0;
@@ -95,6 +103,10 @@ export class Match {
   }
   private prepareServe() {
     this.phase = 'serve';
+    for (const p of this.players) {
+      p.contact = null;
+      p.swing = 0;
+    }
     this.server = this.practice ? 0 : this.score.server;
     this.lastHitter = this.server;
     this.bounces = 0;
@@ -143,6 +155,13 @@ export class Match {
     this.aiThink = 0;
     this.aiWillMiss = this.random.next() < PRESETS[this.difficulty].miss;
   }
+  private recordContact(side: Side) {
+    this.players[side].contact = {
+      id: ++this.contactSequence,
+      position: { ...this.ball.position },
+      age: 0,
+    };
+  }
   private serve(power: number, aim: number) {
     const s = sign(this.server),
       targetSign = (this.score.deuce ? -1 : 1) * s;
@@ -154,6 +173,7 @@ export class Match {
       -s * (4.0 + power * 1.2),
     );
     // A real launch from the held ball at the server's racket, followed by continuous integration.
+    this.recordContact(this.server);
     this.ball.launch(target, 'serve', power);
     this.phase = 'rally';
     this.serveFlight = true;
@@ -260,6 +280,7 @@ export class Match {
             : 7.3 + power * 3.5 + depth * 1.6) +
       this.random.range(-error, error);
     const volley = this.bounces === 0 && shot === 'drive';
+    this.recordContact(side);
     this.ball.launch(vec(targetX, COURT.radius, targetZ), volley ? 'volley' : shot, power);
     this.bounces = 0;
     this.lastHitter = side;
@@ -284,7 +305,10 @@ export class Match {
     if (this.phase === 'menu' || this.phase === 'paused' || this.phase === 'result') return;
     this.timer += this.phase === 'serve' ? dt : 0;
     this.feedbackTime = Math.max(0, this.feedbackTime - dt);
-    for (const p of this.players) p.swing = Math.max(0, p.swing - dt);
+    for (const p of this.players) {
+      p.swing = Math.max(0, p.swing - dt);
+      if (p.contact) p.contact.age += dt;
+    }
     if (this.phase === 'pointOver') {
       this.timer -= dt;
       if (this.timer <= 0) this.prepareServe();

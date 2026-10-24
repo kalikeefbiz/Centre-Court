@@ -133,7 +133,7 @@ scene.app.on('update', (dt: number) => {
     match.tick(step, input.controls);
     input.controls.release = false;
   });
-  scene.render(match, Math.min(dt, 0.1));
+  scene.render(match, Math.min(dt, 0.1), input.charging);
   renderUI();
 });
 $('loading').remove();
@@ -144,6 +144,11 @@ if (new URLSearchParams(location.search).has('debug'))
     value: {
       snapshot: () => ({
         phase: match.phase,
+        kira: scene.kira.snapshot(),
+        contact: match.players[0].contact
+          ? { ...match.players[0].contact, position: { ...match.players[0].contact.position } }
+          : null,
+        renderedBall: scene.ballPresentation(),
         input: { ...input.controls, charging: input.charging, held: input.held },
         ball: { ...match.ball.position },
         velocity: { ...match.ball.velocity },

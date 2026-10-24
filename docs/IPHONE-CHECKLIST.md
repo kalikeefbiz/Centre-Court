@@ -55,3 +55,12 @@ Run in Broadcast and Behind player, in portrait and landscape:
 - Hold both controls, then lift the joystick thumb first: charge must continue. Release Shot to execute.
 - Drag joystick over other controls: it must remain movement input until released.
 - While both are held, switch apps, open Control Center, lock/unlock or rotate the phone; return and resume. No stuck movement, phantom shot or retained charge should occur. New touches must work immediately.
+
+## Kira / GOAL 002
+
+- On a fresh load and a cached reload, confirm the pink character and pink/black racket appear with textures (the temporary opponent should remain).
+- In each camera, watch idle, low joystick movement, full-speed movement, charge, release, return, pause/resume, point reset and match restart. Check for pose snaps, detached racket, foot sliding and texture corruption.
+- Inspect the right-hand grip through the full swing; report any floating, wrong rotation, open fingers or body intersections. The supplied motion has no dedicated serve/backhand/lob variants.
+- Check ball/string contact at serve, forehand, backhand-side reaches, slices, lobs, volleys and low/high or stretched returns. Report any visible snap from the short visual contact correction.
+- Complete and restart a quick match, then play 10 minutes in both orientations. Record device/iOS, loading time, perceived input latency, frame stability, heat, memory reloads and battery behavior.
+- Interrupt while Kira is charging or swinging (Control Center, app switch, lock, incoming call); resume and confirm both animation and input recover without a phantom shot.
