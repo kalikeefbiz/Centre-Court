@@ -22,7 +22,7 @@ Local results: **24 simulation tests passed; 5 browser checks passed, 1 CDP-only
 
 Playwright opens the real PlayCanvas/WebGL app in desktop Chromium and Linux WebKit using the iPhone 13 device profile (390 × 664 CSS pixels). A DPR of 1 keeps software-rendered CI practical; this does not emulate a physical Retina GPU.
 
-Browser checks cover menu actions, Play and Practice, actual serve launch, scoreboard, pause freeze/resume, restart, menu return, camera persistence, one active rendering camera, shot toggles, aim, keyboard/pointer movement, portrait/landscape resize and blur interruption. A Chromium CDP test sends independent **trusted touch pointers** to the joystick and shot button, checks simultaneous movement/charge and releases the shot independently. The corresponding CDP-only test is explicitly skipped in WebKit; WebKit exercises its pointer-event path instead.
+Browser checks run against the built `dist/` app through Vite preview, rather than the development server. They cover menu actions, Play and Practice, actual serve launch, scoreboard, pause freeze/resume, restart, menu return, camera persistence, one active rendering camera, shot toggles, aim, keyboard/pointer movement, portrait/landscape resize and blur interruption. A Chromium CDP test sends independent **trusted touch pointers** to the joystick and shot button, checks simultaneous movement/charge and releases the shot independently. The corresponding CDP-only test is explicitly skipped in WebKit; WebKit exercises its pointer-event path instead.
 
 Screenshots are generated for menu, gameplay and landscape layouts in `test-results/` (ignored by git); failure traces and screenshots are uploaded by CI. An arena draw-call budget is checked in the browser suite. Arena geometry uses static batching and humanoid parts use dynamic batching; shadows avoid shadow-map passes. Pixel ratio is capped at 1.75 on devices.
 
@@ -44,3 +44,9 @@ The GitHub Actions workflow repeats automated verification before deployment. De
 ## Hardware verification remains open
 
 No physical iPhone testing was performed. [IPHONE-CHECKLIST.md](IPHONE-CHECKLIST.md) records the required hardware checks. Sustained frame rate, battery/thermal behavior, actual iOS multi-touch latency, browser chrome and safe areas remain unverified until that checklist is run on named devices.
+
+## GitHub verification and deployment blocker
+
+The [CI run for d00dfc0](https://github.com/kalikeefbiz/Centre-Court/actions/runs/40086254166) passed its complete **verify** job (core tests, strict build and browser suite). The subsequent deployment job failed at Pages activation: `Create Pages site failed: Resource not accessible by integration` (HTTP 403). A direct Pages activation request using the available credential returned the same error. The repository reports `has_pages: false`; a live preview is therefore not claimed.
+
+The remaining account action is to open [repository Settings → Pages](https://github.com/kalikeefbiz/Centre-Court/settings/pages), set the build source to **GitHub Actions**, then rerun the failed deployment job (or the latest workflow). The intended address is https://kalikeefbiz.github.io/Centre-Court/. Source, locked dependencies, a tested production build and the deployment workflow are all ready; no additional game implementation is needed to clear this permission blocker.

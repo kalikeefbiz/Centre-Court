@@ -14,7 +14,7 @@ npm run dev          # Vite development server; opens to the local network
 npm test             # deterministic gameplay tests
 npm run build        # strict TypeScript check and production build in dist/
 npx playwright install --with-deps chromium webkit
-npm run test:browser # desktop Chromium + mobile WebKit browser checks
+npm run test:browser # production browser checks; run build first
 npm run preview      # serve the production build locally
 ```
 
@@ -64,6 +64,8 @@ One-time repository setup (the available integration currently returns HTTP 403 
 ```sh
 gh api --method POST repos/kalikeefbiz/Centre-Court/pages -f build_type=workflow
 ```
+
+If the API returns HTTP 403, open **Settings → Pages → Build and deployment → Source → GitHub Actions** using the repository owner account, then rerun the failed deployment job. The available integration cannot perform this initial activation. No live preview is claimed until activation and deployment succeed.
 
 Subsequent releases: commit and push to `main`, inspect the **Verify and deploy Centre Court** Actions run, then open the published URL. Never commit `node_modules/` or `dist/`. The package lockfile is committed for reproducible installs.
 
