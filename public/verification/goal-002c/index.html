@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" /><meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  /><title>Centre Court — GOAL 002C evidence</title>
+  <style>
+    body {
+      margin: 2rem auto;
+      max-width: 1100px;
+      padding: 0 1rem;
+      background: #10252b;
+      color: #edf4e6;
+      font: 17px/1.5 system-ui;
+    }
+    a {
+      color: #d9f398;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #507477;
+    }
+    figure {
+      margin: 2rem 0;
+    }
+    h1 {
+      font-size: 2rem;
+    }
+    small {
+      color: #b3c4c0;
+    }
+  </style>
+  <h1>GOAL 002C · Gameplay evidence</h1>
+  <p>
+    Actual production game, driven through its input handlers. Pink Valkyrie, the separately
+    attached racket and regulation-scale Royal Rally GLB render in the playable court. Contact
+    images pause immediately after a successful return; the pause overlay is hidden for the capture.
+  </p>
+  <p>
+    <a href="../../">Play Centre Court</a> ·
+    <a href="gameplay-evidence.json">Contact and rendering diagnostics</a> ·
+    <a href="evidence.json">Browser camera verification</a>
+  </p>
+  <figure>
+    <img src="gameplay-broadcast.png" alt="Live game in Broadcast camera" />
+    <figcaption>Broadcast gameplay camera.</figcaption>
+  </figure>
+  <figure>
+    <img src="gameplay-behind.png" alt="Live game behind Pink Valkyrie Kira" />
+    <figcaption>Behind-player gameplay camera.</figcaption>
+  </figure>
+  <figure>
+    <img src="gameplay-forehand.png" alt="Successful forehand return in actual gameplay" />
+    <figcaption>Forehand groundstroke: separate off arm, right-side contact.</figcaption>
+    <img src="gameplay-forehand-detail.png" alt="Unscaled crop of the gameplay forehand" />
+  </figure>
+  <figure>
+    <img src="gameplay-backhand.png" alt="Successful backhand return in actual gameplay" />
+    <figcaption>
+      Two-handed backhand groundstroke: hands together, opposite-side preparation and contact.
+    </figcaption>
+    <img src="gameplay-backhand-detail.png" alt="Unscaled crop of the gameplay backhand" />
+  </figure>
+  <p>
+    The regulation ball is small in the full-court cameras. The following isolated material preview
+    supplements the gameplay evidence above; it is not gameplay evidence itself.
+  </p>
+  <figure>
+    <img
+      src="ball-material-preview.png"
+      alt="Supplemental Royal Rally GLB material preview: red felt, lime crown graphics and curved seams"
+    />
+    <figcaption>
+      Actual optimized Royal Rally GLB, including its original geometry, UVs and PBR maps.
+    </figcaption>
+  </figure>
+  <h2>Animation identification</h2>
+  <p>
+    Rows use source clip indices; the semantic registry records estimated contact frames, durations,
+    loops and confidence.
+    <a href="animation-audit.json">Raw sampled joint positions and clip IDs</a>.
+  </p>
+  <figure>
+    <img src="sheet-0.jpg" alt="Clip inspection contact sheet rows zero through six" />
+  </figure>
+  <figure>
+    <img src="sheet-7.jpg" alt="Clip inspection contact sheet rows seven through twelve" />
+  </figure>
+  <figure>
+    <img src="detail.jpg" alt="Front-view contact-frame detail for all eight hitting animations" />
+  </figure>
+  <p>
+    <small
+      >Physical iPhone testing is still required. Medium-confidence generated slice, lob, volley and
+      shuffle mappings require owner visual review. Some open fingers, foot sliding and
+      stretched-contact gaps remain. No GOAL 003 AI or GOAL 004 stadium work is included.</small
+    >
+  </p>
+</html>

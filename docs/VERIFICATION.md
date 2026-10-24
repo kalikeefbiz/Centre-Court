@@ -1,78 +1,48 @@
-# Verification record
+# GOAL 002C verification
 
-Current milestone: GOAL 001B + 002. See the GOAL 001B and GOAL 002 sections below for this run; the original foundation record is retained for history.
+Date: 2026-10-24 UTC. Physical iPhone acceptance is **not run**. GOAL 003 AI and GOAL 004 stadium production are outside this release.
 
-Verification date: **2026-10-24 (UTC)**. Repository: `kalikeefbiz/Centre-Court`.
+## Automated checks
 
-Local results: **24 simulation tests passed; 5 browser checks passed, 1 CDP-only WebKit case explicitly skipped; production build passed; production dependency audit found zero vulnerabilities.**
+- `npm test`: **45 passed** across scoring/physics/match lifecycle, source asset integrity, contextual strokes, contact zones, animation registry, scale and input ownership. The complete human-win and no-return loss regressions remain enabled; the human driver now positions beside and behind its predicted contact point for the calibrated reach.
+- `npm run build`: passed strict TypeScript and Vite production compilation. The existing large engine-bundle warning remains (about 536 KB gzip).
+- Local iPhone-profile WebKit: **9 passed, 3 Chromium-only CDP cases skipped**. The dedicated trusted two-pointer Chromium regression also passed after fixing its layout wait. Local Chromium subsystem checks passed; interrupted local full runs are not counted as full passes.
+- The complete **24-case browser matrix** (12 desktop Chromium, 12 mobile WebKit, with 3 expected WebKit skips) runs against the production build in [GitHub Actions](https://github.com/kalikeefbiz/Centre-Court/actions/workflows/pages.yml). The workflow must pass before Pages deployment. Use the run for the delivered commit as the full-suite/deployment result.
 
-## Automated simulation coverage
+Coverage includes each missing-asset failure/retry, delayed loading without a human substitute, textured Kira/racket/ball rendering, stationary serve preparation, contact events, pause/restart, in-place hips, lateral shuffle/run transitions, independent trusted movement/charge/release, drag aim/depth in both cameras, selector input without synthesized-click duplication, cancellation and interruptions, regulation ball scale, faults/lets/in-out, scoring and complete matches.
 
-`npm test` runs the production core modules, not a parallel implementation of the rules. The suite covers:
+## Actual gameplay evidence
 
-- Love/15/30/40, deuce, advantage, win-by-two games, quick sets, standard best-of-three sets and match finality.
-- Service-side alternation, service-game rotation, 6–6 and 2–2 tiebreak entry, one-then-two tiebreak serve rotation, two-point margin and next-set service.
-- All four diagonal serve boxes, wrong-side/deep faults, regulation singles boundaries and touching-line calls.
-- Targeted ballistic landing, swept net collision, distinct shot arcs, bounce restitution and independent trajectory prediction.
-- Start, serve, rally, point resolution, first fault, double fault, net-cord let, double bounce, out, practice, result and restart.
-- Pause freezes the exact ball state; resume advances it. Equal seeded simulation outcomes at 30, 60 and 144 Hz.
-- Contextual AI lob/volley selection, legal interception targets, difficulty limits and measured per-step AI speed bounds.
-- Camera switching, smooth tracking, preference persistence and denied-storage recovery.
-- A complete AI win without player returns and a complete human-side win using only movement/release commands. The human-side driver must make more than ten returns and sustain at least a four-contact rally.
+[Gallery](https://kalikeefbiz.github.io/Centre-Court/verification/goal-002c/) and [`gameplay-evidence.json`](../public/verification/goal-002c/gameplay-evidence.json).
 
-## Browser coverage
+`node tools/gameplay-evidence.mjs` drives the shipped keyboard/pointer input handlers in the production preview. It never writes match state, ball positions or animation states. It serves, moves into incoming returns, releases HIT, and pauses immediately after successful forehand/backhand contacts. The scene, physics, scoring and both cameras are the playable game. Pause overlays are hidden only for screenshots. The crops are unscaled crops of those same gameplay pixels.
 
-Playwright opens the real PlayCanvas/WebGL app in desktop Chromium and Linux WebKit using the iPhone 13 device profile (390 × 664 CSS pixels). A DPR of 1 keeps software-rendered CI practical; this does not emulate a physical Retina GPU.
+The captured working-tree build identifies its base code commit in the JSON; final CI camera screenshots identify the delivered commit. The release and exact deployed commit are published in `release.json`.
 
-Browser checks run against the built `dist/` app through Vite preview, rather than the development server. They cover menu actions, Play and Practice, actual serve launch, scoreboard, pause freeze/resume, restart, menu return, camera persistence, one active rendering camera, shot toggles, aim, keyboard/pointer movement, portrait/landscape resize and blur interruption. A Chromium CDP test sends independent **trusted touch pointers** to the joystick and shot button, checks simultaneous movement/charge and releases the shot independently. The corresponding CDP-only test is explicitly skipped in WebKit; WebKit exercises its pointer-event path instead.
+- `gameplay-broadcast.png`, `gameplay-behind.png`: actual gameplay cameras with Pink Valkyrie, separate racket and Royal Rally GLB.
+- `gameplay-forehand.png` / `-detail.png`: successful forehand, source contact frame 28, contact error before visual correction about **0.088 m**.
+- `gameplay-backhand.png` / `-detail.png`: successful distinct two-handed backhand, source contact frame 30; stretched contact error about **0.303 m** before the capped 0.18 m presentation correction. A remaining gap on stretched contacts is a documented limitation.
+- CI also writes Chromium/WebKit full-court and detail screenshots plus rendering diagnostics to `dist/verification/goal-002c/` for publication.
+- `ball-material-preview.png` is an isolated **supplementary material inspection**, not a replacement for gameplay evidence. It shows the actual optimized red-felt/crown/seam GLB in detail because regulation-scale balls occupy few pixels in the gameplay cameras.
 
-Screenshots are generated for menu, gameplay and landscape layouts in `test-results/` (ignored by git); failure traces and screenshots are uploaded by CI. An arena draw-call budget is checked in the browser suite. Arena geometry uses static batching and humanoid parts use dynamic batching; shadows avoid shadow-map passes. Pixel ratio is capped at 1.75 on devices.
+## Assets, animation and physical calibration
 
-The minimal cloud executor does not allow system package installation. Local WebKit OS libraries were downloaded from Debian and extracted outside the repository into a browser-only library directory. Playwright's ldconfig-based host preflight was skipped for this local run because it cannot see those extracted libraries; the browser itself still loads and executes. GitHub CI uses the regular `playwright install --with-deps` procedure without this workaround.
+Exact source paths:
 
-## Release checks
+- `assets/characters/kira/Meshy_AI_Pink_Valkyrie_All_Animations.glb`
+- `assets/balls/royal-rally/Meshy_AI_Royal_Rally_1024220842_texture.glb`
+- Existing separate racket: `public/assets/equipment/rackets/Meshy_AI_Pink_and_Black_Tennis_1024095819_texture.glb`
 
-```sh
-npm test
-npm run build
-npm run test:browser
-npm audit --omit=dev
-```
+Runtime derivatives retain these filenames under `public/assets/`. Pink Rebel remains available for rollback. [Optimization report](asset-optimization.json) records source/runtime SHA-256, bytes and texture dimensions. Tests compare every nonimage buffer and material definition with the source, preserving geometry, UVs, skeleton, clips and approved design. Character textures: 2048→1024 px; ball textures: 2048→512 px. Ball runtime: **246,488 bytes**, 2,058 triangles. No flat sprite or substitute model is used.
 
-The build includes strict TypeScript validation. Font and engine assets are bundled locally with license notices. Vite reports the expected large-engine-chunk warning (about 0.53 MB gzip); no asset CDN is required at runtime.
+The singles court is 8.23×23.77 m, confirming metre units. Valkyrie remains native 1.70 m mesh height. Royal Rally diameter is **0.067 m**, derived from its measured source diameter 0.952636 m; its separate collision sphere radius is 0.0335 m. Court paint and floor physics meet at Y=0. Its ground shadow is scaled and lowered accordingly. Ball launch, restitution, swept net collision, faults, lets and boundary rules retain the established implementation with the regulation radius.
 
-The GitHub Actions workflow repeats automated verification before deployment. Deployment status and the final commit are recorded in the delivery response; a configured URL by itself is not evidence of a live deployment.
+[Animation identification](GOAL-002C-ANIMATIONS.md) records exact clip identifiers, estimated 30 fps contact frames, durations, loop settings, confidence and visual contact sheets. No interface-order mapping is used. Idle/walk/run/shuffles loop; hits do not. Forehand/backhand and compact volleys use incoming side and bounce context; descending overheads consider height and court position. Slice/lob require explicit intent. Serve is dedicated.
 
-## Hardware verification remains open
+Gameplay retains a configurable 250 ms release window. Contact events record ball and athlete positions at the same simulation tick. Presentation samples that contact pose once, applies bounded arm correction without changing gameplay position, then follows through. The first visible ball sample uses the recorded contact point plus at most 0.18 m string-bed correction and converges onto current physics over 65 ms. Normal ground reach is 1.25 m; balls below 0.65 m require a closer 0.65 m reach. The AI retains its original reach/tactics/presets.
 
-No physical iPhone testing was performed. [IPHONE-CHECKLIST.md](IPHONE-CHECKLIST.md) records the required hardware checks. Sustained frame rate, battery/thermal behavior, actual iOS multi-touch latency, browser chrome and safe areas remain unverified until that checklist is run on named devices.
+## Mobile interaction and remaining acceptance
 
-## Historical GitHub deployment blocker (subsequently resolved)
+Left thumb continuously moves. Right thumb taps HIT for quick power (0.45), holds up to 1.2 s for capped charge (1.0), drags left/right for direction and up/down for depth, then releases to execute. One STANDARD ↻ button cycles standard/slice/lob. It acts on pointerdown and ignores synthesized click duplicates. Forehand/backhand are contextual. There is no double-tap power shot. Desktop movement, Space/mouse charge/release, J/L aim, I/K depth and 1/2/3 intent remain supported.
 
-The [CI run for d00dfc0](https://github.com/kalikeefbiz/Centre-Court/actions/runs/40086254166) passed its complete **verify** job (core tests, strict build and browser suite). The subsequent deployment job failed at Pages activation: `Create Pages site failed: Resource not accessible by integration` (HTTP 403). A direct Pages activation request using the available credential returned the same error. The repository reports `has_pages: false`; a live preview is therefore not claimed.
-
-The account action at that time was to open [repository Settings → Pages](https://github.com/kalikeefbiz/Centre-Court/settings/pages), set the build source to **GitHub Actions**, then rerun the failed deployment job (or the latest workflow). The intended address is https://kalikeefbiz.github.io/Centre-Court/. During GOAL 002, the Pages API confirmed `build_type: workflow`; the owner had cleared this activation blocker.
-
-## GOAL 001B — independent mobile pointers
-
-Shot type and aim now activate on `pointerdown`, including secondary touches while the joystick owns the primary touch. Keyboard/assistive clicks remain supported without double-toggling synthesized pointer clicks. Charge release/cancellation checks its owning pointer (or keyboard); unrelated pointer cancellation cannot clear it. Joystick and shot captures remain independent across control boundaries. Blur, page hide and visibility loss clear held input without firing a shot.
-
-Regression coverage adds trusted Chromium multitouch selection/aim/charge while moving in both cameras, both release orders, captured boundary crossing, unrelated/owned cancellation, capture loss and blur/resume. WebKit covers the pointer-event cancellation path; CDP-only cases are explicitly skipped there. The simulation and camera systems are unchanged from the tested foundation.
-
-GOAL 001B gate: **24/24 simulation tests, production build, and 9/9 applicable browser checks passed** (3 Chromium-CDP-only checks skipped on WebKit). The cancellation assertion was rerun on both engines after changing it to wait for the next sampled input frame. Browser libraries were extracted outside the repository as described above. No physical iPhone validation was performed in this run.
-
-## GOAL 002 verification scope
-
-The actual supplied GLBs are shipped unchanged and are parsed by the asset tests and loaded by PlayCanvas in browser tests. The character has four clips and 44 joints; six embedded 2048×2048 texture maps are loaded once across the two containers. Source content uses approximately 128 MiB of uncompressed RGBA texture storage with mipmaps (driver format can vary); no second character texture set is cloned. The browser suite waits for asset readiness before timing input checks. Software-rendered local checks allow longer loading/expectation timeouts than the original primitive-only scene.
-
-See [KIRA-INTEGRATION.md](KIRA-INTEGRATION.md) for calibration and visual limits. Existing full-match human-win/AI-win, scoring, restart and deterministic camera/core checks remain enabled. Physical iPhone timing, GPU memory and thermal behavior remain open.
-
-GOAL 002 final local gate: **34/34 unit tests passed** (24 original gameplay tests, 5 GLB/contact tests, 5 input ownership tests), **15/15 applicable browser checks passed** with 3 CDP-only WebKit skips, strict TypeScript/production build passed, and `npm audit --omit=dev` reported **0 vulnerabilities**. The full production browser run completed in 4.5 minutes on the software-rendered cloud executor. Both actual assets loaded and animated in Chromium and WebKit; each missing-asset path retained playable fallback controls. Close-up pose inspection covered ready, walking, running, backswing, contact and follow-through. The additional input tests caught and guard charge release while gameplay is disabled between points.
-
-## GOAL 002 release-blocking rendering hotfix
-
-The prior acceptance gate permitted a silent temporary-human fallback and did not prevent matches from starting before Kira was ready. It was insufficient; the owner's physical iPhone rejection supersedes the earlier GOAL 002 acceptance claim. See [the root-cause investigation](KIRA-HOTFIX.md).
-
-Hotfix local results: **34 unit tests passed**, production build passed, and **19 applicable browser checks passed** with 3 CDP-only WebKit skips. The full run passed 18 cases; the Chromium animation-pose capture was rerun successfully after waiting for the pause panel to finish hiding before sending the next charge key. Both engines verify error/retry, slow loading, both modes, textured visible skin, attached racket and the absence of a temporary human. Existing scoring/full-match, AI, camera and multitouch checks remain enabled.
-
-Actual production-build screenshots were manually viewed: Kira's pink hair, white top, pink skirt/boots and separate racket are visible in a started match in Broadcast and Behind player cameras. Idle, walk, run and custom tennis poses were also inspected. Production evidence is generated into the Pages artifact at `verification/kira-hotfix/`; it is not a separately staged model. Post-deployment verification must compare `release.json` with the pushed commit, check the unchanged GLB hashes, and visually inspect the live game again. No physical iPhone retest was performed by this environment.
+Owner checks remain in [IPHONE-CHECKLIST.md](IPHONE-CHECKLIST.md): real Safari multitouch feel, release/cancel/interrupt behavior, orientation and browser chrome, ball readability in both cameras, grip and generated-motion review, full matches, cached/fresh deployment loading, and ten-minute heat/memory/frame pacing. Medium-confidence generated motions, open fingers, foot sliding and stretched-contact gaps are recorded in [LIMITATIONS.md](LIMITATIONS.md).
