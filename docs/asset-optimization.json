@@ -1,0 +1,80 @@
+[
+  {
+    "file": "characters/kira/Meshy_AI_Pink_Valkyrie_All_Animations.glb",
+    "sourceBytes": 18390920,
+    "runtimeBytes": 11837468,
+    "sourceSHA256": "0a5ee81d94c98607cabc79b447e5e2a89c12e130630045191db23b268eece024",
+    "runtimeSHA256": "ce2272d87a84bb08be0a765ae35354fac1e505a854b0807ed5cc8323b67a237f",
+    "textures": [
+      {
+        "from": [
+          2048,
+          2048
+        ],
+        "to": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "from": [
+          2048,
+          2048
+        ],
+        "to": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "from": [
+          2048,
+          2048
+        ],
+        "to": [
+          1024,
+          1024
+        ]
+      }
+    ]
+  },
+  {
+    "file": "balls/royal-rally/Meshy_AI_Royal_Rally_1024220842_texture.glb",
+    "sourceBytes": 7668504,
+    "runtimeBytes": 246488,
+    "sourceSHA256": "39c45fd5f4833ad352ea24feec6897400e5de0ffa87cb88c6e657b5fd3e89ea6",
+    "runtimeSHA256": "fa9ea581cbfece0773ef655f12e5dad8486ec15aa8e2c5bd82eea3d3a93093fb",
+    "textures": [
+      {
+        "from": [
+          2048,
+          2048
+        ],
+        "to": [
+          512,
+          512
+        ]
+      },
+      {
+        "from": [
+          2048,
+          2048
+        ],
+        "to": [
+          512,
+          512
+        ]
+      },
+      {
+        "from": [
+          2048,
+          2048
+        ],
+        "to": [
+          512,
+          512
+        ]
+      }
+    ]
+  }
+]
