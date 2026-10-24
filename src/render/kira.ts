@@ -2,12 +2,22 @@ import * as pc from 'playcanvas';
 import type { Match } from '../core/match';
 import { KIRA, locomotionState, type AthleteState } from './athlete-config';
 
-function load(app: pc.Application, url: string): Promise<pc.ContainerResource> {
+function load(app: pc.Application, path: string): Promise<pc.ContainerResource> {
   return new Promise((resolve, reject) => {
-    app.assets.loadFromUrl(import.meta.env.BASE_URL + url, 'container', (error, asset) => {
-      if (error || !asset?.resource) reject(error ?? new Error(`Missing container: ${url}`));
-      else resolve(asset.resource as pc.ContainerResource);
-    });
+    const url = new URL(import.meta.env.BASE_URL + path, document.baseURI);
+    url.searchParams.set('v', __KIRA_ASSET_REVISION__);
+    const timeout = window.setTimeout(() => reject(new Error(`Timed out loading ${path}`)), 30000);
+    app.assets.loadFromUrlAndFilename(
+      url.href,
+      path.split('/').pop()!,
+      'container',
+      (error, asset) => {
+        window.clearTimeout(timeout);
+        if (error || !asset?.resource)
+          reject(new Error(`${path}: ${String(error ?? 'empty asset')}`));
+        else resolve(asset.resource as pc.ContainerResource);
+      },
+    );
   });
 }
 
@@ -35,22 +45,21 @@ export class Kira {
   private swingTime = 0;
   private contactOffset = new pc.Vec3();
   private contactAge = 1;
-  status: 'loading' | 'ready' | 'fallback' = 'loading';
+  status: 'loading' | 'ready' | 'error' = 'loading';
+  private bodyMeshes: pc.MeshInstance[] = [];
+  private racketMeshes: pc.MeshInstance[] = [];
   error = '';
   readonly ready: Promise<void>;
   private resources: pc.ContainerResource[] = [];
-  constructor(
-    private app: pc.Application,
-    private fallback: pc.Entity,
-  ) {
+  constructor(private app: pc.Application) {
     app.root.addChild(this.root);
+    this.root.setPosition(0, 0, 11);
     this.root.setEulerAngles(0, 180, 0);
     this.ready = this.initialize().catch((error: unknown) => {
-      this.status = 'fallback';
+      this.status = 'error';
       this.error = String(error);
       this.root.enabled = false;
-      this.fallback.enabled = true;
-      console.warn('Kira assets unavailable; keeping the playable athlete.', error);
+      console.error('Kira could not be rendered. Match start is blocked.', error);
     });
   }
   private async initialize() {
@@ -89,8 +98,38 @@ export class Kira {
     this.model.anim!.update(0);
     this.clearWrist(0);
     this.inPlace();
-    this.fallback.enabled = false;
-    this.status = 'ready';
+    this.bodyMeshes = this.meshes(this.model).filter((m) => !this.meshes(this.racket).includes(m));
+    this.racketMeshes = this.meshes(this.racket);
+    if (
+      !this.bodyMeshes.some((m) => m.skinInstance && (m.material as pc.StandardMaterial).diffuseMap)
+    )
+      throw new Error('Kira has no textured skinned mesh');
+    if (!this.racketMeshes.length) throw new Error('Kira has no racket mesh');
+    // A parsed container is not a rendered athlete. Gate play on a real camera
+    // render of both meshes; no temporary human exists during loading or failure.
+    await new Promise<void>((resolve, reject) => {
+      const check = () => {
+        if (
+          !this.bodyMeshes.some((m) => m.visibleThisFrame) ||
+          !this.racketMeshes.some((m) => m.visibleThisFrame)
+        )
+          return;
+        window.clearTimeout(timeout);
+        this.app.off('postrender', check);
+        this.status = 'ready';
+        resolve();
+      };
+      const timeout = window.setTimeout(() => {
+        this.app.off('postrender', check);
+        reject(new Error('Kira loaded but did not reach the rendering camera'));
+      }, 15000);
+      this.app.on('postrender', check);
+    });
+  }
+  private meshes(entity: pc.Entity) {
+    return (entity.findComponents('render') as pc.RenderComponent[]).flatMap(
+      (r) => r.meshInstances,
+    );
   }
   private get layer() {
     return this.model.anim!.baseLayer!;
@@ -190,9 +229,20 @@ export class Kira {
     return this.contactOffset.clone().mulScalar(t * t);
   }
   snapshot() {
-    if (this.status !== 'ready') return { status: this.status, error: this.error };
+    const visibility = {
+      rootEnabled: this.root.enabled,
+      bodyMeshCount: this.bodyMeshes.length,
+      bodyVisible: this.bodyMeshes.some((m) => m.visibleThisFrame),
+      racketVisible: this.racketMeshes.some((m) => m.visibleThisFrame),
+      texturedSkin: this.bodyMeshes.some(
+        (m) => !!m.skinInstance && !!(m.material as pc.StandardMaterial).diffuseMap,
+      ),
+      scale: this.root.getLocalScale().toArray(),
+    };
+    if (this.status !== 'ready') return { status: this.status, error: this.error, ...visibility };
     return {
       status: this.status,
+      ...visibility,
       state: this.state,
       time: this.layer.activeStateCurrentTime,
       transitioning: this.layer.transitioning,

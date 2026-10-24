@@ -11,6 +11,7 @@ export class Scene {
   rig: CameraRig;
   kira: Kira;
   private ball: pc.Entity;
+  private playerShadow: pc.Entity;
   private ballShadow: pc.Entity;
   private landing: pc.Entity;
   private athletes: { root: pc.Entity; arm: pc.Entity; legs: pc.Entity[]; shadow: pc.Entity }[] =
@@ -66,11 +67,11 @@ export class Scene {
     sun.setEulerAngles(48, -30, 0);
     this.app.root.addChild(sun);
     this.buildArena();
-    this.athletes = [
-      this.buildAthlete('#e9f4ed', '#f07845'),
-      this.buildAthlete('#f17b4c', '#1c363d'),
-    ];
-    this.kira = new Kira(this.app, this.athletes[0].root);
+    // Only the AI uses a temporary model. Never create a placeholder human.
+    this.athletes = [this.buildAthlete('#f17b4c', '#1c363d')];
+    this.athletes[0].root.enabled = false;
+    this.playerShadow = this.shadow('Kira ground shadow', 1.05);
+    this.kira = new Kira(this.app);
     this.ball = this.shape('sphere', 'Ball', '#e4ff67', [0, 2, 0], [0.34, 0.34, 0.34], false, true);
     this.ballShadow = this.shadow('Ball ground shadow', 0.5);
     this.landing = this.ring('Predicted first bounce', '#d5ef95', 0.34, 0.018);
@@ -214,7 +215,7 @@ export class Scene {
     }
   }
   private buildAthlete(shirt: string, shorts: string) {
-    const root = new pc.Entity('Temporary humanoid athlete');
+    const root = new pc.Entity('AI opponent');
     this.app.root.addChild(root);
     this.shape('sphere', 'Torso', shirt, [0, 1.04, 0], [0.58, 0.69, 0.33], false, false, root);
     this.shape('box', 'Shorts', shorts, [0, 0.67, 0], [0.47, 0.3, 0.34], false, false, root);
@@ -298,6 +299,18 @@ export class Scene {
     }
     return { root, arm, legs, shadow: this.shadow('Athlete shadow', 1.05) };
   }
+  playerPresentation() {
+    const p = this.kira.root.getPosition();
+    const screen = this.camera.camera!.worldToScreen(new pc.Vec3(p.x, p.y + 0.9, p.z));
+    return {
+      screen: { x: screen.x, y: screen.y },
+      cameraPosition: this.camera.getPosition().toArray(),
+      human: 'Kira',
+      temporaryHumanCount: this.app.root.find((n) => n.name === 'Temporary humanoid athlete')
+        .length,
+      opponentCount: this.athletes.length,
+    };
+  }
   ballPresentation() {
     return this.ball.getPosition().toArray();
   }
@@ -310,10 +323,10 @@ export class Scene {
     const p = match.ball.position;
     if (menu) {
       const t = 1 - Math.exp(-dt * 3);
-      this.rig.position.x += (-5 - this.rig.position.x) * t;
-      this.rig.position.y += (27 - this.rig.position.y) * t;
-      this.rig.position.z += (30 - this.rig.position.z) * t;
-      this.rig.target = { x: innerWidth > 700 ? -5 : 0, y: 0, z: 0 };
+      this.rig.position.x += (4.4 - this.rig.position.x) * t;
+      this.rig.position.y += (2.8 - this.rig.position.y) * t;
+      this.rig.position.z += (17.8 - this.rig.position.z) * t;
+      this.rig.target = { x: -1.1, y: 0.9, z: 11 };
     } else this.rig.update(dt, match.players[0].position, p, innerWidth / innerHeight);
     const c = this.rig;
     this.camera.setPosition(c.position.x, c.position.y, c.position.z);
@@ -324,11 +337,15 @@ export class Scene {
     this.ballShadow.setPosition(p.x, 0.065, p.z);
     this.ballShadow.setLocalScale(0.42 + p.y * 0.035, 0.018, 0.42 + p.y * 0.035);
     this.ballShadow.enabled = !menu;
+    this.playerShadow.setPosition(match.players[0].position.x, 0.06, match.players[0].position.z);
+    this.playerShadow.enabled = this.kira.status === 'ready';
     this.athletes.forEach((a, i) => {
-      const athlete = match.players[i],
+      a.root.enabled = !menu;
+      a.shadow.enabled = !menu;
+      const athlete = match.players[i + 1],
         pos = athlete.position;
       a.root.setPosition(pos.x, 0, pos.z);
-      a.root.setEulerAngles(0, i === 0 ? 180 : 0, 0);
+      a.root.setEulerAngles(0, 0, 0);
       a.shadow.setPosition(pos.x, 0.06, pos.z);
       a.legs.forEach((leg, j) =>
         leg.setLocalEulerAngles(Math.sin(athlete.distance * 4 + j * Math.PI) * 24, 0, 0),

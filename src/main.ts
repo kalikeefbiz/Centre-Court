@@ -41,6 +41,7 @@ const updateCamera = () => {
 };
 updateCamera();
 const start = (practice: boolean) => {
+  if (scene.kira.status !== 'ready') return;
   $('help').hidden = true;
   input.clear();
   clock.reset();
@@ -57,6 +58,7 @@ const menu = () => {
   input.clear();
   input.enabled = false;
 };
+$('asset-retry').onclick = () => location.reload();
 $('play').onclick = () => start(false);
 $('practice').onclick = () => start(true);
 $('pause-button').onclick = togglePause;
@@ -90,6 +92,17 @@ window.addEventListener('blur', interrupt);
 window.addEventListener('pagehide', interrupt);
 $('court').addEventListener('webglcontextlost', interrupt);
 const renderUI = () => {
+  const ready = scene.kira.status === 'ready';
+  $<HTMLButtonElement>('play').disabled = !ready;
+  $<HTMLButtonElement>('practice').disabled = !ready;
+  $('athlete-status').hidden = ready;
+  $('asset-retry').hidden = scene.kira.status !== 'error';
+  setText(
+    'athlete-status',
+    scene.kira.status === 'error'
+      ? 'Kira could not load. Check your connection and retry.'
+      : 'Loading Kira and her racket…',
+  );
   $('menu').hidden = match.phase !== 'menu';
   $('menu-note').hidden = match.phase !== 'menu';
   $('footer').hidden = match.phase !== 'menu';
@@ -143,6 +156,9 @@ if (new URLSearchParams(location.search).has('debug'))
   Object.defineProperty(window, 'centreCourt', {
     value: {
       snapshot: () => ({
+        build: __BUILD_ID__,
+        release: 'KIRA-002.1',
+        presentation: scene.playerPresentation(),
         phase: match.phase,
         kira: scene.kira.snapshot(),
         contact: match.players[0].contact

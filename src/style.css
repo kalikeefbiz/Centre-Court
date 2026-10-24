@@ -1036,3 +1036,13 @@ h1 em {
     line-height: 1.6;
   }
 }
+
+#athlete-status {
+  color: #e9c9a0;
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 0 0 12px;
+}
+#asset-retry {
+  margin: 0 0 10px;
+}

@@ -28,11 +28,9 @@
         </div>
       </header>
       <section id="menu" class="panel menu-panel">
-        <div class="eyebrow"><span class="tiny-line"></span> BLACKHOUSE SPORTS · GOAL 001</div>
+        <div class="eyebrow"><span class="tiny-line"></span> BLACKHOUSE SPORTS · PLAY AS KIRA</div>
         <h1>OWN<br />THE <em>COURT.</em></h1>
-        <p class="intro">
-          Every point is yours to earn.<br />Step into a singles match built for the next rally.
-        </p>
+        <p class="intro">Every point is yours to earn.<br />Kira is ready for the next rally.</p>
         <div class="options">
           <label
             >OPPONENT<select id="difficulty">
@@ -47,16 +45,18 @@
             </select></label
           >
         </div>
-        <button id="play" class="primary">PLAY MATCH <span>↗</span></button
-        ><button id="practice" class="secondary">PRACTICE MODE <span>→</span></button>
+        <p id="athlete-status" role="status" aria-live="polite">Loading Kira and her racket…</p>
+        <button id="asset-retry" class="secondary" hidden>RETRY LOADING KIRA</button>
+        <button id="play" class="primary" disabled>PLAY MATCH <span>↗</span></button
+        ><button id="practice" class="secondary" disabled>PRACTICE MODE <span>→</span></button>
         <div class="menu-foot">
           <span>01 / SINGLES</span><button id="help-button">HOW TO PLAY ↗</button>
         </div>
       </section>
       <div id="menu-note">
         <span class="court-badge">HARD COURT</span>
-        <p>THE FOUNDATION SERIES</p>
-        <small>Temporary athletes. Real competition.</small>
+        <p>KIRA TAKES THE COURT</p>
+        <small>Pink rebel. Real competition.</small>
       </div>
       <section id="hud" hidden>
         <div class="scoreboard">
@@ -65,7 +65,7 @@
             ><span>SETS&nbsp; GAMES&nbsp; PTS</span>
           </div>
           <div class="score-row you">
-            <span><i id="serve-you" class="serve-dot"></i> YOU</span>
+            <span><i id="serve-you" class="serve-dot"></i> KIRA · YOU</span>
             <div>
               <b id="sets-you">0</b><b id="games-you">0</b><strong id="points-you">0</strong>
             </div>
@@ -155,7 +155,7 @@
         </div>
       </section>
       <footer id="footer">
-        <span>BLACKHOUSE®</span><span>BUILT FOR THE GAME.</span><span>FOUNDATION v0.1</span>
+        <span>BLACKHOUSE®</span><span>BUILT FOR THE GAME.</span><span>KIRA v0.2.1</span>
       </footer>
     </div>
     <div id="loading">CENTRE COURT<span>PREPARING YOUR COURT…</span></div>

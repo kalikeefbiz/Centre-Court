@@ -11,3 +11,5 @@
 - Original character/racket GLBs add 14.5 MB with six embedded texture maps, loaded once without cloning. The bundled PlayCanvas runtime is roughly 0.53 MB gzipped plus app code and fonts. There is no offline service worker. WebGL support is required.
 - Slow frames are capped at 100 ms of catch-up, so severe sustained overload slows simulation rather than allowing large physics jumps. Determinism is for identical seed/commands on this implementation, not a network lockstep guarantee across arbitrary engines or future releases.
 - AI uses the same collision/contact constraints as the player, but trajectory prediction knows current ball velocity. Reaction is delayed, movement is speed limited, and seeded shot error/missed returns prevent perfect play. Difficulty and game feel will benefit from user playtesting.
+
+- Kira is required for human play. A slow/failed asset load now keeps Play and Practice disabled and offers a retry; it never silently substitutes the temporary athlete. A physical iPhone retest of the hotfix remains necessary.

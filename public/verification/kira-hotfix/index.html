@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Kira — production visual verification</title>
+    <style>
+      body {
+        font: 16px/1.5 system-ui;
+        background: #101e23;
+        color: #edf3e9;
+        max-width: 1100px;
+        margin: 32px auto;
+        padding: 0 20px;
+      }
+      a {
+        color: #f5ac83;
+      }
+      img {
+        max-width: 100%;
+        height: auto;
+        border: 1px solid #52656a;
+      }
+      figure {
+        margin: 24px 0;
+      }
+      figcaption {
+        margin: 8px 0;
+        color: #b8c9c8;
+      }
+      .details {
+        display: flex;
+        gap: 24px;
+        flex-wrap: wrap;
+      }
+      .details img {
+        width: 300px;
+        image-rendering: pixelated;
+      }
+      h1 {
+        font-size: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../../">Play Centre Court</a>
+    <h1>Kira — production visual verification</h1>
+    <p>
+      These screenshots come from the real production build, after starting a singles match. Camera
+      and character transforms are the shipped gameplay transforms. Detail images are screen crops,
+      with no replacement render or model edits.
+    </p>
+    <p>
+      <a href="evidence.json">Build identity and render audit</a> ·
+      <a href="webkit-broadcast.png">WebKit broadcast</a> ·
+      <a href="webkit-behind.png">WebKit behind player</a>
+    </p>
+    <figure>
+      <img src="chromium-menu.png" alt="Kira featured on the main menu" />
+      <figcaption>Menu — the original textured Kira GLB and her separate racket.</figcaption>
+    </figure>
+    <figure>
+      <img src="chromium-broadcast.png" alt="Kira playing a singles match in Broadcast camera" />
+      <figcaption>Broadcast — Kira at the near baseline; temporary AI at the far end.</figcaption>
+    </figure>
+    <figure>
+      <img src="chromium-behind.png" alt="Kira playing in Behind player camera" />
+      <figcaption>Behind player — the same playable Kira entity.</figcaption>
+    </figure>
+    <div class="details">
+      <figure>
+        <img src="chromium-broadcast-detail.png" alt="Crop of Kira in the Broadcast frame" />
+        <figcaption>Broadcast crop</figcaption>
+      </figure>
+      <figure>
+        <img src="chromium-behind-detail.png" alt="Crop of Kira in the Behind player frame" />
+        <figcaption>Behind player crop</figcaption>
+      </figure>
+    </div>
+    <h2>Visible animation samples</h2>
+    <p>
+      Samples from real gameplay, paused to inspect the pose. Only the pause panel is hidden in
+      these crops.
+    </p>
+    <div class="details">
+      <figure>
+        <img src="chromium-idle.png" alt="Kira idle pose" />
+        <figcaption>Idle</figcaption>
+      </figure>
+      <figure>
+        <img src="chromium-walk.png" alt="Kira walking" />
+        <figcaption>Walking</figcaption>
+      </figure>
+      <figure>
+        <img src="chromium-run.png" alt="Kira running" />
+        <figcaption>Running</figcaption>
+      </figure>
+      <figure>
+        <img src="chromium-swing.png" alt="Kira custom tennis animation" />
+        <figcaption>Tennis backswing</figcaption>
+      </figure>
+    </div>
+    <p>
+      Original uploads: pink hair, white top, pink skirt, boots and pink/black racket. The old
+      temporary human is never created. Loading errors block Play and Practice and show a retry
+      action.
+    </p>
+  </body>
+</html>
