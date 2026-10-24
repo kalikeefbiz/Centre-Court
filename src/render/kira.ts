@@ -164,7 +164,7 @@ export class Kira {
   }
   private alignContact(target: pc.Vec3, weight = 1) {
     // Bounded arm-only CCD: keep gameplay feet fixed and preserve the source stroke.
-    // Each joint can adjust at most 25 degrees from its evaluated source pose.
+    // Each joint can adjust at most 35 degrees from its evaluated source pose.
     for (const name of ['mixamorig:RightForeArm', 'mixamorig:RightArm']) {
       const joint = this.model.findByName(name)!;
       const origin = joint.getPosition();
@@ -178,7 +178,7 @@ export class Kira {
       const bounded = new pc.Quat().slerp(
         pc.Quat.IDENTITY,
         delta,
-        Math.min(1, 0.4363 / angle) * weight,
+        Math.min(1, 0.6109 / angle) * weight,
       );
       joint.setRotation(bounded.mul(joint.getRotation().clone()));
     }
