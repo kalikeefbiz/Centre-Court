@@ -30,6 +30,10 @@ for (const [version, url] of [
     }
     await page.locator('#dev-record').click();
     await page.locator('#dev-close').click();
+    // Closing the accessible panel focuses its toggle. Return keyboard focus to gameplay.
+    await page.evaluate(
+      () => document.activeElement instanceof HTMLElement && document.activeElement.blur(),
+    );
     await page.keyboard.down('Space');
     await page.waitForTimeout(550);
     await page.keyboard.up('Space');
@@ -43,6 +47,7 @@ for (const [version, url] of [
       record: s.developer.records.at(-1),
       ai: s.ai,
     });
+    console.log(version, sample, s.developer.records.at(-1)?.frameIntervals);
     await page.locator('#dev-toggle').click();
   }
   await page.close();

@@ -1,0 +1,191 @@
+{
+  "environment": "Node Linux cloud; 30 match attempts per difficulty, seeds 700\u2013729, 900 simulated seconds cap each; scripted neutral/mixed controls, 220ms reaction and 87% player speed. Not human enjoyment or device performance. Capped unfinished matches are reported, not counted as completed. Winner means unreturned point; pressure/unforced error split is a defensive-tactic proxy.",
+  "data": [
+    {
+      "difficulty": "easy",
+      "games": 30,
+      "seeds": [
+        700,
+        729
+      ],
+      "points": 252,
+      "completedMatches": 30,
+      "aiReturns": 1482,
+      "aiLegalReturns": 1482,
+      "incoming": 1604,
+      "returnContactRate": 0.9239401496259352,
+      "legalReturnRate": 0.9239401496259352,
+      "rally": {
+        "mean": 12.722222222222221,
+        "median": 4,
+        "p90": 37,
+        "max": 115,
+        "distribution": {
+          "one": 0,
+          "twoToFour": 141,
+          "fiveToEight": 24,
+          "ninePlus": 87
+        }
+      },
+      "outcomes": {
+        "aiWinners": 10,
+        "playerWinners": 122,
+        "aiErrors": 120,
+        "aiUnforcedErrors": 76,
+        "aiPressureErrors": 44,
+        "playerErrors": 0
+      },
+      "approaches": 28,
+      "defensive": 517,
+      "shots": {
+        "deep neutral": 739,
+        "crosscourt": 212,
+        "slice recovery": 517,
+        "volley": 14
+      },
+      "directions": {
+        "left": 662,
+        "right": 81,
+        "centre": 739
+      },
+      "coverage": {
+        "minX": -4.182194650814622,
+        "maxX": 4.243423487460049,
+        "minZ": -13.289470227941184,
+        "maxZ": -3.70944390415045
+      },
+      "performance": {
+        "ticks": 521309,
+        "averageTickMs": 0.0007156050269609978,
+        "decisions": 8246,
+        "averageDecisionMs": 0.011250301722046276,
+        "maxDecisionMs": 2.0793579999999565
+      }
+    },
+    {
+      "difficulty": "normal",
+      "games": 30,
+      "seeds": [
+        700,
+        729
+      ],
+      "points": 313,
+      "completedMatches": 30,
+      "aiReturns": 2927,
+      "aiLegalReturns": 2895,
+      "incoming": 3028,
+      "returnContactRate": 0.9666446499339498,
+      "legalReturnRate": 0.9560766182298547,
+      "rally": {
+        "mean": 19.424920127795527,
+        "median": 7,
+        "p90": 52,
+        "max": 165,
+        "distribution": {
+          "one": 0,
+          "twoToFour": 104,
+          "fiveToEight": 64,
+          "ninePlus": 145
+        }
+      },
+      "outcomes": {
+        "aiWinners": 55,
+        "playerWinners": 101,
+        "aiErrors": 157,
+        "aiUnforcedErrors": 93,
+        "aiPressureErrors": 64,
+        "playerErrors": 0
+      },
+      "approaches": 96,
+      "defensive": 1151,
+      "shots": {
+        "deep neutral": 1033,
+        "slice recovery": 1151,
+        "crosscourt": 649,
+        "volley": 88,
+        "down the line": 6
+      },
+      "directions": {
+        "left": 1591,
+        "right": 303,
+        "centre": 1033
+      },
+      "coverage": {
+        "minX": -4.4914482379799825,
+        "maxX": 4.6476180602802835,
+        "minZ": -12.964200833485592,
+        "maxZ": -2.9880299758798947
+      },
+      "performance": {
+        "ticks": 936432,
+        "averageTickMs": 0.0008191076575769469,
+        "decisions": 21405,
+        "averageDecisionMs": 0.012269635365568615,
+        "maxDecisionMs": 2.75276400000007
+      }
+    },
+    {
+      "difficulty": "hard",
+      "games": 30,
+      "seeds": [
+        700,
+        729
+      ],
+      "points": 460,
+      "completedMatches": 15,
+      "aiReturns": 8791,
+      "aiLegalReturns": 8694,
+      "incoming": 8809,
+      "returnContactRate": 0.9979566352593938,
+      "legalReturnRate": 0.9869451697127938,
+      "rally": {
+        "mean": 36.428260869565214,
+        "median": 17,
+        "p90": 94,
+        "max": 325,
+        "distribution": {
+          "one": 0,
+          "twoToFour": 120,
+          "fiveToEight": 68,
+          "ninePlus": 272
+        }
+      },
+      "outcomes": {
+        "aiWinners": 172,
+        "playerWinners": 10,
+        "aiErrors": 278,
+        "aiUnforcedErrors": 168,
+        "aiPressureErrors": 110,
+        "playerErrors": 0
+      },
+      "approaches": 346,
+      "defensive": 4002,
+      "shots": {
+        "deep neutral": 2133,
+        "volley": 276,
+        "crosscourt": 1895,
+        "slice recovery": 3964,
+        "down the line": 523
+      },
+      "directions": {
+        "left": 4305,
+        "right": 2353,
+        "centre": 2133
+      },
+      "coverage": {
+        "minX": -4.713420712087959,
+        "maxX": 4.6857570601796,
+        "minZ": -13.260276733325618,
+        "maxZ": -2.1751859649360537
+      },
+      "performance": {
+        "ticks": 2727333,
+        "averageTickMs": 0.0009892548504345472,
+        "decisions": 85710,
+        "averageDecisionMs": 0.01472792100105165,
+        "maxDecisionMs": 0.4103789999999208
+      }
+    }
+  ],
+  "implementationCommit": "eb775186b5f09dc8732ceb36896f961539b82da8"
+}
