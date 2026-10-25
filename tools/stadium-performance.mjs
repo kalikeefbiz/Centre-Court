@@ -32,7 +32,11 @@ for (let sample = 0; sample < 3; sample++) {
   await page.keyboard.down('Space');
   await page.waitForTimeout(550);
   await page.keyboard.up('Space');
-  await page.waitForTimeout(10300);
+  await page.waitForFunction(
+    (count) => window.centreCourt.snapshot().developer.records.length >= count,
+    sample + 1,
+    { timeout: 25000 },
+  );
   const s = await page.evaluate(() => window.centreCourt.snapshot());
   results.push({
     sample,

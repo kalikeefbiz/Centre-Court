@@ -14,6 +14,13 @@ page.on('pageerror', (e) => errors.push(e.message));
 const url = process.env.CC_URL ?? 'http://localhost:4173/';
 const audits = [];
 const snap = () => page.evaluate(() => window.centreCourt.snapshot());
+async function settled(y) {
+  await page.waitForFunction(
+    (y) => Math.abs(window.centreCourt.snapshot().presentation.cameraPosition[1] - y) < 0.1,
+    y,
+    { timeout: 30000 },
+  );
+}
 async function capture(name, provenance) {
   await page.waitForTimeout(600);
   await page.screenshot({ path: `${dir}/${name}.png` });
@@ -29,13 +36,13 @@ await page.locator('#resume').click();
 await page.locator('#dev-toggle').click();
 await page.locator('#dev-scale').selectOption('1.5');
 await page.locator('#dev-close').click();
-await page.waitForTimeout(1800);
+await settled(25);
 await capture(
   'broadcast-gameplay',
   'Actual broadcast gameplay camera, full crowd, 1.50x visual ball; pre-serve',
 );
 await page.locator('#camera-button').click();
-await page.waitForTimeout(1800);
+await settled(10);
 await capture(
   'behind-player-gameplay',
   'Existing behind-player camera, full crowd, 1.50x visual ball; pre-serve',
@@ -53,19 +60,19 @@ await page.locator('#dev-toggle').click();
 await page.locator('#dev-stadium').selectOption('gameplay');
 await page.locator('#dev-close').click();
 await page.setViewportSize({ width: 390, height: 844 });
-await page.waitForTimeout(2000);
+await settled(15);
 await capture(
   'mobile-behind',
   '390x844 Chromium viewport, existing behind camera, full crowd override',
 );
 await page.locator('#camera-button').click();
-await page.waitForTimeout(2000);
+await settled(32);
 await capture('mobile-broadcast', '390x844 Chromium viewport, existing broadcast camera');
 // Ordinary navigation: no developer tool DOM is loaded.
 await page.goto(`${url}?debug`);
 await page.waitForFunction(() => !document.querySelector('#play').disabled, { timeout: 60000 });
 await page.locator('#play').click();
-await page.waitForTimeout(1800);
+await settled(32);
 await page.keyboard.down('Space');
 await page.waitForTimeout(550);
 await page.keyboard.up('Space');

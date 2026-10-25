@@ -137,6 +137,7 @@ export class Stadium {
             pos(u + jitter, y + 0.38 + h + 0.11, v - 0.07),
             [0.23, 0.27, 0.23],
             skin[Math.floor(rng.next() * skin.length)],
+            2,
           );
           g.box(pos(u, y + 0.24, v - 0.28), [0.3, 0.17, 0.38], '#273846', yaw);
           this.crowdCount[group]++;

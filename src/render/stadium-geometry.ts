@@ -67,22 +67,22 @@ export class Geometry {
     }
     this.boxes++;
   }
-  /** Low-poly ellipsoid; 48 triangles per head instead of a default 1k-triangle sphere. */
-  head(p: XYZ, s: XYZ, hex: string) {
+  /** Faceted ellipsoid; stadium heads use 12 triangles, with no degenerate pole faces. */
+  head(p: XYZ, s: XYZ, hex: string, bands = 4) {
     const rgb = [1, 3, 5].map((i) => (parseInt(hex.slice(i, i + 2), 16) / 255) ** 2.2);
     const start = this.positions.length / 3;
-    for (let y = 0; y <= 4; y++)
+    for (let y = 0; y <= bands; y++)
       for (let x = 0; x <= 6; x++) {
-        const a = (y * Math.PI) / 4,
+        const a = (y * Math.PI) / bands,
           b = (x * Math.PI) / 3;
         const n = [Math.sin(a) * Math.cos(b), Math.cos(a), Math.sin(a) * Math.sin(b)];
         this.positions.push(...n.map((v, i) => p[i] + (v * s[i]) / 2));
         this.normals.push(...n);
         this.colors.push(...rgb, 1);
-        if (y < 4 && x < 6) {
+        if (y < bands && x < 6) {
           const i = start + y * 7 + x;
           if (y > 0) this.indices.push(i, i + 1, i + 7);
-          if (y < 3) this.indices.push(i + 1, i + 8, i + 7);
+          if (y < bands - 1) this.indices.push(i + 1, i + 8, i + 7);
         }
       }
   }
