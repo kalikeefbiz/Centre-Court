@@ -302,6 +302,59 @@ export class Scene {
     }
     return { root, arm, legs, shadow: this.shadow('Athlete shadow', 1.05) };
   }
+  /** Presentation-only isolation; all match state and camera-rig state stay untouched. */
+  beginInspection() {
+    const entities = [
+      this.ball,
+      this.ballShadow,
+      this.landing,
+      ...this.trail,
+      ...this.athletes.flatMap((a) => [a.root, a.shadow]),
+    ];
+    const enabled = entities.map((e) => e.enabled);
+    const position = this.camera.getPosition().clone(),
+      rotation = this.camera.getRotation().clone();
+    entities.forEach((e) => (e.enabled = false));
+    return () => {
+      entities.forEach((e, i) => (e.enabled = enabled[i]));
+      this.camera.setPosition(position);
+      this.camera.setRotation(rotation);
+    };
+  }
+  inspectCamera(angle: string) {
+    const views: Record<string, number[]> = {
+      front: [0, 1.8, 6.6],
+      side: [4.4, 1.8, 11],
+      rear: [0, 1.8, 15.4],
+      quarter: [3.4, 2, 7.6],
+    };
+    const p = views[angle] ?? views.quarter;
+    this.camera.setPosition(p[0], p[1], p[2]);
+    // Inspection-only framing leaves the lower phone panel clear of the athlete.
+    // Gameplay CameraRig and its saved transforms are never changed here.
+    const portrait = innerWidth < 600 && innerHeight > innerWidth;
+    const target = new pc.Vec3(0, portrait ? 0.1 : 1.1, 11);
+    this.camera.lookAt(target);
+    if (innerHeight < 500) {
+      target.add(this.camera.right.clone().mulScalar(0.8));
+      this.camera.lookAt(target);
+    }
+  }
+  inspectionBall(position?: number[]) {
+    this.ball.enabled = !!position && this.royalBall.status === 'ready';
+    if (position) this.ball.setPosition(position[0], position[1], position[2]);
+  }
+  renderComparison(match: Match, dt: number) {
+    this.rig.update(dt, match.players[0].position, match.ball.position, innerWidth / innerHeight);
+    this.camera.setPosition(this.rig.position.x, this.rig.position.y, this.rig.position.z);
+    this.camera.lookAt(this.rig.target.x, this.rig.target.y, this.rig.target.z);
+  }
+  compareBall(position: 'serve' | 'near' | 'far') {
+    const p = { serve: [1.6, 2.6, 12.1], near: [0, 1, 8], far: [0, 1, -8] }[position];
+    this.ball.setPosition(p[0], p[1], p[2]);
+    this.ball.enabled = this.royalBall.status === 'ready';
+    this.ballShadow.setPosition(p[0], 0.006, p[2]);
+  }
   playerPresentation() {
     const p = this.kira.root.getPosition();
     const screen = this.camera.camera!.worldToScreen(new pc.Vec3(p.x, p.y + 0.9, p.z));

@@ -7,12 +7,14 @@ import { Match, FixedClock } from './core/match';
 import { Scene } from './render/scene';
 import { Input } from './platform/input';
 import type { Difficulty } from './core/ai';
+import type { DeveloperTools } from './dev/tools';
 import type { MatchLength } from './core/scoring';
 
 const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;
 const match = new Match(),
   clock = new FixedClock();
 let scene: Scene;
+let developer: DeveloperTools | undefined;
 try {
   scene = new Scene($<HTMLCanvasElement>('court'));
 } catch (error) {
@@ -24,12 +26,14 @@ const setText = (id: string, text: string) => {
   if ($(id).textContent !== text) $(id).textContent = text;
 };
 const togglePause = () => {
+  if (developer?.frozen) return;
   if (!$('help').hidden) return;
   match.phase === 'paused' ? match.resume() : match.pause();
   input.clear();
   clock.reset();
 };
 const switchCamera = () => {
+  if (developer?.inspecting) return;
   scene.rig.switch(scene.rig.mode === 'broadcast' ? 'behind' : 'broadcast');
   updateCamera();
 };
@@ -111,7 +115,7 @@ const renderUI = () => {
   $('pause').hidden = match.phase !== 'paused';
   $('results').hidden = match.phase !== 'result';
   $('pause-button').hidden = match.phase === 'menu' || match.phase === 'result';
-  input.enabled = match.phase === 'serve' || match.phase === 'rally';
+  input.enabled = !developer?.frozen && (match.phase === 'serve' || match.phase === 'rally');
   for (const [side, name] of [
     [0, 'you'],
     [1, 'ai'],
@@ -143,22 +147,44 @@ const renderUI = () => {
 };
 scene.app.on('update', (dt: number) => {
   input.sample(Math.min(dt, 0.1));
-  clock.advance(dt, (step) => {
-    match.tick(step, input.controls);
-    input.controls.release = false;
-  });
-  scene.render(match, Math.min(dt, 0.1), input.charging, input.controls.shot);
+  if (!developer?.frozen)
+    clock.advance(dt, (step) => {
+      match.tick(step, input.controls);
+      input.controls.release = false;
+    });
+  if (!developer?.frozen)
+    scene.render(match, Math.min(dt, 0.1), input.charging, input.controls.shot);
+  else if (!developer.inspecting) scene.renderComparison(match, Math.min(dt, 0.1));
+  developer?.update(Math.min(dt, 0.1));
   renderUI();
 });
 $('loading').remove();
 renderUI();
+if (new URLSearchParams(location.search).get('dev') === '1') {
+  void import('./dev/tools').then(({ DeveloperTools }) => {
+    developer = new DeveloperTools(
+      scene,
+      match,
+      () => {
+        input.clear();
+        input.enabled = false;
+        clock.reset();
+      },
+      updateCamera,
+    );
+  });
+}
 // Read-only, opt-in diagnostics for browser QA; no shipped gameplay mutation API.
-if (new URLSearchParams(location.search).has('debug'))
+if (
+  new URLSearchParams(location.search).has('debug') ||
+  new URLSearchParams(location.search).get('dev') === '1'
+)
   Object.defineProperty(window, 'centreCourt', {
     value: {
       snapshot: () => ({
         build: __BUILD_ID__,
-        release: 'GOAL-002C',
+        release: 'GOAL-002D',
+        developer: developer?.snapshot(),
         presentation: scene.playerPresentation(),
         phase: match.phase,
         kira: scene.kira.snapshot(),

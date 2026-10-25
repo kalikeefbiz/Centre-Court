@@ -1,4 +1,4 @@
-# Centre Court · GOAL 002C
+# Centre Court · GOAL 002D
 
 A playable mobile-first 3D arcade singles tennis foundation by **BlackHouse**, built with PlayCanvas and TypeScript. Kira uses the owner-supplied rigged character and separate racket GLBs. The AI opponent retains its temporary model.
 
@@ -76,3 +76,9 @@ Both assets are mandatory. Failed loads block match start and offer retry. The A
 [Current limitations](docs/LIMITATIONS.md), [verification and evidence](docs/VERIFICATION.md), and [physical iPhone acceptance](docs/IPHONE-CHECKLIST.md) document the remaining checks. Actual iPhone Safari compatibility and sustained device performance remain unverified until hardware acceptance. Older Kira integration/hotfix documents describe the previous release and are historical.
 
 Production evidence: https://kalikeefbiz.github.io/Centre-Court/verification/goal-002c/ . `release.json` identifies the exact build; GLB requests include a content revision across character, racket and ball.
+
+## GOAL 002D developer diagnostics
+
+Open [developer mode](https://kalikeefbiz.github.io/Centre-Court/?dev=1) and tap **DEV · Tools** for the production Kira animation inspector, isolated serve feasibility prototype, visual-only Royal Rally size comparisons, performance readout and JSON measurements. Every visit starts with the approved 1.00× ball visual size; physics and production serve behavior are unchanged.
+
+See [GOAL-002D-REPORT.md](docs/GOAL-002D-REPORT.md) for access, rendered evidence, animation/serve findings, skill references and the physical iPhone test procedure. Normal gameplay shows no developer controls. Next production milestone: GOAL 003 — Competitive AI.

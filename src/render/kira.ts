@@ -1,4 +1,5 @@
 import * as pc from 'playcanvas';
+import { assetTimings } from '../dev/metrics';
 import { selectStroke } from '../core/hitting';
 import { ANIMATIONS } from './animation-registry';
 import type { Match } from '../core/match';
@@ -8,13 +9,30 @@ export function load(app: pc.Application, path: string): Promise<pc.ContainerRes
   return new Promise((resolve, reject) => {
     const url = new URL(import.meta.env.BASE_URL + path, document.baseURI);
     url.searchParams.set('v', __KIRA_ASSET_REVISION__);
-    const timeout = window.setTimeout(() => reject(new Error(`Timed out loading ${path}`)), 30000);
+    const timing = {
+      path,
+      status: 'loading' as 'loading' | 'ready' | 'error',
+      startMs: performance.now(),
+    };
+    assetTimings.push(timing);
+    const finish = (error?: string) =>
+      Object.assign(timing, {
+        status: error ? 'error' : 'ready',
+        durationMs: performance.now() - timing.startMs,
+        ...(error ? { error } : {}),
+      });
+    const timeout = window.setTimeout(() => {
+      finish(`Timed out loading ${path}`);
+      reject(new Error(`Timed out loading ${path}`));
+    }, 30000);
     app.assets.loadFromUrlAndFilename(
       url.href,
       path.split('/').pop()!,
       'container',
       (error, asset) => {
         window.clearTimeout(timeout);
+        if (timing.status === 'error') return; // A late response cannot erase a timeout.
+        finish(error || !asset?.resource ? String(error ?? 'empty asset') : undefined);
         if (error || !asset?.resource)
           reject(new Error(`${path}: ${String(error ?? 'empty asset')}`));
         else resolve(asset.resource as pc.ContainerResource);
@@ -295,6 +313,64 @@ export class Kira {
       .add(this.contactOffset)
       .sub(new pc.Vec3(position.x, position.y, position.z))
       .mulScalar(t * t);
+  }
+  /** Reuse the production rig/registry; never run the match controller during this session. */
+  beginInspection() {
+    if (this.status !== 'ready') throw new Error('Kira is not ready');
+    const savedState = this.layer.activeState;
+    const savedTime = this.layer.activeStateCurrentTime;
+    const nodes: pc.GraphNode[] = [];
+    const visit = (node: pc.GraphNode) => {
+      nodes.push(node);
+      node.children.forEach(visit);
+    };
+    visit(this.root);
+    const transforms = nodes.map((node) => ({
+      node,
+      p: node.getLocalPosition().clone(),
+      q: node.getLocalRotation().clone(),
+    }));
+    let selected: AthleteState | undefined;
+    this.root.setPosition(0, 0, 11);
+    return {
+      pose: (state: AthleteState, seconds: number, blend = 0) => {
+        if (selected !== state) {
+          this.layer.transition(state, blend);
+          selected = state;
+        }
+        this.layer.activeStateCurrentTime = Math.max(
+          0,
+          Math.min(ANIMATIONS[state].duration - 0.00001, seconds),
+        );
+        this.model.anim!.update(0.000001);
+        // Production carry orientation for locomotion, uncorrected source arm for shots.
+        if (!('contact' in ANIMATIONS[state]))
+          this.hand.setLocalRotation(this.hand.getLocalRotation().clone().mul(this.carryWrist));
+        this.inPlace();
+      },
+      markers: () => ({
+        root: this.root.getPosition().toArray(),
+        grip: this.socket.getPosition().toArray(),
+        head: this.head().toArray(),
+        leftHand: this.model.findByName('mixamorig:LeftHand')?.getPosition().toArray(),
+        palm: this.model
+          .findByName('mixamorig:LeftHand')
+          ?.getWorldTransform()
+          .transformPoint(new pc.Vec3(0, 0.04, 0.035))
+          .toArray(),
+        leftFoot: this.model.findByName('mixamorig:LeftFoot')?.getPosition().toArray(),
+        rightFoot: this.model.findByName('mixamorig:RightFoot')?.getPosition().toArray(),
+      }),
+      restore: () => {
+        this.layer.transition(savedState, 0);
+        this.layer.activeStateCurrentTime = savedTime;
+        this.model.anim!.update(0.000001);
+        transforms.forEach(({ node, p, q }) => {
+          node.setLocalPosition(p);
+          node.setLocalRotation(q);
+        });
+      },
+    };
   }
   snapshot() {
     const visibility = {

@@ -1,5 +1,6 @@
 import * as pc from 'playcanvas';
 import { COURT } from '../core/court';
+import { validBallScale } from '../dev/metrics';
 import { load } from './kira';
 export const ROYAL_BALL = {
   url: 'assets/balls/royal-rally/Meshy_AI_Royal_Rally_1024220842_texture.glb',
@@ -10,6 +11,13 @@ export class RoyalBall {
   readonly root = new pc.Entity('Royal Rally ball: visual only');
   status: 'loading' | 'ready' | 'error' = 'loading';
   error = '';
+  visualScale = 1;
+  setVisualScale(value: number) {
+    if (!validBallScale(value)) return;
+    this.visualScale = value;
+    // Parent scales the already normalized model. Physics never reads this entity.
+    this.root.setLocalScale(value, value, value);
+  }
   private meshes: pc.MeshInstance[] = [];
   constructor(app: pc.Application) {
     app.root.addChild(this.root);
@@ -38,6 +46,11 @@ export class RoyalBall {
       status: this.status,
       error: this.error,
       diameter: ROYAL_BALL.diameter,
+      visualScale: this.visualScale,
+      meshDiameter: this.meshes.length
+        ? Math.max(...this.meshes[0].aabb.halfExtents.toArray()) * 2
+        : 0,
+      visualDiameter: ROYAL_BALL.diameter * this.visualScale,
       collisionRadius: COURT.radius,
       meshCount: this.meshes.length,
       visible: this.meshes.some((m) => m.visibleThisFrame),

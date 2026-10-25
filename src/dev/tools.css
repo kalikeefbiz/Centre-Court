@@ -1,0 +1,146 @@
+#dev-tools {
+  position: fixed;
+  z-index: 100;
+  right: max(12px, env(safe-area-inset-right));
+  top: calc(76px + env(safe-area-inset-top));
+  color: #ecf7ed;
+  font:
+    14px/1.4 Barlow,
+    sans-serif;
+  pointer-events: none;
+}
+#dev-tools button,
+#dev-tools select,
+#dev-tools input,
+#dev-tools summary {
+  pointer-events: auto;
+}
+#dev-tools button,
+#dev-tools select {
+  min-height: 44px;
+  padding: 8px 12px;
+  font: inherit;
+  border: 1px solid #63847f;
+  border-radius: 6px;
+  background: #17373d;
+  color: #fff;
+  touch-action: manipulation;
+}
+#dev-tools button:disabled {
+  opacity: 0.45;
+}
+#dev-tools :focus-visible {
+  outline: 3px solid #deef95;
+  outline-offset: 2px;
+}
+#dev-toggle {
+  display: block;
+  margin-left: auto;
+}
+#dev-panel {
+  pointer-events: auto;
+  margin-top: 6px;
+  padding: 12px;
+  width: min(350px, calc(100vw - 48px));
+  max-height: 47dvh;
+  overflow: auto;
+  overscroll-behavior: contain;
+  background: #0c2329f5;
+  border: 1px solid #63847f;
+  border-radius: 8px;
+  touch-action: pan-y;
+}
+#dev-panel label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 8px 0;
+}
+#dev-panel label select {
+  width: 100%;
+  font-size: 16px;
+}
+#dev-panel input[type='range'] {
+  width: 100%;
+  min-height: 44px;
+  touch-action: pan-x;
+}
+#dev-panel input[type='checkbox'] {
+  width: 24px;
+  height: 24px;
+  margin: 10px;
+}
+#dev-panel p {
+  margin: 6px 0;
+  font-size: 13px;
+  color: #bcd1ce;
+}
+#dev-panel pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 12px;
+}
+#dev-panel summary {
+  padding: 12px 0;
+}
+.dev-row,
+.dev-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: space-between;
+}
+#dev-readout {
+  position: fixed;
+  z-index: 99;
+  pointer-events: none;
+  left: max(10px, env(safe-area-inset-left));
+  top: calc(220px + env(safe-area-inset-top));
+  margin: 0;
+  padding: 8px;
+  max-width: calc(100vw - 36px);
+  background: #071b22e8;
+  color: #edffc1;
+  font: 12px/1.45 monospace;
+}
+.dev-inspecting #app {
+  visibility: hidden;
+  pointer-events: none;
+}
+.dev-inspecting #dev-tools {
+  top: max(12px, env(safe-area-inset-top));
+  bottom: auto;
+}
+.dev-inspecting #dev-panel {
+  max-height: calc(100dvh - 100px - env(safe-area-inset-bottom));
+}
+@media (max-width: 600px) and (orientation: portrait) {
+  .dev-inspecting #dev-tools {
+    top: auto;
+    bottom: max(10px, env(safe-area-inset-bottom));
+    left: max(12px, env(safe-area-inset-left));
+  }
+  .dev-inspecting #dev-panel {
+    width: auto;
+    max-height: 40dvh;
+  }
+}
+.dev-inspecting #dev-readout {
+  top: max(10px, env(safe-area-inset-top));
+}
+@media (max-height: 500px) {
+  #dev-tools {
+    top: max(8px, env(safe-area-inset-top));
+  }
+  #dev-panel {
+    max-height: 58dvh;
+  }
+  .dev-inspecting #dev-tools {
+    left: auto;
+    width: 310px;
+  }
+  .dev-inspecting #dev-panel {
+    max-height: 65dvh;
+  }
+}
