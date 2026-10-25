@@ -120,6 +120,7 @@ export function runSimulation(difficulty: Difficulty, games = 30, seedBase = 700
       if (
         phase === 'rally' &&
         last === 1 &&
+        before > 1 && // A serve is not a rally reply.
         beforeBounces === 0 &&
         ((m.bounces === 1 && m.phase === 'rally') || (m.contacts > before && m.lastHitter === 0))
       )

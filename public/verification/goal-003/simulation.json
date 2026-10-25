@@ -11,10 +11,10 @@
       "points": 252,
       "completedMatches": 30,
       "aiReturns": 1482,
-      "aiLegalReturns": 1482,
+      "aiLegalReturns": 1362,
       "incoming": 1604,
       "returnContactRate": 0.9239401496259352,
-      "legalReturnRate": 0.9239401496259352,
+      "legalReturnRate": 0.8491271820448878,
       "rally": {
         "mean": 12.722222222222221,
         "median": 4,
@@ -56,10 +56,10 @@
       },
       "performance": {
         "ticks": 521309,
-        "averageTickMs": 0.0007156050269609978,
+        "averageTickMs": 0.0006824138562733745,
         "decisions": 8246,
-        "averageDecisionMs": 0.011250301722046276,
-        "maxDecisionMs": 2.0793579999999565
+        "averageDecisionMs": 0.010467569488236171,
+        "maxDecisionMs": 0.6147669999999721
       }
     },
     {
@@ -72,10 +72,10 @@
       "points": 313,
       "completedMatches": 30,
       "aiReturns": 2927,
-      "aiLegalReturns": 2895,
+      "aiLegalReturns": 2770,
       "incoming": 3028,
       "returnContactRate": 0.9666446499339498,
-      "legalReturnRate": 0.9560766182298547,
+      "legalReturnRate": 0.9147952443857331,
       "rally": {
         "mean": 19.424920127795527,
         "median": 7,
@@ -118,10 +118,10 @@
       },
       "performance": {
         "ticks": 936432,
-        "averageTickMs": 0.0008191076575769469,
+        "averageTickMs": 0.0008813657980504894,
         "decisions": 21405,
-        "averageDecisionMs": 0.012269635365568615,
-        "maxDecisionMs": 2.75276400000007
+        "averageDecisionMs": 0.01244876000934329,
+        "maxDecisionMs": 7.2998660000000655
       }
     },
     {
@@ -134,10 +134,10 @@
       "points": 460,
       "completedMatches": 15,
       "aiReturns": 8791,
-      "aiLegalReturns": 8694,
+      "aiLegalReturns": 8507,
       "incoming": 8809,
       "returnContactRate": 0.9979566352593938,
-      "legalReturnRate": 0.9869451697127938,
+      "legalReturnRate": 0.9657168804631626,
       "rally": {
         "mean": 36.428260869565214,
         "median": 17,
@@ -180,12 +180,13 @@
       },
       "performance": {
         "ticks": 2727333,
-        "averageTickMs": 0.0009892548504345472,
+        "averageTickMs": 0.0015074767151645554,
         "decisions": 85710,
-        "averageDecisionMs": 0.01472792100105165,
-        "maxDecisionMs": 0.4103789999999208
+        "averageDecisionMs": 0.020538428503091004,
+        "maxDecisionMs": 37.14340700000048
       }
     }
   ],
-  "implementationCommit": "eb775186b5f09dc8732ceb36896f961539b82da8"
+  "implementationCommit": "eb775186b5f09dc8732ceb36896f961539b82da8",
+  "measurementNote": "Legal return rate excludes AI service landings; gameplay is unchanged."
 }

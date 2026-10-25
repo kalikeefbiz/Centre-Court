@@ -4,6 +4,8 @@ Implementation commit: `eb775186b5f09dc8732ceb36896f961539b82da8` (the subsequen
 
 Live deployment: <https://kalikeefbiz.github.io/Centre-Court/>. The deployed `release.json` identifies the exact publication SHA and asset revision. Release identifier: `GOAL-003`. Deployment uses the existing GitHub Actions verify → Pages workflow.
 
+Initial publication `6dea2878f204a3f8a144e0af7a6dc5c59d1712ee` passed [the full verify/deploy workflow](https://github.com/kalikeefbiz/Centre-Court/actions/runs/40167270414). A browser check of the public site confirmed that exact GOAL 003 build, a real human serve and AI return (two contacts), loaded Kira/racket/Royal Rally, one camera and zero browser errors. See [live verification](../public/verification/goal-003/live-verification.json). The subsequent reporting correction excludes AI service landings from the legal-return metric; all seeded rally/outcome/positioning results are identical and gameplay code is unchanged.
+
 ## Architecture audit
 
 | System        | Baseline finding and retained boundary                                                                                                                                                                                                                                                                                                                                                                                              |
@@ -71,14 +73,14 @@ Local browser coverage: **37 checks passed** (20 Chromium, 17 WebKit), with **th
 
 See [raw measurements](../public/verification/goal-003/simulation.json). The automated opponent faces scripted human controls, using only normal movement/shot commands. Thirty seeded match attempts per difficulty use seeds 700–729 and a 900 simulated-second cap each. The player model waits 220 ms, moves at 87% of the player's maximum speed, and alternates cooperative neutral and mixed attacking/short-ball/lob strategies. It has consistent aim and is not a model of physical human skill.
 
-Metrics below are generated from the final implementation. Contact rate counts AI contacts / incoming human shots. Legal-return rate counts replies that land legally or are volleyed by the human; incoming shots include their normal engine outcomes. Rally length includes the serve. Completed-point distributions exclude an unfinished rally at a simulation cap; contact counts include it. Capped match attempts are disclosed, not silently called completed matches. “Winner” means an unreturned point; pressure/unforced error labels are a defensive-tactic proxy, not video-judged tennis statistics.
+Metrics below are generated from the final implementation. Contact rate counts AI contacts / incoming human shots. Legal-return rate counts replies that land legally or are volleyed by the human, excluding AI service landings; incoming shots include their normal engine outcomes. Rally length includes the serve. Completed-point distributions exclude an unfinished rally at a simulation cap; contact counts include it. Capped match attempts are disclosed, not silently called completed matches. “Winner” means an unreturned point; pressure/unforced error labels are a defensive-tactic proxy, not video-judged tennis statistics.
 
 | Metric                                                 |                     Easy |                     Normal |                           Hard |
 | ------------------------------------------------------ | -----------------------: | -------------------------: | -----------------------------: |
 | Completed matches / 30 attempts                        |                       30 |                         30 |                             15 |
 | Resolved points                                        |                      252 |                        313 |                            460 |
 | Contact return rate                                    |                   92.39% |                     96.66% |                         99.80% |
-| Legal return rate                                      |                   92.39% |                     95.61% |                         98.69% |
+| Legal return rate                                      |                   84.91% |                     91.48% |                         96.57% |
 | Rally contacts: mean / median / p90 / max              |     12.72 / 4 / 37 / 115 |       19.42 / 7 / 52 / 165 |          36.43 / 17 / 94 / 325 |
 | Point lengths 1 / 2–4 / 5–8 / 9+                       |        0 / 141 / 24 / 87 |         0 / 104 / 64 / 145 |             0 / 120 / 68 / 272 |
 | AI / player unreturned-point wins                      |                 10 / 122 |                   55 / 101 |                       172 / 10 |
@@ -90,7 +92,7 @@ Metrics below are generated from the final implementation. Contact rate counts A
 | Shot directions: left / centre / right                 |           662 / 739 / 81 |          1591 / 1033 / 303 |             4305 / 2133 / 2353 |
 | Covered X range, m                                     |            -4.18 to 4.24 |              -4.49 to 4.65 |                  -4.71 to 4.69 |
 | Covered Z range, m                                     |          -13.29 to -3.71 |            -12.96 to -2.99 |                -13.26 to -2.18 |
-| Mean AI decision CPU, ms                               |                   0.0113 |                     0.0123 |                         0.0147 |
+| Mean AI decision CPU, ms                               |                   0.0105 |                     0.0124 |                         0.0205 |
 
 Early runs exposed hundreds-of-contact cooperative exchanges, no approaches and excessive low safe returns. Changes included stable receiving position, shared contact gates, better contact timing, pressure/risk placement scatter, short-ball incentives, outgoing-angle recovery and finite acceleration. The final distributions show separation and varied positions, while retaining a cooperative long tail. These simulations demonstrate behavior and failure modes; they do not establish that the game is fun. No artificial rally-length cap or prescribed winning percentage was introduced.
 
