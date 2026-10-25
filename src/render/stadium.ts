@@ -28,6 +28,12 @@ export class Stadium {
     navigator.hardwareConcurrency,
   );
   private fullCrowd: pc.Entity;
+  private primaryCrowd: pc.Entity;
+  private reducedCrowd: pc.Entity;
+  private seating: pc.Entity;
+  private reducedSeating: pc.Entity;
+  private fullTriangles = 0;
+  private reducedTriangles = 0;
   private crowdCount = [0, 0];
   private boardCanvas = document.createElement('canvas');
   private boardTexture: pc.Texture;
@@ -51,6 +57,8 @@ export class Stadium {
     };
     assetTimings.push(timing);
     app.root.addChild(this.root);
+    const lowSeats = new Geometry(),
+      lowCrowd = new Geometry();
     const arch = new Geometry(),
       seats = new Geometry(),
       crowd = [new Geometry(), new Geometry()];
@@ -114,6 +122,8 @@ export class Stadium {
         const v = row * 0.94,
           y = 0.25 + tier + row * 0.47;
         b(pos(0, y / 2, v), [width, y, 0.95], row % 2 ? '#46535e' : '#4c5963', yaw);
+        lowSeats.box(pos(0, y + 0.21, v), [width, 0.12, 0.48], palette.seat, yaw);
+        lowSeats.box(pos(0, y + 0.46, v + 0.23), [width, 0.4, 0.08], palette.seat, yaw);
         for (let u = -width / 2 + 0.45; u < width / 2 - 0.2; u += 0.68) {
           seats.box(pos(u, y + 0.21, v), [0.5, 0.13, 0.48], palette.seat, yaw);
           seats.box(
@@ -140,6 +150,22 @@ export class Stadium {
             3,
           );
           g.box(pos(u, y + 0.24, v - 0.28), [0.3, 0.17, 0.38], '#273846', yaw);
+          if (group === 0) {
+            lowCrowd.billboard(
+              pos(u + jitter, y + 0.32 + h / 2, v - 0.06),
+              [0.34, h],
+              shirts[Math.floor(rng.seed % shirts.length)],
+              yaw,
+            );
+            lowCrowd.billboard(
+              pos(u + jitter, y + 0.4 + h, v - 0.07),
+              [0.23, 0.27],
+              skin[Math.floor(rng.seed % skin.length)],
+              yaw,
+              8,
+            );
+            lowCrowd.billboard(pos(u, y + 0.24, v - 0.28), [0.3, 0.17], '#273846', yaw);
+          }
           this.crowdCount[group]++;
         }
       }
@@ -208,8 +234,19 @@ export class Stadium {
     for (let n = 0; n < 7; n++) b([-7.65, 0.22 + n * 0.28, 0.1], [0.35, 0.05, 0.65], palette.tread);
     for (const x of [-3.7, 3.7]) b([x, 3.5, -23.65], [0.18, 7, 0.18], palette.edge);
     this.bake('Architecture and courtside equipment', arch);
-    this.bake('Baked seating', seats);
-    this.crowdGroups.push(this.bake('Crowd · primary scattered occupancy', crowd[0]));
+    this.seating = this.bake('Baked seating', seats);
+    this.reducedSeating = this.bake('Reduced continuous row seating', lowSeats);
+    this.reducedCrowd = this.bake('Reduced opaque seated silhouettes', lowCrowd, true);
+    this.primaryCrowd = this.bake('Crowd · primary scattered occupancy', crowd[0]);
+    this.crowdGroups.push(this.primaryCrowd);
+    this.fullTriangles =
+      (arch.indices.length +
+        seats.indices.length +
+        crowd[0].indices.length +
+        crowd[1].indices.length) /
+      3;
+    this.reducedTriangles =
+      (arch.indices.length + lowSeats.indices.length + lowCrowd.indices.length) / 3;
     this.fullCrowd = this.bake('Crowd · additional scattered occupancy', crowd[1]);
     this.crowdGroups.push(this.fullCrowd);
     this.setQuality(this.quality);
@@ -225,7 +262,7 @@ export class Stadium {
     timing.durationMs = performance.now() - timing.startMs;
     this.status = 'ready';
   }
-  private bake(name: string, g: Geometry) {
+  private bake(name: string, g: Geometry, unlit = false) {
     const mesh = new pc.Mesh(this.app.graphicsDevice);
     mesh.setPositions(g.positions);
     mesh.setNormals(g.normals);
@@ -234,7 +271,14 @@ export class Stadium {
     mesh.update();
     const m = new pc.StandardMaterial();
     m.diffuse.set(1, 1, 1);
-    m.diffuseVertexColor = true;
+    m.diffuseVertexColor = !unlit;
+    if (unlit) {
+      m.useLighting = false;
+      m.diffuse.set(0, 0, 0);
+      m.emissive.set(1, 1, 1);
+      m.emissiveVertexColor = true;
+      m.cull = pc.CULLFACE_NONE;
+    }
     m.gloss = 4;
     m.update();
     const e = new pc.Entity(name);
@@ -354,6 +398,10 @@ export class Stadium {
   setQuality(q: StadiumQuality) {
     this.quality = q;
     this.fullCrowd.enabled = q === 'full';
+    this.primaryCrowd.enabled = q === 'full';
+    this.seating.enabled = q === 'full';
+    this.reducedCrowd.enabled = q === 'reduced';
+    this.reducedSeating.enabled = q === 'reduced';
   }
   update(match: Match, dt: number) {
     this.clock += dt;
@@ -419,7 +467,10 @@ export class Stadium {
       sections: this.sections,
       spectatorCount: this.crowdCount[0] + (this.quality === 'full' ? this.crowdCount[1] : 0),
       fullCount: this.crowdCount.reduce((a, b) => a + b),
-      triangles: this.triangles,
+      triangles: this.quality === 'full' ? this.fullTriangles : this.reducedTriangles,
+      fullTriangles: this.fullTriangles,
+      reducedTriangles: this.reducedTriangles,
+      allocatedTriangles: this.triangles,
       collisionComponents: this.root.findComponents('collision').length,
       court: { ...COURT },
       runoff: STADIUM.runoff,

@@ -35,6 +35,8 @@ test('stadium builds locally, preserves dimensions, scales crowd and clears both
   expect(s.stadium.spectatorCount).toBeGreaterThan(400);
   expect(s.stadium.spectatorCount).toBeLessThan(full);
   expect(s.stadium.fullCount).toBe(full);
+  expect(s.stadium.reducedTriangles).toBeLessThan(s.stadium.fullTriangles / 3);
+  expect(s.stadium.triangles).toBe(s.stadium.reducedTriangles);
   await page.locator('#stadium-sound').click();
   expect((await snap(page)).stadiumAudio.enabled).toBe(false);
   await page.locator('#resume').click();

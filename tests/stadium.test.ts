@@ -14,6 +14,11 @@ describe('stadium presentation contract', () => {
     const coarse = new Geometry();
     coarse.head([0, 0, 0], [0.23, 0.27, 0.23], '#aabbcc', 3);
     expect(coarse.indices.length / 3).toBe(24);
+    const flat = new Geometry();
+    flat.billboard([0, 1, 0], [0.23, 0.27], '#aabbcc', Math.PI / 2, 8);
+    flat.billboard([0, 0.7, 0], [0.34, 0.5], '#334455', Math.PI / 2);
+    expect(flat.indices.length / 3).toBe(10);
+    expect(flat.positions.every(Number.isFinite)).toBe(true);
     expect(g.positions.every(Number.isFinite)).toBe(true);
     expect(Math.max(...g.indices)).toBeLessThan(g.positions.length / 3);
     expect(g.indices.length / 3).toBe(48);

@@ -67,6 +67,36 @@ export class Geometry {
     }
     this.boxes++;
   }
+  /** Opaque seated silhouette in the row plane; no alpha textures or per-person entities. */
+  billboard(p: XYZ, size: [number, number], hex: string, yaw: number, sides = 4) {
+    const rgb = [1, 3, 5].map((i) => (parseInt(hex.slice(i, i + 2), 16) / 255) ** 2.2);
+    const c = Math.cos(yaw),
+      s = Math.sin(yaw),
+      start = this.positions.length / 3;
+    const point = (x: number, y: number) => {
+      this.positions.push(p[0] + x * c, p[1] + y, p[2] - x * s);
+      this.normals.push(-s, 0, -c);
+      this.colors.push(...rgb, 1);
+    };
+    if (sides === 4) {
+      for (const [x, y] of [
+        [-1, -1],
+        [-1, 1],
+        [1, 1],
+        [1, -1],
+      ])
+        point((x * size[0]) / 2, (y * size[1]) / 2);
+      this.indices.push(start, start + 1, start + 2, start, start + 2, start + 3);
+    } else {
+      point(0, 0);
+      for (let i = 0; i < sides; i++) {
+        const a = (-i * 2 * Math.PI) / sides;
+        point((Math.cos(a) * size[0]) / 2, (Math.sin(a) * size[1]) / 2);
+      }
+      for (let i = 0; i < sides; i++)
+        this.indices.push(start, start + 1 + i, start + 1 + ((i + 1) % sides));
+    }
+  }
   /** Faceted ellipsoid; stadium heads use 24 triangles, with no degenerate pole faces. */
   head(p: XYZ, s: XYZ, hex: string, bands = 4) {
     const rgb = [1, 3, 5].map((i) => (parseInt(hex.slice(i, i + 2), 16) / 255) ** 2.2);
