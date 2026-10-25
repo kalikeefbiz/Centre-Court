@@ -263,7 +263,7 @@ export class Match {
       this.endPoint(this.lastHitter, 'DOUBLE BOUNCE');
     }
   }
-  private canHit(side: Side) {
+  private canHit(side: Side, intent: Controls['shot'] = 'drive') {
     if (
       this.phase !== 'rally' ||
       this.lastHitter === side ||
@@ -279,7 +279,7 @@ export class Match {
       velocity: this.ball.velocity,
       side,
       bounces: this.bounces,
-      intent: side === 0 ? (this.swingShot as Controls['shot']) : 'drive',
+      intent: side === 0 ? (this.swingShot as Controls['shot']) : intent,
     });
   }
   private hit(side: Side, shot: Shot, power: number, aim: number, depth: number, tactic?: Tactic) {
@@ -425,7 +425,8 @@ export class Match {
         },
         this.random,
       );
-      this.hit(1, tactic.shot, tactic.power, tactic.aim, tactic.depth, tactic);
+      if (this.canHit(1, tactic.shot))
+        this.hit(1, tactic.shot, tactic.power, tactic.aim, tactic.depth, tactic);
     }
     for (const event of this.ball.step(dt)) {
       if (this.phase !== 'rally') break;

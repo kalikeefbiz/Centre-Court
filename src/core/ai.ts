@@ -1,6 +1,6 @@
 import { clamp, COURT, Random, vec, type Vec } from './court';
 import { Ball, type Shot, type BallEvent } from './ball';
-import { inContactZone } from './hitting';
+import { CONTACT, inContactZone } from './hitting';
 
 export type Difficulty = 'easy' | 'normal' | 'hard';
 // Speed remains below the human's 6.3 m/s. Difficulty changes decisions and consistency too.
@@ -295,6 +295,8 @@ export function selectTactic(c: TacticalContext, rng: Random): Tactic {
   let best = candidates[0] as (typeof candidates)[number],
     utility = -Infinity;
   for (const option of candidates) {
+    // Drive can become an overhead. Lob/slice must not borrow its taller contact window.
+    if (c.bounces === 0 && c.ball.y > CONTACT.volley.maxHeight && option.shot !== 'drive') continue;
     const score = option.score - (c.previous === option.name ? 0.08 : 0) + rng.range(0, p.variety);
     if (score > utility) {
       best = option;

@@ -322,3 +322,29 @@ describe('developer reproduction and serving lifecycle', () => {
     expect(m.fault).toBe(0);
   });
 });
+
+it('does not let a lob or slice borrow the drive overhead contact window', () => {
+  const c = context({
+    ball: vec(0, 2.4, -3),
+    player: vec(0, 0, -4),
+    opponent: vec(0, 0, 1),
+    velocity: vec(0, -3, 0),
+    bounces: 0,
+    quality: 0.2,
+  });
+  const rng = new Random(77);
+  for (let i = 0; i < 500; i++) {
+    const tactic = selectTactic(c, rng);
+    expect(tactic.shot).toBe('drive');
+    expect(
+      inContactZone({
+        player: c.player,
+        ball: c.ball,
+        velocity: c.velocity,
+        side: 1,
+        bounces: 0,
+        intent: tactic.shot,
+      }),
+    ).toBe(true);
+  }
+});
