@@ -28,6 +28,7 @@ export class DeveloperTools {
   readonly timeline = new InspectionTimeline();
   inspecting = false;
   comparison = 'live';
+  private stadiumView = 'gameplay';
   private session?: ReturnType<Scene['kira']['beginInspection']>;
   private restoreScene?: () => void;
   private recent = new FrameWindow();
@@ -73,7 +74,7 @@ export class DeveloperTools {
     this.root.innerHTML = `
       <button id="dev-toggle" aria-expanded="false" aria-controls="dev-panel">DEV · Tools</button>
       <section id="dev-panel" hidden aria-label="Developer controls">
-        <div class="dev-heading"><strong>GOAL 003 · Diagnostics</strong><button id="dev-close" aria-label="Close developer panel">×</button></div>
+        <div class="dev-heading"><strong>GOAL 004 · Diagnostics</strong><button id="dev-close" aria-label="Close developer panel">×</button></div>
         <p>Local tests only · visual size never changes physics.</p>
         <button id="dev-inspect" disabled>Inspect Kira animations</button>
         <div id="dev-animation" hidden>
@@ -103,8 +104,10 @@ export class DeveloperTools {
           <label>Royal Rally visual scale<select id="dev-scale">${BALL_SCALES.map((x) => `<option value="${x}">${x.toFixed(2)}×</option>`).join('')}</select></label>
           <label>Gameplay camera<select id="dev-camera"><option value="broadcast">Broadcast</option><option value="behind">Behind player</option></select></label>
           <label>Readability comparison<select id="dev-comparison"><option value="live">Live gameplay</option><option value="frozen">Freeze current rally / serve</option><option value="serve">Serve reference · 2.6 m</option><option value="near">Near court · 1 m high</option><option value="far">Far court · 1 m high</option></select></label>
-          <p>References freeze simulation and move only the rendered ball. Return to Live before playing. 1.50× is the current preferred visual scale; collision radius is unchanged.</p>
+          <p>References freeze simulation and move only the rendered ball. Return to Live before playing. 1.50× is the default, based on owner iPhone readability feedback; collision radius is unchanged.</p>
         </div>
+        <label>Stadium inspection<select id="dev-stadium"><option value="gameplay">Gameplay camera</option><option value="overview">Full stadium overview</option><option value="net">Court surface and net</option><option value="seating">Seating and crowd</option><option value="courtside">Courtside equipment</option><option value="scoreboard">Live scoreboard</option></select></label>
+        <p>Stadium views freeze the match. Select Gameplay camera to resume.</p>
         <label><input id="dev-ai" type="checkbox"> AI decision overlay</label>
         <p>AI guides: cyan interception · yellow bounce · lime recovery. Export includes seed and state history.</p>
         <label>Reproduction seed<input id="dev-seed" type="number" value="314159" min="0" max="4294967295" step="1"></label>
@@ -186,6 +189,11 @@ export class DeveloperTools {
       this.comparison = this.value('dev-comparison');
       this.resetInput();
     });
+    on('dev-stadium', 'change', () => {
+      if (this.inspecting) return;
+      this.stadiumView = this.value('dev-stadium');
+      this.resetInput();
+    });
     on('dev-ai', 'change', () => (this.aiReadout.hidden = !this.checked('dev-ai')));
     on('dev-seed-restart', 'click', () => {
       if (this.frozen) return;
@@ -218,7 +226,7 @@ export class DeveloperTools {
           JSON.stringify(
             {
               build: __BUILD_ID__,
-              release: 'GOAL-003',
+              release: 'GOAL-004',
               device: navigator.userAgent,
               capturedAt: new Date().toISOString(),
               ...this.snapshot(),
@@ -233,7 +241,7 @@ export class DeveloperTools {
       const url = URL.createObjectURL(blob),
         a = document.createElement('a');
       a.href = url;
-      a.download = 'centre-court-003-diagnostics.json';
+      a.download = 'centre-court-004-diagnostics.json';
       a.click();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
     });
@@ -261,12 +269,14 @@ export class DeveloperTools {
     else this.el('dev-toggle').focus();
   }
   get frozen() {
-    return this.inspecting || this.comparison !== 'live';
+    return this.inspecting || this.comparison !== 'live' || this.stadiumView !== 'gameplay';
   }
   private inspect(active: boolean) {
     if (active && this.scene.kira.status !== 'ready') return;
     this.resetInput();
     if (active) {
+      this.stadiumView = 'gameplay';
+      (this.el('dev-stadium') as HTMLSelectElement).value = 'gameplay';
       this.comparison = 'live';
       (this.el('dev-comparison') as HTMLSelectElement).value = 'live';
       this.session = this.scene.kira.beginInspection();
@@ -408,6 +418,8 @@ export class DeveloperTools {
     }
     if (this.comparison !== 'live' && this.comparison !== 'frozen')
       this.scene.compareBall(this.comparison as 'serve' | 'near' | 'far');
+    if (!this.inspecting && this.stadiumView !== 'gameplay')
+      this.scene.inspectStadium(this.stadiumView);
     if (this.recording && now - this.captureStart >= 10000) {
       this.recording = false;
       this.records.push({
@@ -475,6 +487,7 @@ export class DeveloperTools {
       camera.horizontalFov ? rect.width : rect.height,
     );
     return {
+      stadium: this.scene.stadium.snapshot(),
       renderer: [canvas.width, canvas.height],
       viewport: [rect.width, rect.height],
       dpr: devicePixelRatio,
@@ -482,6 +495,7 @@ export class DeveloperTools {
       camera: this.inspecting ? `inspection/${this.angle}` : this.scene.rig.mode,
       phase: this.match.phase,
       comparison: this.comparison,
+      stadiumView: this.stadiumView,
       visualScale: this.scene.royalBall.visualScale,
       ballScreen: { x: screen.x, y: screen.y },
       ballPixels: {

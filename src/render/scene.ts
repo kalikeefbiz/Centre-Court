@@ -5,9 +5,11 @@ import { CameraRig } from '../core/camera';
 import { predict } from '../core/ball';
 import { RoyalBall } from './royal-ball';
 import { Kira } from './kira';
+import { Stadium } from './stadium';
 
 export class Scene {
   app: pc.Application;
+  stadium: Stadium;
   camera: pc.Entity;
   rig: CameraRig;
   kira: Kira;
@@ -37,16 +39,16 @@ export class Scene {
     this.app.graphicsDevice.maxPixelRatio = Math.min(window.devicePixelRatio, 1.75);
     this.app.setCanvasFillMode(pc.FILLMODE_FILL_WINDOW);
     this.app.setCanvasResolution(pc.RESOLUTION_AUTO);
-    this.app.scene.ambientLight = new pc.Color(0.65, 0.72, 0.74);
+    this.app.scene.ambientLight = new pc.Color(0.48, 0.54, 0.59);
     this.app.scene.fog.type = 'linear';
-    this.app.scene.fog.color = new pc.Color(0.055, 0.105, 0.12);
-    this.app.scene.fog.start = 48;
-    this.app.scene.fog.end = 105;
+    this.app.scene.fog.color = new pc.Color(0.28, 0.36, 0.43);
+    this.app.scene.fog.start = 65;
+    this.app.scene.fog.end = 150;
     this.courtBatch = this.app.batcher!.addGroup('Arena static', false, 100)!.id;
     this.athleteBatch = this.app.batcher!.addGroup('Athletes dynamic', true, 50)!.id;
     this.camera = new pc.Entity('Single active rendering camera');
     this.camera.addComponent('camera', {
-      clearColor: new pc.Color(0.055, 0.105, 0.12),
+      clearColor: new pc.Color(0.28, 0.36, 0.43),
       fov: 48,
       nearClip: 0.1,
       farClip: 160,
@@ -63,12 +65,13 @@ export class Scene {
     sun.addComponent('light', {
       type: 'directional',
       color: new pc.Color(1, 0.94, 0.82),
-      intensity: 1.5,
+      intensity: 1.35,
       castShadows: false,
     });
     sun.setEulerAngles(48, -30, 0);
     this.app.root.addChild(sun);
     this.buildArena();
+    this.stadium = new Stadium(this.app);
     // Only the AI uses a temporary model. Never create a placeholder human.
     this.athletes = [this.buildAthlete('#f17b4c', '#1c363d')];
     this.athletes[0].root.enabled = false;
@@ -153,69 +156,80 @@ export class Scene {
     return this.shape('sphere', name, '#102d32', [0, 0.022, 0], [size, 0.018, size], false, true);
   }
   private buildArena() {
-    this.shape('box', 'Arena floor', '#172e32', [0, -0.22, 0], [65, 0.3, 75]);
-    this.shape('box', 'Runoff surface', '#356e70', [0, -0.105, 0], [19, 0.12, 35]);
-    this.shape('box', 'Playing surface', '#397c80', [0, -0.042, 0], [10.97, 0.025, 23.77]);
-    this.shape('box', 'Singles interior', '#438b8d', [0, -0.027, 0], [8.23, 0.012, 23.77]);
+    this.shape('box', 'Runoff surface', '#294f5c', [0, -0.105, 0], [20, 0.12, 36]);
+    const surface = this.shape(
+      'box',
+      'Playing surface',
+      '#285f91',
+      [0, -0.042, 0],
+      [COURT.doublesWidth * 2, 0.025, COURT.halfLength * 2],
+    );
+    // Quiet acrylic aggregate: one 256px repeating map, no normal map or texture downloads.
+    const canvas = document.createElement('canvas');
+    canvas.width = canvas.height = 256;
+    const ctx = canvas.getContext('2d')!,
+      pixels = ctx.createImageData(256, 256);
+    let seed = 4004;
+    for (let i = 0; i < pixels.data.length; i += 4) {
+      seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+      const value = 245 + (seed % 11);
+      pixels.data.set([value, value, value, 255], i);
+    }
+    ctx.putImageData(pixels, 0, 0);
+    const texture = new pc.Texture(this.app.graphicsDevice, {
+      width: 256,
+      height: 256,
+      mipmaps: true,
+    });
+    texture.setSource(canvas);
+    const m = this.material('#285f91');
+    m.diffuseMap = texture;
+    m.diffuseMapTiling.set(7, 14);
+    m.gloss = 2;
+    m.update();
+    surface.render!.material = m;
+    // Measured line centres and all gameplay dimensions remain from the shared court constants.
     const line = (x: number, z: number, w: number, d: number) =>
-      this.shape('box', 'Court line', '#eaf1e5', [x, -0.009, z], [w, 0.018, d]);
-    for (const x of [-5.485, -4.115, 4.115, 5.485]) line(x, 0, 0.05, 23.82);
-    for (const z of [-11.885, 11.885]) {
-      line(0, z, 11.02, 0.05);
+      this.shape('box', 'Court line', '#f1f3e9', [x, -0.009, z], [w, 0.018, d]);
+    for (const x of [-COURT.doublesWidth, -COURT.halfWidth, COURT.halfWidth, COURT.doublesWidth])
+      line(x, 0, 0.05, COURT.halfLength * 2 + 0.05);
+    for (const z of [-COURT.halfLength, COURT.halfLength]) {
+      line(0, z, COURT.doublesWidth * 2 + 0.05, 0.05);
       line(0, z + Math.sign(z) * 0.1, 0.05, 0.2);
     }
-    for (const z of [-6.4, 6.4]) line(0, z, 8.23, 0.05);
-    line(0, 0, 0.05, 12.8);
-    // A fine, batched net mesh and sloped tape, with regulation centre/edge heights.
-    this.shape('box', 'Net fabric', '#172b31', [0, 0.47, 0], [10.1, 0.9, 0.025]);
-    for (let x = -5; x <= 5; x += 0.2)
-      this.shape('box', 'Net vertical cord', '#68858a', [x, 0.47, 0.025], [0.012, 0.9, 0.012]);
-    for (let y = 0.12; y < 0.95; y += 0.14)
-      this.shape('box', 'Net horizontal cord', '#68858a', [0, y, 0.025], [10, 0.012, 0.012]);
-    for (const x of [-2.515, 2.515]) {
-      const e = this.shape('box', 'Net tape', '#f3f0de', [x, 0.99, 0], [5.04, 0.065, 0.07]);
-      e.setEulerAngles(0, 0, Math.sign(x) * 1.77);
+    for (const z of [-COURT.service, COURT.service]) line(0, z, COURT.halfWidth * 2, 0.05);
+    line(0, 0, 0.05, COURT.service * 2);
+    // Open net holes: batched opaque cords, no alpha-overdraw or solid fabric occluding feet.
+    for (let x = -5.03; x <= 5.04; x += 0.14) {
+      const height = COURT.netCentre + ((COURT.netEdge - COURT.netCentre) * Math.abs(x)) / 5.03;
+      this.shape('box', 'Net vertical cord', '#263943', [x, height / 2, 0], [0.012, height, 0.012]);
     }
-    this.shape('box', 'Net centre strap', '#f3f0de', [0, 0.47, 0.04], [0.045, 0.94, 0.025]);
-    for (const x of [-5.03, 5.03]) {
-      this.shape('cylinder', 'Net post', '#dbe5dc', [x, 0.54, 0], [0.1, 1.08, 0.1]);
-      this.shape('sphere', 'Post cap', '#f07845', [x, 1.1, 0], [0.15, 0.15, 0.15]);
-    }
-    // Low arena architecture keeps the court readable without detailed crowd assets.
+    for (let y = 0.1; y < COURT.netCentre; y += 0.12)
+      this.shape('box', 'Net horizontal cord', '#263943', [0, y, 0], [10.06, 0.012, 0.012]);
     for (const side of [-1, 1]) {
-      this.shape('box', 'Back wall', '#182e33', [0, 1.0, side * 19], [34, 2, 1]);
-      this.shape('box', 'Sponsor ribbon', '#ed7d50', [0, 1.2, side * 18.43], [13, 0.4, 0.06]);
-      this.shape('box', 'Side wall', '#182e33', [side * 12, 1, 0], [0.7, 2, 38]);
-      for (let row = 0; row < 5; row++) {
-        this.shape(
-          'box',
-          'Grandstand riser',
-          row % 2 ? '#213e44' : '#29484d',
-          [side * (14 + row * 1.3), row * 0.65 + 0.5, 0],
-          [1.2, 0.65, 38],
-        );
-        for (let z = -17; z < 18; z += 2.4)
-          this.shape(
-            'box',
-            'Bench',
-            '#36545a',
-            [side * (14 + row * 1.3), row * 0.65 + 0.92, z],
-            [0.8, 0.12, 1.65],
-          );
-      }
-      for (const z of [-16, 16]) {
-        this.shape('cylinder', 'Light mast', '#52676c', [side * 11, 6, z], [0.16, 12, 0.16]);
-        this.shape(
-          'box',
-          'Stadium luminaire',
-          '#e7edcd',
-          [side * 11, 12, z],
-          [1.9, 0.32, 0.5],
-          true,
-          true,
-        );
-      }
+      const tape = this.shape(
+        'box',
+        'Net tape',
+        '#f3f0de',
+        [side * 2.515, (COURT.netCentre + COURT.netEdge) / 2, 0],
+        [5.0324, 0.045, 0.045],
+      );
+      tape.setEulerAngles(
+        0,
+        0,
+        (side * Math.atan2(COURT.netEdge - COURT.netCentre, 5.03) * 180) / Math.PI,
+      );
+      this.shape('cylinder', 'Net post', '#273540', [side * 5.03, 0.54, 0], [0.11, 1.08, 0.11]);
+      this.shape('sphere', 'Post cap', '#b6ca70', [side * 5.03, 1.09, 0], [0.13, 0.06, 0.13]);
+      this.shape('box', 'Post footing', '#21303a', [side * 5.03, 0.04, 0], [0.24, 0.08, 0.24]);
     }
+    this.shape(
+      'box',
+      'Net centre strap',
+      '#f3f0de',
+      [0, COURT.netCentre / 2, 0.025],
+      [0.04, COURT.netCentre, 0.022],
+    );
   }
   private buildAthlete(shirt: string, shorts: string) {
     const root = new pc.Entity('AI opponent');
@@ -324,6 +338,34 @@ export class Scene {
       this.playerShadow.setPosition(shadowPosition);
     };
   }
+  /** Diagnostic views only. Neither camera-rig transforms nor saved mode are changed. */
+  inspectStadium(view: string) {
+    const views: Record<string, [number[], number[]]> = {
+      overview: [
+        [43, 35, 48],
+        [0, 1, 0],
+      ],
+      net: [
+        [7.4, 2.8, 5.5],
+        [0, 0.45, 0],
+      ],
+      seating: [
+        [8.8, 5, 7],
+        [17, 3.4, -5],
+      ],
+      courtside: [
+        [3, 4.2, 9.5],
+        [8.6, 0.9, 5.5],
+      ],
+      scoreboard: [
+        [0, 5.5, -13.5],
+        [0, 5.3, -23.5],
+      ],
+    };
+    const [p, target] = views[view] ?? views.overview;
+    this.camera.setPosition(p[0], p[1], p[2]);
+    this.camera.lookAt(target[0], target[1], target[2]);
+  }
   inspectCamera(angle: string) {
     const views: Record<string, number[]> = {
       front: [0, 1.8, 6.6],
@@ -370,6 +412,34 @@ export class Scene {
       opponentCount: this.athletes.length,
     };
   }
+  stadiumPresentation() {
+    const project = (x: number, y: number, z: number) => {
+      const p = this.camera.camera!.worldToScreen(new pc.Vec3(x, y, z));
+      return { x: p.x / this.canvas.width, y: p.y / this.canvas.height };
+    };
+    return {
+      ...this.stadium.snapshot(),
+      renderedCourt: {
+        surface: this.app.root.findByName('Playing surface')?.getLocalScale().toArray(),
+        lines: this.app.root
+          .find((n) => n.name === 'Court line')
+          .map((e) => ({
+            position: e.getLocalPosition().toArray(),
+            size: e.getLocalScale().toArray(),
+          })),
+        netPosts: this.app.root
+          .find((n) => n.name === 'Net post')
+          .map((e) => e.getLocalPosition().toArray()),
+      },
+      courtCorners: [-1, 1].flatMap((x) =>
+        [-1, 1].map((z) => project(x * COURT.doublesWidth, 0, z * COURT.halfLength)),
+      ),
+      players: [this.kira.root, this.athletes[0].root].map((e) => {
+        const p = e.getPosition();
+        return project(p.x, p.y + 0.9, p.z);
+      }),
+    };
+  }
   ballPresentation() {
     return this.ball.getPosition().toArray();
   }
@@ -377,6 +447,7 @@ export class Scene {
     this.app.resizeCanvas();
   }
   render(match: Match, dt: number, charging = false, intent: 'drive' | 'slice' | 'lob' = 'drive') {
+    this.stadium.update(match, dt);
     this.kira.update(match, dt, charging, intent);
     const menu = match.phase === 'menu';
     const p = match.ball.position;

@@ -74,3 +74,11 @@ Run in Broadcast and Behind player, in portrait and landscape:
 - [ ] Observe hand grip, ball/string gap, root stability and open fingers at low/high/stretched contact; review the 30 fps calibration frame estimates and medium-confidence mappings.
 - [ ] Judge regulation ball readability in both cameras, especially portrait, bright daylight and Low Power Mode. Do not increase geometry size without reviewing the approved scale.
 - [ ] Record download time, memory pressure, heat and sustained frame pacing over ten minutes.
+
+## GOAL 004 — Crown Pavilion
+
+- [ ] In portrait and landscape, play both cameras. Verify Kira, opponent, 1.50× Royal Rally, net tape and singles lines remain readable against the blue hardcourt. The existing behind portrait framing crops the outer doubles alleys; check actual play at wide positions and near the touch-control area.
+- [ ] Pause → Stadium detail: compare reduced/full crowd; confirm court, ball, characters, input, score and camera preference stay intact. Check sound On/Off, Safari gesture unlock, background/pause silence and resumed ambience.
+- [ ] Serve, return, extend a rally, win/lose a point, continue, finish a match. Compare the physical stadium display with the HUD, including deuce/advantage and match winner. Inspect display up close with DEV → Stadium inspection if required.
+- [ ] Export three uninterrupted GOAL 002D 10-second records each for loading/init, serving, sustained rally and camera switching. Compare baseline/GOAL 004 on the same iPhone, iOS, orientation, DPR, power/thermal state, cache and crowd tier. Keep 60/30 fps budgets separate from observed values.
+- [ ] Check quiet point reactions, clipping, safe areas, simultaneous move/charge/aim, cancellations, context recovery and Safari JSON export. These remain hardware acceptance steps; Linux WebKit is not an iPhone measurement.

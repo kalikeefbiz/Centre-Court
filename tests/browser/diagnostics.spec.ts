@@ -18,7 +18,7 @@ test('developer tools require explicit dev=1 and scale resets on ordinary visits
   expect((await snap(page)).royalBall.visualScale).toBe(1.75);
   await page.goto('/?dev=0&debug');
   await expect(page.locator('#play')).toBeEnabled({ timeout: 45000 });
-  expect((await snap(page)).royalBall.visualScale).toBe(1);
+  expect((await snap(page)).royalBall.visualScale).toBe(1.5);
   await expect(page.locator('#dev-tools')).toHaveCount(0);
   await page.goto('/');
   await expect(page.locator('#play')).toBeEnabled({ timeout: 45000 });
@@ -102,7 +102,7 @@ test('production rig inspection selects every registry clip and restores a froze
   await page.locator('#dev-serve-prototype').uncheck();
   await page.locator('#dev-speed').selectOption('0.25');
   await page.locator('#dev-restart').click();
-  await page.waitForTimeout(400);
+  await expect.poll(async () => (await snap(page)).developer.timeline.time).toBeGreaterThan(0);
   const slow = (await snap(page)).developer.timeline.time;
   expect(slow).toBeGreaterThan(0);
   expect(slow).toBeLessThan(0.4);
@@ -163,9 +163,14 @@ test('visual presets preserve physics and cameras, diagnostics export and touch 
   await expect(page.locator('#dev-record-status')).toContainText('Saved', { timeout: 15000 });
   const download = page.waitForEvent('download');
   await page.locator('#dev-export').click();
-  expect((await download).suggestedFilename()).toContain('003');
+  expect((await download).suggestedFilename()).toContain('004');
   const s = await snap(page);
-  expect(s.developer.assets).toHaveLength(3);
+  expect(s.developer.assets.filter((a: any) => !a.path.startsWith('procedural:'))).toHaveLength(3);
+  expect(
+    s.developer.assets.some(
+      (a: any) => a.path === 'procedural:Crown-Pavilion' && a.status === 'ready',
+    ),
+  ).toBe(true);
   expect(s.developer.assets.every((a: any) => a.status === 'ready' && a.durationMs > 0)).toBe(true);
   await page.locator('#dev-perf').uncheck();
   await expect(page.locator('#dev-readout')).toBeHidden();

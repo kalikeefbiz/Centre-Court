@@ -11,7 +11,7 @@ export class RoyalBall {
   readonly root = new pc.Entity('Royal Rally ball: visual only');
   status: 'loading' | 'ready' | 'error' = 'loading';
   error = '';
-  visualScale = 1;
+  visualScale = 1.5;
   setVisualScale(value: number) {
     if (!validBallScale(value)) return;
     this.visualScale = value;
@@ -21,6 +21,7 @@ export class RoyalBall {
   private meshes: pc.MeshInstance[] = [];
   constructor(app: pc.Application) {
     app.root.addChild(this.root);
+    this.setVisualScale(this.visualScale);
     load(app, ROYAL_BALL.url)
       .then((resource) => {
         const model = resource.instantiateRenderEntity({ castShadows: false });

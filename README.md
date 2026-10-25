@@ -1,6 +1,6 @@
-# Centre Court · GOAL 003
+# Centre Court · GOAL 004
 
-A playable mobile-first 3D arcade singles tennis foundation by **BlackHouse**, built with PlayCanvas and TypeScript. Kira uses the owner-supplied rigged character and separate racket GLBs. The AI opponent retains its temporary model.
+A playable mobile-first 3D arcade singles tennis game in the original Crown Pavilion stadium by **BlackHouse**, built with PlayCanvas and TypeScript. Kira uses the owner-supplied rigged character and separate racket GLBs. The AI opponent retains its temporary model.
 
 **GitHub Pages:** https://kalikeefbiz.github.io/Centre-Court/
 
@@ -71,7 +71,7 @@ Pink Valkyrie replaces Pink Rebel; the old GLB remains in `public/assets/charact
 
 Royal Rally is the supplied 3D mesh and all three original PBR material maps, optimized to 512 px. The character maps are 1024 px. [Optimization report](docs/asset-optimization.json) records hashes, bytes and dimensions; tests verify every nonimage buffer and material definition against the uploaded originals. `python tools/optimize-assets.py` reproduces the derivatives (requires Pillow). No replacement model or reference-image sprite is used.
 
-Both assets are mandatory. Failed loads block match start and offer retry. The existing camera rig, scoring and match lifecycle remain the foundation. GOAL 003 adds competitive AI; GOAL 004 (Stadium & Presentation) remains next.
+Both assets are mandatory. Failed loads block match start and offer retry. The existing camera rig, scoring and match lifecycle remain the foundation. GOAL 003 adds competitive AI; GOAL 004 adds the original Crown Pavilion stadium. GOAL 005 is Final Gameplay, Animation & Visual Polish.
 
 [Current limitations](docs/LIMITATIONS.md), [verification and evidence](docs/VERIFICATION.md), and [physical iPhone acceptance](docs/IPHONE-CHECKLIST.md) document the remaining checks. Actual iPhone Safari compatibility and sustained device performance remain unverified until hardware acceptance. Older Kira integration/hotfix documents describe the previous release and are historical.
 
@@ -90,3 +90,11 @@ Choose Easy, Normal (default), or Hard in the existing setup. The opponent antic
 In `?dev=1`, enable **AI decision overlay** in the existing DEV panel. Cyan marks intended interception, yellow predicted bounce, lime recovery. Seed restart and labeled AI test feeds reproduce defensive/short-ball/open-court situations through real gameplay simulation. Export JSON includes the seed, random state, recent transitions, targets, utility, and CPU decision timing. Tools remain absent on ordinary visits.
 
 See [GOAL-003-REPORT.md](docs/GOAL-003-REPORT.md) for architecture, difficulty parameters, simulation distributions, rendered browser evidence, limitations and physical iPhone checks. Run `CC_AI_REPORT=1 npm test` to regenerate simulation measurements; `node tools/ai-evidence.mjs` captures rendered fixtures against the preview server.
+
+## Crown Pavilion stadium (GOAL 004)
+
+The blue hardcourt sits inside a graphite, faceted bowl with 24 tiered seating sections, cantilever wings, aisles, stairs, a lightweight crowd, original Centre Court ribbons and courtside equipment. Two stadium displays use the actual match score. Pause → **Stadium detail** switches between 1,180 and 645 baked spectators. Small viewports and low-core devices start reduced. **Stadium sound** toggles quiet, locally synthesized crowd ambience and point reactions; browser gesture rules still apply.
+
+The Royal Rally visual default is **1.50×**, following confirmed owner iPhone feedback. DEV tools retain all four comparison sizes; collision radius stays 0.0335 m. `?dev=1` also exposes frozen stadium inspection views; return to Gameplay camera to resume. Core cameras and tennis logic are unchanged.
+
+[GOAL 004 report](docs/GOAL-004-REPORT.md) contains architecture, measurements, rendered evidence, verification and remaining physical iPhone checks. Reproduce evidence with `node tools/stadium-evidence.mjs`; measure with `node tools/stadium-performance.mjs` (set `CC_URL` / `CC_VERSION` for baseline comparison).

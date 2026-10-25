@@ -28,7 +28,7 @@ export default defineConfig({
         this.emitFile({
           type: 'asset',
           fileName: 'release.json',
-          source: JSON.stringify({ release: 'GOAL-003', commit: buildId, assetRevision }),
+          source: JSON.stringify({ release: 'GOAL-004', commit: buildId, assetRevision }),
         });
       },
     },

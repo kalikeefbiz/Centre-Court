@@ -89,8 +89,13 @@
             <span>MOVE</span>
           </div>
           <div class="shot-controls">
-            <button id="shot-intent" aria-label="Cycle shot intent: standard, slice, lob">STANDARD ↻</button>
-            <button id="shot-button" aria-label="Tap to hit; hold to charge, drag to aim, release to swing">
+            <button id="shot-intent" aria-label="Cycle shot intent: standard, slice, lob">
+              STANDARD ↻
+            </button>
+            <button
+              id="shot-button"
+              aria-label="Tap to hit; hold to charge, drag to aim, release to swing"
+            >
               <span id="shot-name">HIT</span><small id="aim-feedback">TAP · HOLD · DRAG</small>
             </button>
             <div class="power-track"><i id="power-fill"></i><span></span></div>
@@ -102,6 +107,17 @@
           <div class="eyebrow">TAKE A BREATH</div>
           <h2>Play paused.</h2>
           <p>Your court will be right here.</p>
+          <div class="venue-settings">
+            <label
+              >STADIUM DETAIL<select id="stadium-quality">
+                <option value="full">Full crowd</option>
+                <option value="reduced">Reduced crowd · mobile</option>
+              </select></label
+            >
+            <button id="stadium-sound" class="text-button" aria-pressed="true">
+              STADIUM SOUND · ON
+            </button>
+          </div>
           <button id="resume" class="primary">RESUME MATCH <span>→</span></button
           ><button id="restart-pause" class="secondary">RESTART MATCH</button
           ><button id="menu-pause" class="text-button">RETURN TO MENU</button>
@@ -128,12 +144,15 @@
             and the landing ring.
           </p>
           <p>
-            <b>Hold, then release.</b> Tap HIT for a standard shot. Hold HIT, Space, or the court with a mouse to charge power. Release
-            when the ball is beside your athlete. Aim for the marked 70% power zone.
+            <b>Hold, then release.</b> Tap HIT for a standard shot. Hold HIT, Space, or the court
+            with a mouse to charge power. Release when the ball is beside your athlete. Aim for the
+            marked 70% power zone.
           </p>
           <p>
-            <b>Place your return.</b> Drag from HIT to aim left / right and up / down for depth. J / L aim on desktop. I / K change depth on
-            desktop. Mouse position across the court sets aim. Select 1 Drive, 2 Slice, or 3 Lob; on touch tap STANDARD ↻ to cycle standard, slice and lob. Forehand and backhand are automatic.
+            <b>Place your return.</b> Drag from HIT to aim left / right and up / down for depth. J /
+            L aim on desktop. I / K change depth on desktop. Mouse position across the court sets
+            aim. Select 1 Drive, 2 Slice, or 3 Lob; on touch tap STANDARD ↻ to cycle standard, slice
+            and lob. Forehand and backhand are automatic.
           </p>
           <p>
             <b>Serve diagonally.</b> Hold and release to serve. Two faults lose the point. A net

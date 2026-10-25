@@ -6,6 +6,9 @@ import './style.css';
 import { Match, FixedClock } from './core/match';
 import { Scene } from './render/scene';
 import { Input } from './platform/input';
+import { StadiumAudio } from './platform/stadium-audio';
+import type { StadiumQuality } from './render/stadium-geometry';
+const stadiumAudio = new StadiumAudio();
 import type { Difficulty } from './core/ai';
 import type { DeveloperTools } from './dev/tools';
 import type { MatchLength } from './core/scoring';
@@ -45,6 +48,7 @@ const updateCamera = () => {
 };
 updateCamera();
 const start = (practice: boolean) => {
+  stadiumAudio.unlock();
   if (scene.kira.status !== 'ready' || scene.royalBall.status !== 'ready') return;
   $('help').hidden = true;
   input.clear();
@@ -61,6 +65,15 @@ const menu = () => {
   match.menu();
   input.clear();
   input.enabled = false;
+};
+$<HTMLSelectElement>('stadium-quality').value = scene.stadium.quality;
+$('stadium-quality').onchange = () =>
+  scene.stadium.setQuality($<HTMLSelectElement>('stadium-quality').value as StadiumQuality);
+$('stadium-sound').onclick = () => {
+  stadiumAudio.enabled = !stadiumAudio.enabled;
+  $('stadium-sound').textContent = `STADIUM SOUND · ${stadiumAudio.enabled ? 'ON' : 'OFF'}`;
+  $('stadium-sound').setAttribute('aria-pressed', String(stadiumAudio.enabled));
+  stadiumAudio.unlock();
 };
 $('asset-retry').onclick = () => location.reload();
 $('play').onclick = () => start(false);
@@ -86,6 +99,7 @@ $('help-close').onclick = () => {
 };
 const interrupt = () => {
   match.pause();
+  stadiumAudio.update(match);
   input.clear();
   clock.reset();
 };
@@ -156,6 +170,7 @@ scene.app.on('update', (dt: number) => {
     scene.render(match, Math.min(dt, 0.1), input.charging, input.controls.shot);
   else if (!developer.inspecting) scene.renderComparison(match, Math.min(dt, 0.1));
   developer?.update(Math.min(dt, 0.1));
+  stadiumAudio.update(match);
   renderUI();
 });
 $('loading').remove();
@@ -183,9 +198,11 @@ if (
     value: {
       snapshot: () => ({
         build: __BUILD_ID__,
-        release: 'GOAL-003',
+        release: 'GOAL-004',
         developer: developer?.snapshot(),
         presentation: scene.playerPresentation(),
+        stadium: scene.stadiumPresentation(),
+        stadiumAudio: stadiumAudio.snapshot(),
         phase: match.phase,
         kira: scene.kira.snapshot(),
         royalBall: scene.royalBall.snapshot(),
