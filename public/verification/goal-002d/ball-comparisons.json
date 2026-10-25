@@ -1,0 +1,4484 @@
+[
+  {
+    "build": "e598c2a23f4bd282e10e8fd6c9fcbbc268e08310",
+    "release": "GOAL-002D",
+    "developer": {
+      "inspecting": false,
+      "frozen": true,
+      "timeline": {
+        "state": "Idle",
+        "time": 0,
+        "speed": 1,
+        "playing": true,
+        "loop": true
+      },
+      "servePrototype": false,
+      "overlayVisible": false,
+      "markersVisible": false,
+      "recent": {
+        "samples": 64,
+        "fps": 8.130701018878327,
+        "averageMs": 122.99062500000218,
+        "stddevMs": 155.87833568879424,
+        "p95Ms": 456.20000000018626,
+        "maxMs": 814.5,
+        "over33Ms": 32
+      },
+      "assets": [
+        {
+          "path": "assets/characters/kira/Meshy_AI_Pink_Valkyrie_All_Animations.glb",
+          "status": "ready",
+          "startMs": 370.19999999995343,
+          "durationMs": 1542.6999999999534
+        },
+        {
+          "path": "assets/equipment/rackets/Meshy_AI_Pink_and_Black_Tennis_1024095819_texture.glb",
+          "status": "ready",
+          "startMs": 373.19999999995343,
+          "durationMs": 643.3000000000466
+        },
+        {
+          "path": "assets/balls/royal-rally/Meshy_AI_Royal_Rally_1024220842_texture.glb",
+          "status": "ready",
+          "startMs": 374.0999999998603,
+          "durationMs": 293.4000000001397
+        }
+      ],
+      "readyMs": 2089.899999999907,
+      "renderer": [
+        390,
+        844
+      ],
+      "viewport": [
+        390,
+        844
+      ],
+      "dpr": 1,
+      "renderScale": 1,
+      "camera": "broadcast",
+      "phase": "serve",
+      "comparison": "serve",
+      "visualScale": 1,
+      "ballScreen": {
+        "x": 235.87959816367388,
+        "y": 597.4040920710828
+      },
+      "ballPixels": {
+        "css": 1.7906620588191915,
+        "render": 1.7906620588191915,
+        "onScreen": true
+      },
+      "records": []
+    },
+    "presentation": {
+      "screen": {
+        "x": 234.71637300675485,
+        "y": 628.8183510582367
+      },
+      "cameraPosition": [
+        0.1920507252216339,
+        31.99964141845703,
+        32.999813079833984
+      ],
+      "human": "Kira",
+      "temporaryHumanCount": 0,
+      "opponentCount": 1
+    },
+    "phase": "serve",
+    "kira": {
+      "status": "ready",
+      "rootEnabled": true,
+      "bodyMeshCount": 1,
+      "bodyVisible": true,
+      "racketVisible": true,
+      "texturedSkin": true,
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "state": "Idle",
+      "time": 0.5334000000000001,
+      "transitioning": false,
+      "clips": [
+        {
+          "name": "Running",
+          "duration": 0.6333330273628235
+        },
+        {
+          "name": "Walking",
+          "duration": 1.0333329439163208
+        },
+        {
+          "name": "_01a16f14_df89_70e4_966f_38087b9b2ef7",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f17_0702_776b_a578_5ae634002c9e",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f19_f977_75c8_82d3_00bd61e22843",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f1f_22af_74e9_af26_8f1aec798eb5",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f20_14b9_70d3_b4cd_5b3e4d514601",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f21_3bc1_7312_b0db_d96fda6475ea",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f27_4128_711d_a437_5651121a8e2c",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f33_ae88_77f6_8f6a_d4c208041d36",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f36_0b96_76c3_ac06_6409b3e12e89",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f37_5a33_7498_91c4_55e2e1439bac",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "Idle_7",
+          "duration": 8.733333587646484
+        }
+      ],
+      "textures": 6,
+      "hand": "mixamorig:RightHand",
+      "racketAttached": true,
+      "grip": "[0, 0.065, 0]",
+      "racketHead": [
+        2.2365018117427824,
+        0.8207214206643403,
+        12.386293203234672
+      ],
+      "hips": [
+        1.600000023841858,
+        1.022186517715454,
+        12.350000381469727
+      ],
+      "root": [
+        1.600000023841858,
+        0,
+        12.350000381469727
+      ],
+      "contactPose": null,
+      "contactId": -1,
+      "contactError": 0,
+      "contactAge": 1.5334000000000005
+    },
+    "royalBall": {
+      "status": "ready",
+      "error": "",
+      "diameter": 0.067,
+      "visualScale": 1,
+      "meshDiameter": 0.06699999871245588,
+      "visualDiameter": 0.067,
+      "collisionRadius": 0.0335,
+      "meshCount": 1,
+      "visible": true,
+      "textured": true,
+      "scale": 0.07033116505595467
+    },
+    "contact": null,
+    "renderedBall": [
+      1.600000023841858,
+      2.5999999046325684,
+      12.100000381469727
+    ],
+    "input": {
+      "x": 0,
+      "z": 0,
+      "aim": 0,
+      "depth": 0,
+      "power": 0.5,
+      "shot": "drive",
+      "release": false,
+      "charging": false,
+      "held": 0
+    },
+    "ball": {
+      "x": 1.6,
+      "y": 2.6,
+      "z": 12.1
+    },
+    "velocity": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "players": [
+      {
+        "x": 1.6,
+        "y": 0,
+        "z": 12.35
+      },
+      {
+        "x": -1.2800000000000002,
+        "y": 0,
+        "z": -10.4
+      }
+    ],
+    "server": 0,
+    "fault": 0,
+    "contacts": 0,
+    "totalPoints": 0,
+    "points": [
+      0,
+      0
+    ],
+    "games": [
+      0,
+      0
+    ],
+    "notice": "FIRST SERVE · TAP OR HOLD HIT",
+    "camera": "broadcast",
+    "drawCalls": 31,
+    "fps": 9,
+    "activeCameras": 1
+  },
+  {
+    "build": "e598c2a23f4bd282e10e8fd6c9fcbbc268e08310",
+    "release": "GOAL-002D",
+    "developer": {
+      "inspecting": false,
+      "frozen": true,
+      "timeline": {
+        "state": "Idle",
+        "time": 0,
+        "speed": 1,
+        "playing": true,
+        "loop": true
+      },
+      "servePrototype": false,
+      "overlayVisible": false,
+      "markersVisible": false,
+      "recent": {
+        "samples": 87,
+        "fps": 7.968054512483217,
+        "averageMs": 125.50114942528843,
+        "stddevMs": 138.62720578077872,
+        "p95Ms": 387,
+        "maxMs": 814.5,
+        "over33Ms": 52
+      },
+      "assets": [
+        {
+          "path": "assets/characters/kira/Meshy_AI_Pink_Valkyrie_All_Animations.glb",
+          "status": "ready",
+          "startMs": 370.19999999995343,
+          "durationMs": 1542.6999999999534
+        },
+        {
+          "path": "assets/equipment/rackets/Meshy_AI_Pink_and_Black_Tennis_1024095819_texture.glb",
+          "status": "ready",
+          "startMs": 373.19999999995343,
+          "durationMs": 643.3000000000466
+        },
+        {
+          "path": "assets/balls/royal-rally/Meshy_AI_Royal_Rally_1024220842_texture.glb",
+          "status": "ready",
+          "startMs": 374.0999999998603,
+          "durationMs": 293.4000000001397
+        }
+      ],
+      "readyMs": 2089.899999999907,
+      "renderer": [
+        390,
+        844
+      ],
+      "viewport": [
+        390,
+        844
+      ],
+      "dpr": 1,
+      "renderScale": 1,
+      "camera": "broadcast",
+      "phase": "serve",
+      "comparison": "serve",
+      "visualScale": 1.5,
+      "ballScreen": {
+        "x": 235.87940472458504,
+        "y": 597.4047335061396
+      },
+      "ballPixels": {
+        "css": 2.6859635799885804,
+        "render": 2.6859635799885804,
+        "onScreen": true
+      },
+      "records": []
+    },
+    "presentation": {
+      "screen": {
+        "x": 234.71620931670938,
+        "y": 628.81861085581
+      },
+      "cameraPosition": [
+        0.19200001657009125,
+        32,
+        33
+      ],
+      "human": "Kira",
+      "temporaryHumanCount": 0,
+      "opponentCount": 1
+    },
+    "phase": "serve",
+    "kira": {
+      "status": "ready",
+      "rootEnabled": true,
+      "bodyMeshCount": 1,
+      "bodyVisible": true,
+      "racketVisible": true,
+      "texturedSkin": true,
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "state": "Idle",
+      "time": 0.5334000000000001,
+      "transitioning": false,
+      "clips": [
+        {
+          "name": "Running",
+          "duration": 0.6333330273628235
+        },
+        {
+          "name": "Walking",
+          "duration": 1.0333329439163208
+        },
+        {
+          "name": "_01a16f14_df89_70e4_966f_38087b9b2ef7",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f17_0702_776b_a578_5ae634002c9e",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f19_f977_75c8_82d3_00bd61e22843",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f1f_22af_74e9_af26_8f1aec798eb5",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f20_14b9_70d3_b4cd_5b3e4d514601",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f21_3bc1_7312_b0db_d96fda6475ea",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f27_4128_711d_a437_5651121a8e2c",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f33_ae88_77f6_8f6a_d4c208041d36",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f36_0b96_76c3_ac06_6409b3e12e89",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f37_5a33_7498_91c4_55e2e1439bac",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "Idle_7",
+          "duration": 8.733333587646484
+        }
+      ],
+      "textures": 6,
+      "hand": "mixamorig:RightHand",
+      "racketAttached": true,
+      "grip": "[0, 0.065, 0]",
+      "racketHead": [
+        2.2365018117427824,
+        0.8207214206643403,
+        12.386293203234672
+      ],
+      "hips": [
+        1.600000023841858,
+        1.022186517715454,
+        12.350000381469727
+      ],
+      "root": [
+        1.600000023841858,
+        0,
+        12.350000381469727
+      ],
+      "contactPose": null,
+      "contactId": -1,
+      "contactError": 0,
+      "contactAge": 1.5334000000000005
+    },
+    "royalBall": {
+      "status": "ready",
+      "error": "",
+      "diameter": 0.067,
+      "visualScale": 1.5,
+      "meshDiameter": 0.10050000161752948,
+      "visualDiameter": 0.1005,
+      "collisionRadius": 0.0335,
+      "meshCount": 1,
+      "visible": true,
+      "textured": true,
+      "scale": 0.07033116505595467
+    },
+    "contact": null,
+    "renderedBall": [
+      1.600000023841858,
+      2.5999999046325684,
+      12.100000381469727
+    ],
+    "input": {
+      "x": 0,
+      "z": 0,
+      "aim": 0,
+      "depth": 0,
+      "power": 0.5,
+      "shot": "drive",
+      "release": false,
+      "charging": false,
+      "held": 0
+    },
+    "ball": {
+      "x": 1.6,
+      "y": 2.6,
+      "z": 12.1
+    },
+    "velocity": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "players": [
+      {
+        "x": 1.6,
+        "y": 0,
+        "z": 12.35
+      },
+      {
+        "x": -1.2800000000000002,
+        "y": 0,
+        "z": -10.4
+      }
+    ],
+    "server": 0,
+    "fault": 0,
+    "contacts": 0,
+    "totalPoints": 0,
+    "points": [
+      0,
+      0
+    ],
+    "games": [
+      0,
+      0
+    ],
+    "notice": "FIRST SERVE · TAP OR HOLD HIT",
+    "camera": "broadcast",
+    "drawCalls": 31,
+    "fps": 8,
+    "activeCameras": 1
+  },
+  {
+    "build": "e598c2a23f4bd282e10e8fd6c9fcbbc268e08310",
+    "release": "GOAL-002D",
+    "developer": {
+      "inspecting": false,
+      "frozen": true,
+      "timeline": {
+        "state": "Idle",
+        "time": 0,
+        "speed": 1,
+        "playing": true,
+        "loop": true
+      },
+      "servePrototype": false,
+      "overlayVisible": false,
+      "markersVisible": false,
+      "recent": {
+        "samples": 111,
+        "fps": 7.942754919499105,
+        "averageMs": 125.90090090090091,
+        "stddevMs": 130.08435758875055,
+        "p95Ms": 387,
+        "maxMs": 814.5,
+        "over33Ms": 70
+      },
+      "assets": [
+        {
+          "path": "assets/characters/kira/Meshy_AI_Pink_Valkyrie_All_Animations.glb",
+          "status": "ready",
+          "startMs": 370.19999999995343,
+          "durationMs": 1542.6999999999534
+        },
+        {
+          "path": "assets/equipment/rackets/Meshy_AI_Pink_and_Black_Tennis_1024095819_texture.glb",
+          "status": "ready",
+          "startMs": 373.19999999995343,
+          "durationMs": 643.3000000000466
+        },
+        {
+          "path": "assets/balls/royal-rally/Meshy_AI_Royal_Rally_1024220842_texture.glb",
+          "status": "ready",
+          "startMs": 374.0999999998603,
+          "durationMs": 293.4000000001397
+        }
+      ],
+      "readyMs": 2089.899999999907,
+      "renderer": [
+        390,
+        844
+      ],
+      "viewport": [
+        390,
+        844
+      ],
+      "dpr": 1,
+      "renderScale": 1,
+      "camera": "broadcast",
+      "phase": "serve",
+      "comparison": "serve",
+      "visualScale": 1.75,
+      "ballScreen": {
+        "x": 235.87940469634535,
+        "y": 597.4047334662887
+      },
+      "ballPixels": {
+        "css": 3.133624176587511,
+        "render": 3.133624176587511,
+        "onScreen": true
+      },
+      "records": []
+    },
+    "presentation": {
+      "screen": {
+        "x": 234.71620927743834,
+        "y": 628.8186108164144
+      },
+      "cameraPosition": [
+        0.19200000166893005,
+        32,
+        33
+      ],
+      "human": "Kira",
+      "temporaryHumanCount": 0,
+      "opponentCount": 1
+    },
+    "phase": "serve",
+    "kira": {
+      "status": "ready",
+      "rootEnabled": true,
+      "bodyMeshCount": 1,
+      "bodyVisible": true,
+      "racketVisible": true,
+      "texturedSkin": true,
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "state": "Idle",
+      "time": 0.5334000000000001,
+      "transitioning": false,
+      "clips": [
+        {
+          "name": "Running",
+          "duration": 0.6333330273628235
+        },
+        {
+          "name": "Walking",
+          "duration": 1.0333329439163208
+        },
+        {
+          "name": "_01a16f14_df89_70e4_966f_38087b9b2ef7",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f17_0702_776b_a578_5ae634002c9e",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f19_f977_75c8_82d3_00bd61e22843",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f1f_22af_74e9_af26_8f1aec798eb5",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f20_14b9_70d3_b4cd_5b3e4d514601",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f21_3bc1_7312_b0db_d96fda6475ea",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f27_4128_711d_a437_5651121a8e2c",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f33_ae88_77f6_8f6a_d4c208041d36",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f36_0b96_76c3_ac06_6409b3e12e89",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f37_5a33_7498_91c4_55e2e1439bac",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "Idle_7",
+          "duration": 8.733333587646484
+        }
+      ],
+      "textures": 6,
+      "hand": "mixamorig:RightHand",
+      "racketAttached": true,
+      "grip": "[0, 0.065, 0]",
+      "racketHead": [
+        2.2365018117427824,
+        0.8207214206643403,
+        12.386293203234672
+      ],
+      "hips": [
+        1.600000023841858,
+        1.022186517715454,
+        12.350000381469727
+      ],
+      "root": [
+        1.600000023841858,
+        0,
+        12.350000381469727
+      ],
+      "contactPose": null,
+      "contactId": -1,
+      "contactError": 0,
+      "contactAge": 1.5334000000000005
+    },
+    "royalBall": {
+      "status": "ready",
+      "error": "",
+      "diameter": 0.067,
+      "visualScale": 1.75,
+      "meshDiameter": 0.11724999952122062,
+      "visualDiameter": 0.11725000000000001,
+      "collisionRadius": 0.0335,
+      "meshCount": 1,
+      "visible": true,
+      "textured": true,
+      "scale": 0.07033116505595467
+    },
+    "contact": null,
+    "renderedBall": [
+      1.600000023841858,
+      2.5999999046325684,
+      12.100000381469727
+    ],
+    "input": {
+      "x": 0,
+      "z": 0,
+      "aim": 0,
+      "depth": 0,
+      "power": 0.5,
+      "shot": "drive",
+      "release": false,
+      "charging": false,
+      "held": 0
+    },
+    "ball": {
+      "x": 1.6,
+      "y": 2.6,
+      "z": 12.1
+    },
+    "velocity": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "players": [
+      {
+        "x": 1.6,
+        "y": 0,
+        "z": 12.35
+      },
+      {
+        "x": -1.2800000000000002,
+        "y": 0,
+        "z": -10.4
+      }
+    ],
+    "server": 0,
+    "fault": 0,
+    "contacts": 0,
+    "totalPoints": 0,
+    "points": [
+      0,
+      0
+    ],
+    "games": [
+      0,
+      0
+    ],
+    "notice": "FIRST SERVE · TAP OR HOLD HIT",
+    "camera": "broadcast",
+    "drawCalls": 31,
+    "fps": 6,
+    "activeCameras": 1
+  },
+  {
+    "build": "e598c2a23f4bd282e10e8fd6c9fcbbc268e08310",
+    "release": "GOAL-002D",
+    "developer": {
+      "inspecting": false,
+      "frozen": true,
+      "timeline": {
+        "state": "Idle",
+        "time": 0,
+        "speed": 1,
+        "playing": true,
+        "loop": true
+      },
+      "servePrototype": false,
+      "overlayVisible": false,
+      "markersVisible": false,
+      "recent": {
+        "samples": 139,
+        "fps": 8.16729439277043,
+        "averageMs": 122.43956834532442,
+        "stddevMs": 120.91026675600104,
+        "p95Ms": 384.5999999998603,
+        "maxMs": 814.5,
+        "over33Ms": 91
+      },
+      "assets": [
+        {
+          "path": "assets/characters/kira/Meshy_AI_Pink_Valkyrie_All_Animations.glb",
+          "status": "ready",
+          "startMs": 370.19999999995343,
+          "durationMs": 1542.6999999999534
+        },
+        {
+          "path": "assets/equipment/rackets/Meshy_AI_Pink_and_Black_Tennis_1024095819_texture.glb",
+          "status": "ready",
+          "startMs": 373.19999999995343,
+          "durationMs": 643.3000000000466
+        },
+        {
+          "path": "assets/balls/royal-rally/Meshy_AI_Royal_Rally_1024220842_texture.glb",
+          "status": "ready",
+          "startMs": 374.0999999998603,
+          "durationMs": 293.4000000001397
+        }
+      ],
+      "readyMs": 2089.899999999907,
+      "renderer": [
+        390,
+        844
+      ],
+      "viewport": [
+        390,
+        844
+      ],
+      "dpr": 1,
+      "renderScale": 1,
+      "camera": "broadcast",
+      "phase": "serve",
+      "comparison": "near",
+      "visualScale": 1,
+      "ballScreen": {
+        "x": 193.88393630648042,
+        "y": 538.321755094148
+      },
+      "ballPixels": {
+        "css": 1.6065487603239497,
+        "render": 1.6065487603239494,
+        "onScreen": true
+      },
+      "records": []
+    },
+    "presentation": {
+      "screen": {
+        "x": 234.71620927743834,
+        "y": 628.8186108164144
+      },
+      "cameraPosition": [
+        0.19200000166893005,
+        32,
+        33
+      ],
+      "human": "Kira",
+      "temporaryHumanCount": 0,
+      "opponentCount": 1
+    },
+    "phase": "serve",
+    "kira": {
+      "status": "ready",
+      "rootEnabled": true,
+      "bodyMeshCount": 1,
+      "bodyVisible": true,
+      "racketVisible": true,
+      "texturedSkin": true,
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "state": "Idle",
+      "time": 0.5334000000000001,
+      "transitioning": false,
+      "clips": [
+        {
+          "name": "Running",
+          "duration": 0.6333330273628235
+        },
+        {
+          "name": "Walking",
+          "duration": 1.0333329439163208
+        },
+        {
+          "name": "_01a16f14_df89_70e4_966f_38087b9b2ef7",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f17_0702_776b_a578_5ae634002c9e",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f19_f977_75c8_82d3_00bd61e22843",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f1f_22af_74e9_af26_8f1aec798eb5",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f20_14b9_70d3_b4cd_5b3e4d514601",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f21_3bc1_7312_b0db_d96fda6475ea",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f27_4128_711d_a437_5651121a8e2c",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f33_ae88_77f6_8f6a_d4c208041d36",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f36_0b96_76c3_ac06_6409b3e12e89",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f37_5a33_7498_91c4_55e2e1439bac",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "Idle_7",
+          "duration": 8.733333587646484
+        }
+      ],
+      "textures": 6,
+      "hand": "mixamorig:RightHand",
+      "racketAttached": true,
+      "grip": "[0, 0.065, 0]",
+      "racketHead": [
+        2.2365018117427824,
+        0.8207214206643403,
+        12.386293203234672
+      ],
+      "hips": [
+        1.600000023841858,
+        1.022186517715454,
+        12.350000381469727
+      ],
+      "root": [
+        1.600000023841858,
+        0,
+        12.350000381469727
+      ],
+      "contactPose": null,
+      "contactId": -1,
+      "contactError": 0,
+      "contactAge": 1.5334000000000005
+    },
+    "royalBall": {
+      "status": "ready",
+      "error": "",
+      "diameter": 0.067,
+      "visualScale": 1,
+      "meshDiameter": 0.06699999871245588,
+      "visualDiameter": 0.067,
+      "collisionRadius": 0.0335,
+      "meshCount": 1,
+      "visible": true,
+      "textured": true,
+      "scale": 0.07033116505595467
+    },
+    "contact": null,
+    "renderedBall": [
+      0,
+      1,
+      8
+    ],
+    "input": {
+      "x": 0,
+      "z": 0,
+      "aim": 0,
+      "depth": 0,
+      "power": 0.5,
+      "shot": "drive",
+      "release": false,
+      "charging": false,
+      "held": 0
+    },
+    "ball": {
+      "x": 1.6,
+      "y": 2.6,
+      "z": 12.1
+    },
+    "velocity": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "players": [
+      {
+        "x": 1.6,
+        "y": 0,
+        "z": 12.35
+      },
+      {
+        "x": -1.2800000000000002,
+        "y": 0,
+        "z": -10.4
+      }
+    ],
+    "server": 0,
+    "fault": 0,
+    "contacts": 0,
+    "totalPoints": 0,
+    "points": [
+      0,
+      0
+    ],
+    "games": [
+      0,
+      0
+    ],
+    "notice": "FIRST SERVE · TAP OR HOLD HIT",
+    "camera": "broadcast",
+    "drawCalls": 31,
+    "fps": 9,
+    "activeCameras": 1
+  },
+  {
+    "build": "e598c2a23f4bd282e10e8fd6c9fcbbc268e08310",
+    "release": "GOAL-002D",
+    "developer": {
+      "inspecting": false,
+      "frozen": true,
+      "timeline": {
+        "state": "Idle",
+        "time": 0,
+        "speed": 1,
+        "playing": true,
+        "loop": true
+      },
+      "servePrototype": false,
+      "overlayVisible": false,
+      "markersVisible": false,
+      "recent": {
+        "samples": 164,
+        "fps": 8.06808678112855,
+        "averageMs": 123.9451219512195,
+        "stddevMs": 114.9719866754776,
+        "p95Ms": 305.10000000009313,
+        "maxMs": 814.5,
+        "over33Ms": 113
+      },
+      "assets": [
+        {
+          "path": "assets/characters/kira/Meshy_AI_Pink_Valkyrie_All_Animations.glb",
+          "status": "ready",
+          "startMs": 370.19999999995343,
+          "durationMs": 1542.6999999999534
+        },
+        {
+          "path": "assets/equipment/rackets/Meshy_AI_Pink_and_Black_Tennis_1024095819_texture.glb",
+          "status": "ready",
+          "startMs": 373.19999999995343,
+          "durationMs": 643.3000000000466
+        },
+        {
+          "path": "assets/balls/royal-rally/Meshy_AI_Royal_Rally_1024220842_texture.glb",
+          "status": "ready",
+          "startMs": 374.0999999998603,
+          "durationMs": 293.4000000001397
+        }
+      ],
+      "readyMs": 2089.899999999907,
+      "renderer": [
+        390,
+        844
+      ],
+      "viewport": [
+        390,
+        844
+      ],
+      "dpr": 1,
+      "renderScale": 1,
+      "camera": "broadcast",
+      "phase": "serve",
+      "comparison": "near",
+      "visualScale": 1.5,
+      "ballScreen": {
+        "x": 193.88393630648042,
+        "y": 538.321755094148
+      },
+      "ballPixels": {
+        "css": 2.4098231404859245,
+        "render": 2.4098231404859245,
+        "onScreen": true
+      },
+      "records": []
+    },
+    "presentation": {
+      "screen": {
+        "x": 234.71620927743834,
+        "y": 628.8186108164144
+      },
+      "cameraPosition": [
+        0.19200000166893005,
+        32,
+        33
+      ],
+      "human": "Kira",
+      "temporaryHumanCount": 0,
+      "opponentCount": 1
+    },
+    "phase": "serve",
+    "kira": {
+      "status": "ready",
+      "rootEnabled": true,
+      "bodyMeshCount": 1,
+      "bodyVisible": true,
+      "racketVisible": true,
+      "texturedSkin": true,
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "state": "Idle",
+      "time": 0.5334000000000001,
+      "transitioning": false,
+      "clips": [
+        {
+          "name": "Running",
+          "duration": 0.6333330273628235
+        },
+        {
+          "name": "Walking",
+          "duration": 1.0333329439163208
+        },
+        {
+          "name": "_01a16f14_df89_70e4_966f_38087b9b2ef7",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f17_0702_776b_a578_5ae634002c9e",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f19_f977_75c8_82d3_00bd61e22843",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f1f_22af_74e9_af26_8f1aec798eb5",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f20_14b9_70d3_b4cd_5b3e4d514601",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f21_3bc1_7312_b0db_d96fda6475ea",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f27_4128_711d_a437_5651121a8e2c",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f33_ae88_77f6_8f6a_d4c208041d36",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f36_0b96_76c3_ac06_6409b3e12e89",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f37_5a33_7498_91c4_55e2e1439bac",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "Idle_7",
+          "duration": 8.733333587646484
+        }
+      ],
+      "textures": 6,
+      "hand": "mixamorig:RightHand",
+      "racketAttached": true,
+      "grip": "[0, 0.065, 0]",
+      "racketHead": [
+        2.2365018117427824,
+        0.8207214206643403,
+        12.386293203234672
+      ],
+      "hips": [
+        1.600000023841858,
+        1.022186517715454,
+        12.350000381469727
+      ],
+      "root": [
+        1.600000023841858,
+        0,
+        12.350000381469727
+      ],
+      "contactPose": null,
+      "contactId": -1,
+      "contactError": 0,
+      "contactAge": 1.5334000000000005
+    },
+    "royalBall": {
+      "status": "ready",
+      "error": "",
+      "diameter": 0.067,
+      "visualScale": 1.5,
+      "meshDiameter": 0.10050000161752948,
+      "visualDiameter": 0.1005,
+      "collisionRadius": 0.0335,
+      "meshCount": 1,
+      "visible": true,
+      "textured": true,
+      "scale": 0.07033116505595467
+    },
+    "contact": null,
+    "renderedBall": [
+      0,
+      1,
+      8
+    ],
+    "input": {
+      "x": 0,
+      "z": 0,
+      "aim": 0,
+      "depth": 0,
+      "power": 0.5,
+      "shot": "drive",
+      "release": false,
+      "charging": false,
+      "held": 0
+    },
+    "ball": {
+      "x": 1.6,
+      "y": 2.6,
+      "z": 12.1
+    },
+    "velocity": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "players": [
+      {
+        "x": 1.6,
+        "y": 0,
+        "z": 12.35
+      },
+      {
+        "x": -1.2800000000000002,
+        "y": 0,
+        "z": -10.4
+      }
+    ],
+    "server": 0,
+    "fault": 0,
+    "contacts": 0,
+    "totalPoints": 0,
+    "points": [
+      0,
+      0
+    ],
+    "games": [
+      0,
+      0
+    ],
+    "notice": "FIRST SERVE · TAP OR HOLD HIT",
+    "camera": "broadcast",
+    "drawCalls": 31,
+    "fps": 8,
+    "activeCameras": 1
+  },
+  {
+    "build": "e598c2a23f4bd282e10e8fd6c9fcbbc268e08310",
+    "release": "GOAL-002D",
+    "developer": {
+      "inspecting": false,
+      "frozen": true,
+      "timeline": {
+        "state": "Idle",
+        "time": 0,
+        "speed": 1,
+        "playing": true,
+        "loop": true
+      },
+      "servePrototype": false,
+      "overlayVisible": false,
+      "markersVisible": false,
+      "recent": {
+        "samples": 189,
+        "fps": 8.050466628898997,
+        "averageMs": 124.21640211640286,
+        "stddevMs": 109.92185630198951,
+        "p95Ms": 295.69999999995343,
+        "maxMs": 814.5,
+        "over33Ms": 134
+      },
+      "assets": [
+        {
+          "path": "assets/characters/kira/Meshy_AI_Pink_Valkyrie_All_Animations.glb",
+          "status": "ready",
+          "startMs": 370.19999999995343,
+          "durationMs": 1542.6999999999534
+        },
+        {
+          "path": "assets/equipment/rackets/Meshy_AI_Pink_and_Black_Tennis_1024095819_texture.glb",
+          "status": "ready",
+          "startMs": 373.19999999995343,
+          "durationMs": 643.3000000000466
+        },
+        {
+          "path": "assets/balls/royal-rally/Meshy_AI_Royal_Rally_1024220842_texture.glb",
+          "status": "ready",
+          "startMs": 374.0999999998603,
+          "durationMs": 293.4000000001397
+        }
+      ],
+      "readyMs": 2089.899999999907,
+      "renderer": [
+        390,
+        844
+      ],
+      "viewport": [
+        390,
+        844
+      ],
+      "dpr": 1,
+      "renderScale": 1,
+      "camera": "broadcast",
+      "phase": "serve",
+      "comparison": "near",
+      "visualScale": 1.75,
+      "ballScreen": {
+        "x": 193.88393630648042,
+        "y": 538.321755094148
+      },
+      "ballPixels": {
+        "css": 2.811460330566912,
+        "render": 2.8114603305669124,
+        "onScreen": true
+      },
+      "records": []
+    },
+    "presentation": {
+      "screen": {
+        "x": 234.71620927743834,
+        "y": 628.8186108164144
+      },
+      "cameraPosition": [
+        0.19200000166893005,
+        32,
+        33
+      ],
+      "human": "Kira",
+      "temporaryHumanCount": 0,
+      "opponentCount": 1
+    },
+    "phase": "serve",
+    "kira": {
+      "status": "ready",
+      "rootEnabled": true,
+      "bodyMeshCount": 1,
+      "bodyVisible": true,
+      "racketVisible": true,
+      "texturedSkin": true,
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "state": "Idle",
+      "time": 0.5334000000000001,
+      "transitioning": false,
+      "clips": [
+        {
+          "name": "Running",
+          "duration": 0.6333330273628235
+        },
+        {
+          "name": "Walking",
+          "duration": 1.0333329439163208
+        },
+        {
+          "name": "_01a16f14_df89_70e4_966f_38087b9b2ef7",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f17_0702_776b_a578_5ae634002c9e",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f19_f977_75c8_82d3_00bd61e22843",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f1f_22af_74e9_af26_8f1aec798eb5",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f20_14b9_70d3_b4cd_5b3e4d514601",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f21_3bc1_7312_b0db_d96fda6475ea",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f27_4128_711d_a437_5651121a8e2c",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f33_ae88_77f6_8f6a_d4c208041d36",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f36_0b96_76c3_ac06_6409b3e12e89",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f37_5a33_7498_91c4_55e2e1439bac",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "Idle_7",
+          "duration": 8.733333587646484
+        }
+      ],
+      "textures": 6,
+      "hand": "mixamorig:RightHand",
+      "racketAttached": true,
+      "grip": "[0, 0.065, 0]",
+      "racketHead": [
+        2.2365018117427824,
+        0.8207214206643403,
+        12.386293203234672
+      ],
+      "hips": [
+        1.600000023841858,
+        1.022186517715454,
+        12.350000381469727
+      ],
+      "root": [
+        1.600000023841858,
+        0,
+        12.350000381469727
+      ],
+      "contactPose": null,
+      "contactId": -1,
+      "contactError": 0,
+      "contactAge": 1.5334000000000005
+    },
+    "royalBall": {
+      "status": "ready",
+      "error": "",
+      "diameter": 0.067,
+      "visualScale": 1.75,
+      "meshDiameter": 0.11724999952122062,
+      "visualDiameter": 0.11725000000000001,
+      "collisionRadius": 0.0335,
+      "meshCount": 1,
+      "visible": true,
+      "textured": true,
+      "scale": 0.07033116505595467
+    },
+    "contact": null,
+    "renderedBall": [
+      0,
+      1,
+      8
+    ],
+    "input": {
+      "x": 0,
+      "z": 0,
+      "aim": 0,
+      "depth": 0,
+      "power": 0.5,
+      "shot": "drive",
+      "release": false,
+      "charging": false,
+      "held": 0
+    },
+    "ball": {
+      "x": 1.6,
+      "y": 2.6,
+      "z": 12.1
+    },
+    "velocity": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "players": [
+      {
+        "x": 1.6,
+        "y": 0,
+        "z": 12.35
+      },
+      {
+        "x": -1.2800000000000002,
+        "y": 0,
+        "z": -10.4
+      }
+    ],
+    "server": 0,
+    "fault": 0,
+    "contacts": 0,
+    "totalPoints": 0,
+    "points": [
+      0,
+      0
+    ],
+    "games": [
+      0,
+      0
+    ],
+    "notice": "FIRST SERVE · TAP OR HOLD HIT",
+    "camera": "broadcast",
+    "drawCalls": 31,
+    "fps": 8,
+    "activeCameras": 1
+  },
+  {
+    "build": "e598c2a23f4bd282e10e8fd6c9fcbbc268e08310",
+    "release": "GOAL-002D",
+    "developer": {
+      "inspecting": false,
+      "frozen": true,
+      "timeline": {
+        "state": "Idle",
+        "time": 0,
+        "speed": 1,
+        "playing": true,
+        "loop": true
+      },
+      "servePrototype": false,
+      "overlayVisible": false,
+      "markersVisible": false,
+      "recent": {
+        "samples": 214,
+        "fps": 7.962346287649061,
+        "averageMs": 125.5911214953271,
+        "stddevMs": 107.9523755572855,
+        "p95Ms": 295.69999999995343,
+        "maxMs": 814.5,
+        "over33Ms": 154
+      },
+      "assets": [
+        {
+          "path": "assets/characters/kira/Meshy_AI_Pink_Valkyrie_All_Animations.glb",
+          "status": "ready",
+          "startMs": 370.19999999995343,
+          "durationMs": 1542.6999999999534
+        },
+        {
+          "path": "assets/equipment/rackets/Meshy_AI_Pink_and_Black_Tennis_1024095819_texture.glb",
+          "status": "ready",
+          "startMs": 373.19999999995343,
+          "durationMs": 643.3000000000466
+        },
+        {
+          "path": "assets/balls/royal-rally/Meshy_AI_Royal_Rally_1024220842_texture.glb",
+          "status": "ready",
+          "startMs": 374.0999999998603,
+          "durationMs": 293.4000000001397
+        }
+      ],
+      "readyMs": 2089.899999999907,
+      "renderer": [
+        390,
+        844
+      ],
+      "viewport": [
+        390,
+        844
+      ],
+      "dpr": 1,
+      "renderScale": 1,
+      "camera": "broadcast",
+      "phase": "serve",
+      "comparison": "far",
+      "visualScale": 1,
+      "ballScreen": {
+        "x": 195.86477507112588,
+        "y": 305.19222198838463
+      },
+      "ballPixels": {
+        "css": 1.2448240648760118,
+        "render": 1.2448240648760118,
+        "onScreen": true
+      },
+      "records": []
+    },
+    "presentation": {
+      "screen": {
+        "x": 234.71620927743834,
+        "y": 628.8186108164144
+      },
+      "cameraPosition": [
+        0.19200000166893005,
+        32,
+        33
+      ],
+      "human": "Kira",
+      "temporaryHumanCount": 0,
+      "opponentCount": 1
+    },
+    "phase": "serve",
+    "kira": {
+      "status": "ready",
+      "rootEnabled": true,
+      "bodyMeshCount": 1,
+      "bodyVisible": true,
+      "racketVisible": true,
+      "texturedSkin": true,
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "state": "Idle",
+      "time": 0.5334000000000001,
+      "transitioning": false,
+      "clips": [
+        {
+          "name": "Running",
+          "duration": 0.6333330273628235
+        },
+        {
+          "name": "Walking",
+          "duration": 1.0333329439163208
+        },
+        {
+          "name": "_01a16f14_df89_70e4_966f_38087b9b2ef7",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f17_0702_776b_a578_5ae634002c9e",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f19_f977_75c8_82d3_00bd61e22843",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f1f_22af_74e9_af26_8f1aec798eb5",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f20_14b9_70d3_b4cd_5b3e4d514601",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f21_3bc1_7312_b0db_d96fda6475ea",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f27_4128_711d_a437_5651121a8e2c",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f33_ae88_77f6_8f6a_d4c208041d36",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f36_0b96_76c3_ac06_6409b3e12e89",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f37_5a33_7498_91c4_55e2e1439bac",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "Idle_7",
+          "duration": 8.733333587646484
+        }
+      ],
+      "textures": 6,
+      "hand": "mixamorig:RightHand",
+      "racketAttached": true,
+      "grip": "[0, 0.065, 0]",
+      "racketHead": [
+        2.2365018117427824,
+        0.8207214206643403,
+        12.386293203234672
+      ],
+      "hips": [
+        1.600000023841858,
+        1.022186517715454,
+        12.350000381469727
+      ],
+      "root": [
+        1.600000023841858,
+        0,
+        12.350000381469727
+      ],
+      "contactPose": null,
+      "contactId": -1,
+      "contactError": 0,
+      "contactAge": 1.5334000000000005
+    },
+    "royalBall": {
+      "status": "ready",
+      "error": "",
+      "diameter": 0.067,
+      "visualScale": 1,
+      "meshDiameter": 0.06699999871245588,
+      "visualDiameter": 0.067,
+      "collisionRadius": 0.0335,
+      "meshCount": 1,
+      "visible": true,
+      "textured": true,
+      "scale": 0.07033116505595467
+    },
+    "contact": null,
+    "renderedBall": [
+      0,
+      1,
+      -8
+    ],
+    "input": {
+      "x": 0,
+      "z": 0,
+      "aim": 0,
+      "depth": 0,
+      "power": 0.5,
+      "shot": "drive",
+      "release": false,
+      "charging": false,
+      "held": 0
+    },
+    "ball": {
+      "x": 1.6,
+      "y": 2.6,
+      "z": 12.1
+    },
+    "velocity": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "players": [
+      {
+        "x": 1.6,
+        "y": 0,
+        "z": 12.35
+      },
+      {
+        "x": -1.2800000000000002,
+        "y": 0,
+        "z": -10.4
+      }
+    ],
+    "server": 0,
+    "fault": 0,
+    "contacts": 0,
+    "totalPoints": 0,
+    "points": [
+      0,
+      0
+    ],
+    "games": [
+      0,
+      0
+    ],
+    "notice": "FIRST SERVE · TAP OR HOLD HIT",
+    "camera": "broadcast",
+    "drawCalls": 31,
+    "fps": 6,
+    "activeCameras": 1
+  },
+  {
+    "build": "e598c2a23f4bd282e10e8fd6c9fcbbc268e08310",
+    "release": "GOAL-002D",
+    "developer": {
+      "inspecting": false,
+      "frozen": true,
+      "timeline": {
+        "state": "Idle",
+        "time": 0,
+        "speed": 1,
+        "playing": true,
+        "loop": true
+      },
+      "servePrototype": false,
+      "overlayVisible": false,
+      "markersVisible": false,
+      "recent": {
+        "samples": 239,
+        "fps": 7.963958920633602,
+        "averageMs": 125.56569037656982,
+        "stddevMs": 104.60022557838603,
+        "p95Ms": 294.30000000004657,
+        "maxMs": 814.5,
+        "over33Ms": 174
+      },
+      "assets": [
+        {
+          "path": "assets/characters/kira/Meshy_AI_Pink_Valkyrie_All_Animations.glb",
+          "status": "ready",
+          "startMs": 370.19999999995343,
+          "durationMs": 1542.6999999999534
+        },
+        {
+          "path": "assets/equipment/rackets/Meshy_AI_Pink_and_Black_Tennis_1024095819_texture.glb",
+          "status": "ready",
+          "startMs": 373.19999999995343,
+          "durationMs": 643.3000000000466
+        },
+        {
+          "path": "assets/balls/royal-rally/Meshy_AI_Royal_Rally_1024220842_texture.glb",
+          "status": "ready",
+          "startMs": 374.0999999998603,
+          "durationMs": 293.4000000001397
+        }
+      ],
+      "readyMs": 2089.899999999907,
+      "renderer": [
+        390,
+        844
+      ],
+      "viewport": [
+        390,
+        844
+      ],
+      "dpr": 1,
+      "renderScale": 1,
+      "camera": "broadcast",
+      "phase": "serve",
+      "comparison": "far",
+      "visualScale": 1.5,
+      "ballScreen": {
+        "x": 195.86477507112588,
+        "y": 305.19222198838463
+      },
+      "ballPixels": {
+        "css": 1.8672360973140179,
+        "render": 1.8672360973140179,
+        "onScreen": true
+      },
+      "records": []
+    },
+    "presentation": {
+      "screen": {
+        "x": 234.71620927743834,
+        "y": 628.8186108164144
+      },
+      "cameraPosition": [
+        0.19200000166893005,
+        32,
+        33
+      ],
+      "human": "Kira",
+      "temporaryHumanCount": 0,
+      "opponentCount": 1
+    },
+    "phase": "serve",
+    "kira": {
+      "status": "ready",
+      "rootEnabled": true,
+      "bodyMeshCount": 1,
+      "bodyVisible": true,
+      "racketVisible": true,
+      "texturedSkin": true,
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "state": "Idle",
+      "time": 0.5334000000000001,
+      "transitioning": false,
+      "clips": [
+        {
+          "name": "Running",
+          "duration": 0.6333330273628235
+        },
+        {
+          "name": "Walking",
+          "duration": 1.0333329439163208
+        },
+        {
+          "name": "_01a16f14_df89_70e4_966f_38087b9b2ef7",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f17_0702_776b_a578_5ae634002c9e",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f19_f977_75c8_82d3_00bd61e22843",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f1f_22af_74e9_af26_8f1aec798eb5",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f20_14b9_70d3_b4cd_5b3e4d514601",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f21_3bc1_7312_b0db_d96fda6475ea",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f27_4128_711d_a437_5651121a8e2c",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f33_ae88_77f6_8f6a_d4c208041d36",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f36_0b96_76c3_ac06_6409b3e12e89",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f37_5a33_7498_91c4_55e2e1439bac",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "Idle_7",
+          "duration": 8.733333587646484
+        }
+      ],
+      "textures": 6,
+      "hand": "mixamorig:RightHand",
+      "racketAttached": true,
+      "grip": "[0, 0.065, 0]",
+      "racketHead": [
+        2.2365018117427824,
+        0.8207214206643403,
+        12.386293203234672
+      ],
+      "hips": [
+        1.600000023841858,
+        1.022186517715454,
+        12.350000381469727
+      ],
+      "root": [
+        1.600000023841858,
+        0,
+        12.350000381469727
+      ],
+      "contactPose": null,
+      "contactId": -1,
+      "contactError": 0,
+      "contactAge": 1.5334000000000005
+    },
+    "royalBall": {
+      "status": "ready",
+      "error": "",
+      "diameter": 0.067,
+      "visualScale": 1.5,
+      "meshDiameter": 0.10050000161752948,
+      "visualDiameter": 0.1005,
+      "collisionRadius": 0.0335,
+      "meshCount": 1,
+      "visible": true,
+      "textured": true,
+      "scale": 0.07033116505595467
+    },
+    "contact": null,
+    "renderedBall": [
+      0,
+      1,
+      -8
+    ],
+    "input": {
+      "x": 0,
+      "z": 0,
+      "aim": 0,
+      "depth": 0,
+      "power": 0.5,
+      "shot": "drive",
+      "release": false,
+      "charging": false,
+      "held": 0
+    },
+    "ball": {
+      "x": 1.6,
+      "y": 2.6,
+      "z": 12.1
+    },
+    "velocity": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "players": [
+      {
+        "x": 1.6,
+        "y": 0,
+        "z": 12.35
+      },
+      {
+        "x": -1.2800000000000002,
+        "y": 0,
+        "z": -10.4
+      }
+    ],
+    "server": 0,
+    "fault": 0,
+    "contacts": 0,
+    "totalPoints": 0,
+    "points": [
+      0,
+      0
+    ],
+    "games": [
+      0,
+      0
+    ],
+    "notice": "FIRST SERVE · TAP OR HOLD HIT",
+    "camera": "broadcast",
+    "drawCalls": 31,
+    "fps": 8,
+    "activeCameras": 1
+  },
+  {
+    "build": "e598c2a23f4bd282e10e8fd6c9fcbbc268e08310",
+    "release": "GOAL-002D",
+    "developer": {
+      "inspecting": false,
+      "frozen": true,
+      "timeline": {
+        "state": "Idle",
+        "time": 0,
+        "speed": 1,
+        "playing": true,
+        "loop": true
+      },
+      "servePrototype": false,
+      "overlayVisible": false,
+      "markersVisible": false,
+      "recent": {
+        "samples": 262,
+        "fps": 7.909839901217561,
+        "averageMs": 126.42480916030551,
+        "stddevMs": 102.10815005751554,
+        "p95Ms": 291.29999999981374,
+        "maxMs": 814.5,
+        "over33Ms": 194
+      },
+      "assets": [
+        {
+          "path": "assets/characters/kira/Meshy_AI_Pink_Valkyrie_All_Animations.glb",
+          "status": "ready",
+          "startMs": 370.19999999995343,
+          "durationMs": 1542.6999999999534
+        },
+        {
+          "path": "assets/equipment/rackets/Meshy_AI_Pink_and_Black_Tennis_1024095819_texture.glb",
+          "status": "ready",
+          "startMs": 373.19999999995343,
+          "durationMs": 643.3000000000466
+        },
+        {
+          "path": "assets/balls/royal-rally/Meshy_AI_Royal_Rally_1024220842_texture.glb",
+          "status": "ready",
+          "startMs": 374.0999999998603,
+          "durationMs": 293.4000000001397
+        }
+      ],
+      "readyMs": 2089.899999999907,
+      "renderer": [
+        390,
+        844
+      ],
+      "viewport": [
+        390,
+        844
+      ],
+      "dpr": 1,
+      "renderScale": 1,
+      "camera": "broadcast",
+      "phase": "serve",
+      "comparison": "far",
+      "visualScale": 1.75,
+      "ballScreen": {
+        "x": 195.86477507112588,
+        "y": 305.19222198838463
+      },
+      "ballPixels": {
+        "css": 2.1784421135330208,
+        "render": 2.1784421135330208,
+        "onScreen": true
+      },
+      "records": []
+    },
+    "presentation": {
+      "screen": {
+        "x": 234.71620927743834,
+        "y": 628.8186108164144
+      },
+      "cameraPosition": [
+        0.19200000166893005,
+        32,
+        33
+      ],
+      "human": "Kira",
+      "temporaryHumanCount": 0,
+      "opponentCount": 1
+    },
+    "phase": "serve",
+    "kira": {
+      "status": "ready",
+      "rootEnabled": true,
+      "bodyMeshCount": 1,
+      "bodyVisible": true,
+      "racketVisible": true,
+      "texturedSkin": true,
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "state": "Idle",
+      "time": 0.5334000000000001,
+      "transitioning": false,
+      "clips": [
+        {
+          "name": "Running",
+          "duration": 0.6333330273628235
+        },
+        {
+          "name": "Walking",
+          "duration": 1.0333329439163208
+        },
+        {
+          "name": "_01a16f14_df89_70e4_966f_38087b9b2ef7",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f17_0702_776b_a578_5ae634002c9e",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f19_f977_75c8_82d3_00bd61e22843",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f1f_22af_74e9_af26_8f1aec798eb5",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f20_14b9_70d3_b4cd_5b3e4d514601",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f21_3bc1_7312_b0db_d96fda6475ea",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f27_4128_711d_a437_5651121a8e2c",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f33_ae88_77f6_8f6a_d4c208041d36",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f36_0b96_76c3_ac06_6409b3e12e89",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f37_5a33_7498_91c4_55e2e1439bac",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "Idle_7",
+          "duration": 8.733333587646484
+        }
+      ],
+      "textures": 6,
+      "hand": "mixamorig:RightHand",
+      "racketAttached": true,
+      "grip": "[0, 0.065, 0]",
+      "racketHead": [
+        2.2365018117427824,
+        0.8207214206643403,
+        12.386293203234672
+      ],
+      "hips": [
+        1.600000023841858,
+        1.022186517715454,
+        12.350000381469727
+      ],
+      "root": [
+        1.600000023841858,
+        0,
+        12.350000381469727
+      ],
+      "contactPose": null,
+      "contactId": -1,
+      "contactError": 0,
+      "contactAge": 1.5334000000000005
+    },
+    "royalBall": {
+      "status": "ready",
+      "error": "",
+      "diameter": 0.067,
+      "visualScale": 1.75,
+      "meshDiameter": 0.11724999952122062,
+      "visualDiameter": 0.11725000000000001,
+      "collisionRadius": 0.0335,
+      "meshCount": 1,
+      "visible": true,
+      "textured": true,
+      "scale": 0.07033116505595467
+    },
+    "contact": null,
+    "renderedBall": [
+      0,
+      1,
+      -8
+    ],
+    "input": {
+      "x": 0,
+      "z": 0,
+      "aim": 0,
+      "depth": 0,
+      "power": 0.5,
+      "shot": "drive",
+      "release": false,
+      "charging": false,
+      "held": 0
+    },
+    "ball": {
+      "x": 1.6,
+      "y": 2.6,
+      "z": 12.1
+    },
+    "velocity": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "players": [
+      {
+        "x": 1.6,
+        "y": 0,
+        "z": 12.35
+      },
+      {
+        "x": -1.2800000000000002,
+        "y": 0,
+        "z": -10.4
+      }
+    ],
+    "server": 0,
+    "fault": 0,
+    "contacts": 0,
+    "totalPoints": 0,
+    "points": [
+      0,
+      0
+    ],
+    "games": [
+      0,
+      0
+    ],
+    "notice": "FIRST SERVE · TAP OR HOLD HIT",
+    "camera": "broadcast",
+    "drawCalls": 31,
+    "fps": 7,
+    "activeCameras": 1
+  },
+  {
+    "build": "e598c2a23f4bd282e10e8fd6c9fcbbc268e08310",
+    "release": "GOAL-002D",
+    "developer": {
+      "inspecting": false,
+      "frozen": true,
+      "timeline": {
+        "state": "Idle",
+        "time": 0,
+        "speed": 1,
+        "playing": true,
+        "loop": true
+      },
+      "servePrototype": false,
+      "overlayVisible": false,
+      "markersVisible": false,
+      "recent": {
+        "samples": 303,
+        "fps": 7.872276854726614,
+        "averageMs": 127.02805280528052,
+        "stddevMs": 97.28922536156881,
+        "p95Ms": 276.19999999995343,
+        "maxMs": 814.5,
+        "over33Ms": 232
+      },
+      "assets": [
+        {
+          "path": "assets/characters/kira/Meshy_AI_Pink_Valkyrie_All_Animations.glb",
+          "status": "ready",
+          "startMs": 370.19999999995343,
+          "durationMs": 1542.6999999999534
+        },
+        {
+          "path": "assets/equipment/rackets/Meshy_AI_Pink_and_Black_Tennis_1024095819_texture.glb",
+          "status": "ready",
+          "startMs": 373.19999999995343,
+          "durationMs": 643.3000000000466
+        },
+        {
+          "path": "assets/balls/royal-rally/Meshy_AI_Royal_Rally_1024220842_texture.glb",
+          "status": "ready",
+          "startMs": 374.0999999998603,
+          "durationMs": 293.4000000001397
+        }
+      ],
+      "readyMs": 2089.899999999907,
+      "renderer": [
+        390,
+        844
+      ],
+      "viewport": [
+        390,
+        844
+      ],
+      "dpr": 1,
+      "renderScale": 1,
+      "camera": "behind",
+      "phase": "serve",
+      "comparison": "serve",
+      "visualScale": 1,
+      "ballScreen": {
+        "x": 250.1065106690361,
+        "y": 609.7429900905121
+      },
+      "ballPixels": {
+        "css": 3.048271600458922,
+        "render": 3.048271600458922,
+        "onScreen": true
+      },
+      "records": []
+    },
+    "presentation": {
+      "screen": {
+        "x": 248.79092609072657,
+        "y": 678.936817357553
+      },
+      "cameraPosition": [
+        0.5119998455047607,
+        15.000007629394531,
+        29.35000228881836
+      ],
+      "human": "Kira",
+      "temporaryHumanCount": 0,
+      "opponentCount": 1
+    },
+    "phase": "serve",
+    "kira": {
+      "status": "ready",
+      "rootEnabled": true,
+      "bodyMeshCount": 1,
+      "bodyVisible": true,
+      "racketVisible": true,
+      "texturedSkin": true,
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "state": "Idle",
+      "time": 0.5334000000000001,
+      "transitioning": false,
+      "clips": [
+        {
+          "name": "Running",
+          "duration": 0.6333330273628235
+        },
+        {
+          "name": "Walking",
+          "duration": 1.0333329439163208
+        },
+        {
+          "name": "_01a16f14_df89_70e4_966f_38087b9b2ef7",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f17_0702_776b_a578_5ae634002c9e",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f19_f977_75c8_82d3_00bd61e22843",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f1f_22af_74e9_af26_8f1aec798eb5",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f20_14b9_70d3_b4cd_5b3e4d514601",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f21_3bc1_7312_b0db_d96fda6475ea",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f27_4128_711d_a437_5651121a8e2c",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f33_ae88_77f6_8f6a_d4c208041d36",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f36_0b96_76c3_ac06_6409b3e12e89",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f37_5a33_7498_91c4_55e2e1439bac",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "Idle_7",
+          "duration": 8.733333587646484
+        }
+      ],
+      "textures": 6,
+      "hand": "mixamorig:RightHand",
+      "racketAttached": true,
+      "grip": "[0, 0.065, 0]",
+      "racketHead": [
+        2.2365018117427824,
+        0.8207214206643403,
+        12.386293203234672
+      ],
+      "hips": [
+        1.600000023841858,
+        1.022186517715454,
+        12.350000381469727
+      ],
+      "root": [
+        1.600000023841858,
+        0,
+        12.350000381469727
+      ],
+      "contactPose": null,
+      "contactId": -1,
+      "contactError": 0,
+      "contactAge": 1.5334000000000005
+    },
+    "royalBall": {
+      "status": "ready",
+      "error": "",
+      "diameter": 0.067,
+      "visualScale": 1,
+      "meshDiameter": 0.06699999871245588,
+      "visualDiameter": 0.067,
+      "collisionRadius": 0.0335,
+      "meshCount": 1,
+      "visible": true,
+      "textured": true,
+      "scale": 0.07033116505595467
+    },
+    "contact": null,
+    "renderedBall": [
+      1.600000023841858,
+      2.5999999046325684,
+      12.100000381469727
+    ],
+    "input": {
+      "x": 0,
+      "z": 0,
+      "aim": 0,
+      "depth": 0,
+      "power": 0.5,
+      "shot": "drive",
+      "release": false,
+      "charging": false,
+      "held": 0
+    },
+    "ball": {
+      "x": 1.6,
+      "y": 2.6,
+      "z": 12.1
+    },
+    "velocity": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "players": [
+      {
+        "x": 1.6,
+        "y": 0,
+        "z": 12.35
+      },
+      {
+        "x": -1.2800000000000002,
+        "y": 0,
+        "z": -10.4
+      }
+    ],
+    "server": 0,
+    "fault": 0,
+    "contacts": 0,
+    "totalPoints": 0,
+    "points": [
+      0,
+      0
+    ],
+    "games": [
+      0,
+      0
+    ],
+    "notice": "FIRST SERVE · TAP OR HOLD HIT",
+    "camera": "behind",
+    "drawCalls": 31,
+    "fps": 6,
+    "activeCameras": 1
+  },
+  {
+    "build": "e598c2a23f4bd282e10e8fd6c9fcbbc268e08310",
+    "release": "GOAL-002D",
+    "developer": {
+      "inspecting": false,
+      "frozen": true,
+      "timeline": {
+        "state": "Idle",
+        "time": 0,
+        "speed": 1,
+        "playing": true,
+        "loop": true
+      },
+      "servePrototype": false,
+      "overlayVisible": false,
+      "markersVisible": false,
+      "recent": {
+        "samples": 327,
+        "fps": 7.856384333360527,
+        "averageMs": 127.28501529052045,
+        "stddevMs": 96.17239421208225,
+        "p95Ms": 284.19999999995343,
+        "maxMs": 814.5,
+        "over33Ms": 252
+      },
+      "assets": [
+        {
+          "path": "assets/characters/kira/Meshy_AI_Pink_Valkyrie_All_Animations.glb",
+          "status": "ready",
+          "startMs": 370.19999999995343,
+          "durationMs": 1542.6999999999534
+        },
+        {
+          "path": "assets/equipment/rackets/Meshy_AI_Pink_and_Black_Tennis_1024095819_texture.glb",
+          "status": "ready",
+          "startMs": 373.19999999995343,
+          "durationMs": 643.3000000000466
+        },
+        {
+          "path": "assets/balls/royal-rally/Meshy_AI_Royal_Rally_1024220842_texture.glb",
+          "status": "ready",
+          "startMs": 374.0999999998603,
+          "durationMs": 293.4000000001397
+        }
+      ],
+      "readyMs": 2089.899999999907,
+      "renderer": [
+        390,
+        844
+      ],
+      "viewport": [
+        390,
+        844
+      ],
+      "dpr": 1,
+      "renderScale": 1,
+      "camera": "behind",
+      "phase": "serve",
+      "comparison": "serve",
+      "visualScale": 1.5,
+      "ballScreen": {
+        "x": 250.10651478838028,
+        "y": 609.7429258555542
+      },
+      "ballPixels": {
+        "css": 4.572408278001038,
+        "render": 4.572408278001038,
+        "onScreen": true
+      },
+      "records": []
+    },
+    "presentation": {
+      "screen": {
+        "x": 248.79093080649073,
+        "y": 678.9367782530103
+      },
+      "cameraPosition": [
+        0.5120000243186951,
+        15,
+        29.350000381469727
+      ],
+      "human": "Kira",
+      "temporaryHumanCount": 0,
+      "opponentCount": 1
+    },
+    "phase": "serve",
+    "kira": {
+      "status": "ready",
+      "rootEnabled": true,
+      "bodyMeshCount": 1,
+      "bodyVisible": true,
+      "racketVisible": true,
+      "texturedSkin": true,
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "state": "Idle",
+      "time": 0.5334000000000001,
+      "transitioning": false,
+      "clips": [
+        {
+          "name": "Running",
+          "duration": 0.6333330273628235
+        },
+        {
+          "name": "Walking",
+          "duration": 1.0333329439163208
+        },
+        {
+          "name": "_01a16f14_df89_70e4_966f_38087b9b2ef7",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f17_0702_776b_a578_5ae634002c9e",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f19_f977_75c8_82d3_00bd61e22843",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f1f_22af_74e9_af26_8f1aec798eb5",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f20_14b9_70d3_b4cd_5b3e4d514601",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f21_3bc1_7312_b0db_d96fda6475ea",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f27_4128_711d_a437_5651121a8e2c",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f33_ae88_77f6_8f6a_d4c208041d36",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f36_0b96_76c3_ac06_6409b3e12e89",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f37_5a33_7498_91c4_55e2e1439bac",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "Idle_7",
+          "duration": 8.733333587646484
+        }
+      ],
+      "textures": 6,
+      "hand": "mixamorig:RightHand",
+      "racketAttached": true,
+      "grip": "[0, 0.065, 0]",
+      "racketHead": [
+        2.2365018117427824,
+        0.8207214206643403,
+        12.386293203234672
+      ],
+      "hips": [
+        1.600000023841858,
+        1.022186517715454,
+        12.350000381469727
+      ],
+      "root": [
+        1.600000023841858,
+        0,
+        12.350000381469727
+      ],
+      "contactPose": null,
+      "contactId": -1,
+      "contactError": 0,
+      "contactAge": 1.5334000000000005
+    },
+    "royalBall": {
+      "status": "ready",
+      "error": "",
+      "diameter": 0.067,
+      "visualScale": 1.5,
+      "meshDiameter": 0.10050000161752948,
+      "visualDiameter": 0.1005,
+      "collisionRadius": 0.0335,
+      "meshCount": 1,
+      "visible": true,
+      "textured": true,
+      "scale": 0.07033116505595467
+    },
+    "contact": null,
+    "renderedBall": [
+      1.600000023841858,
+      2.5999999046325684,
+      12.100000381469727
+    ],
+    "input": {
+      "x": 0,
+      "z": 0,
+      "aim": 0,
+      "depth": 0,
+      "power": 0.5,
+      "shot": "drive",
+      "release": false,
+      "charging": false,
+      "held": 0
+    },
+    "ball": {
+      "x": 1.6,
+      "y": 2.6,
+      "z": 12.1
+    },
+    "velocity": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "players": [
+      {
+        "x": 1.6,
+        "y": 0,
+        "z": 12.35
+      },
+      {
+        "x": -1.2800000000000002,
+        "y": 0,
+        "z": -10.4
+      }
+    ],
+    "server": 0,
+    "fault": 0,
+    "contacts": 0,
+    "totalPoints": 0,
+    "points": [
+      0,
+      0
+    ],
+    "games": [
+      0,
+      0
+    ],
+    "notice": "FIRST SERVE · TAP OR HOLD HIT",
+    "camera": "behind",
+    "drawCalls": 31,
+    "fps": 7,
+    "activeCameras": 1
+  },
+  {
+    "build": "e598c2a23f4bd282e10e8fd6c9fcbbc268e08310",
+    "release": "GOAL-002D",
+    "developer": {
+      "inspecting": false,
+      "frozen": true,
+      "timeline": {
+        "state": "Idle",
+        "time": 0,
+        "speed": 1,
+        "playing": true,
+        "loop": true
+      },
+      "servePrototype": false,
+      "overlayVisible": false,
+      "markersVisible": false,
+      "recent": {
+        "samples": 351,
+        "fps": 7.8370605887396065,
+        "averageMs": 127.59886039886094,
+        "stddevMs": 95.06625579117099,
+        "p95Ms": 280.0999999998603,
+        "maxMs": 814.5,
+        "over33Ms": 271
+      },
+      "assets": [
+        {
+          "path": "assets/characters/kira/Meshy_AI_Pink_Valkyrie_All_Animations.glb",
+          "status": "ready",
+          "startMs": 370.19999999995343,
+          "durationMs": 1542.6999999999534
+        },
+        {
+          "path": "assets/equipment/rackets/Meshy_AI_Pink_and_Black_Tennis_1024095819_texture.glb",
+          "status": "ready",
+          "startMs": 373.19999999995343,
+          "durationMs": 643.3000000000466
+        },
+        {
+          "path": "assets/balls/royal-rally/Meshy_AI_Royal_Rally_1024220842_texture.glb",
+          "status": "ready",
+          "startMs": 374.0999999998603,
+          "durationMs": 293.4000000001397
+        }
+      ],
+      "readyMs": 2089.899999999907,
+      "renderer": [
+        390,
+        844
+      ],
+      "viewport": [
+        390,
+        844
+      ],
+      "dpr": 1,
+      "renderScale": 1,
+      "camera": "behind",
+      "phase": "serve",
+      "comparison": "serve",
+      "visualScale": 1.75,
+      "ballScreen": {
+        "x": 250.10651478838028,
+        "y": 609.7429258555542
+      },
+      "ballPixels": {
+        "css": 5.3344763243345446,
+        "render": 5.334476324334544,
+        "onScreen": true
+      },
+      "records": []
+    },
+    "presentation": {
+      "screen": {
+        "x": 248.79093080649073,
+        "y": 678.9367782530103
+      },
+      "cameraPosition": [
+        0.5120000243186951,
+        15,
+        29.350000381469727
+      ],
+      "human": "Kira",
+      "temporaryHumanCount": 0,
+      "opponentCount": 1
+    },
+    "phase": "serve",
+    "kira": {
+      "status": "ready",
+      "rootEnabled": true,
+      "bodyMeshCount": 1,
+      "bodyVisible": true,
+      "racketVisible": true,
+      "texturedSkin": true,
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "state": "Idle",
+      "time": 0.5334000000000001,
+      "transitioning": false,
+      "clips": [
+        {
+          "name": "Running",
+          "duration": 0.6333330273628235
+        },
+        {
+          "name": "Walking",
+          "duration": 1.0333329439163208
+        },
+        {
+          "name": "_01a16f14_df89_70e4_966f_38087b9b2ef7",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f17_0702_776b_a578_5ae634002c9e",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f19_f977_75c8_82d3_00bd61e22843",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f1f_22af_74e9_af26_8f1aec798eb5",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f20_14b9_70d3_b4cd_5b3e4d514601",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f21_3bc1_7312_b0db_d96fda6475ea",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f27_4128_711d_a437_5651121a8e2c",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f33_ae88_77f6_8f6a_d4c208041d36",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f36_0b96_76c3_ac06_6409b3e12e89",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f37_5a33_7498_91c4_55e2e1439bac",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "Idle_7",
+          "duration": 8.733333587646484
+        }
+      ],
+      "textures": 6,
+      "hand": "mixamorig:RightHand",
+      "racketAttached": true,
+      "grip": "[0, 0.065, 0]",
+      "racketHead": [
+        2.2365018117427824,
+        0.8207214206643403,
+        12.386293203234672
+      ],
+      "hips": [
+        1.600000023841858,
+        1.022186517715454,
+        12.350000381469727
+      ],
+      "root": [
+        1.600000023841858,
+        0,
+        12.350000381469727
+      ],
+      "contactPose": null,
+      "contactId": -1,
+      "contactError": 0,
+      "contactAge": 1.5334000000000005
+    },
+    "royalBall": {
+      "status": "ready",
+      "error": "",
+      "diameter": 0.067,
+      "visualScale": 1.75,
+      "meshDiameter": 0.11724999952122062,
+      "visualDiameter": 0.11725000000000001,
+      "collisionRadius": 0.0335,
+      "meshCount": 1,
+      "visible": true,
+      "textured": true,
+      "scale": 0.07033116505595467
+    },
+    "contact": null,
+    "renderedBall": [
+      1.600000023841858,
+      2.5999999046325684,
+      12.100000381469727
+    ],
+    "input": {
+      "x": 0,
+      "z": 0,
+      "aim": 0,
+      "depth": 0,
+      "power": 0.5,
+      "shot": "drive",
+      "release": false,
+      "charging": false,
+      "held": 0
+    },
+    "ball": {
+      "x": 1.6,
+      "y": 2.6,
+      "z": 12.1
+    },
+    "velocity": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "players": [
+      {
+        "x": 1.6,
+        "y": 0,
+        "z": 12.35
+      },
+      {
+        "x": -1.2800000000000002,
+        "y": 0,
+        "z": -10.4
+      }
+    ],
+    "server": 0,
+    "fault": 0,
+    "contacts": 0,
+    "totalPoints": 0,
+    "points": [
+      0,
+      0
+    ],
+    "games": [
+      0,
+      0
+    ],
+    "notice": "FIRST SERVE · TAP OR HOLD HIT",
+    "camera": "behind",
+    "drawCalls": 31,
+    "fps": 7,
+    "activeCameras": 1
+  },
+  {
+    "build": "e598c2a23f4bd282e10e8fd6c9fcbbc268e08310",
+    "release": "GOAL-002D",
+    "developer": {
+      "inspecting": false,
+      "frozen": true,
+      "timeline": {
+        "state": "Idle",
+        "time": 0,
+        "speed": 1,
+        "playing": true,
+        "loop": true
+      },
+      "servePrototype": false,
+      "overlayVisible": false,
+      "markersVisible": false,
+      "recent": {
+        "samples": 374,
+        "fps": 7.803664801298633,
+        "averageMs": 128.14491978609675,
+        "stddevMs": 93.72700837996507,
+        "p95Ms": 280.0999999998603,
+        "maxMs": 814.5,
+        "over33Ms": 292
+      },
+      "assets": [
+        {
+          "path": "assets/characters/kira/Meshy_AI_Pink_Valkyrie_All_Animations.glb",
+          "status": "ready",
+          "startMs": 370.19999999995343,
+          "durationMs": 1542.6999999999534
+        },
+        {
+          "path": "assets/equipment/rackets/Meshy_AI_Pink_and_Black_Tennis_1024095819_texture.glb",
+          "status": "ready",
+          "startMs": 373.19999999995343,
+          "durationMs": 643.3000000000466
+        },
+        {
+          "path": "assets/balls/royal-rally/Meshy_AI_Royal_Rally_1024220842_texture.glb",
+          "status": "ready",
+          "startMs": 374.0999999998603,
+          "durationMs": 293.4000000001397
+        }
+      ],
+      "readyMs": 2089.899999999907,
+      "renderer": [
+        390,
+        844
+      ],
+      "viewport": [
+        390,
+        844
+      ],
+      "dpr": 1,
+      "renderScale": 1,
+      "camera": "behind",
+      "phase": "serve",
+      "comparison": "near",
+      "visualScale": 1,
+      "ballScreen": {
+        "x": 181.50067928379096,
+        "y": 567.5703897785559
+      },
+      "ballPixels": {
+        "css": 2.5162725890886892,
+        "render": 2.5162725890886897,
+        "onScreen": true
+      },
+      "records": []
+    },
+    "presentation": {
+      "screen": {
+        "x": 248.79093080649073,
+        "y": 678.9367782530103
+      },
+      "cameraPosition": [
+        0.5120000243186951,
+        15,
+        29.350000381469727
+      ],
+      "human": "Kira",
+      "temporaryHumanCount": 0,
+      "opponentCount": 1
+    },
+    "phase": "serve",
+    "kira": {
+      "status": "ready",
+      "rootEnabled": true,
+      "bodyMeshCount": 1,
+      "bodyVisible": true,
+      "racketVisible": true,
+      "texturedSkin": true,
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "state": "Idle",
+      "time": 0.5334000000000001,
+      "transitioning": false,
+      "clips": [
+        {
+          "name": "Running",
+          "duration": 0.6333330273628235
+        },
+        {
+          "name": "Walking",
+          "duration": 1.0333329439163208
+        },
+        {
+          "name": "_01a16f14_df89_70e4_966f_38087b9b2ef7",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f17_0702_776b_a578_5ae634002c9e",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f19_f977_75c8_82d3_00bd61e22843",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f1f_22af_74e9_af26_8f1aec798eb5",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f20_14b9_70d3_b4cd_5b3e4d514601",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f21_3bc1_7312_b0db_d96fda6475ea",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f27_4128_711d_a437_5651121a8e2c",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f33_ae88_77f6_8f6a_d4c208041d36",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f36_0b96_76c3_ac06_6409b3e12e89",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f37_5a33_7498_91c4_55e2e1439bac",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "Idle_7",
+          "duration": 8.733333587646484
+        }
+      ],
+      "textures": 6,
+      "hand": "mixamorig:RightHand",
+      "racketAttached": true,
+      "grip": "[0, 0.065, 0]",
+      "racketHead": [
+        2.2365018117427824,
+        0.8207214206643403,
+        12.386293203234672
+      ],
+      "hips": [
+        1.600000023841858,
+        1.022186517715454,
+        12.350000381469727
+      ],
+      "root": [
+        1.600000023841858,
+        0,
+        12.350000381469727
+      ],
+      "contactPose": null,
+      "contactId": -1,
+      "contactError": 0,
+      "contactAge": 1.5334000000000005
+    },
+    "royalBall": {
+      "status": "ready",
+      "error": "",
+      "diameter": 0.067,
+      "visualScale": 1,
+      "meshDiameter": 0.06699999871245588,
+      "visualDiameter": 0.067,
+      "collisionRadius": 0.0335,
+      "meshCount": 1,
+      "visible": true,
+      "textured": true,
+      "scale": 0.07033116505595467
+    },
+    "contact": null,
+    "renderedBall": [
+      0,
+      1,
+      8
+    ],
+    "input": {
+      "x": 0,
+      "z": 0,
+      "aim": 0,
+      "depth": 0,
+      "power": 0.5,
+      "shot": "drive",
+      "release": false,
+      "charging": false,
+      "held": 0
+    },
+    "ball": {
+      "x": 1.6,
+      "y": 2.6,
+      "z": 12.1
+    },
+    "velocity": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "players": [
+      {
+        "x": 1.6,
+        "y": 0,
+        "z": 12.35
+      },
+      {
+        "x": -1.2800000000000002,
+        "y": 0,
+        "z": -10.4
+      }
+    ],
+    "server": 0,
+    "fault": 0,
+    "contacts": 0,
+    "totalPoints": 0,
+    "points": [
+      0,
+      0
+    ],
+    "games": [
+      0,
+      0
+    ],
+    "notice": "FIRST SERVE · TAP OR HOLD HIT",
+    "camera": "behind",
+    "drawCalls": 31,
+    "fps": 7,
+    "activeCameras": 1
+  },
+  {
+    "build": "e598c2a23f4bd282e10e8fd6c9fcbbc268e08310",
+    "release": "GOAL-002D",
+    "developer": {
+      "inspecting": false,
+      "frozen": true,
+      "timeline": {
+        "state": "Idle",
+        "time": 0,
+        "speed": 1,
+        "playing": true,
+        "loop": true
+      },
+      "servePrototype": false,
+      "overlayVisible": false,
+      "markersVisible": false,
+      "recent": {
+        "samples": 396,
+        "fps": 7.762422816818583,
+        "averageMs": 128.82575757575756,
+        "stddevMs": 92.20287711707607,
+        "p95Ms": 280.0999999998603,
+        "maxMs": 814.5,
+        "over33Ms": 313
+      },
+      "assets": [
+        {
+          "path": "assets/characters/kira/Meshy_AI_Pink_Valkyrie_All_Animations.glb",
+          "status": "ready",
+          "startMs": 370.19999999995343,
+          "durationMs": 1542.6999999999534
+        },
+        {
+          "path": "assets/equipment/rackets/Meshy_AI_Pink_and_Black_Tennis_1024095819_texture.glb",
+          "status": "ready",
+          "startMs": 373.19999999995343,
+          "durationMs": 643.3000000000466
+        },
+        {
+          "path": "assets/balls/royal-rally/Meshy_AI_Royal_Rally_1024220842_texture.glb",
+          "status": "ready",
+          "startMs": 374.0999999998603,
+          "durationMs": 293.4000000001397
+        }
+      ],
+      "readyMs": 2089.899999999907,
+      "renderer": [
+        390,
+        844
+      ],
+      "viewport": [
+        390,
+        844
+      ],
+      "dpr": 1,
+      "renderScale": 1,
+      "camera": "behind",
+      "phase": "serve",
+      "comparison": "near",
+      "visualScale": 1.5,
+      "ballScreen": {
+        "x": 181.50067928379096,
+        "y": 567.5703897785559
+      },
+      "ballPixels": {
+        "css": 3.7744088836330336,
+        "render": 3.7744088836330336,
+        "onScreen": true
+      },
+      "records": []
+    },
+    "presentation": {
+      "screen": {
+        "x": 248.79093080649073,
+        "y": 678.9367782530103
+      },
+      "cameraPosition": [
+        0.5120000243186951,
+        15,
+        29.350000381469727
+      ],
+      "human": "Kira",
+      "temporaryHumanCount": 0,
+      "opponentCount": 1
+    },
+    "phase": "serve",
+    "kira": {
+      "status": "ready",
+      "rootEnabled": true,
+      "bodyMeshCount": 1,
+      "bodyVisible": true,
+      "racketVisible": true,
+      "texturedSkin": true,
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "state": "Idle",
+      "time": 0.5334000000000001,
+      "transitioning": false,
+      "clips": [
+        {
+          "name": "Running",
+          "duration": 0.6333330273628235
+        },
+        {
+          "name": "Walking",
+          "duration": 1.0333329439163208
+        },
+        {
+          "name": "_01a16f14_df89_70e4_966f_38087b9b2ef7",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f17_0702_776b_a578_5ae634002c9e",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f19_f977_75c8_82d3_00bd61e22843",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f1f_22af_74e9_af26_8f1aec798eb5",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f20_14b9_70d3_b4cd_5b3e4d514601",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f21_3bc1_7312_b0db_d96fda6475ea",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f27_4128_711d_a437_5651121a8e2c",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f33_ae88_77f6_8f6a_d4c208041d36",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f36_0b96_76c3_ac06_6409b3e12e89",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f37_5a33_7498_91c4_55e2e1439bac",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "Idle_7",
+          "duration": 8.733333587646484
+        }
+      ],
+      "textures": 6,
+      "hand": "mixamorig:RightHand",
+      "racketAttached": true,
+      "grip": "[0, 0.065, 0]",
+      "racketHead": [
+        2.2365018117427824,
+        0.8207214206643403,
+        12.386293203234672
+      ],
+      "hips": [
+        1.600000023841858,
+        1.022186517715454,
+        12.350000381469727
+      ],
+      "root": [
+        1.600000023841858,
+        0,
+        12.350000381469727
+      ],
+      "contactPose": null,
+      "contactId": -1,
+      "contactError": 0,
+      "contactAge": 1.5334000000000005
+    },
+    "royalBall": {
+      "status": "ready",
+      "error": "",
+      "diameter": 0.067,
+      "visualScale": 1.5,
+      "meshDiameter": 0.10050000161752948,
+      "visualDiameter": 0.1005,
+      "collisionRadius": 0.0335,
+      "meshCount": 1,
+      "visible": true,
+      "textured": true,
+      "scale": 0.07033116505595467
+    },
+    "contact": null,
+    "renderedBall": [
+      0,
+      1,
+      8
+    ],
+    "input": {
+      "x": 0,
+      "z": 0,
+      "aim": 0,
+      "depth": 0,
+      "power": 0.5,
+      "shot": "drive",
+      "release": false,
+      "charging": false,
+      "held": 0
+    },
+    "ball": {
+      "x": 1.6,
+      "y": 2.6,
+      "z": 12.1
+    },
+    "velocity": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "players": [
+      {
+        "x": 1.6,
+        "y": 0,
+        "z": 12.35
+      },
+      {
+        "x": -1.2800000000000002,
+        "y": 0,
+        "z": -10.4
+      }
+    ],
+    "server": 0,
+    "fault": 0,
+    "contacts": 0,
+    "totalPoints": 0,
+    "points": [
+      0,
+      0
+    ],
+    "games": [
+      0,
+      0
+    ],
+    "notice": "FIRST SERVE · TAP OR HOLD HIT",
+    "camera": "behind",
+    "drawCalls": 31,
+    "fps": 7,
+    "activeCameras": 1
+  },
+  {
+    "build": "e598c2a23f4bd282e10e8fd6c9fcbbc268e08310",
+    "release": "GOAL-002D",
+    "developer": {
+      "inspecting": false,
+      "frozen": true,
+      "timeline": {
+        "state": "Idle",
+        "time": 0,
+        "speed": 1,
+        "playing": true,
+        "loop": true
+      },
+      "servePrototype": false,
+      "overlayVisible": false,
+      "markersVisible": false,
+      "recent": {
+        "samples": 419,
+        "fps": 7.7316829234987665,
+        "averageMs": 129.33794749403364,
+        "stddevMs": 90.98808239298012,
+        "p95Ms": 280.0999999998603,
+        "maxMs": 814.5,
+        "over33Ms": 334
+      },
+      "assets": [
+        {
+          "path": "assets/characters/kira/Meshy_AI_Pink_Valkyrie_All_Animations.glb",
+          "status": "ready",
+          "startMs": 370.19999999995343,
+          "durationMs": 1542.6999999999534
+        },
+        {
+          "path": "assets/equipment/rackets/Meshy_AI_Pink_and_Black_Tennis_1024095819_texture.glb",
+          "status": "ready",
+          "startMs": 373.19999999995343,
+          "durationMs": 643.3000000000466
+        },
+        {
+          "path": "assets/balls/royal-rally/Meshy_AI_Royal_Rally_1024220842_texture.glb",
+          "status": "ready",
+          "startMs": 374.0999999998603,
+          "durationMs": 293.4000000001397
+        }
+      ],
+      "readyMs": 2089.899999999907,
+      "renderer": [
+        390,
+        844
+      ],
+      "viewport": [
+        390,
+        844
+      ],
+      "dpr": 1,
+      "renderScale": 1,
+      "camera": "behind",
+      "phase": "serve",
+      "comparison": "near",
+      "visualScale": 1.75,
+      "ballScreen": {
+        "x": 181.50067928379096,
+        "y": 567.5703897785559
+      },
+      "ballPixels": {
+        "css": 4.403477030905206,
+        "render": 4.403477030905206,
+        "onScreen": true
+      },
+      "records": []
+    },
+    "presentation": {
+      "screen": {
+        "x": 248.79093080649073,
+        "y": 678.9367782530103
+      },
+      "cameraPosition": [
+        0.5120000243186951,
+        15,
+        29.350000381469727
+      ],
+      "human": "Kira",
+      "temporaryHumanCount": 0,
+      "opponentCount": 1
+    },
+    "phase": "serve",
+    "kira": {
+      "status": "ready",
+      "rootEnabled": true,
+      "bodyMeshCount": 1,
+      "bodyVisible": true,
+      "racketVisible": true,
+      "texturedSkin": true,
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "state": "Idle",
+      "time": 0.5334000000000001,
+      "transitioning": false,
+      "clips": [
+        {
+          "name": "Running",
+          "duration": 0.6333330273628235
+        },
+        {
+          "name": "Walking",
+          "duration": 1.0333329439163208
+        },
+        {
+          "name": "_01a16f14_df89_70e4_966f_38087b9b2ef7",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f17_0702_776b_a578_5ae634002c9e",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f19_f977_75c8_82d3_00bd61e22843",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f1f_22af_74e9_af26_8f1aec798eb5",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f20_14b9_70d3_b4cd_5b3e4d514601",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f21_3bc1_7312_b0db_d96fda6475ea",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f27_4128_711d_a437_5651121a8e2c",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f33_ae88_77f6_8f6a_d4c208041d36",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f36_0b96_76c3_ac06_6409b3e12e89",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f37_5a33_7498_91c4_55e2e1439bac",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "Idle_7",
+          "duration": 8.733333587646484
+        }
+      ],
+      "textures": 6,
+      "hand": "mixamorig:RightHand",
+      "racketAttached": true,
+      "grip": "[0, 0.065, 0]",
+      "racketHead": [
+        2.2365018117427824,
+        0.8207214206643403,
+        12.386293203234672
+      ],
+      "hips": [
+        1.600000023841858,
+        1.022186517715454,
+        12.350000381469727
+      ],
+      "root": [
+        1.600000023841858,
+        0,
+        12.350000381469727
+      ],
+      "contactPose": null,
+      "contactId": -1,
+      "contactError": 0,
+      "contactAge": 1.5334000000000005
+    },
+    "royalBall": {
+      "status": "ready",
+      "error": "",
+      "diameter": 0.067,
+      "visualScale": 1.75,
+      "meshDiameter": 0.11724999952122062,
+      "visualDiameter": 0.11725000000000001,
+      "collisionRadius": 0.0335,
+      "meshCount": 1,
+      "visible": true,
+      "textured": true,
+      "scale": 0.07033116505595467
+    },
+    "contact": null,
+    "renderedBall": [
+      0,
+      1,
+      8
+    ],
+    "input": {
+      "x": 0,
+      "z": 0,
+      "aim": 0,
+      "depth": 0,
+      "power": 0.5,
+      "shot": "drive",
+      "release": false,
+      "charging": false,
+      "held": 0
+    },
+    "ball": {
+      "x": 1.6,
+      "y": 2.6,
+      "z": 12.1
+    },
+    "velocity": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "players": [
+      {
+        "x": 1.6,
+        "y": 0,
+        "z": 12.35
+      },
+      {
+        "x": -1.2800000000000002,
+        "y": 0,
+        "z": -10.4
+      }
+    ],
+    "server": 0,
+    "fault": 0,
+    "contacts": 0,
+    "totalPoints": 0,
+    "points": [
+      0,
+      0
+    ],
+    "games": [
+      0,
+      0
+    ],
+    "notice": "FIRST SERVE · TAP OR HOLD HIT",
+    "camera": "behind",
+    "drawCalls": 31,
+    "fps": 6,
+    "activeCameras": 1
+  },
+  {
+    "build": "e598c2a23f4bd282e10e8fd6c9fcbbc268e08310",
+    "release": "GOAL-002D",
+    "developer": {
+      "inspecting": false,
+      "frozen": true,
+      "timeline": {
+        "state": "Idle",
+        "time": 0,
+        "speed": 1,
+        "playing": true,
+        "loop": true
+      },
+      "servePrototype": false,
+      "overlayVisible": false,
+      "markersVisible": false,
+      "recent": {
+        "samples": 440,
+        "fps": 7.689350249903883,
+        "averageMs": 130.05,
+        "stddevMs": 89.55146184278826,
+        "p95Ms": 276.19999999995343,
+        "maxMs": 814.5,
+        "over33Ms": 354
+      },
+      "assets": [
+        {
+          "path": "assets/characters/kira/Meshy_AI_Pink_Valkyrie_All_Animations.glb",
+          "status": "ready",
+          "startMs": 370.19999999995343,
+          "durationMs": 1542.6999999999534
+        },
+        {
+          "path": "assets/equipment/rackets/Meshy_AI_Pink_and_Black_Tennis_1024095819_texture.glb",
+          "status": "ready",
+          "startMs": 373.19999999995343,
+          "durationMs": 643.3000000000466
+        },
+        {
+          "path": "assets/balls/royal-rally/Meshy_AI_Royal_Rally_1024220842_texture.glb",
+          "status": "ready",
+          "startMs": 374.0999999998603,
+          "durationMs": 293.4000000001397
+        }
+      ],
+      "readyMs": 2089.899999999907,
+      "renderer": [
+        390,
+        844
+      ],
+      "viewport": [
+        390,
+        844
+      ],
+      "dpr": 1,
+      "renderScale": 1,
+      "camera": "behind",
+      "phase": "serve",
+      "comparison": "far",
+      "visualScale": 1,
+      "ballScreen": {
+        "x": 189.16162029380007,
+        "y": 356.17332683168246
+      },
+      "ballPixels": {
+        "css": 1.5958174772152962,
+        "render": 1.5958174772152962,
+        "onScreen": true
+      },
+      "records": []
+    },
+    "presentation": {
+      "screen": {
+        "x": 248.79093080649073,
+        "y": 678.9367782530103
+      },
+      "cameraPosition": [
+        0.5120000243186951,
+        15,
+        29.350000381469727
+      ],
+      "human": "Kira",
+      "temporaryHumanCount": 0,
+      "opponentCount": 1
+    },
+    "phase": "serve",
+    "kira": {
+      "status": "ready",
+      "rootEnabled": true,
+      "bodyMeshCount": 1,
+      "bodyVisible": true,
+      "racketVisible": true,
+      "texturedSkin": true,
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "state": "Idle",
+      "time": 0.5334000000000001,
+      "transitioning": false,
+      "clips": [
+        {
+          "name": "Running",
+          "duration": 0.6333330273628235
+        },
+        {
+          "name": "Walking",
+          "duration": 1.0333329439163208
+        },
+        {
+          "name": "_01a16f14_df89_70e4_966f_38087b9b2ef7",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f17_0702_776b_a578_5ae634002c9e",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f19_f977_75c8_82d3_00bd61e22843",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f1f_22af_74e9_af26_8f1aec798eb5",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f20_14b9_70d3_b4cd_5b3e4d514601",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f21_3bc1_7312_b0db_d96fda6475ea",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f27_4128_711d_a437_5651121a8e2c",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f33_ae88_77f6_8f6a_d4c208041d36",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f36_0b96_76c3_ac06_6409b3e12e89",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f37_5a33_7498_91c4_55e2e1439bac",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "Idle_7",
+          "duration": 8.733333587646484
+        }
+      ],
+      "textures": 6,
+      "hand": "mixamorig:RightHand",
+      "racketAttached": true,
+      "grip": "[0, 0.065, 0]",
+      "racketHead": [
+        2.2365018117427824,
+        0.8207214206643403,
+        12.386293203234672
+      ],
+      "hips": [
+        1.600000023841858,
+        1.022186517715454,
+        12.350000381469727
+      ],
+      "root": [
+        1.600000023841858,
+        0,
+        12.350000381469727
+      ],
+      "contactPose": null,
+      "contactId": -1,
+      "contactError": 0,
+      "contactAge": 1.5334000000000005
+    },
+    "royalBall": {
+      "status": "ready",
+      "error": "",
+      "diameter": 0.067,
+      "visualScale": 1,
+      "meshDiameter": 0.06699999871245588,
+      "visualDiameter": 0.067,
+      "collisionRadius": 0.0335,
+      "meshCount": 1,
+      "visible": true,
+      "textured": true,
+      "scale": 0.07033116505595467
+    },
+    "contact": null,
+    "renderedBall": [
+      0,
+      1,
+      -8
+    ],
+    "input": {
+      "x": 0,
+      "z": 0,
+      "aim": 0,
+      "depth": 0,
+      "power": 0.5,
+      "shot": "drive",
+      "release": false,
+      "charging": false,
+      "held": 0
+    },
+    "ball": {
+      "x": 1.6,
+      "y": 2.6,
+      "z": 12.1
+    },
+    "velocity": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "players": [
+      {
+        "x": 1.6,
+        "y": 0,
+        "z": 12.35
+      },
+      {
+        "x": -1.2800000000000002,
+        "y": 0,
+        "z": -10.4
+      }
+    ],
+    "server": 0,
+    "fault": 0,
+    "contacts": 0,
+    "totalPoints": 0,
+    "points": [
+      0,
+      0
+    ],
+    "games": [
+      0,
+      0
+    ],
+    "notice": "FIRST SERVE · TAP OR HOLD HIT",
+    "camera": "behind",
+    "drawCalls": 31,
+    "fps": 7,
+    "activeCameras": 1
+  },
+  {
+    "build": "e598c2a23f4bd282e10e8fd6c9fcbbc268e08310",
+    "release": "GOAL-002D",
+    "developer": {
+      "inspecting": false,
+      "frozen": true,
+      "timeline": {
+        "state": "Idle",
+        "time": 0,
+        "speed": 1,
+        "playing": true,
+        "loop": true
+      },
+      "servePrototype": false,
+      "overlayVisible": false,
+      "markersVisible": false,
+      "recent": {
+        "samples": 462,
+        "fps": 7.685142058686539,
+        "averageMs": 130.12121212121212,
+        "stddevMs": 88.0397299644266,
+        "p95Ms": 270.19999999995343,
+        "maxMs": 814.5,
+        "over33Ms": 374
+      },
+      "assets": [
+        {
+          "path": "assets/characters/kira/Meshy_AI_Pink_Valkyrie_All_Animations.glb",
+          "status": "ready",
+          "startMs": 370.19999999995343,
+          "durationMs": 1542.6999999999534
+        },
+        {
+          "path": "assets/equipment/rackets/Meshy_AI_Pink_and_Black_Tennis_1024095819_texture.glb",
+          "status": "ready",
+          "startMs": 373.19999999995343,
+          "durationMs": 643.3000000000466
+        },
+        {
+          "path": "assets/balls/royal-rally/Meshy_AI_Royal_Rally_1024220842_texture.glb",
+          "status": "ready",
+          "startMs": 374.0999999998603,
+          "durationMs": 293.4000000001397
+        }
+      ],
+      "readyMs": 2089.899999999907,
+      "renderer": [
+        390,
+        844
+      ],
+      "viewport": [
+        390,
+        844
+      ],
+      "dpr": 1,
+      "renderScale": 1,
+      "camera": "behind",
+      "phase": "serve",
+      "comparison": "far",
+      "visualScale": 1.5,
+      "ballScreen": {
+        "x": 189.16162029380007,
+        "y": 356.17332683168246
+      },
+      "ballPixels": {
+        "css": 2.3937262158229444,
+        "render": 2.3937262158229444,
+        "onScreen": true
+      },
+      "records": []
+    },
+    "presentation": {
+      "screen": {
+        "x": 248.79093080649073,
+        "y": 678.9367782530103
+      },
+      "cameraPosition": [
+        0.5120000243186951,
+        15,
+        29.350000381469727
+      ],
+      "human": "Kira",
+      "temporaryHumanCount": 0,
+      "opponentCount": 1
+    },
+    "phase": "serve",
+    "kira": {
+      "status": "ready",
+      "rootEnabled": true,
+      "bodyMeshCount": 1,
+      "bodyVisible": true,
+      "racketVisible": true,
+      "texturedSkin": true,
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "state": "Idle",
+      "time": 0.5334000000000001,
+      "transitioning": false,
+      "clips": [
+        {
+          "name": "Running",
+          "duration": 0.6333330273628235
+        },
+        {
+          "name": "Walking",
+          "duration": 1.0333329439163208
+        },
+        {
+          "name": "_01a16f14_df89_70e4_966f_38087b9b2ef7",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f17_0702_776b_a578_5ae634002c9e",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f19_f977_75c8_82d3_00bd61e22843",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f1f_22af_74e9_af26_8f1aec798eb5",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f20_14b9_70d3_b4cd_5b3e4d514601",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f21_3bc1_7312_b0db_d96fda6475ea",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f27_4128_711d_a437_5651121a8e2c",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f33_ae88_77f6_8f6a_d4c208041d36",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f36_0b96_76c3_ac06_6409b3e12e89",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f37_5a33_7498_91c4_55e2e1439bac",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "Idle_7",
+          "duration": 8.733333587646484
+        }
+      ],
+      "textures": 6,
+      "hand": "mixamorig:RightHand",
+      "racketAttached": true,
+      "grip": "[0, 0.065, 0]",
+      "racketHead": [
+        2.2365018117427824,
+        0.8207214206643403,
+        12.386293203234672
+      ],
+      "hips": [
+        1.600000023841858,
+        1.022186517715454,
+        12.350000381469727
+      ],
+      "root": [
+        1.600000023841858,
+        0,
+        12.350000381469727
+      ],
+      "contactPose": null,
+      "contactId": -1,
+      "contactError": 0,
+      "contactAge": 1.5334000000000005
+    },
+    "royalBall": {
+      "status": "ready",
+      "error": "",
+      "diameter": 0.067,
+      "visualScale": 1.5,
+      "meshDiameter": 0.10050000161752948,
+      "visualDiameter": 0.1005,
+      "collisionRadius": 0.0335,
+      "meshCount": 1,
+      "visible": true,
+      "textured": true,
+      "scale": 0.07033116505595467
+    },
+    "contact": null,
+    "renderedBall": [
+      0,
+      1,
+      -8
+    ],
+    "input": {
+      "x": 0,
+      "z": 0,
+      "aim": 0,
+      "depth": 0,
+      "power": 0.5,
+      "shot": "drive",
+      "release": false,
+      "charging": false,
+      "held": 0
+    },
+    "ball": {
+      "x": 1.6,
+      "y": 2.6,
+      "z": 12.1
+    },
+    "velocity": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "players": [
+      {
+        "x": 1.6,
+        "y": 0,
+        "z": 12.35
+      },
+      {
+        "x": -1.2800000000000002,
+        "y": 0,
+        "z": -10.4
+      }
+    ],
+    "server": 0,
+    "fault": 0,
+    "contacts": 0,
+    "totalPoints": 0,
+    "points": [
+      0,
+      0
+    ],
+    "games": [
+      0,
+      0
+    ],
+    "notice": "FIRST SERVE · TAP OR HOLD HIT",
+    "camera": "behind",
+    "drawCalls": 31,
+    "fps": 7,
+    "activeCameras": 1
+  },
+  {
+    "build": "e598c2a23f4bd282e10e8fd6c9fcbbc268e08310",
+    "release": "GOAL-002D",
+    "developer": {
+      "inspecting": false,
+      "frozen": true,
+      "timeline": {
+        "state": "Idle",
+        "time": 0,
+        "speed": 1,
+        "playing": true,
+        "loop": true
+      },
+      "servePrototype": false,
+      "overlayVisible": false,
+      "markersVisible": false,
+      "recent": {
+        "samples": 485,
+        "fps": 7.636845179890988,
+        "averageMs": 130.9441237113405,
+        "stddevMs": 89.12944317522674,
+        "p95Ms": 270.19999999995343,
+        "maxMs": 814.5,
+        "over33Ms": 395
+      },
+      "assets": [
+        {
+          "path": "assets/characters/kira/Meshy_AI_Pink_Valkyrie_All_Animations.glb",
+          "status": "ready",
+          "startMs": 370.19999999995343,
+          "durationMs": 1542.6999999999534
+        },
+        {
+          "path": "assets/equipment/rackets/Meshy_AI_Pink_and_Black_Tennis_1024095819_texture.glb",
+          "status": "ready",
+          "startMs": 373.19999999995343,
+          "durationMs": 643.3000000000466
+        },
+        {
+          "path": "assets/balls/royal-rally/Meshy_AI_Royal_Rally_1024220842_texture.glb",
+          "status": "ready",
+          "startMs": 374.0999999998603,
+          "durationMs": 293.4000000001397
+        }
+      ],
+      "readyMs": 2089.899999999907,
+      "renderer": [
+        390,
+        844
+      ],
+      "viewport": [
+        390,
+        844
+      ],
+      "dpr": 1,
+      "renderScale": 1,
+      "camera": "behind",
+      "phase": "serve",
+      "comparison": "far",
+      "visualScale": 1.75,
+      "ballScreen": {
+        "x": 189.16162029380007,
+        "y": 356.17332683168246
+      },
+      "ballPixels": {
+        "css": 2.7926805851267686,
+        "render": 2.7926805851267686,
+        "onScreen": true
+      },
+      "records": []
+    },
+    "presentation": {
+      "screen": {
+        "x": 248.79093080649073,
+        "y": 678.9367782530103
+      },
+      "cameraPosition": [
+        0.5120000243186951,
+        15,
+        29.350000381469727
+      ],
+      "human": "Kira",
+      "temporaryHumanCount": 0,
+      "opponentCount": 1
+    },
+    "phase": "serve",
+    "kira": {
+      "status": "ready",
+      "rootEnabled": true,
+      "bodyMeshCount": 1,
+      "bodyVisible": true,
+      "racketVisible": true,
+      "texturedSkin": true,
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "state": "Idle",
+      "time": 0.5334000000000001,
+      "transitioning": false,
+      "clips": [
+        {
+          "name": "Running",
+          "duration": 0.6333330273628235
+        },
+        {
+          "name": "Walking",
+          "duration": 1.0333329439163208
+        },
+        {
+          "name": "_01a16f14_df89_70e4_966f_38087b9b2ef7",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f17_0702_776b_a578_5ae634002c9e",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f19_f977_75c8_82d3_00bd61e22843",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f1f_22af_74e9_af26_8f1aec798eb5",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f20_14b9_70d3_b4cd_5b3e4d514601",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f21_3bc1_7312_b0db_d96fda6475ea",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f27_4128_711d_a437_5651121a8e2c",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f33_ae88_77f6_8f6a_d4c208041d36",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f36_0b96_76c3_ac06_6409b3e12e89",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f37_5a33_7498_91c4_55e2e1439bac",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "Idle_7",
+          "duration": 8.733333587646484
+        }
+      ],
+      "textures": 6,
+      "hand": "mixamorig:RightHand",
+      "racketAttached": true,
+      "grip": "[0, 0.065, 0]",
+      "racketHead": [
+        2.2365018117427824,
+        0.8207214206643403,
+        12.386293203234672
+      ],
+      "hips": [
+        1.600000023841858,
+        1.022186517715454,
+        12.350000381469727
+      ],
+      "root": [
+        1.600000023841858,
+        0,
+        12.350000381469727
+      ],
+      "contactPose": null,
+      "contactId": -1,
+      "contactError": 0,
+      "contactAge": 1.5334000000000005
+    },
+    "royalBall": {
+      "status": "ready",
+      "error": "",
+      "diameter": 0.067,
+      "visualScale": 1.75,
+      "meshDiameter": 0.11724999952122062,
+      "visualDiameter": 0.11725000000000001,
+      "collisionRadius": 0.0335,
+      "meshCount": 1,
+      "visible": true,
+      "textured": true,
+      "scale": 0.07033116505595467
+    },
+    "contact": null,
+    "renderedBall": [
+      0,
+      1,
+      -8
+    ],
+    "input": {
+      "x": 0,
+      "z": 0,
+      "aim": 0,
+      "depth": 0,
+      "power": 0.5,
+      "shot": "drive",
+      "release": false,
+      "charging": false,
+      "held": 0
+    },
+    "ball": {
+      "x": 1.6,
+      "y": 2.6,
+      "z": 12.1
+    },
+    "velocity": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "players": [
+      {
+        "x": 1.6,
+        "y": 0,
+        "z": 12.35
+      },
+      {
+        "x": -1.2800000000000002,
+        "y": 0,
+        "z": -10.4
+      }
+    ],
+    "server": 0,
+    "fault": 0,
+    "contacts": 0,
+    "totalPoints": 0,
+    "points": [
+      0,
+      0
+    ],
+    "games": [
+      0,
+      0
+    ],
+    "notice": "FIRST SERVE · TAP OR HOLD HIT",
+    "camera": "behind",
+    "drawCalls": 31,
+    "fps": 4,
+    "activeCameras": 1
+  }
+]
