@@ -1,10 +1,10 @@
 # Centre Court — GOAL 003
 
-Implementation commit: `eb775186b5f09dc8732ceb36896f961539b82da8` (the subsequent publication commit adds this report and evidence). Baseline: `929aebf30af6148a18850c2db25db5c11d1d01f0`.
+Initial implementation commit: `eb775186b5f09dc8732ceb36896f961539b82da8`. Final contact-fairness follow-up: `3a766bb2072beae1cd5918ad76c3a4021dc3f9cc`. Publication commits add the report and evidence. Baseline: `929aebf30af6148a18850c2db25db5c11d1d01f0`.
 
 Live deployment: <https://kalikeefbiz.github.io/Centre-Court/>. The deployed `release.json` identifies the exact publication SHA and asset revision. Release identifier: `GOAL-003`. Deployment uses the existing GitHub Actions verify → Pages workflow.
 
-Initial publication `6dea2878f204a3f8a144e0af7a6dc5c59d1712ee` passed [the full verify/deploy workflow](https://github.com/kalikeefbiz/Centre-Court/actions/runs/40167270414). A browser check of the public site confirmed that exact GOAL 003 build, a real human serve and AI return (two contacts), loaded Kira/racket/Royal Rally, one camera and zero browser errors. See [live verification](../public/verification/goal-003/live-verification.json). The subsequent reporting correction excludes AI service landings from the legal-return metric; all seeded rally/outcome/positioning results are identical and gameplay code is unchanged.
+Initial publication `6dea2878f204a3f8a144e0af7a6dc5c59d1712ee` passed [the full verify/deploy workflow](https://github.com/kalikeefbiz/Centre-Court/actions/runs/40167270414). A browser check of the public site confirmed that exact GOAL 003 build, a real human serve and AI return (two contacts), loaded Kira/racket/Royal Rally, one camera and zero browser errors. See [live verification](../public/verification/goal-003/live-verification.json). The subsequent reporting correction excludes AI service landings from the legal-return metric; all seeded rally/outcome/positioning results are identical for that reporting correction. A subsequent fairness review added an intent-specific contact guard and vetoed lob/slice choices above their legal volley height. The 500-selection regression test and final 74-unit suite pass; the published simulation was regenerated with this guard enabled.
 
 ## Architecture audit
 
@@ -62,9 +62,10 @@ Existing JSON export now includes initial seed, current random state, ball/veloc
 ## Automated verification
 
 - 49 baseline unit tests passed before implementation.
-- 73 final unit tests pass, including all existing scoring/control/assets/diagnostic coverage and focused AI, reproduction, simulation and CPU-budget checks.
+- 74 final unit tests pass, including all existing scoring/control/assets/diagnostic coverage and focused AI, reproduction, simulation and CPU-budget checks.
 - TypeScript and Vite production build pass. The pre-existing large PlayCanvas bundle warning remains; no new dependency was introduced.
 - Existing full-match test retains a real scripted human win and a sustained rally assertion. Its input driver was updated from assumptions about the old enlarged AI contact radius to the shared contact-aware scripted control driver. The assertions were not weakened.
+- The AI validates its selected shot intent immediately before contact. Drive may become an overhead above the ordinary volley window; lob/slice cannot borrow that taller reach. A seeded 500-choice high-contact regression verifies the restriction.
 - Tests cover bounce/time prediction, legal/reachable/unreachable contacts, dead net/second bounce, recovery, attack/defence, open court, lob/volley/overhead intent, difficulty dimensions, seeded error probabilities, service targets, speed/acceleration, reaction/returns, reset/pause, state history isolation, net approach, overlays, asset rendering, input ownership and performance.
 
 Local browser coverage: **37 checks passed** (20 Chromium, 17 WebKit), with **three intentional WebKit skips** for Chromium-only trusted CDP multitouch. WebKit covers pointer events, cancellation, pause, render assets and all new AI overlay flows. The existing CI workflow runs all 40 browser entries again before Pages deployment. Local WebKit required workspace-only extracted system libraries in its browser cache; the project and CI dependency installation were unchanged. An initial diagnostic-export filename assertion was updated from `002d` to `003`. Initial WebKit launch failures were host-library failures, not counted as gameplay passes.
@@ -92,7 +93,7 @@ Metrics below are generated from the final implementation. Contact rate counts A
 | Shot directions: left / centre / right                 |           662 / 739 / 81 |          1591 / 1033 / 303 |             4305 / 2133 / 2353 |
 | Covered X range, m                                     |            -4.18 to 4.24 |              -4.49 to 4.65 |                  -4.71 to 4.69 |
 | Covered Z range, m                                     |          -13.29 to -3.71 |            -12.96 to -2.99 |                -13.26 to -2.18 |
-| Mean AI decision CPU, ms                               |                   0.0105 |                     0.0124 |                         0.0205 |
+| Mean AI decision CPU, ms                               |                   0.0107 |                     0.0111 |                         0.0141 |
 
 Early runs exposed hundreds-of-contact cooperative exchanges, no approaches and excessive low safe returns. Changes included stable receiving position, shared contact gates, better contact timing, pressure/risk placement scatter, short-ball incentives, outgoing-angle recovery and finite acceleration. The final distributions show separation and varied positions, while retaining a cooperative long tail. These simulations demonstrate behavior and failure modes; they do not establish that the game is fun. No artificial rally-length cap or prescribed winning percentage was introduced.
 
@@ -104,10 +105,10 @@ The AI has no pathfinding framework, per-frame trajectory array, scene search or
 
 | Measurement         | Baseline median | GOAL 003 median |
 | ------------------- | --------------: | --------------: |
-| Interception helper |        0.012933 |        0.021082 |
-| Match tick          |        0.000597 |        0.000653 |
+| Interception helper |        0.012933 |        0.024565 |
+| Match tick          |        0.000597 |        0.001541 |
 
-The richer interception helper costs more per call: it checks shared contact gates and acceleration and steps at 120 Hz versus the old sampled 60 Hz search. The final total Match-tick difference is about 0.000057 ms in this workload, within the sample variability. Allocation reuse was implemented in the measured prediction path before release; no physics simplification or fairness compromise was used. These are microbenchmarks, not whole-frame CPU/GPU profiles. The regression budgets are 2 ms per prediction and 0.1 ms per Match tick; actual measurements are far below them.
+The richer interception helper costs more per call: it checks shared contact gates and acceleration and steps at 120 Hz versus the old sampled 60 Hz search. The final total Match-tick difference is about 0.000944 ms in this workload, within the sample variability. Allocation reuse was implemented in the measured prediction path before release; no physics simplification or fairness compromise was used. These are microbenchmarks, not whole-frame CPU/GPU profiles. The regression budgets are 2 ms median per prediction helper and 0.1 ms median per Match tick; actual measurements are far below them.
 
 [Browser samples](../public/verification/goal-003/browser-performance.json) use the existing GOAL 002D 10-second performance capture, three sequential serving/idle-return windows per version, 390×844 render pixels, DPR 1, software SwiftShader Chromium, tools panel closed and performance overlay on. Every record has zero interruptions.
 
@@ -121,6 +122,8 @@ The richer interception helper costs more per call: it checks shared contact gat
 | goal003 / 3      |                   90.68 |  179.20 | 11.03 |         31 |
 
 Both versions are slow on software WebGL, and the frame-time ranges overlap. The across-window mean is 94.18 ms baseline versus 96.26 ms GOAL 003. That small difference is below the variation among these windows and does not establish an AI-induced frame regression. No 30/60 FPS mobile claim is made. Draw calls remain 31; the added decision CPU time is separately visible in the raw AI snapshots. A representative physical-device CPU/GPU profile is still required.
+
+The browser frame-window samples and rendered captures predate the final intent-specific guard; that guard adds only a contact-time legality check and no rendering change. Node CPU budgets and both browser AI flows were rerun after it.
 
 The existing diagnostic exports provide frame intervals, draw calls, render dimensions and asset timings. GPU time remains explicitly unavailable. Linux software WebGL, Node timings and emulated mobile WebKit are not physical iPhone performance measurements. Safari responsiveness and thermal behavior still need device review.
 

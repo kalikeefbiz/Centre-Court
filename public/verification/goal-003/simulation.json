@@ -56,10 +56,10 @@
       },
       "performance": {
         "ticks": 521309,
-        "averageTickMs": 0.0006824138562733745,
+        "averageTickMs": 0.0006688390820031972,
         "decisions": 8246,
-        "averageDecisionMs": 0.010467569488236171,
-        "maxDecisionMs": 0.6147669999999721
+        "averageDecisionMs": 0.010733296507397386,
+        "maxDecisionMs": 0.6452050000000327
       }
     },
     {
@@ -118,10 +118,10 @@
       },
       "performance": {
         "ticks": 936432,
-        "averageTickMs": 0.0008813657980504894,
+        "averageTickMs": 0.0007590150635604317,
         "decisions": 21405,
-        "averageDecisionMs": 0.01244876000934329,
-        "maxDecisionMs": 7.2998660000000655
+        "averageDecisionMs": 0.011053925671572207,
+        "maxDecisionMs": 0.19173000000000684
       }
     },
     {
@@ -180,13 +180,13 @@
       },
       "performance": {
         "ticks": 2727333,
-        "averageTickMs": 0.0015074767151645554,
+        "averageTickMs": 0.0009603289323304621,
         "decisions": 85710,
-        "averageDecisionMs": 0.020538428503091004,
-        "maxDecisionMs": 37.14340700000048
+        "averageDecisionMs": 0.014098078578928556,
+        "maxDecisionMs": 0.8550310000000536
       }
     }
   ],
-  "implementationCommit": "eb775186b5f09dc8732ceb36896f961539b82da8",
-  "measurementNote": "Legal return rate excludes AI service landings; gameplay is unchanged."
+  "implementationCommit": "3a766bb2072beae1cd5918ad76c3a4021dc3f9cc",
+  "measurementNote": "AI service landings excluded from legal replies; final intent-specific contact guard enabled."
 }

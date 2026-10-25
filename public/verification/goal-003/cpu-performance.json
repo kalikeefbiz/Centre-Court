@@ -1,6 +1,6 @@
 {
   "baselineCommit": "929aebf30af6148a18850c2db25db5c11d1d01f0",
-  "implementationCommit": "eb775186b5f09dc8732ceb36896f961539b82da8",
+  "implementationCommit": "3a766bb2072beae1cd5918ad76c3a4021dc3f9cc",
   "baseline": {
     "environment": "Node Linux cloud; one warmup, five repetitions; milliseconds per call; same seeded idle-player Practice workload",
     "prediction": {
@@ -31,27 +31,27 @@
   "final": {
     "environment": "Node Linux cloud; one warmup, five repetitions; milliseconds per call; same seeded idle-player Practice workload",
     "prediction": {
-      "median": 0.021082172000000014,
-      "min": 0.019548887999999976,
-      "max": 0.02530660599999999,
+      "median": 0.02456458399999997,
+      "min": 0.01971729700000003,
+      "max": 0.0660378159999999,
       "samples": [
-        0.02530660599999999,
-        0.019548887999999976,
-        0.024288089000000013,
-        0.020845934999999996,
-        0.021082172000000014
+        0.028626116000000024,
+        0.02456458399999997,
+        0.0660378159999999,
+        0.022445113999999988,
+        0.01971729700000003
       ]
     },
     "tick": {
-      "median": 0.000653306666666664,
-      "min": 0.0005300901388888867,
-      "max": 0.0008208316666666665,
+      "median": 0.0015406565277777734,
+      "min": 0.00047413944444444825,
+      "max": 0.004532619166666668,
       "samples": [
-        0.0007785691666666692,
-        0.000653306666666664,
-        0.0008208316666666665,
-        0.0005300901388888867,
-        0.0005358891666666605
+        0.004532619166666668,
+        0.0009635448611111188,
+        0.0018145908333333377,
+        0.0015406565277777734,
+        0.00047413944444444825
       ]
     }
   }
