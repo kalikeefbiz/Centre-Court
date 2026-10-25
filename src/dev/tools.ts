@@ -36,6 +36,7 @@ export class DeveloperTools {
   private instantMs = 0;
   private captureStart = 0;
   private captureScenario = '';
+  private captureInterruptions = 0;
   private captureContext?: unknown;
   private recording = false;
   private records: unknown[] = [];
@@ -178,6 +179,7 @@ export class DeveloperTools {
       this.captureStart = performance.now();
       this.recording = true;
       this.captureScenario = this.scenario;
+      this.captureInterruptions = this.interruptions;
       this.captureContext = this.context();
       this.el('dev-record-status').textContent = `Recording ${this.scenario}…`;
     });
@@ -380,7 +382,7 @@ export class DeveloperTools {
         scenario: this.captureScenario,
         startContext: this.captureContext,
         elapsedMs: now - this.captureStart,
-        interruptions: this.interruptions,
+        interruptions: this.interruptions - this.captureInterruptions,
         frameIntervals: this.capture.summary(),
         context: this.context(),
       });

@@ -4,13 +4,17 @@ const url = process.env.CENTRE_COURT_URL || 'http://127.0.0.1:4174/';
 const directory = 'public/verification/goal-002d';
 const ballOnly = process.argv.includes('--ball-only');
 const samplesOnly = process.argv.includes('--samples-only');
+const performanceOnly = process.argv.includes('--performance-only');
 const audit = [];
 mkdirSync(directory, { recursive: true });
 const browser = await chromium.launch({
   args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-webgl'],
 });
 const page = await browser.newPage({
-  viewport: ballOnly || samplesOnly ? { width: 390, height: 844 } : { width: 1280, height: 900 },
+  viewport:
+    ballOnly || samplesOnly || performanceOnly
+      ? { width: 390, height: 844 }
+      : { width: 1280, height: 900 },
   deviceScaleFactor: 1,
 });
 page.on('pageerror', (e) => console.error(e.message));
@@ -19,6 +23,17 @@ await page.goto(url + '?dev=1');
 await page.locator('#play').waitFor({ state: 'visible' });
 await page.waitForFunction(() => !document.querySelector('#play').disabled, { timeout: 45000 });
 await page.locator('#dev-toggle').click();
+if (performanceOnly) {
+  await page.locator('#dev-close').click();
+  await page.locator('#practice').click();
+  await page.locator('#dev-toggle').click();
+  await page.locator('#dev-perf').check();
+  await page.locator('#dev-close').click();
+  await page.waitForTimeout(1000);
+  await page.screenshot({ path: `${directory}/performance.png` });
+  await browser.close();
+  process.exit(0);
+}
 if (!ballOnly) {
   await page.locator('#dev-inspect').click();
   await page.locator('#dev-markers').check();
@@ -110,8 +125,10 @@ for (const camera of ['broadcast', 'behind']) {
   }
 }
 await page.locator('#dev-perf').check();
+await page.locator('#dev-close').click();
 await page.waitForTimeout(300);
 await page.screenshot({ path: `${directory}/performance.png` });
+await page.locator('#dev-toggle').click();
 await page.locator('#dev-perf').uncheck();
 await page.locator('#dev-comparison').selectOption('live');
 await page.locator('#dev-close').click();

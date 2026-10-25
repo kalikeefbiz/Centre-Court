@@ -74,7 +74,7 @@ test('production rig inspection selects every registry clip and restores a froze
   await expect.poll(async () => (await snap(page)).developer.serveStudy?.releaseTime).toBe(0.9);
   const held = await snap(page);
   expect(held.renderedBall[1]).toBeCloseTo(held.developer.markers.palm[1], 2);
-  await page.locator('#dev-time').fill('0.900');
+  await page.locator('#dev-time').fill('0.9');
   await page.waitForTimeout(80);
   const release = await snap(page);
   await expect
