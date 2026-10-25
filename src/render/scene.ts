@@ -312,6 +312,8 @@ export class Scene {
       ...this.athletes.flatMap((a) => [a.root, a.shadow]),
     ];
     const enabled = entities.map((e) => e.enabled);
+    const shadowPosition = this.playerShadow.getPosition().clone();
+    this.playerShadow.setPosition(0, 0.06, 11);
     const position = this.camera.getPosition().clone(),
       rotation = this.camera.getRotation().clone();
     entities.forEach((e) => (e.enabled = false));
@@ -319,6 +321,7 @@ export class Scene {
       entities.forEach((e, i) => (e.enabled = enabled[i]));
       this.camera.setPosition(position);
       this.camera.setRotation(rotation);
+      this.playerShadow.setPosition(shadowPosition);
     };
   }
   inspectCamera(angle: string) {
