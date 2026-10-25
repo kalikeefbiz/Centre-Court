@@ -3,13 +3,14 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 const url = process.env.CENTRE_COURT_URL || 'http://127.0.0.1:4174/';
 const directory = 'public/verification/goal-002d';
 const ballOnly = process.argv.includes('--ball-only');
+const samplesOnly = process.argv.includes('--samples-only');
 const audit = [];
 mkdirSync(directory, { recursive: true });
 const browser = await chromium.launch({
   args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-webgl'],
 });
 const page = await browser.newPage({
-  viewport: ballOnly ? { width: 390, height: 844 } : { width: 1280, height: 900 },
+  viewport: ballOnly || samplesOnly ? { width: 390, height: 844 } : { width: 1280, height: 900 },
   deviceScaleFactor: 1,
 });
 page.on('pageerror', (e) => console.error(e.message));
@@ -25,7 +26,7 @@ if (!ballOnly) {
   await page.locator('#dev-contact-seek').click();
   await page.waitForTimeout(500);
   await page.locator('#dev-panel').evaluate((e) => (e.scrollTop = 0));
-  await page.screenshot({ path: `${directory}/inspection.png` });
+  if (!samplesOnly) await page.screenshot({ path: `${directory}/inspection.png` });
   for (const clip of [
     'Forehand',
     'Backhand',
@@ -45,14 +46,20 @@ if (!ballOnly) {
         ?.duration || 2.9666669;
     for (const time of [0, 0.4, 0.8, 1.2, 1.533, 2, 2.6].filter((t) => t < duration)) {
       await page.locator('#dev-time').fill(String(time));
-      await page.waitForTimeout(65);
+      await page.waitForFunction(
+        ({ clip, time }) => {
+          const m = window.centreCourt.snapshot().developer.markers;
+          return m.animationState === clip && Math.abs(m.animationTime - time) < 0.001;
+        },
+        { clip, time },
+      );
       audit.push({
         clip,
         time,
         ...(await snap()).developer.markers,
         serveStudy: (await snap()).developer.serveStudy,
       });
-      if (['Forehand', 'Backhand', 'Serve'].includes(clip)) {
+      if (!samplesOnly && ['Forehand', 'Backhand', 'Serve'].includes(clip)) {
         // Hide the panel for unobstructed full-body source-pose evidence.
         await page.locator('#dev-close').click();
         await page.screenshot({
@@ -61,6 +68,11 @@ if (!ballOnly) {
         await page.locator('#dev-toggle').click();
       }
     }
+  }
+  if (samplesOnly) {
+    writeFileSync(`${directory}/animation-samples.json`, JSON.stringify(audit, null, 2));
+    await browser.close();
+    process.exit(0);
   }
   await page.locator('#dev-clip').selectOption('Serve');
   await page.locator('#dev-contact-seek').click();

@@ -349,6 +349,8 @@ export class Kira {
         this.inPlace();
       },
       markers: () => ({
+        animationState: this.layer.activeState,
+        animationTime: this.layer.activeStateCurrentTime,
         root: this.root.getPosition().toArray(),
         grip: this.socket.getPosition().toArray(),
         head: this.head().toArray(),

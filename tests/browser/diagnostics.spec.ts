@@ -57,6 +57,7 @@ test('production rig inspection selects every registry clip and restores a froze
   ]) {
     await page.locator('#dev-clip').selectOption(state);
     await expect.poll(async () => (await snap(page)).developer.timeline.state).toBe(state);
+    await expect.poll(async () => (await snap(page)).developer.markers.animationState).toBe(state);
     await expect.poll(async () => (await snap(page)).kira.bodyVisible).toBe(true);
     expect((await snap(page)).kira.racketAttached).toBe(true);
     if (['Forehand', 'Backhand', 'Serve'].includes(state)) {
