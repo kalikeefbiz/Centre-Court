@@ -261,6 +261,9 @@ export class DeveloperTools {
   }
   private syncTimeline() {
     const clip = ANIMATIONS[this.timeline.state];
+    (this.el('dev-time') as HTMLInputElement).value = String(this.timeline.time);
+    this.el('dev-position').textContent =
+      `${this.timeline.time.toFixed(3)} / ${clip.duration.toFixed(3)} s`;
     (this.el('dev-time') as HTMLInputElement).max = String(clip.duration);
     (this.el('dev-loop') as HTMLInputElement).checked = this.timeline.loop;
     this.el('dev-play').textContent = this.timeline.playing ? 'Pause' : 'Play';

@@ -65,6 +65,12 @@ test('production rig inspection selects every registry clip and restores a froze
       const s = await snap(page);
       expect(s.developer.timeline.playing).toBe(false);
       expect(s.developer.timeline.time).toBeGreaterThan(0.8);
+      await expect
+        .poll(async () => {
+          const s = await snap(page);
+          return Math.abs(s.developer.markers.animationTime - s.developer.timeline.time);
+        })
+        .toBeLessThan(0.001);
       await page.screenshot({ path: resolve(directory, `${state.toLowerCase()}.png`) });
     }
   }

@@ -144,3 +144,11 @@
     max-height: 65dvh;
   }
 }
+
+/* Keep native Safari/WPE select text legible while retaining the native picker. */
+#dev-tools select {
+  appearance: none;
+  -webkit-appearance: none;
+  background: #17373d;
+  color: #fff;
+}
