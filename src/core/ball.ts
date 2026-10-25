@@ -30,20 +30,22 @@ export class Ball {
       (target.z - this.position.z) / t,
     );
   }
-  step(dt: number): BallEvent[] {
-    if (!this.active) return [];
-    const events: BallEvent[] = [];
+  step(dt: number, events: BallEvent[] = []): BallEvent[] {
+    events.length = 0;
+    if (!this.active) return events;
     const p = this.position,
       v = this.velocity;
-    const old = { ...p };
+    const oldX = p.x,
+      oldY = p.y,
+      oldZ = p.z;
     p.x += v.x * dt;
     p.z += v.z * dt;
     p.y += v.y * dt - 0.5 * GRAVITY * dt * dt;
     v.y -= GRAVITY * dt;
-    if (old.z * p.z <= 0 && old.z !== p.z && Math.abs(p.x) <= 5.7 && !this.netTouched) {
-      const f = old.z / (old.z - p.z),
-        y = old.y + (p.y - old.y) * f,
-        x = old.x + (p.x - old.x) * f;
+    if (oldZ * p.z <= 0 && oldZ !== p.z && Math.abs(p.x) <= 5.7 && !this.netTouched) {
+      const f = oldZ / (oldZ - p.z),
+        y = oldY + (p.y - oldY) * f,
+        x = oldX + (p.x - oldX) * f;
       if (y - COURT.radius < netHeight(x)) {
         const grazing = y > netHeight(x) - 0.04;
         this.netTouched = true;
@@ -53,7 +55,7 @@ export class Ball {
           v.z *= 0.8;
           v.y *= 0.7;
         } else {
-          p.z = Math.sign(old.z) * 0.13;
+          p.z = Math.sign(oldZ) * 0.13;
           v.z *= -0.15;
           v.x *= 0.4;
           v.y = Math.min(v.y, 0);
@@ -62,8 +64,8 @@ export class Ball {
     }
     if (p.y <= COURT.radius && v.y < 0) {
       // Interpolate the actual floor crossing; don't judge a later frame's X/Z.
-      const f = (old.y - COURT.radius) / Math.max(0.00001, old.y - p.y);
-      const at = vec(old.x + (p.x - old.x) * f, COURT.radius, old.z + (p.z - old.z) * f);
+      const f = (oldY - COURT.radius) / Math.max(0.00001, oldY - p.y);
+      const at = vec(oldX + (p.x - oldX) * f, COURT.radius, oldZ + (p.z - oldZ) * f);
       p.x = at.x;
       p.y = COURT.radius;
       p.z = at.z;

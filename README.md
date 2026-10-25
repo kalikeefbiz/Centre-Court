@@ -1,4 +1,4 @@
-# Centre Court · GOAL 002D
+# Centre Court · GOAL 003
 
 A playable mobile-first 3D arcade singles tennis foundation by **BlackHouse**, built with PlayCanvas and TypeScript. Kira uses the owner-supplied rigged character and separate racket GLBs. The AI opponent retains its temporary model.
 
@@ -43,7 +43,7 @@ npm run preview      # serve the production build locally
 | `src/platform/input.ts` | Keyboard, mouse, multi-pointer joystick, charge/release and aiming                                       |
 | `src/main.ts`           | Composition, UI binding, browser lifecycle and fixed-step scheduling                                     |
 
-Core modules have no PlayCanvas or DOM runtime dependency. Camera storage is injected. Identical seed and fixed-step commands reproduce a match. The renderer never changes the ball, scoring, AI or match state. AI retains its established reach checks, tactics and presets. The playable athlete uses the calibrated racket contact zones; both share launch physics, movement bounds and court rules.
+Core modules have no PlayCanvas or DOM runtime dependency. Camera storage is injected. Identical seed and fixed-step commands reproduce a match. The renderer never changes the ball, scoring, AI or match state. AI uses a lightweight state machine, predictive interception, utility-scored tactics, and acceleration-limited steering. Both athletes use the calibrated contact zones, launch physics, movement bounds and court rules.
 
 World +Y is up; +Z is the human end. The singles court is **8.23 × 23.77 m**; service lines are 6.4 m from the net. Royal Rally’s visual diameter is 0.067 m; the separate simulation sphere has radius 0.0335 m. Court paint tops meet the physics ground plane at Y=0. A ball touching a boundary counts as in. Net height rises from 0.914 m at centre to 1.07 m near the posts.
 
@@ -71,7 +71,7 @@ Pink Valkyrie replaces Pink Rebel; the old GLB remains in `public/assets/charact
 
 Royal Rally is the supplied 3D mesh and all three original PBR material maps, optimized to 512 px. The character maps are 1024 px. [Optimization report](docs/asset-optimization.json) records hashes, bytes and dimensions; tests verify every nonimage buffer and material definition against the uploaded originals. `python tools/optimize-assets.py` reproduces the derivatives (requires Pillow). No replacement model or reference-image sprite is used.
 
-Both assets are mandatory. Failed loads block match start and offer retry. The AI, camera rig, scoring and match lifecycle remain the existing foundation; GOAL 003 and GOAL 004 have not begun.
+Both assets are mandatory. Failed loads block match start and offer retry. The existing camera rig, scoring and match lifecycle remain the foundation. GOAL 003 adds competitive AI; GOAL 004 (Stadium & Presentation) remains next.
 
 [Current limitations](docs/LIMITATIONS.md), [verification and evidence](docs/VERIFICATION.md), and [physical iPhone acceptance](docs/IPHONE-CHECKLIST.md) document the remaining checks. Actual iPhone Safari compatibility and sustained device performance remain unverified until hardware acceptance. Older Kira integration/hotfix documents describe the previous release and are historical.
 
@@ -79,6 +79,14 @@ Production evidence: https://kalikeefbiz.github.io/Centre-Court/verification/goa
 
 ## GOAL 002D developer diagnostics
 
-Open [developer mode](https://kalikeefbiz.github.io/Centre-Court/?dev=1) and tap **DEV · Tools** for the production Kira animation inspector, isolated serve feasibility prototype, visual-only Royal Rally size comparisons, performance readout and JSON measurements. Every visit starts with the approved 1.00× ball visual size; physics and production serve behavior are unchanged.
+Open [developer mode](https://kalikeefbiz.github.io/Centre-Court/?dev=1) and tap **DEV · Tools** for the production Kira animation inspector, isolated serve feasibility prototype, visual-only Royal Rally size comparisons, performance readout and JSON measurements. Every visit retains the existing 1.00× default. The owner’s current preferred visual scale is 1.50× (select it in DEV tools); physics and production serve behavior are unchanged.
 
-See [GOAL-002D-REPORT.md](docs/GOAL-002D-REPORT.md) for access, rendered evidence, animation/serve findings, skill references and the physical iPhone test procedure. Normal gameplay shows no developer controls. Next production milestone: GOAL 003 — Competitive AI.
+See [GOAL-002D-REPORT.md](docs/GOAL-002D-REPORT.md) for access, rendered evidence, animation/serve findings, skill references and the physical iPhone test procedure. Normal gameplay shows no developer controls. Next milestone: GOAL 004 — Stadium & Presentation.
+
+## GOAL 003 competitive opponent
+
+Choose Easy, Normal (default), or Hard in the existing setup. The opponent anticipates reachable contact windows, accelerates toward them, selects safe or attacking shots, targets open space, and recovers according to the shot. Hard has finite speed/reaction/accuracy and the same contact and ball rules as the player.
+
+In `?dev=1`, enable **AI decision overlay** in the existing DEV panel. Cyan marks intended interception, yellow predicted bounce, lime recovery. Seed restart and labeled AI test feeds reproduce defensive/short-ball/open-court situations through real gameplay simulation. Export JSON includes the seed, random state, recent transitions, targets, utility, and CPU decision timing. Tools remain absent on ordinary visits.
+
+See [GOAL-003-REPORT.md](docs/GOAL-003-REPORT.md) for architecture, difficulty parameters, simulation distributions, rendered browser evidence, limitations and physical iPhone checks. Run `CC_AI_REPORT=1 npm test` to regenerate simulation measurements; `node tools/ai-evidence.mjs` captures rendered fixtures against the preview server.

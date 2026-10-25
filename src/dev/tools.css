@@ -152,3 +152,28 @@
   background: #17373d;
   color: #fff;
 }
+
+#dev-ai-readout {
+  position: fixed;
+  z-index: 99;
+  pointer-events: none;
+  left: max(10px, env(safe-area-inset-left));
+  bottom: calc(170px + env(safe-area-inset-bottom));
+  max-width: calc(100vw - 36px);
+  margin: 0;
+  padding: 8px;
+  background: #071b22e8;
+  color: #b8fff3;
+  font: 11px/1.4 monospace;
+}
+#dev-seed {
+  max-width: 160px;
+  min-height: 44px;
+  font-size: 16px;
+}
+@media (max-height: 500px) {
+  #dev-ai-readout {
+    bottom: 8px;
+    left: 150px;
+  }
+}

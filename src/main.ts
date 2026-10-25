@@ -183,7 +183,7 @@ if (
     value: {
       snapshot: () => ({
         build: __BUILD_ID__,
-        release: 'GOAL-002D',
+        release: 'GOAL-003',
         developer: developer?.snapshot(),
         presentation: scene.playerPresentation(),
         phase: match.phase,
@@ -194,6 +194,10 @@ if (
           : null,
         renderedBall: scene.ballPresentation(),
         input: { ...input.controls, charging: input.charging, held: input.held },
+        ai: match.ai.snapshot(match.difficulty, match.initialSeed),
+        lastHitter: match.lastHitter,
+        bounces: match.bounces,
+        serveFlight: match.serveFlight,
         ball: { ...match.ball.position },
         velocity: { ...match.ball.velocity },
         players: match.players.map((p) => ({ ...p.position })),

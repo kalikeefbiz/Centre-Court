@@ -163,7 +163,7 @@ test('visual presets preserve physics and cameras, diagnostics export and touch 
   await expect(page.locator('#dev-record-status')).toContainText('Saved', { timeout: 15000 });
   const download = page.waitForEvent('download');
   await page.locator('#dev-export').click();
-  expect((await download).suggestedFilename()).toContain('002d');
+  expect((await download).suggestedFilename()).toContain('003');
   const s = await snap(page);
   expect(s.developer.assets).toHaveLength(3);
   expect(s.developer.assets.every((a: any) => a.status === 'ready' && a.durationMs > 0)).toBe(true);

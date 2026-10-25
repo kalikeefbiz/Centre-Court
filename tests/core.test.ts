@@ -5,6 +5,7 @@ import { Ball, predict } from '../src/core/ball';
 import { Match, FixedClock, FIXED_DT, idleControls } from '../src/core/match';
 import { CameraRig } from '../src/core/camera';
 import { chooseShot, intercept, PRESETS } from '../src/core/ai';
+import { scriptedPlayer } from './support/scripted';
 
 const winGame = (s: Score, side: 0 | 1) => {
   for (let i = 0; i < 4; i++) s.award(side);
@@ -340,52 +341,11 @@ describe('full-match playability', () => {
     m.start('easy', 'short', false, 851);
     let best = 0,
       returns = 0;
-    let target = vec();
+    const memory = { target: vec(0, 0, 11) };
     for (let i = 0; i < 120 * 600 && m.phase !== 'result'; i++) {
-      const c = idleControls(),
-        p = m.players[0].position,
-        b = m.ball.position;
-      if (m.phase === 'serve' && m.server === 0) {
-        c.release = true;
-        c.power = 0.65;
-      }
-      if (m.phase === 'rally' && m.lastHitter === 1) {
-        if (i % 12 === 0) {
-          const prediction = predict(m.ball, 3);
-          const hit = prediction.find(
-            (s) =>
-              s.position.z > 0.5 &&
-              s.position.z < 15 &&
-              s.position.y > 0.65 &&
-              s.position.y < 1.85 &&
-              (!m.serveFlight || s.bounced) &&
-              Math.hypot(s.position.x - p.x, s.position.z - p.z) < 6.3 * s.time + 1.3,
-          );
-          target = hit
-            ? { ...hit.position, x: hit.position.x - 0.45, z: hit.position.z + 0.45 }
-            : p;
-        }
-        const dx = target.x - p.x,
-          dz = target.z - p.z,
-          d = Math.hypot(dx, dz);
-        if (d > 0.2) {
-          c.x = dx / Math.max(1, d);
-          c.z = dz / Math.max(1, d);
-        }
-        if (
-          !m.serveFlight &&
-          b.z > 0.15 &&
-          b.y > 0.45 &&
-          b.y < 2.4 &&
-          Math.hypot(b.x - p.x, b.z - p.z) < 1.55
-        ) {
-          c.release = true;
-          c.power = 0.65;
-          c.aim = m.players[1].position.x > 0 ? -0.85 : 0.85;
-          returns++;
-        }
-      }
-      m.tick(FIXED_DT, c);
+      const before = m.contacts;
+      m.tick(FIXED_DT, scriptedPlayer(m, i, memory, 'neutral'));
+      if (m.contacts > before && m.lastHitter === 0 && m.contacts > 1) returns++;
       best = Math.max(best, m.contacts);
     }
     expect(returns).toBeGreaterThan(10);

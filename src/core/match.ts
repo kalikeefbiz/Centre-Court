@@ -1,6 +1,6 @@
 import { selectStroke, inContactZone, CONTACT, type Stroke } from './hitting';
 import { Ball, type Shot } from './ball';
-import { chooseShot, intercept, PRESETS, type Difficulty } from './ai';
+import { OpponentAI, chooseServe, PRESETS, type Difficulty, type Tactic } from './ai';
 import {
   COURT,
   clamp,
@@ -83,14 +83,28 @@ export class Match {
   private swingAim = 0;
   private swingDepth = 0;
   private swingShot: Shot = 'drive';
-  private aiReaction = 0;
-  private aiThink = 0;
-  private aiTarget = vec(0, 0, -10);
-  private aiWillMiss = false;
+  ai = new OpponentAI();
+  initialSeed = 314159;
+  private aiContext() {
+    return {
+      phase: this.phase,
+      server: this.server,
+      ball: this.ball,
+      player: this.players[1].position,
+      opponent: this.players[0].position,
+      lastHitter: this.lastHitter,
+      contacts: this.contacts,
+      bounces: this.bounces,
+      serveFlight: this.serveFlight,
+      difficulty: this.difficulty,
+    };
+  }
   start(difficulty: Difficulty, length: MatchLength, practice = false, seed = 314159) {
     this.difficulty = difficulty;
     this.practice = practice;
     this.random = new Random(seed);
+    this.initialSeed = seed;
+    this.ai = new OpponentAI();
     this.score = new Score(length);
     this.fault = 0;
     this.contacts = 0;
@@ -106,6 +120,7 @@ export class Match {
   }
   private prepareServe() {
     this.phase = 'serve';
+    this.pointWinner = null;
     for (const p of this.players) {
       p.contact = null;
       p.swing = 0;
@@ -124,6 +139,7 @@ export class Match {
     this.ball.active = false;
     this.ball.position = vec(sx, 2.6, sign(this.server) * 12.1);
     this.ball.velocity = vec();
+    this.ai.reset(this.server, this.players[1].position);
     this.announce(
       this.server === 0
         ? `${this.fault ? 'SECOND' : 'FIRST'} SERVE · TAP OR HOLD HIT`
@@ -153,11 +169,6 @@ export class Match {
     p.z = sign(side) * clamp(sign(side) * (p.z + (z / n) * speed * dt), 0.65, 15.3);
     this.players[side].distance += Math.hypot(p.x - before.x, p.z - before.z);
   }
-  private react() {
-    this.aiReaction = PRESETS[this.difficulty].reaction;
-    this.aiThink = 0;
-    this.aiWillMiss = this.random.next() < PRESETS[this.difficulty].miss;
-  }
   private recordContact(side: Side, stroke: Stroke) {
     this.players[side].contact = {
       id: ++this.contactSequence,
@@ -171,7 +182,7 @@ export class Match {
     const s = sign(this.server),
       targetSign = (this.score.deuce ? -1 : 1) * s;
     const error =
-      this.server === 1 ? PRESETS[this.difficulty].error * 0.7 : Math.abs(power - 0.65) * 0.8;
+      this.server === 1 ? PRESETS[this.difficulty].precision * 0.7 : Math.abs(power - 0.65) * 0.8;
     const target = vec(
       targetSign * 2.0 + aim * 1.55 + this.random.range(-error, error),
       COURT.radius,
@@ -186,11 +197,12 @@ export class Match {
     this.players[this.server].swing = 0.45;
     this.players[this.server].stroke = 'SERVE';
     this.contacts = 1;
-    this.react();
+    if (this.server === 1) this.ai.served(this.aiContext(), target);
     this.announce('SERVE');
   }
   private endPoint(winner: Side, reason: string) {
     if (this.phase !== 'rally') return; // Point resolution is idempotent.
+    this.ai.conclude();
     this.pointWinner = winner;
     this.totalPoints++;
     this.bestRally = Math.max(this.bestRally, this.contacts);
@@ -215,6 +227,7 @@ export class Match {
       return;
     }
     this.fault = 1;
+    this.ai.conclude();
     this.phase = 'pointOver';
     this.timer = 1.65;
     this.ball.active = false;
@@ -228,6 +241,7 @@ export class Match {
         return;
       }
       if (this.ball.netTouched) {
+        this.ai.conclude();
         this.phase = 'pointOver';
         this.timer = 1.5;
         this.ball.active = false;
@@ -259,8 +273,6 @@ export class Match {
       return false;
     const p = this.players[side].position,
       b = this.ball.position;
-    // GOAL 002C calibrates the playable athlete; preserve the existing opponent.
-    if (side === 1) return b.y > 0.3 && b.y < 2.9 && Math.hypot(p.x - b.x, p.z - b.z) < 1.75;
     return inContactZone({
       player: p,
       ball: b,
@@ -270,7 +282,7 @@ export class Match {
       intent: side === 0 ? (this.swingShot as Controls['shot']) : 'drive',
     });
   }
-  private hit(side: Side, shot: Shot, power: number, aim: number, depth: number) {
+  private hit(side: Side, shot: Shot, power: number, aim: number, depth: number, tactic?: Tactic) {
     const p = this.players[side],
       b = this.ball.position,
       s = sign(side);
@@ -280,10 +292,14 @@ export class Match {
       0,
       1,
     );
-    const error =
+    let error =
       side === 0
         ? (1 - quality) * 1.5 + Math.abs(power - 0.7) * 0.35
-        : PRESETS[this.difficulty].error;
+        : (1 - quality) * 1.5 + Math.abs(power - 0.7) * 0.35 + PRESETS[this.difficulty].precision;
+    // Execution errors affect placement through the same launch, net and in/out rules.
+    if (side === 1 && tactic && this.random.next() < tactic.errorProbability) {
+      error += this.random.range(3, 5);
+    }
     const targetX = clamp(aim, -1, 1) * 3.35 + this.random.range(-error, error);
     const targetZ =
       -s *
@@ -308,7 +324,8 @@ export class Match {
     this.lastHitter = side;
     this.rallyTime = 0;
     this.contacts++;
-    this.react();
+    if (side === 1 && tactic)
+      this.ai.afterHit(this.aiContext(), tactic, vec(targetX, COURT.radius, targetZ));
     p.swing = 0.38;
     p.stroke = stroke.replace(/([a-z])([A-Z])/g, '$1 $2').toUpperCase();
     if (side === 0) {
@@ -332,8 +349,10 @@ export class Match {
     }
     if (this.phase === 'serve') {
       if (this.server === 0 && c.release) this.serve(c.power, c.aim);
-      if (this.server === 1 && this.timer > 1.35)
-        this.serve(this.random.range(0.4, 0.8), this.random.range(-0.55, 0.55));
+      if (this.server === 1 && this.timer > 1.35) {
+        const serve = chooseServe(this.difficulty, this.score.deuce, this.fault > 0, this.random);
+        this.serve(serve.power, serve.aim);
+      }
       return;
     }
     this.rallyTime += dt;
@@ -369,37 +388,48 @@ export class Match {
         }
       }
     }
-    const preset = PRESETS[this.difficulty];
-    this.aiReaction -= dt;
-    this.aiThink -= dt;
-    if (this.aiReaction <= 0) {
-      if (this.aiThink <= 0) {
-        this.aiTarget =
-          this.lastHitter === 0
-            ? intercept(this.ball, this.players[1].position, preset.speed, this.serveFlight)
-            : vec(clamp(-user.x * 0.18, -1.5, 1.5), 0, -10);
-        this.aiThink = 0.12;
-      }
-      const ai = this.players[1].position,
-        dx = this.aiTarget.x - ai.x,
-        dz = this.aiTarget.z - ai.z,
-        d = Math.hypot(dx, dz);
-      if (d > 0.12)
-        this.move(
-          1,
-          (dx / Math.max(d, 0.01)) * Math.min(1, d * 3),
-          (dz / Math.max(d, 0.01)) * Math.min(1, d * 3),
-          preset.speed,
-          dt,
-        );
-      if (this.canHit(1) && !this.aiWillMiss) {
-        const shot = chooseShot(b, user, this.random),
-          aim = (user.x > 0 ? -0.7 : 0.7) * preset.aggression + this.random.range(-0.22, 0.22);
-        this.hit(1, shot, this.random.range(0.42, 0.75), aim, 0);
-      }
+    this.ai.update(dt, this.aiContext(), this.random);
+    const v = this.ai.steer(dt, this.players[1].position, this.difficulty);
+    this.move(
+      1,
+      v.x / PRESETS[this.difficulty].speed,
+      v.z / PRESETS[this.difficulty].speed,
+      PRESETS[this.difficulty].speed,
+      dt,
+    );
+    if (
+      this.ai.reaction <= 0 &&
+      this.canHit(1) &&
+      (this.bounces > 0 ||
+        this.players[1].position.z > -7 ||
+        (b.y > 1.9 && this.ball.velocity.y < 0)) &&
+      (b.y > 0.8 || this.ball.velocity.y < 0 || (this.ai.prediction?.time ?? 0) < 0.08)
+    ) {
+      const position = this.players[1].position;
+      const distance = Math.hypot(position.x - b.x, position.z - b.z);
+      const quality = clamp(
+        1 - Math.abs(b.y - 1.15) * 0.35 - Math.max(0, distance - 0.8) * 0.35,
+        0,
+        1,
+      );
+      const tactic = this.ai.chooseTactic(
+        {
+          ball: b,
+          velocity: this.ball.velocity,
+          player: position,
+          opponent: user,
+          bounces: this.bounces,
+          quality,
+          difficulty: this.difficulty,
+          previous: this.ai.tactic?.name,
+        },
+        this.random,
+      );
+      this.hit(1, tactic.shot, tactic.power, tactic.aim, tactic.depth, tactic);
     }
     for (const event of this.ball.step(dt)) {
       if (this.phase !== 'rally') break;
+      if (this.lastHitter === 0) this.ai.invalidatePrediction();
       if (event.type === 'net' && !event.grazing) {
         if (this.serveFlight) this.serveFault('NET FAULT');
         else this.endPoint(other(this.lastHitter), 'NET');

@@ -7,6 +7,7 @@ import { ROYAL_BALL } from '../render/royal-ball';
 import { assetTimings, BALL_SCALES, FrameWindow, projectedDiameter } from './metrics';
 import { InspectionTimeline } from './timeline';
 import './tools.css';
+import { AI_FEEDS, feedAI, type AIFeed } from './ai-feeds';
 
 const labels: Record<AthleteState, string> = {
   Idle: 'Idle',
@@ -57,6 +58,7 @@ export class DeveloperTools {
   private interruptions = 0;
   private root = document.createElement('aside');
   private readout = document.createElement('pre');
+  private aiReadout = document.createElement('pre');
   private v = new pc.Vec3();
   private w = new pc.Vec3();
   private view = new pc.Mat4();
@@ -71,7 +73,7 @@ export class DeveloperTools {
     this.root.innerHTML = `
       <button id="dev-toggle" aria-expanded="false" aria-controls="dev-panel">DEV · Tools</button>
       <section id="dev-panel" hidden aria-label="Developer controls">
-        <div class="dev-heading"><strong>GOAL 002D · Diagnostics</strong><button id="dev-close" aria-label="Close developer panel">×</button></div>
+        <div class="dev-heading"><strong>GOAL 003 · Diagnostics</strong><button id="dev-close" aria-label="Close developer panel">×</button></div>
         <p>Local tests only · visual size never changes physics.</p>
         <button id="dev-inspect" disabled>Inspect Kira animations</button>
         <div id="dev-animation" hidden>
@@ -101,8 +103,15 @@ export class DeveloperTools {
           <label>Royal Rally visual scale<select id="dev-scale">${BALL_SCALES.map((x) => `<option value="${x}">${x.toFixed(2)}×</option>`).join('')}</select></label>
           <label>Gameplay camera<select id="dev-camera"><option value="broadcast">Broadcast</option><option value="behind">Behind player</option></select></label>
           <label>Readability comparison<select id="dev-comparison"><option value="live">Live gameplay</option><option value="frozen">Freeze current rally / serve</option><option value="serve">Serve reference · 2.6 m</option><option value="near">Near court · 1 m high</option><option value="far">Far court · 1 m high</option></select></label>
-          <p>References freeze simulation and move only the rendered ball. Return to Live before playing. Default resets to 1.00× on every visit.</p>
+          <p>References freeze simulation and move only the rendered ball. Return to Live before playing. 1.50× is the current preferred visual scale; collision radius is unchanged.</p>
         </div>
+        <label><input id="dev-ai" type="checkbox"> AI decision overlay</label>
+        <p>AI guides: cyan interception · yellow bounce · lime recovery. Export includes seed and state history.</p>
+        <label>Reproduction seed<input id="dev-seed" type="number" value="314159" min="0" max="4294967295" step="1"></label>
+        <button id="dev-seed-restart">Restart match with seed</button>
+        <label>AI test feed<select id="dev-ai-feed">${AI_FEEDS.map((x) => `<option>${x}</option>`).join('')}</select></label>
+        <button id="dev-ai-launch">Launch test feed</button>
+        <p>Test feeds reset Practice to a labeled fixture, then run real movement, shots and scoring.</p>
         <label><input id="dev-perf" type="checkbox"> Performance overlay</label>
         <label>Measurement scenario<select id="dev-scenario">${['Initial loading', 'Match initialization', 'Serving', 'Sustained rally', 'Camera switching', 'Animation inspection', 'Ball visual-scale switching'].map((x) => `<option>${x}</option>`).join('')}</select></label>
         <div class="dev-row"><button id="dev-record">Record 10 seconds</button><button id="dev-export">Export JSON</button></div>
@@ -114,6 +123,11 @@ export class DeveloperTools {
     this.readout.hidden = true;
     this.readout.setAttribute('aria-label', 'Performance diagnostics');
     document.body.append(this.readout);
+    this.aiReadout.id = 'dev-ai-readout';
+    this.aiReadout.hidden = true;
+    this.aiReadout.setAttribute('aria-label', 'AI decisions');
+    document.body.append(this.aiReadout);
+    (this.el('dev-scale') as HTMLSelectElement).value = String(this.scene.royalBall.visualScale);
     const on = (id: string, event: string, action: () => void) =>
       this.el(id).addEventListener(event, action);
     // Stop only events originating inside developer controls. Owned gameplay pointers
@@ -172,6 +186,21 @@ export class DeveloperTools {
       this.comparison = this.value('dev-comparison');
       this.resetInput();
     });
+    on('dev-ai', 'change', () => (this.aiReadout.hidden = !this.checked('dev-ai')));
+    on('dev-seed-restart', 'click', () => {
+      if (this.frozen) return;
+      const seed = Number(this.value('dev-seed'));
+      if (!Number.isInteger(seed) || seed < 0 || seed > 4294967295) return;
+      this.resetInput();
+      this.match.start(this.match.difficulty, this.match.score.length, this.match.practice, seed);
+    });
+    on('dev-ai-launch', 'click', () => {
+      if (this.frozen) return;
+      const seed = Number(this.value('dev-seed'));
+      if (!Number.isInteger(seed) || seed < 0 || seed > 4294967295) return;
+      this.resetInput();
+      feedAI(this.match, this.value('dev-ai-feed') as AIFeed, seed);
+    });
     on('dev-perf', 'change', () => (this.readout.hidden = !this.checked('dev-perf')));
     on('dev-scenario', 'change', () => (this.scenario = this.value('dev-scenario')));
     on('dev-record', 'click', () => {
@@ -189,7 +218,7 @@ export class DeveloperTools {
           JSON.stringify(
             {
               build: __BUILD_ID__,
-              release: 'GOAL-002D',
+              release: 'GOAL-003',
               device: navigator.userAgent,
               capturedAt: new Date().toISOString(),
               ...this.snapshot(),
@@ -204,7 +233,7 @@ export class DeveloperTools {
       const url = URL.createObjectURL(blob),
         a = document.createElement('a');
       a.href = url;
-      a.download = 'centre-court-002d-diagnostics.json';
+      a.download = 'centre-court-003-diagnostics.json';
       a.click();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
     });
@@ -393,7 +422,21 @@ export class DeveloperTools {
       this.el('dev-record-status').textContent =
         `Saved ${this.captureScenario} · ${this.records.length} record(s)`;
     }
+    if (!this.aiReadout.hidden && !this.inspecting && this.match.phase !== 'menu') {
+      const ai = this.match.ai;
+      const point = (p: { x: number; y: number; z: number }, color: pc.Color) =>
+        this.cross([p.x, Math.max(0.08, p.y), p.z], color);
+      point(ai.target, new pc.Color(0, 1, 1));
+      point(ai.recovery, new pc.Color(0.7, 1, 0));
+      if (ai.prediction?.bounce) point(ai.prediction.bounce, new pc.Color(1, 0.8, 0));
+    }
     if (now < this.paintAt) return;
+    if (!this.aiReadout.hidden) {
+      const a = this.match.ai.snapshot(this.match.difficulty, this.match.initialSeed);
+      const pos = (p?: { x: number; z: number } | null) =>
+        p ? `${p.x.toFixed(2)}, ${p.z.toFixed(2)}` : '—';
+      this.aiReadout.textContent = `AI · ${a.difficulty} · ${a.state}\nBounce ${pos(a.prediction?.bounce)} · ${a.prediction?.bounceTime?.toFixed(2) ?? '—'} s\nIntercept ${pos(a.target)} · ${a.prediction?.reachable ? 'reachable' : 'unconfirmed'}\nRecovery ${pos(a.recovery)}\n${a.tactic?.name ?? 'awaiting shot'} · aim ${a.tactic?.aim.toFixed(2) ?? '—'}\nReaction ${a.reactionDelay.toFixed(2)} s · confidence ${a.confidence.toFixed(2)}\nUtility ${a.tactic?.utility.toFixed(2) ?? '—'} · seed ${a.seed}\nDecisions ${a.averageDecisionMs.toFixed(3)} ms avg`;
+    }
     this.paintAt = now + 250;
     (this.el('dev-inspect') as HTMLButtonElement).disabled = this.scene.kira.status !== 'ready';
     if (!this.el('dev-panel').hidden) {
@@ -456,6 +499,20 @@ export class DeveloperTools {
   }
   snapshot() {
     return {
+      reproduction: {
+        initialSeed: this.match.initialSeed,
+        randomState: this.match.random.seed,
+        contacts: this.match.contacts,
+        bounces: this.match.bounces,
+        serveFlight: this.match.serveFlight,
+        ball: { ...this.match.ball.position },
+        velocity: { ...this.match.ball.velocity },
+        players: this.match.players.map((p) => ({ ...p.position })),
+        points: [...this.match.score.points],
+        games: [...this.match.score.games],
+      },
+      aiOverlayVisible: !this.aiReadout.hidden,
+      ai: this.match.ai.snapshot(this.match.difficulty, this.match.initialSeed),
       inspecting: this.inspecting,
       frozen: this.frozen,
       timeline: { ...this.timeline },
