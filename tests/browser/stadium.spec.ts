@@ -40,7 +40,13 @@ test('stadium builds locally, preserves dimensions, scales crowd and clears both
   await page.locator('#resume').click();
   for (const mode of ['broadcast', 'behind']) {
     if ((await snap(page)).camera !== mode) await page.locator('#camera-button').click();
-    await page.waitForTimeout(2200);
+    const portrait = page.viewportSize()!.width / page.viewportSize()!.height < 0.85;
+    const expectedY = mode === 'broadcast' ? (portrait ? 32 : 25) : portrait ? 15 : 10;
+    await expect
+      .poll(async () => Math.abs((await snap(page)).presentation.cameraPosition[1] - expectedY), {
+        timeout: 20000,
+      })
+      .toBeLessThan(0.1);
     s = await snap(page);
     expect(s.activeCameras).toBe(1);
     expect(s.kira.bodyVisible).toBe(true);

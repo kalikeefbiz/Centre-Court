@@ -1,7 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
 export default defineConfig({
   testDir: 'tests/browser',
-  timeout: 60000,
+  // Software WebGL runners may need multiple slow navigations in one flow.
+  timeout: 120000,
   expect: { timeout: 10000 },
   fullyParallel: false,
   workers: 1,

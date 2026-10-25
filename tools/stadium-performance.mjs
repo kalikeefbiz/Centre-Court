@@ -13,6 +13,7 @@ await page.waitForFunction(() => !document.querySelector('#play').disabled, { ti
 await page.locator('#practice').click();
 await page.locator('#dev-toggle').click();
 await page.locator('#dev-scenario').selectOption('Serving');
+await page.locator('#dev-scale').selectOption('1.5');
 await page.locator('#dev-perf').check();
 await page.waitForTimeout(2000);
 const results = [];
@@ -36,6 +37,8 @@ for (let sample = 0; sample < 3; sample++) {
   results.push({
     sample,
     build: s.build,
+    readyMs: s.developer.readyMs,
+    assets: s.developer.assets,
     drawCalls: s.drawCalls,
     stadium: s.stadium,
     record: s.developer.records.at(-1),

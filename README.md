@@ -79,9 +79,9 @@ Production evidence: https://kalikeefbiz.github.io/Centre-Court/verification/goa
 
 ## GOAL 002D developer diagnostics
 
-Open [developer mode](https://kalikeefbiz.github.io/Centre-Court/?dev=1) and tap **DEV · Tools** for the production Kira animation inspector, isolated serve feasibility prototype, visual-only Royal Rally size comparisons, performance readout and JSON measurements. Every visit retains the existing 1.00× default. The owner’s current preferred visual scale is 1.50× (select it in DEV tools); physics and production serve behavior are unchanged.
+Open [developer mode](https://kalikeefbiz.github.io/Centre-Court/?dev=1) and tap **DEV · Tools** for the production Kira animation inspector, isolated serve feasibility prototype, visual-only Royal Rally size comparisons, performance readout and JSON measurements. GOAL 004 uses the owner-confirmed 1.50× visual default; select any of the four sizes in DEV tools. Physics and production serve behavior are unchanged.
 
-See [GOAL-002D-REPORT.md](docs/GOAL-002D-REPORT.md) for access, rendered evidence, animation/serve findings, skill references and the physical iPhone test procedure. Normal gameplay shows no developer controls. Next milestone: GOAL 004 — Stadium & Presentation.
+See [GOAL-002D-REPORT.md](docs/GOAL-002D-REPORT.md) for access, rendered evidence, animation/serve findings, skill references and the physical iPhone test procedure. Normal gameplay shows no developer controls. Next milestone: GOAL 005 — Final Gameplay, Animation & Visual Polish.
 
 ## GOAL 003 competitive opponent
 
