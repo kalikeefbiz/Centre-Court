@@ -1,10 +1,11 @@
-import { chromium } from 'playwright';
+import { chromium, webkit } from 'playwright';
 import { mkdirSync, writeFileSync } from 'node:fs';
 const version = process.env.CC_VERSION ?? 'goal004';
 const url = process.env.CC_URL ?? 'http://localhost:4173/';
-const browser = await chromium.launch({
-  args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-webgl'],
-});
+const engine = process.env.CC_BROWSER === 'webkit' ? 'webkit' : 'chromium';
+const browser = await (engine === 'webkit'
+  ? webkit.launch()
+  : chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-webgl'] }));
 const page = await browser.newPage({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 1 });
 const errors = [];
 page.on('pageerror', (e) => errors.push(e.message));
@@ -55,8 +56,18 @@ writeFileSync(
   `public/verification/goal-004/performance-${version}.json`,
   JSON.stringify(
     {
-      environment:
-        'Linux headless Chromium 156 / SwiftShader software WebGL, 390x844 DPR1; tools closed, perf overlay on; three serving/idle-return 10s records; not iPhone or GPU timings',
+      environment: `Linux headless ${engine} ${browser.version()}, 390x844 DPR1; tools closed, perf overlay on; three serving/idle-return 10s records; not iPhone or GPU timings`,
+      runtime: await page.evaluate(() => {
+        const gl = document.querySelector('canvas').getContext('webgl2');
+        const ext = gl?.getExtension('WEBGL_debug_renderer_info');
+        return {
+          userAgent: navigator.userAgent,
+          cores: navigator.hardwareConcurrency,
+          renderer: gl
+            ? gl.getParameter(ext ? ext.UNMASKED_RENDERER_WEBGL : gl.RENDERER)
+            : 'unavailable',
+        };
+      }),
       errors,
       results,
     },

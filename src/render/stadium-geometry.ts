@@ -67,7 +67,7 @@ export class Geometry {
     }
     this.boxes++;
   }
-  /** Faceted ellipsoid; stadium heads use 12 triangles, with no degenerate pole faces. */
+  /** Faceted ellipsoid; stadium heads use 24 triangles, with no degenerate pole faces. */
   head(p: XYZ, s: XYZ, hex: string, bands = 4) {
     const rgb = [1, 3, 5].map((i) => (parseInt(hex.slice(i, i + 2), 16) / 255) ** 2.2);
     const start = this.positions.length / 3;
