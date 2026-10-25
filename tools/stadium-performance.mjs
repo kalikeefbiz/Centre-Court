@@ -10,7 +10,9 @@ const page = await browser.newPage({ viewport: { width: 390, height: 844 }, devi
 const errors = [];
 page.on('pageerror', (e) => errors.push(e.message));
 await page.goto(`${url}?dev=1`);
-await page.waitForFunction(() => !document.querySelector('#play').disabled, { timeout: 45000 });
+await page.waitForFunction(() => !document.querySelector('#play').disabled, undefined, {
+  timeout: 45000,
+});
 await page.locator('#practice').click();
 await page.locator('#dev-toggle').click();
 await page.locator('#dev-scenario').selectOption('Serving');

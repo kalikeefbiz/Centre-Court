@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Crown Pavilion · GOAL 004 rendered evidence</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: #101d27;
+        color: #e9eeeb;
+        font:
+          16px/1.5 system-ui,
+          sans-serif;
+      }
+      main {
+        max-width: 1200px;
+        margin: auto;
+        padding: 32px 20px;
+      }
+      a {
+        color: #c3d879;
+      }
+      h1 {
+        font-size: clamp(30px, 5vw, 60px);
+        line-height: 1.05;
+        margin: 20px 0;
+      }
+      p {
+        max-width: 850px;
+        color: #aabcc3;
+      }
+      .eyebrow {
+        letter-spacing: 0.18em;
+        font-size: 12px;
+        color: #c3d879;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+        gap: 20px;
+      }
+      figure {
+        margin: 0 0 24px;
+        background: #1b2b35;
+      }
+      img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+      figcaption {
+        padding: 14px 18px;
+        font-size: 14px;
+        color: #bbcacd;
+      }
+      .links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px 24px;
+        margin: 28px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <a href="../../">← Play Centre Court</a>
+      <h1>Crown Pavilion</h1>
+      <div class="eyebrow">CENTRE COURT / GOAL 004 / RENDERED VERIFICATION</div>
+      <p>
+        Actual PlayCanvas application captures. The overview and close views use the shipped frozen
+        stadium inspector. Gameplay views use the two existing cameras. These are Linux
+        software-browser captures, not concept art or physical iPhone performance evidence.
+      </p>
+      <figure>
+        <a href="overview.png"
+          ><img
+            src="overview.png"
+            alt="Full original Crown Pavilion stadium with tiered seating and cantilever wings"
+        /></a>
+        <figcaption>Full stadium overview · actual scene, frozen inspection viewpoint.</figcaption>
+      </figure>
+      <div class="grid">
+        <figure>
+          <a href="broadcast-gameplay.png"
+            ><img
+              loading="lazy"
+              src="broadcast-gameplay.png"
+              alt="Blue tennis court framed by the stadium in broadcast camera"
+          /></a>
+          <figcaption>Existing broadcast gameplay camera · full crowd.</figcaption>
+        </figure>
+        <figure>
+          <a href="behind-player-gameplay.png"
+            ><img
+              loading="lazy"
+              src="behind-player-gameplay.png"
+              alt="Kira preparing to serve in the behind-player camera"
+          /></a>
+          <figcaption>Existing behind-player camera · full crowd.</figcaption>
+        </figure>
+        <figure>
+          <a href="net.png"
+            ><img
+              loading="lazy"
+              src="net.png"
+              alt="Court surface, open net cords, tape and dark posts"
+          /></a>
+          <figcaption>Hardcourt surface and open net · frozen detail view.</figcaption>
+        </figure>
+        <figure>
+          <a href="seating.png"
+            ><img
+              loading="lazy"
+              src="seating.png"
+              alt="Seating rows, stairs, railings and varied low-poly spectators"
+          /></a>
+          <figcaption>Seating architecture and baked crowd · frozen detail view.</figcaption>
+        </figure>
+        <figure>
+          <a href="scoreboard.png"
+            ><img loading="lazy" src="scoreboard.png" alt="Centre Court live stadium score display"
+          /></a>
+          <figcaption>
+            Stadium display showing the actual pre-serve score · frozen detail view.
+          </figcaption>
+        </figure>
+        <figure>
+          <a href="courtside.png"
+            ><img
+              loading="lazy"
+              src="courtside.png"
+              alt="Courtside bench, equipment chest and ball container"
+          /></a>
+          <figcaption>Courtside equipment zone · frozen detail view.</figcaption>
+        </figure>
+        <figure>
+          <a href="mobile-broadcast.png"
+            ><img loading="lazy" src="mobile-broadcast.png" alt="Portrait broadcast court framing"
+          /></a>
+          <figcaption>Portrait broadcast · 390×844 Chromium viewport.</figcaption>
+        </figure>
+        <figure>
+          <a href="mobile-behind.png"
+            ><img loading="lazy" src="mobile-behind.png" alt="Portrait behind-player court framing"
+          /></a>
+          <figcaption>Portrait behind · 390×844 Chromium viewport.</figcaption>
+        </figure>
+        <figure>
+          <a href="normal-gameplay.png"
+            ><img
+              loading="lazy"
+              src="normal-gameplay.png"
+              alt="Normal gameplay with no developer controls"
+          /></a>
+          <figcaption>Normal gameplay · no developer tools loaded.</figcaption>
+        </figure>
+        <figure>
+          <a href="match-continuation.png"
+            ><img
+              loading="lazy"
+              src="match-continuation.png"
+              alt="Match continues after a scored point"
+          /></a>
+          <figcaption>Native-input match flow · actual scored point and continuation.</figcaption>
+        </figure>
+      </div>
+      <div class="links">
+        <a href="browser-evidence.json">Capture provenance</a
+        ><a href="match-flow.json">Match-flow observations</a
+        ><a href="performance-baseline.json">Baseline measurements</a
+        ><a href="performance-goal004.json">Stadium measurements</a
+        ><a href="https://github.com/kalikeefbiz/Centre-Court/blob/main/docs/GOAL-004-REPORT.md"
+          >Full report</a
+        >
+      </div>
+      <p>
+        Core cameras, collision physics, scoring, AI, characters and two-thumb controls remain the
+        existing systems. Physical iPhone Safari readability, sustained frame rate, thermals and
+        audio behavior still require hardware testing.
+      </p>
+    </main>
+  </body>
+</html>

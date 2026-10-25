@@ -93,7 +93,7 @@ See [GOAL-003-REPORT.md](docs/GOAL-003-REPORT.md) for architecture, difficulty p
 
 ## Crown Pavilion stadium (GOAL 004)
 
-The blue hardcourt sits inside a graphite, faceted bowl with 24 tiered seating sections, cantilever wings, aisles, stairs, a lightweight crowd, original Centre Court ribbons and courtside equipment. Two stadium displays use the actual match score. Pause → **Stadium detail** switches between 1,180 and 645 baked spectators. Small viewports and low-core devices start reduced. **Stadium sound** toggles quiet, locally synthesized crowd ambience and point reactions; browser gesture rules still apply.
+The blue hardcourt sits inside a graphite, faceted bowl with 24 tiered seating sections, cantilever wings, aisles, stairs, a lightweight crowd, original Centre Court ribbons and courtside equipment. Two stadium displays use the actual match score. Pause → **Stadium detail** switches between 1,180 and 645 baked spectators. Small viewports and low-core devices start reduced, using opaque crowd silhouettes and simpler row seating while preserving the court and athletes. **Stadium sound** toggles quiet, locally synthesized crowd ambience and point reactions; browser gesture rules still apply.
 
 The Royal Rally visual default is **1.50×**, following confirmed owner iPhone feedback. DEV tools retain all four comparison sizes; collision radius stays 0.0335 m. `?dev=1` also exposes frozen stadium inspection views; return to Gameplay camera to resume. Core cameras and tennis logic are unchanged.
 

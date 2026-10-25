@@ -1,0 +1,1244 @@
+{
+  "environment": "Linux headless webkit 27.2, 390x844 DPR1; tools closed, perf overlay on; three serving/idle-return 10s records; not iPhone or GPU timings",
+  "runtime": {
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Safari/605.1.15",
+    "cores": 4,
+    "renderer": "Apple GPU"
+  },
+  "errors": [],
+  "results": [
+    {
+      "sample": 0,
+      "build": "f5ccfdc8dc1a87e9319f83565841cbb1bb0c77d7",
+      "readyMs": 2056,
+      "assets": [
+        {
+          "path": "procedural:Crown-Pavilion",
+          "status": "ready",
+          "startMs": 518,
+          "durationMs": 212
+        },
+        {
+          "path": "assets/characters/kira/Meshy_AI_Pink_Valkyrie_All_Animations.glb",
+          "status": "ready",
+          "startMs": 742,
+          "durationMs": 1065
+        },
+        {
+          "path": "assets/equipment/rackets/Meshy_AI_Pink_and_Black_Tennis_1024095819_texture.glb",
+          "status": "ready",
+          "startMs": 745,
+          "durationMs": 1013
+        },
+        {
+          "path": "assets/balls/royal-rally/Meshy_AI_Royal_Rally_1024220842_texture.glb",
+          "status": "ready",
+          "startMs": 747,
+          "durationMs": 795
+        }
+      ],
+      "drawCalls": 33,
+      "stadium": {
+        "name": "Crown Pavilion",
+        "status": "ready",
+        "quality": "reduced",
+        "sections": 24,
+        "spectatorCount": 645,
+        "fullCount": 1180,
+        "triangles": 101352,
+        "collisionComponents": 0,
+        "court": {
+          "halfLength": 11.885,
+          "halfWidth": 4.115,
+          "doublesWidth": 5.485,
+          "service": 6.4,
+          "netCentre": 0.914,
+          "netEdge": 1.07,
+          "radius": 0.0335
+        },
+        "runoff": [
+          20,
+          36
+        ],
+        "scoreboard": {
+          "server": 0,
+          "rows": [
+            {
+              "name": "KIRA",
+              "sets": 0,
+              "games": 0,
+              "points": "—"
+            },
+            {
+              "name": "OPPONENT",
+              "sets": 0,
+              "games": 0,
+              "points": "—"
+            }
+          ],
+          "caption": "PRACTICE  /  ENDLESS RALLIES"
+        },
+        "boardUpdates": 2,
+        "reaction": 0.309,
+        "phase": "pointOver",
+        "renderedCourt": {
+          "surface": [
+            10.97,
+            0.025,
+            23.77
+          ],
+          "lines": [
+            {
+              "position": [
+                -5.485,
+                -0.009,
+                0
+              ],
+              "size": [
+                0.05,
+                0.018,
+                23.82
+              ]
+            },
+            {
+              "position": [
+                -4.115,
+                -0.009,
+                0
+              ],
+              "size": [
+                0.05,
+                0.018,
+                23.82
+              ]
+            },
+            {
+              "position": [
+                4.115,
+                -0.009,
+                0
+              ],
+              "size": [
+                0.05,
+                0.018,
+                23.82
+              ]
+            },
+            {
+              "position": [
+                5.485,
+                -0.009,
+                0
+              ],
+              "size": [
+                0.05,
+                0.018,
+                23.82
+              ]
+            },
+            {
+              "position": [
+                0,
+                -0.009,
+                -11.885
+              ],
+              "size": [
+                11.020000000000001,
+                0.018,
+                0.05
+              ]
+            },
+            {
+              "position": [
+                0,
+                -0.009,
+                -11.985
+              ],
+              "size": [
+                0.05,
+                0.018,
+                0.2
+              ]
+            },
+            {
+              "position": [
+                0,
+                -0.009,
+                11.885
+              ],
+              "size": [
+                11.020000000000001,
+                0.018,
+                0.05
+              ]
+            },
+            {
+              "position": [
+                0,
+                -0.009,
+                11.985
+              ],
+              "size": [
+                0.05,
+                0.018,
+                0.2
+              ]
+            },
+            {
+              "position": [
+                0,
+                -0.009,
+                -6.4
+              ],
+              "size": [
+                8.23,
+                0.018,
+                0.05
+              ]
+            },
+            {
+              "position": [
+                0,
+                -0.009,
+                6.4
+              ],
+              "size": [
+                8.23,
+                0.018,
+                0.05
+              ]
+            },
+            {
+              "position": [
+                0,
+                -0.009,
+                0
+              ],
+              "size": [
+                0.05,
+                0.018,
+                12.8
+              ]
+            }
+          ],
+          "netPosts": [
+            [
+              -5.03,
+              0.54,
+              0
+            ],
+            [
+              5.03,
+              0.54,
+              0
+            ]
+          ]
+        },
+        "courtCorners": [
+          {
+            "x": 0.2558633963432989,
+            "y": 0.32945698208379204
+          },
+          {
+            "x": 0.14329399736661697,
+            "y": 0.7480850168432664
+          },
+          {
+            "x": 0.7450534631560783,
+            "y": 0.3295680820008371
+          },
+          {
+            "x": 0.8554769784769558,
+            "y": 0.7483204902678678
+          }
+        ],
+        "players": [
+          {
+            "x": 0.5639436068996859,
+            "y": 0.7448326416782817
+          },
+          {
+            "x": 0.47630949299506775,
+            "y": 0.3293170853310964
+          }
+        ]
+      },
+      "record": {
+        "scenario": "Serving",
+        "startContext": {
+          "stadium": {
+            "name": "Crown Pavilion",
+            "status": "ready",
+            "quality": "reduced",
+            "sections": 24,
+            "spectatorCount": 645,
+            "fullCount": 1180,
+            "triangles": 101352,
+            "collisionComponents": 0,
+            "court": {
+              "halfLength": 11.885,
+              "halfWidth": 4.115,
+              "doublesWidth": 5.485,
+              "service": 6.4,
+              "netCentre": 0.914,
+              "netEdge": 1.07,
+              "radius": 0.0335
+            },
+            "runoff": [
+              20,
+              36
+            ],
+            "scoreboard": {
+              "server": 0,
+              "rows": [
+                {
+                  "name": "KIRA",
+                  "sets": 0,
+                  "games": 0,
+                  "points": "—"
+                },
+                {
+                  "name": "OPPONENT",
+                  "sets": 0,
+                  "games": 0,
+                  "points": "—"
+                }
+              ],
+              "caption": "PRACTICE  /  ENDLESS RALLIES"
+            },
+            "boardUpdates": 2,
+            "reaction": 0,
+            "phase": "serve"
+          },
+          "renderer": [
+            390,
+            844
+          ],
+          "viewport": [
+            390,
+            844
+          ],
+          "dpr": 1,
+          "renderScale": 1,
+          "camera": "broadcast",
+          "phase": "serve",
+          "comparison": "live",
+          "stadiumView": "gameplay",
+          "visualScale": 1.5,
+          "ballScreen": {
+            "x": 235.8794119687252,
+            "y": 597.404697642936
+          },
+          "ballPixels": {
+            "css": 2.685964742576033,
+            "render": 2.685964742576033,
+            "onScreen": true
+          }
+        },
+        "elapsedMs": 10038,
+        "interruptions": 0,
+        "frameIntervals": {
+          "samples": 69,
+          "fps": 6.83303624480095,
+          "averageMs": 146.34782608695653,
+          "stddevMs": 249.94276597531294,
+          "p95Ms": 549,
+          "maxMs": 1851,
+          "over33Ms": 69
+        },
+        "context": {
+          "stadium": {
+            "name": "Crown Pavilion",
+            "status": "ready",
+            "quality": "reduced",
+            "sections": 24,
+            "spectatorCount": 645,
+            "fullCount": 1180,
+            "triangles": 101352,
+            "collisionComponents": 0,
+            "court": {
+              "halfLength": 11.885,
+              "halfWidth": 4.115,
+              "doublesWidth": 5.485,
+              "service": 6.4,
+              "netCentre": 0.914,
+              "netEdge": 1.07,
+              "radius": 0.0335
+            },
+            "runoff": [
+              20,
+              36
+            ],
+            "scoreboard": {
+              "server": 0,
+              "rows": [
+                {
+                  "name": "KIRA",
+                  "sets": 0,
+                  "games": 0,
+                  "points": "—"
+                },
+                {
+                  "name": "OPPONENT",
+                  "sets": 0,
+                  "games": 0,
+                  "points": "—"
+                }
+              ],
+              "caption": "PRACTICE  /  ENDLESS RALLIES"
+            },
+            "boardUpdates": 2,
+            "reaction": 0.309,
+            "phase": "pointOver"
+          },
+          "renderer": [
+            390,
+            844
+          ],
+          "viewport": [
+            390,
+            844
+          ],
+          "dpr": 1,
+          "renderScale": 1,
+          "camera": "broadcast",
+          "phase": "pointOver",
+          "comparison": "live",
+          "stadiumView": "gameplay",
+          "visualScale": 1.5,
+          "ballScreen": {
+            "x": 202.3488175758581,
+            "y": 1008.1577427081421
+          },
+          "ballPixels": {
+            "css": 3.397407219734465,
+            "render": 3.3974072197344656,
+            "onScreen": false
+          }
+        }
+      }
+    },
+    {
+      "sample": 1,
+      "build": "f5ccfdc8dc1a87e9319f83565841cbb1bb0c77d7",
+      "readyMs": 2056,
+      "assets": [
+        {
+          "path": "procedural:Crown-Pavilion",
+          "status": "ready",
+          "startMs": 518,
+          "durationMs": 212
+        },
+        {
+          "path": "assets/characters/kira/Meshy_AI_Pink_Valkyrie_All_Animations.glb",
+          "status": "ready",
+          "startMs": 742,
+          "durationMs": 1065
+        },
+        {
+          "path": "assets/equipment/rackets/Meshy_AI_Pink_and_Black_Tennis_1024095819_texture.glb",
+          "status": "ready",
+          "startMs": 745,
+          "durationMs": 1013
+        },
+        {
+          "path": "assets/balls/royal-rally/Meshy_AI_Royal_Rally_1024220842_texture.glb",
+          "status": "ready",
+          "startMs": 747,
+          "durationMs": 795
+        }
+      ],
+      "drawCalls": 35,
+      "stadium": {
+        "name": "Crown Pavilion",
+        "status": "ready",
+        "quality": "reduced",
+        "sections": 24,
+        "spectatorCount": 645,
+        "fullCount": 1180,
+        "triangles": 101352,
+        "collisionComponents": 0,
+        "court": {
+          "halfLength": 11.885,
+          "halfWidth": 4.115,
+          "doublesWidth": 5.485,
+          "service": 6.4,
+          "netCentre": 0.914,
+          "netEdge": 1.07,
+          "radius": 0.0335
+        },
+        "runoff": [
+          20,
+          36
+        ],
+        "scoreboard": {
+          "server": 0,
+          "rows": [
+            {
+              "name": "KIRA",
+              "sets": 0,
+              "games": 0,
+              "points": "—"
+            },
+            {
+              "name": "OPPONENT",
+              "sets": 0,
+              "games": 0,
+              "points": "—"
+            }
+          ],
+          "caption": "PRACTICE  /  ENDLESS RALLIES"
+        },
+        "boardUpdates": 2,
+        "reaction": 0,
+        "phase": "serve",
+        "renderedCourt": {
+          "surface": [
+            10.97,
+            0.025,
+            23.77
+          ],
+          "lines": [
+            {
+              "position": [
+                -5.485,
+                -0.009,
+                0
+              ],
+              "size": [
+                0.05,
+                0.018,
+                23.82
+              ]
+            },
+            {
+              "position": [
+                -4.115,
+                -0.009,
+                0
+              ],
+              "size": [
+                0.05,
+                0.018,
+                23.82
+              ]
+            },
+            {
+              "position": [
+                4.115,
+                -0.009,
+                0
+              ],
+              "size": [
+                0.05,
+                0.018,
+                23.82
+              ]
+            },
+            {
+              "position": [
+                5.485,
+                -0.009,
+                0
+              ],
+              "size": [
+                0.05,
+                0.018,
+                23.82
+              ]
+            },
+            {
+              "position": [
+                0,
+                -0.009,
+                -11.885
+              ],
+              "size": [
+                11.020000000000001,
+                0.018,
+                0.05
+              ]
+            },
+            {
+              "position": [
+                0,
+                -0.009,
+                -11.985
+              ],
+              "size": [
+                0.05,
+                0.018,
+                0.2
+              ]
+            },
+            {
+              "position": [
+                0,
+                -0.009,
+                11.885
+              ],
+              "size": [
+                11.020000000000001,
+                0.018,
+                0.05
+              ]
+            },
+            {
+              "position": [
+                0,
+                -0.009,
+                11.985
+              ],
+              "size": [
+                0.05,
+                0.018,
+                0.2
+              ]
+            },
+            {
+              "position": [
+                0,
+                -0.009,
+                -6.4
+              ],
+              "size": [
+                8.23,
+                0.018,
+                0.05
+              ]
+            },
+            {
+              "position": [
+                0,
+                -0.009,
+                6.4
+              ],
+              "size": [
+                8.23,
+                0.018,
+                0.05
+              ]
+            },
+            {
+              "position": [
+                0,
+                -0.009,
+                0
+              ],
+              "size": [
+                0.05,
+                0.018,
+                12.8
+              ]
+            }
+          ],
+          "netPosts": [
+            [
+              -5.03,
+              0.54,
+              0
+            ],
+            [
+              5.03,
+              0.54,
+              0
+            ]
+          ]
+        },
+        "courtCorners": [
+          {
+            "x": 0.25777746578396327,
+            "y": 0.3292282774701614
+          },
+          {
+            "x": 0.14073824858620793,
+            "y": 0.7475891814672768
+          },
+          {
+            "x": 0.7469630310009882,
+            "y": 0.3298027026419563
+          },
+          {
+            "x": 0.852907268575704,
+            "y": 0.748806652248693
+          }
+        ],
+        "players": [
+          {
+            "x": 0.6030594594973347,
+            "y": 0.7449876652339268
+          },
+          {
+            "x": 0.44316734749309333,
+            "y": 0.33222544628180667
+          }
+        ]
+      },
+      "record": {
+        "scenario": "Serving",
+        "startContext": {
+          "stadium": {
+            "name": "Crown Pavilion",
+            "status": "ready",
+            "quality": "reduced",
+            "sections": 24,
+            "spectatorCount": 645,
+            "fullCount": 1180,
+            "triangles": 101352,
+            "collisionComponents": 0,
+            "court": {
+              "halfLength": 11.885,
+              "halfWidth": 4.115,
+              "doublesWidth": 5.485,
+              "service": 6.4,
+              "netCentre": 0.914,
+              "netEdge": 1.07,
+              "radius": 0.0335
+            },
+            "runoff": [
+              20,
+              36
+            ],
+            "scoreboard": {
+              "server": 0,
+              "rows": [
+                {
+                  "name": "KIRA",
+                  "sets": 0,
+                  "games": 0,
+                  "points": "—"
+                },
+                {
+                  "name": "OPPONENT",
+                  "sets": 0,
+                  "games": 0,
+                  "points": "—"
+                }
+              ],
+              "caption": "PRACTICE  /  ENDLESS RALLIES"
+            },
+            "boardUpdates": 2,
+            "reaction": 0,
+            "phase": "serve"
+          },
+          "renderer": [
+            390,
+            844
+          ],
+          "viewport": [
+            390,
+            844
+          ],
+          "dpr": 1,
+          "renderScale": 1,
+          "camera": "broadcast",
+          "phase": "serve",
+          "comparison": "live",
+          "stadiumView": "gameplay",
+          "visualScale": 1.5,
+          "ballScreen": {
+            "x": 235.8825116760234,
+            "y": 597.4043975494341
+          },
+          "ballPixels": {
+            "css": 2.6859630436401356,
+            "render": 2.6859630436401356,
+            "onScreen": true
+          }
+        },
+        "elapsedMs": 10108,
+        "interruptions": 0,
+        "frameIntervals": {
+          "samples": 109,
+          "fps": 10.729402500246087,
+          "averageMs": 93.20183486238533,
+          "stddevMs": 266.5432398546803,
+          "p95Ms": 106,
+          "maxMs": 1998,
+          "over33Ms": 109
+        },
+        "context": {
+          "stadium": {
+            "name": "Crown Pavilion",
+            "status": "ready",
+            "quality": "reduced",
+            "sections": 24,
+            "spectatorCount": 645,
+            "fullCount": 1180,
+            "triangles": 101352,
+            "collisionComponents": 0,
+            "court": {
+              "halfLength": 11.885,
+              "halfWidth": 4.115,
+              "doublesWidth": 5.485,
+              "service": 6.4,
+              "netCentre": 0.914,
+              "netEdge": 1.07,
+              "radius": 0.0335
+            },
+            "runoff": [
+              20,
+              36
+            ],
+            "scoreboard": {
+              "server": 0,
+              "rows": [
+                {
+                  "name": "KIRA",
+                  "sets": 0,
+                  "games": 0,
+                  "points": "—"
+                },
+                {
+                  "name": "OPPONENT",
+                  "sets": 0,
+                  "games": 0,
+                  "points": "—"
+                }
+              ],
+              "caption": "PRACTICE  /  ENDLESS RALLIES"
+            },
+            "boardUpdates": 2,
+            "reaction": 0,
+            "phase": "serve"
+          },
+          "renderer": [
+            390,
+            844
+          ],
+          "viewport": [
+            390,
+            844
+          ],
+          "dpr": 1,
+          "renderScale": 1,
+          "camera": "broadcast",
+          "phase": "serve",
+          "comparison": "live",
+          "stadiumView": "gameplay",
+          "visualScale": 1.5,
+          "ballScreen": {
+            "x": 236.948452979553,
+            "y": 597.2942242342439
+          },
+          "ballPixels": {
+            "css": 2.6857932635313997,
+            "render": 2.6857932635313997,
+            "onScreen": true
+          }
+        }
+      }
+    },
+    {
+      "sample": 2,
+      "build": "f5ccfdc8dc1a87e9319f83565841cbb1bb0c77d7",
+      "readyMs": 2056,
+      "assets": [
+        {
+          "path": "procedural:Crown-Pavilion",
+          "status": "ready",
+          "startMs": 518,
+          "durationMs": 212
+        },
+        {
+          "path": "assets/characters/kira/Meshy_AI_Pink_Valkyrie_All_Animations.glb",
+          "status": "ready",
+          "startMs": 742,
+          "durationMs": 1065
+        },
+        {
+          "path": "assets/equipment/rackets/Meshy_AI_Pink_and_Black_Tennis_1024095819_texture.glb",
+          "status": "ready",
+          "startMs": 745,
+          "durationMs": 1013
+        },
+        {
+          "path": "assets/balls/royal-rally/Meshy_AI_Royal_Rally_1024220842_texture.glb",
+          "status": "ready",
+          "startMs": 747,
+          "durationMs": 795
+        }
+      ],
+      "drawCalls": 35,
+      "stadium": {
+        "name": "Crown Pavilion",
+        "status": "ready",
+        "quality": "reduced",
+        "sections": 24,
+        "spectatorCount": 645,
+        "fullCount": 1180,
+        "triangles": 101352,
+        "collisionComponents": 0,
+        "court": {
+          "halfLength": 11.885,
+          "halfWidth": 4.115,
+          "doublesWidth": 5.485,
+          "service": 6.4,
+          "netCentre": 0.914,
+          "netEdge": 1.07,
+          "radius": 0.0335
+        },
+        "runoff": [
+          20,
+          36
+        ],
+        "scoreboard": {
+          "server": 0,
+          "rows": [
+            {
+              "name": "KIRA",
+              "sets": 0,
+              "games": 0,
+              "points": "—"
+            },
+            {
+              "name": "OPPONENT",
+              "sets": 0,
+              "games": 0,
+              "points": "—"
+            }
+          ],
+          "caption": "PRACTICE  /  ENDLESS RALLIES"
+        },
+        "boardUpdates": 2,
+        "reaction": 0,
+        "phase": "serve",
+        "renderedCourt": {
+          "surface": [
+            10.97,
+            0.025,
+            23.77
+          ],
+          "lines": [
+            {
+              "position": [
+                -5.485,
+                -0.009,
+                0
+              ],
+              "size": [
+                0.05,
+                0.018,
+                23.82
+              ]
+            },
+            {
+              "position": [
+                -4.115,
+                -0.009,
+                0
+              ],
+              "size": [
+                0.05,
+                0.018,
+                23.82
+              ]
+            },
+            {
+              "position": [
+                4.115,
+                -0.009,
+                0
+              ],
+              "size": [
+                0.05,
+                0.018,
+                23.82
+              ]
+            },
+            {
+              "position": [
+                5.485,
+                -0.009,
+                0
+              ],
+              "size": [
+                0.05,
+                0.018,
+                23.82
+              ]
+            },
+            {
+              "position": [
+                0,
+                -0.009,
+                -11.885
+              ],
+              "size": [
+                11.020000000000001,
+                0.018,
+                0.05
+              ]
+            },
+            {
+              "position": [
+                0,
+                -0.009,
+                -11.985
+              ],
+              "size": [
+                0.05,
+                0.018,
+                0.2
+              ]
+            },
+            {
+              "position": [
+                0,
+                -0.009,
+                11.885
+              ],
+              "size": [
+                11.020000000000001,
+                0.018,
+                0.05
+              ]
+            },
+            {
+              "position": [
+                0,
+                -0.009,
+                11.985
+              ],
+              "size": [
+                0.05,
+                0.018,
+                0.2
+              ]
+            },
+            {
+              "position": [
+                0,
+                -0.009,
+                -6.4
+              ],
+              "size": [
+                8.23,
+                0.018,
+                0.05
+              ]
+            },
+            {
+              "position": [
+                0,
+                -0.009,
+                6.4
+              ],
+              "size": [
+                8.23,
+                0.018,
+                0.05
+              ]
+            },
+            {
+              "position": [
+                0,
+                -0.009,
+                0
+              ],
+              "size": [
+                0.05,
+                0.018,
+                12.8
+              ]
+            }
+          ],
+          "netPosts": [
+            [
+              -5.03,
+              0.54,
+              0
+            ],
+            [
+              5.03,
+              0.54,
+              0
+            ]
+          ]
+        },
+        "courtCorners": [
+          {
+            "x": 0.258595331476304,
+            "y": 0.32913190412329824
+          },
+          {
+            "x": 0.13965043379133762,
+            "y": 0.7473756372420735
+          },
+          {
+            "x": 0.7477770392811319,
+            "y": 0.32990406818745505
+          },
+          {
+            "x": 0.851807625623077,
+            "y": 0.7490121979566754
+          }
+        ],
+        "players": [
+          {
+            "x": 0.6018366704540358,
+            "y": 0.7450457352438759
+          },
+          {
+            "x": 0.44388246437800327,
+            "y": 0.33220377971546694
+          }
+        ]
+      },
+      "record": {
+        "scenario": "Serving",
+        "startContext": {
+          "stadium": {
+            "name": "Crown Pavilion",
+            "status": "ready",
+            "quality": "reduced",
+            "sections": 24,
+            "spectatorCount": 645,
+            "fullCount": 1180,
+            "triangles": 101352,
+            "collisionComponents": 0,
+            "court": {
+              "halfLength": 11.885,
+              "halfWidth": 4.115,
+              "doublesWidth": 5.485,
+              "service": 6.4,
+              "netCentre": 0.914,
+              "netEdge": 1.07,
+              "radius": 0.0335
+            },
+            "runoff": [
+              20,
+              36
+            ],
+            "scoreboard": {
+              "server": 0,
+              "rows": [
+                {
+                  "name": "KIRA",
+                  "sets": 0,
+                  "games": 0,
+                  "points": "—"
+                },
+                {
+                  "name": "OPPONENT",
+                  "sets": 0,
+                  "games": 0,
+                  "points": "—"
+                }
+              ],
+              "caption": "PRACTICE  /  ENDLESS RALLIES"
+            },
+            "boardUpdates": 2,
+            "reaction": 0,
+            "phase": "serve"
+          },
+          "renderer": [
+            390,
+            844
+          ],
+          "viewport": [
+            390,
+            844
+          ],
+          "dpr": 1,
+          "renderScale": 1,
+          "camera": "broadcast",
+          "phase": "serve",
+          "comparison": "live",
+          "stadiumView": "gameplay",
+          "visualScale": 1.5,
+          "ballScreen": {
+            "x": 235.87941570821695,
+            "y": 597.4047322379718
+          },
+          "ballPixels": {
+            "css": 2.6859635768850385,
+            "render": 2.6859635768850385,
+            "onScreen": true
+          }
+        },
+        "elapsedMs": 10049,
+        "interruptions": 0,
+        "frameIntervals": {
+          "samples": 135,
+          "fps": 13.343876643273699,
+          "averageMs": 74.94074074074074,
+          "stddevMs": 73.6695085387448,
+          "p95Ms": 185,
+          "maxMs": 576,
+          "over33Ms": 135
+        },
+        "context": {
+          "stadium": {
+            "name": "Crown Pavilion",
+            "status": "ready",
+            "quality": "reduced",
+            "sections": 24,
+            "spectatorCount": 645,
+            "fullCount": 1180,
+            "triangles": 101352,
+            "collisionComponents": 0,
+            "court": {
+              "halfLength": 11.885,
+              "halfWidth": 4.115,
+              "doublesWidth": 5.485,
+              "service": 6.4,
+              "netCentre": 0.914,
+              "netEdge": 1.07,
+              "radius": 0.0335
+            },
+            "runoff": [
+              20,
+              36
+            ],
+            "scoreboard": {
+              "server": 0,
+              "rows": [
+                {
+                  "name": "KIRA",
+                  "sets": 0,
+                  "games": 0,
+                  "points": "—"
+                },
+                {
+                  "name": "OPPONENT",
+                  "sets": 0,
+                  "games": 0,
+                  "points": "—"
+                }
+              ],
+              "caption": "PRACTICE  /  ENDLESS RALLIES"
+            },
+            "boardUpdates": 2,
+            "reaction": 0,
+            "phase": "serve"
+          },
+          "renderer": [
+            390,
+            844
+          ],
+          "viewport": [
+            390,
+            844
+          ],
+          "dpr": 1,
+          "renderScale": 1,
+          "camera": "broadcast",
+          "phase": "serve",
+          "comparison": "live",
+          "stadiumView": "gameplay",
+          "visualScale": 1.5,
+          "ballScreen": {
+            "x": 235.87952293185012,
+            "y": 597.4047204802182
+          },
+          "ballPixels": {
+            "css": 2.6859635547088176,
+            "render": 2.6859635547088176,
+            "onScreen": true
+          }
+        }
+      }
+    }
+  ]
+}

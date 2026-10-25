@@ -9,7 +9,9 @@ page.on('pageerror', (e) => errors.push(e.message));
 const dir = 'public/verification/goal-004';
 mkdirSync(dir, { recursive: true });
 await page.goto(`${process.env.CC_URL ?? 'http://localhost:4173/'}?debug`);
-await page.waitForFunction(() => !document.querySelector('#play').disabled, { timeout: 60000 });
+await page.waitForFunction(() => !document.querySelector('#play').disabled, undefined, {
+  timeout: 60000,
+});
 await page.locator('#difficulty').selectOption('hard');
 await page.locator('#play').click();
 await page.evaluate(() => {
@@ -98,7 +100,7 @@ await page.evaluate(() => {
 await page.keyboard.down('Space');
 await page.waitForTimeout(550);
 await page.keyboard.up('Space');
-await page.waitForFunction(() => window.stadiumFlow.complete, { timeout: 90000 });
+await page.waitForFunction(() => window.stadiumFlow.complete, undefined, { timeout: 90000 });
 const result = await page.evaluate(() => ({
   ...window.stadiumFlow,
   final: window.centreCourt.snapshot(),

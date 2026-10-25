@@ -28,7 +28,9 @@ async function capture(name, provenance) {
   console.log(name);
 }
 await page.goto(`${url}?dev=1`);
-await page.waitForFunction(() => !document.querySelector('#play').disabled, { timeout: 60000 });
+await page.waitForFunction(() => !document.querySelector('#play').disabled, undefined, {
+  timeout: 60000,
+});
 await page.locator('#play').click();
 await page.locator('#pause-button').click();
 await page.locator('#stadium-quality').selectOption('full');
@@ -70,7 +72,9 @@ await settled(32);
 await capture('mobile-broadcast', '390x844 Chromium viewport, existing broadcast camera');
 // Ordinary navigation: no developer tool DOM is loaded.
 await page.goto(`${url}?debug`);
-await page.waitForFunction(() => !document.querySelector('#play').disabled, { timeout: 60000 });
+await page.waitForFunction(() => !document.querySelector('#play').disabled, undefined, {
+  timeout: 60000,
+});
 await page.locator('#play').click();
 await settled(32);
 await page.keyboard.down('Space');

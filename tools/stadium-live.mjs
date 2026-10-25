@@ -1,9 +1,11 @@
 import { chromium } from 'playwright';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
-import { writeFileSync } from 'node:fs';
+import { writeFileSync, mkdirSync } from 'node:fs';
 const run = promisify(execFile);
 const base = 'https://kalikeefbiz.github.io/Centre-Court/';
+const dir = process.env.CC_OUTPUT_DIR ?? 'public/verification/goal-004';
+mkdirSync(dir, { recursive: true });
 const browser = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader'] });
 const page = await browser.newPage({ viewport: { width: 700, height: 650 }, deviceScaleFactor: 1 });
 // The managed workspace's HTTP proxy and CA trust belong to curl. Retain TLS validation
@@ -31,16 +33,22 @@ await page.route(`${base}**`, async (route) => {
 const errors = [];
 page.on('pageerror', (e) => errors.push(e.message));
 await page.goto(`${base}?debug`);
-await page.waitForFunction(() => !document.querySelector('#play').disabled, { timeout: 60000 });
+await page.waitForFunction(() => !document.querySelector('#play').disabled, undefined, {
+  timeout: 60000,
+});
 await page.locator('#play').click();
-await page.waitForTimeout(1800);
+await page.waitForFunction(
+  () => Math.abs(window.centreCourt.snapshot().presentation.cameraPosition[1] - 25) < 0.1,
+  undefined,
+  { timeout: 30000 },
+);
 const s = await page.evaluate(() => window.centreCourt.snapshot());
-await page.screenshot({ path: 'public/verification/goal-004/live-deployment.png' });
+await page.screenshot({ path: `${dir}/live-deployment.png` });
 const release = JSON.parse(
   (await run('curl', ['--fail', '--silent', '--show-error', `${base}release.json`])).stdout,
 );
 writeFileSync(
-  'public/verification/goal-004/live-verification.json',
+  `${dir}/live-verification.json`,
   JSON.stringify(
     {
       url: base,

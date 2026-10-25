@@ -1,0 +1,276 @@
+{
+  "environment": "Linux headless Chromium 156 / SwiftShader software WebGL, 390x844 DPR1; tools closed, perf overlay on; three serving/idle-return 10s records; not iPhone or GPU timings",
+  "errors": [],
+  "results": [
+    {
+      "sample": 0,
+      "build": "48c7e501ece1dd58cc8b2caf1fb38dfe41310e7c",
+      "readyMs": 2882.5,
+      "assets": [
+        {
+          "path": "assets/characters/kira/Meshy_AI_Pink_Valkyrie_All_Animations.glb",
+          "status": "ready",
+          "startMs": 840.2999999998137,
+          "durationMs": 1744.8000000002794
+        },
+        {
+          "path": "assets/equipment/rackets/Meshy_AI_Pink_and_Black_Tennis_1024095819_texture.glb",
+          "status": "ready",
+          "startMs": 844.1999999997206,
+          "durationMs": 1630.8000000002794
+        },
+        {
+          "path": "assets/balls/royal-rally/Meshy_AI_Royal_Rally_1024220842_texture.glb",
+          "status": "ready",
+          "startMs": 847.7999999998137,
+          "durationMs": 1057.8999999999069
+        }
+      ],
+      "drawCalls": 29,
+      "record": {
+        "scenario": "Serving",
+        "startContext": {
+          "renderer": [
+            390,
+            844
+          ],
+          "viewport": [
+            390,
+            844
+          ],
+          "dpr": 1,
+          "renderScale": 1,
+          "camera": "broadcast",
+          "phase": "serve",
+          "comparison": "live",
+          "visualScale": 1.5,
+          "ballScreen": {
+            "x": 236.01728866469165,
+            "y": 596.966432480343
+          },
+          "ballPixels": {
+            "css": 2.708681629920789,
+            "render": 2.708681629920789,
+            "onScreen": true
+          }
+        },
+        "elapsedMs": 10067.5,
+        "interruptions": 0,
+        "frameIntervals": {
+          "samples": 53,
+          "fps": 5.244720644407989,
+          "averageMs": 190.66792452830012,
+          "stddevMs": 135.17477124996446,
+          "p95Ms": 536.1999999997206,
+          "maxMs": 730.2999999998137,
+          "over33Ms": 49
+        },
+        "context": {
+          "renderer": [
+            390,
+            844
+          ],
+          "viewport": [
+            390,
+            844
+          ],
+          "dpr": 1,
+          "renderScale": 1,
+          "camera": "broadcast",
+          "phase": "pointOver",
+          "comparison": "live",
+          "visualScale": 1.5,
+          "ballScreen": {
+            "x": 200.95783268080078,
+            "y": 1013.0263739308997
+          },
+          "ballPixels": {
+            "css": 3.4083959391175513,
+            "render": 3.4083959391175513,
+            "onScreen": false
+          }
+        }
+      }
+    },
+    {
+      "sample": 1,
+      "build": "48c7e501ece1dd58cc8b2caf1fb38dfe41310e7c",
+      "readyMs": 2882.5,
+      "assets": [
+        {
+          "path": "assets/characters/kira/Meshy_AI_Pink_Valkyrie_All_Animations.glb",
+          "status": "ready",
+          "startMs": 840.2999999998137,
+          "durationMs": 1744.8000000002794
+        },
+        {
+          "path": "assets/equipment/rackets/Meshy_AI_Pink_and_Black_Tennis_1024095819_texture.glb",
+          "status": "ready",
+          "startMs": 844.1999999997206,
+          "durationMs": 1630.8000000002794
+        },
+        {
+          "path": "assets/balls/royal-rally/Meshy_AI_Royal_Rally_1024220842_texture.glb",
+          "status": "ready",
+          "startMs": 847.7999999998137,
+          "durationMs": 1057.8999999999069
+        }
+      ],
+      "drawCalls": 31,
+      "record": {
+        "scenario": "Serving",
+        "startContext": {
+          "renderer": [
+            390,
+            844
+          ],
+          "viewport": [
+            390,
+            844
+          ],
+          "dpr": 1,
+          "renderScale": 1,
+          "camera": "broadcast",
+          "phase": "serve",
+          "comparison": "live",
+          "visualScale": 1.5,
+          "ballScreen": {
+            "x": 235.90256549301466,
+            "y": 597.4023640127251
+          },
+          "ballPixels": {
+            "css": 2.6859583446049564,
+            "render": 2.6859583446049564,
+            "onScreen": true
+          }
+        },
+        "elapsedMs": 10054.19999999972,
+        "interruptions": 0,
+        "frameIntervals": {
+          "samples": 62,
+          "fps": 6.1606335516053,
+          "averageMs": 162.32096774193397,
+          "stddevMs": 84.69578413755077,
+          "p95Ms": 308.89999999990687,
+          "maxMs": 354.10000000009313,
+          "over33Ms": 55
+        },
+        "context": {
+          "renderer": [
+            390,
+            844
+          ],
+          "viewport": [
+            390,
+            844
+          ],
+          "dpr": 1,
+          "renderScale": 1,
+          "camera": "broadcast",
+          "phase": "serve",
+          "comparison": "live",
+          "visualScale": 1.5,
+          "ballScreen": {
+            "x": 236.35586869484817,
+            "y": 597.3562064391892
+          },
+          "ballPixels": {
+            "css": 2.6858890680631995,
+            "render": 2.685889068063199,
+            "onScreen": true
+          }
+        }
+      }
+    },
+    {
+      "sample": 2,
+      "build": "48c7e501ece1dd58cc8b2caf1fb38dfe41310e7c",
+      "readyMs": 2882.5,
+      "assets": [
+        {
+          "path": "assets/characters/kira/Meshy_AI_Pink_Valkyrie_All_Animations.glb",
+          "status": "ready",
+          "startMs": 840.2999999998137,
+          "durationMs": 1744.8000000002794
+        },
+        {
+          "path": "assets/equipment/rackets/Meshy_AI_Pink_and_Black_Tennis_1024095819_texture.glb",
+          "status": "ready",
+          "startMs": 844.1999999997206,
+          "durationMs": 1630.8000000002794
+        },
+        {
+          "path": "assets/balls/royal-rally/Meshy_AI_Royal_Rally_1024220842_texture.glb",
+          "status": "ready",
+          "startMs": 847.7999999998137,
+          "durationMs": 1057.8999999999069
+        }
+      ],
+      "drawCalls": 29,
+      "record": {
+        "scenario": "Serving",
+        "startContext": {
+          "renderer": [
+            390,
+            844
+          ],
+          "viewport": [
+            390,
+            844
+          ],
+          "dpr": 1,
+          "renderScale": 1,
+          "camera": "broadcast",
+          "phase": "serve",
+          "comparison": "live",
+          "visualScale": 1.5,
+          "ballScreen": {
+            "x": 235.881702673109,
+            "y": 597.4045013822964
+          },
+          "ballPixels": {
+            "css": 2.685963014071859,
+            "render": 2.685963014071859,
+            "onScreen": true
+          }
+        },
+        "elapsedMs": 10048.100000000093,
+        "interruptions": 0,
+        "frameIntervals": {
+          "samples": 51,
+          "fps": 5.052306229196433,
+          "averageMs": 197.92941176470404,
+          "stddevMs": 102.08866637200222,
+          "p95Ms": 347.60000000009313,
+          "maxMs": 485.20000000018626,
+          "over33Ms": 47
+        },
+        "context": {
+          "renderer": [
+            390,
+            844
+          ],
+          "viewport": [
+            390,
+            844
+          ],
+          "dpr": 1,
+          "renderScale": 1,
+          "camera": "broadcast",
+          "phase": "pointOver",
+          "comparison": "live",
+          "visualScale": 1.5,
+          "ballScreen": {
+            "x": 202.38233094591655,
+            "y": 1016.4008999390726
+          },
+          "ballPixels": {
+            "css": 3.4160121666323553,
+            "render": 3.4160121666323553,
+            "onScreen": false
+          }
+        }
+      }
+    }
+  ]
+}
