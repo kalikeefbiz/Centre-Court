@@ -17,7 +17,7 @@ describe('authoritative production GLBs', () => {
   it('contains Kira’s updated skeleton, all thirteen clips and embedded PBR textures', () => {
     const { b, json: g } = glb(KIRA.characterUrl);
     expect(createHash('sha256').update(b).digest('hex')).toBe(
-      'ce2272d87a84bb08be0a765ae35354fac1e505a854b0807ed5cc8323b67a237f',
+      'f55979d3991fc1a2647df1fc63be4751c91a743f7498d37726362ae3468fd2d9',
     );
     expect(g.animations.map((a: any) => a.name).sort()).toEqual(Object.values(KIRA.clips).sort());
     expect(g.skins[0].joints).toHaveLength(74);
@@ -32,6 +32,52 @@ describe('authoritative production GLBs', () => {
     }
     expect(g.images).toHaveLength(3);
     expect(g.images.every((i: any) => i.bufferView !== undefined && !i.uri)).toBe(true);
+  });
+  it('retains the rollback rig, exact animation payloads, bind matrices and hand transforms', () => {
+    const { b: oldBytes, json: original } = glb(KIRA.rollbackUrl);
+    const { b: newBytes, json: candidate } = glb(KIRA.characterUrl);
+    expect(createHash('sha256').update(oldBytes).digest('hex')).toBe(
+      'ce2272d87a84bb08be0a765ae35354fac1e505a854b0807ed5cc8323b67a237f',
+    );
+    expect(candidate.nodes).toEqual(original.nodes);
+    expect(candidate.skins).toEqual(original.skins);
+    expect(candidate.animations).toEqual(original.animations);
+    const references = new Set<number>([original.skins[0].inverseBindMatrices]);
+    for (const clip of original.animations)
+      for (const sampler of clip.samplers) {
+        references.add(sampler.input);
+        references.add(sampler.output);
+      }
+    for (const index of references) {
+      expect(candidate.accessors[index]).toEqual(original.accessors[index]);
+      const view = original.bufferViews[original.accessors[index].bufferView];
+      const newView = candidate.bufferViews[candidate.accessors[index].bufferView];
+      const bytes = (b: Buffer, v: any) => {
+        const start = 28 + b.readUInt32LE(12) + (v.byteOffset ?? 0);
+        return b.subarray(start, start + v.byteLength);
+      };
+      expect(Buffer.compare(bytes(oldBytes, view), bytes(newBytes, newView))).toBe(0);
+    }
+  });
+  it('keeps the full mid-resolution topology with finite normalized four-influence weights', () => {
+    const { b, json: g } = glb(KIRA.characterUrl);
+    const p = g.meshes[0].primitives[0];
+    expect(g.accessors[p.attributes.POSITION].count).toBe(46890);
+    expect(g.accessors[p.indices].count / 3).toBe(30463);
+    const a = g.accessors[p.attributes.WEIGHTS_0];
+    const v = g.bufferViews[a.bufferView];
+    const start = 28 + b.readUInt32LE(12) + v.byteOffset + (a.byteOffset ?? 0);
+    let maxError = 0;
+    for (let i = 0; i < a.count; i++) {
+      let total = 0;
+      for (let k = 0; k < 4; k++) {
+        const w = b.readFloatLE(start + i * 16 + k * 4);
+        if (!Number.isFinite(w) || w < 0) throw new Error(`Invalid skin weight at ${i}`);
+        total += w;
+      }
+      maxError = Math.max(maxError, Math.abs(total - 1));
+    }
+    expect(maxError).toBeLessThan(0.000001);
   });
   it('ships the unchanged, separately textured racket', () => {
     const { b, json: g } = glb(KIRA.racketUrl);
@@ -93,7 +139,7 @@ describe('presentation contact events preserve gameplay', () => {
 
 describe('GOAL 002C optimized source integrity', () => {
   for (const path of [
-    KIRA.characterUrl,
+    'assets/characters/kira/Meshy_AI_Pink_Valkyrie_All_Animations.glb',
     'assets/balls/royal-rally/Meshy_AI_Royal_Rally_1024220842_texture.glb',
   ])
     it(`preserves nonimage buffers and PBR material design: ${path}`, () => {

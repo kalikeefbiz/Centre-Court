@@ -1,0 +1,94 @@
+
+> centre-court@0.1.0 test:browser
+> playwright test
+
+
+Running 46 tests using 1 worker
+
+(node:4018) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Skipping host requirements validation logic because `PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS` env variable is set.
+  ✓   1 [desktop-chromium] › tests/browser/ai.spec.ts:3:1 › difficulty selection, seeded AI overlay and live predictive movement (44.9s)
+  ✓   2 [desktop-chromium] › tests/browser/ai.spec.ts:38:1 › ordinary matches hide all AI developer controls (22.8s)
+  ✓   3 [desktop-chromium] › tests/browser/diagnostics.spec.ts:13:1 › developer tools require explicit dev=1 and scale resets on ordinary visits (1.2m)
+  ✓   4 [desktop-chromium] › tests/browser/diagnostics.spec.ts:31:1 › production rig inspection selects every registry clip and restores a frozen match (1.4m)
+  ✓   5 [desktop-chromium] › tests/browser/diagnostics.spec.ts:131:1 › visual presets preserve physics and cameras, diagnostics export and touch ownership (46.5s)
+  ✓   6 [desktop-chromium] › tests/browser/diagnostics.spec.ts:209:3 › developer asset ledger reports characters/kira failure (18.0s)
+  ✓   7 [desktop-chromium] › tests/browser/diagnostics.spec.ts:209:3 › developer asset ledger reports equipment/rackets failure (23.2s)
+  ✓   8 [desktop-chromium] › tests/browser/diagnostics.spec.ts:209:3 › developer asset ledger reports balls/royal-rally failure (28.6s)
+  ✓   9 [desktop-chromium] › tests/browser/kira.spec.ts:7:1 › Valkyrie and Royal Rally render, prepare, contact, move in place and freeze safely (42.1s)
+  ✓  10 [desktop-chromium] › tests/browser/kira.spec.ts:56:3 › failed characters/kira loading blocks placeholder gameplay and offers retry (43.3s)
+  ✓  11 [desktop-chromium] › tests/browser/kira.spec.ts:56:3 › failed equipment/rackets loading blocks placeholder gameplay and offers retry (45.9s)
+  ✓  12 [desktop-chromium] › tests/browser/kira.spec.ts:56:3 › failed balls/royal-rally loading blocks placeholder gameplay and offers retry (53.3s)
+  ✓  13 [desktop-chromium] › tests/browser/kira.spec.ts:85:1 › delayed GLBs cannot start either mode with a temporary human (28.3s)
+  ✓  14 [desktop-chromium] › tests/browser/play.spec.ts:16:1 › renders a playable court, serves, pauses, switches camera, restarts and returns to menu (1.1m)
+  ✓  15 [desktop-chromium] › tests/browser/play.spec.ts:65:1 › practice, shot selection, movement and resize remain usable (29.2s)
+  ✓  16 [desktop-chromium] › tests/browser/play.spec.ts:107:1 › independent trusted touch pointers move and charge together (26.4s)
+  ✓  17 [desktop-chromium] › tests/browser/play.spec.ts:140:3 › secondary touch selects and aims while moving in broadcast (26.0s)
+  ✓  18 [desktop-chromium] › tests/browser/play.spec.ts:140:3 › secondary touch selects and aims while moving in behind (25.9s)
+  ✓  19 [desktop-chromium] › tests/browser/play.spec.ts:188:1 › pointer cancellation and interruptions clear only the owned inputs (22.6s)
+  ✓  20 [desktop-chromium] › tests/browser/stadium.spec.ts:6:1 › stadium builds locally, preserves dimensions, scales crowd and clears both cameras (40.4s)
+  ✓  21 [desktop-chromium] › tests/browser/stadium.spec.ts:75:1 › native serve, AI return, point score, live display update and next serve (58.1s)
+  ✓  22 [desktop-chromium] › tests/browser/stadium.spec.ts:134:1 › stadium inspection restores gameplay and diagnostic exports include venue context (28.6s)
+  ✘  23 [desktop-chromium] › tests/browser/visual.spec.ts:5:1 › production pixels show textured Kira in a match through both shipped cameras (1.0m)
+(node:5291) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Skipping host requirements validation logic because `PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS` env variable is set.
+  ✓  24 [mobile-webkit] › tests/browser/ai.spec.ts:3:1 › difficulty selection, seeded AI overlay and live predictive movement (23.0s)
+  ✓  25 [mobile-webkit] › tests/browser/ai.spec.ts:38:1 › ordinary matches hide all AI developer controls (10.0s)
+  ✓  26 [mobile-webkit] › tests/browser/diagnostics.spec.ts:13:1 › developer tools require explicit dev=1 and scale resets on ordinary visits (25.6s)
+  ✓  27 [mobile-webkit] › tests/browser/diagnostics.spec.ts:31:1 › production rig inspection selects every registry clip and restores a frozen match (29.2s)
+  ✓  28 [mobile-webkit] › tests/browser/diagnostics.spec.ts:131:1 › visual presets preserve physics and cameras, diagnostics export and touch ownership (32.4s)
+  ✓  29 [mobile-webkit] › tests/browser/diagnostics.spec.ts:209:3 › developer asset ledger reports characters/kira failure (8.6s)
+  ✓  30 [mobile-webkit] › tests/browser/diagnostics.spec.ts:209:3 › developer asset ledger reports equipment/rackets failure (13.2s)
+  ✓  31 [mobile-webkit] › tests/browser/diagnostics.spec.ts:209:3 › developer asset ledger reports balls/royal-rally failure (14.0s)
+  ✓  32 [mobile-webkit] › tests/browser/kira.spec.ts:7:1 › Valkyrie and Royal Rally render, prepare, contact, move in place and freeze safely (13.4s)
+  ✓  33 [mobile-webkit] › tests/browser/kira.spec.ts:56:3 › failed characters/kira loading blocks placeholder gameplay and offers retry (22.9s)
+  ✓  34 [mobile-webkit] › tests/browser/kira.spec.ts:56:3 › failed equipment/rackets loading blocks placeholder gameplay and offers retry (19.8s)
+  ✓  35 [mobile-webkit] › tests/browser/kira.spec.ts:56:3 › failed balls/royal-rally loading blocks placeholder gameplay and offers retry (24.2s)
+  ✓  36 [mobile-webkit] › tests/browser/kira.spec.ts:85:1 › delayed GLBs cannot start either mode with a temporary human (9.3s)
+  ✓  37 [mobile-webkit] › tests/browser/play.spec.ts:16:1 › renders a playable court, serves, pauses, switches camera, restarts and returns to menu (21.5s)
+  ✓  38 [mobile-webkit] › tests/browser/play.spec.ts:65:1 › practice, shot selection, movement and resize remain usable (11.8s)
+  -  39 [mobile-webkit] › tests/browser/play.spec.ts:107:1 › independent trusted touch pointers move and charge together
+  -  40 [mobile-webkit] › tests/browser/play.spec.ts:140:3 › secondary touch selects and aims while moving in broadcast
+  -  41 [mobile-webkit] › tests/browser/play.spec.ts:140:3 › secondary touch selects and aims while moving in behind
+  ✓  42 [mobile-webkit] › tests/browser/play.spec.ts:188:1 › pointer cancellation and interruptions clear only the owned inputs (10.2s)
+  ✓  43 [mobile-webkit] › tests/browser/stadium.spec.ts:6:1 › stadium builds locally, preserves dimensions, scales crowd and clears both cameras (12.8s)
+  ✓  44 [mobile-webkit] › tests/browser/stadium.spec.ts:75:1 › native serve, AI return, point score, live display update and next serve (15.7s)
+  ✓  45 [mobile-webkit] › tests/browser/stadium.spec.ts:134:1 › stadium inspection restores gameplay and diagnostic exports include venue context (24.2s)
+  ✓  46 [mobile-webkit] › tests/browser/visual.spec.ts:5:1 › production pixels show textured Kira in a match through both shipped cameras (19.0s)
+
+
+  1) [desktop-chromium] › tests/browser/visual.spec.ts:5:1 › production pixels show textured Kira in a match through both shipped cameras 
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 0.1
+    Received:   0.5307273864746094
+
+    Call Log:
+    - Timeout 15000ms exceeded while waiting on the predicate
+
+      28 |         timeout: 15000,
+      29 |       })
+    > 30 |       .toBeLessThan(0.1);
+         |        ^
+      31 |     await expect.poll(async () => (await snap(page)).kira.bodyVisible).toBe(true);
+      32 |     const s = await snap(page);
+      33 |     expect(s.kira.texturedSkin).toBe(true);
+        at /workspace/Centre-Court/tests/browser/visual.spec.ts:30:8
+
+    Error Context: test-results/visual-production-pixels-s-05a39-hrough-both-shipped-cameras-desktop-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/visual-production-pixels-s-05a39-hrough-both-shipped-cameras-desktop-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/visual-production-pixels-s-05a39-hrough-both-shipped-cameras-desktop-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [desktop-chromium] › tests/browser/visual.spec.ts:5:1 › production pixels show textured Kira in a match through both shipped cameras 
+  3 skipped
+  42 passed (22.2m)

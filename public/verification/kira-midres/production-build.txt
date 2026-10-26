@@ -1,0 +1,29 @@
+
+> centre-court@0.1.0 build
+> tsc --noEmit && vite build
+
+vite v7.3.7 building client environment for production...
+transforming...
+✓ 1278 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/release.json                                                 0.11 kB │ gzip:   0.12 kB
+dist/index.html                                                   8.09 kB │ gzip:   2.85 kB
+dist/assets/barlow-condensed-latin-700-normal-Dmwat-ge.woff      18.82 kB
+dist/assets/barlow-latin-400-normal-fsAxiSwU.woff                19.58 kB
+dist/assets/barlow-latin-800-normal-BdVooDN4.woff                19.64 kB
+dist/assets/barlow-latin-600-normal-CNwfPWQD.woff                19.88 kB
+dist/assets/barlow-latin-400-normal-qiz4-Cze.woff2               22.20 kB
+dist/assets/barlow-condensed-latin-700-normal-v1xN8_Wq.woff2     22.44 kB
+dist/assets/barlow-latin-600-normal-DILqtrty.woff2               22.77 kB
+dist/assets/barlow-latin-800-normal-s1sAMnoV.woff2               22.98 kB
+dist/assets/tools-Bx_fZd7K.css                                    2.83 kB │ gzip:   1.00 kB
+dist/assets/index-iBJ3xHcu.css                                   15.10 kB │ gzip:   4.25 kB
+dist/assets/tools-PbzMhxp0.js                                    19.83 kB │ gzip:   6.76 kB
+dist/assets/index-CM2-23-d.js                                 2,091.14 kB │ gzip: 546.57 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 5.04s

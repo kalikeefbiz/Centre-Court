@@ -1,0 +1,236 @@
+[
+  {
+    "clip": "Idle_7",
+    "frames": 263,
+    "skins": {
+      "Kira original - reference only": {
+        "finite": true,
+        "max_edge_stretch": 3.167861820515424,
+        "worst_p99_edge_stretch": 1.2728551987269656,
+        "worst_p001_edge_ratio": 0.5326668037313639
+      },
+      "Kira Midres - transferred skin": {
+        "finite": true,
+        "max_edge_stretch": 2.6937018434888054,
+        "worst_p99_edge_stretch": 1.248621918315712,
+        "worst_p001_edge_ratio": 0.36004679376857135
+      }
+    }
+  },
+  {
+    "clip": "_01a16f37_5a33_7498_91c4_55e2e1439bac",
+    "frames": 90,
+    "skins": {
+      "Kira original - reference only": {
+        "finite": true,
+        "max_edge_stretch": 7.176155662010158,
+        "worst_p99_edge_stretch": 1.4876719704635208,
+        "worst_p001_edge_ratio": 0.3093051006304899
+      },
+      "Kira Midres - transferred skin": {
+        "finite": true,
+        "max_edge_stretch": 3.811135120044124,
+        "worst_p99_edge_stretch": 1.5382828590173894,
+        "worst_p001_edge_ratio": 0.25568693687869026
+      }
+    }
+  },
+  {
+    "clip": "_01a16f36_0b96_76c3_ac06_6409b3e12e89",
+    "frames": 90,
+    "skins": {
+      "Kira original - reference only": {
+        "finite": true,
+        "max_edge_stretch": 6.098912306782567,
+        "worst_p99_edge_stretch": 1.4645740178177455,
+        "worst_p001_edge_ratio": 0.3198629387376459
+      },
+      "Kira Midres - transferred skin": {
+        "finite": true,
+        "max_edge_stretch": 3.75084086130958,
+        "worst_p99_edge_stretch": 1.5576225125682621,
+        "worst_p001_edge_ratio": 0.3454209959691706
+      }
+    }
+  },
+  {
+    "clip": "_01a16f33_ae88_77f6_8f6a_d4c208041d36",
+    "frames": 90,
+    "skins": {
+      "Kira original - reference only": {
+        "finite": true,
+        "max_edge_stretch": 6.611917125221203,
+        "worst_p99_edge_stretch": 1.4399235615867383,
+        "worst_p001_edge_ratio": 0.34361415264207756
+      },
+      "Kira Midres - transferred skin": {
+        "finite": true,
+        "max_edge_stretch": 5.106215702630189,
+        "worst_p99_edge_stretch": 1.4507035258819785,
+        "worst_p001_edge_ratio": 0.3977308685988989
+      }
+    }
+  },
+  {
+    "clip": "_01a16f27_4128_711d_a437_5651121a8e2c",
+    "frames": 90,
+    "skins": {
+      "Kira original - reference only": {
+        "finite": true,
+        "max_edge_stretch": 8.507812376991609,
+        "worst_p99_edge_stretch": 1.543193533238776,
+        "worst_p001_edge_ratio": 0.29674113879235225
+      },
+      "Kira Midres - transferred skin": {
+        "finite": true,
+        "max_edge_stretch": 4.677207513751867,
+        "worst_p99_edge_stretch": 1.5984332276187334,
+        "worst_p001_edge_ratio": 0.261600195390229
+      }
+    }
+  },
+  {
+    "clip": "_01a16f21_3bc1_7312_b0db_d96fda6475ea",
+    "frames": 90,
+    "skins": {
+      "Kira original - reference only": {
+        "finite": true,
+        "max_edge_stretch": 7.1764763000575815,
+        "worst_p99_edge_stretch": 1.475719139477439,
+        "worst_p001_edge_ratio": 0.28396063863185694
+      },
+      "Kira Midres - transferred skin": {
+        "finite": true,
+        "max_edge_stretch": 5.862307595561705,
+        "worst_p99_edge_stretch": 1.5066246024765748,
+        "worst_p001_edge_ratio": 0.38197600652620267
+      }
+    }
+  },
+  {
+    "clip": "_01a16f20_14b9_70d3_b4cd_5b3e4d514601",
+    "frames": 90,
+    "skins": {
+      "Kira original - reference only": {
+        "finite": true,
+        "max_edge_stretch": 6.899265757442401,
+        "worst_p99_edge_stretch": 1.5638718586056306,
+        "worst_p001_edge_ratio": 0.3092561363529606
+      },
+      "Kira Midres - transferred skin": {
+        "finite": true,
+        "max_edge_stretch": 6.32169354269444,
+        "worst_p99_edge_stretch": 1.5152073637823336,
+        "worst_p001_edge_ratio": 0.29055804503435334
+      }
+    }
+  },
+  {
+    "clip": "_01a16f1f_22af_74e9_af26_8f1aec798eb5",
+    "frames": 90,
+    "skins": {
+      "Kira original - reference only": {
+        "finite": true,
+        "max_edge_stretch": 5.655830435073069,
+        "worst_p99_edge_stretch": 1.4370652278410088,
+        "worst_p001_edge_ratio": 0.384860716767631
+      },
+      "Kira Midres - transferred skin": {
+        "finite": true,
+        "max_edge_stretch": 3.7661009354934443,
+        "worst_p99_edge_stretch": 1.4701010981526799,
+        "worst_p001_edge_ratio": 0.431091054629361
+      }
+    }
+  },
+  {
+    "clip": "_01a16f19_f977_75c8_82d3_00bd61e22843",
+    "frames": 90,
+    "skins": {
+      "Kira original - reference only": {
+        "finite": true,
+        "max_edge_stretch": 6.356393502290317,
+        "worst_p99_edge_stretch": 1.4305668897614703,
+        "worst_p001_edge_ratio": 0.3479128616679349
+      },
+      "Kira Midres - transferred skin": {
+        "finite": true,
+        "max_edge_stretch": 3.9398069804163525,
+        "worst_p99_edge_stretch": 1.4505811933496184,
+        "worst_p001_edge_ratio": 0.3970895205805215
+      }
+    }
+  },
+  {
+    "clip": "_01a16f17_0702_776b_a578_5ae634002c9e",
+    "frames": 90,
+    "skins": {
+      "Kira original - reference only": {
+        "finite": true,
+        "max_edge_stretch": 9.476115435961988,
+        "worst_p99_edge_stretch": 1.5604557442601519,
+        "worst_p001_edge_ratio": 0.23264417620188857
+      },
+      "Kira Midres - transferred skin": {
+        "finite": true,
+        "max_edge_stretch": 4.187719515008507,
+        "worst_p99_edge_stretch": 1.6016351859112932,
+        "worst_p001_edge_ratio": 0.22361778948347444
+      }
+    }
+  },
+  {
+    "clip": "_01a16f14_df89_70e4_966f_38087b9b2ef7",
+    "frames": 90,
+    "skins": {
+      "Kira original - reference only": {
+        "finite": true,
+        "max_edge_stretch": 6.570215543230274,
+        "worst_p99_edge_stretch": 1.5111873710474912,
+        "worst_p001_edge_ratio": 0.2779679098336675
+      },
+      "Kira Midres - transferred skin": {
+        "finite": true,
+        "max_edge_stretch": 4.800698654926676,
+        "worst_p99_edge_stretch": 1.4494448593273488,
+        "worst_p001_edge_ratio": 0.30392363571151865
+      }
+    }
+  },
+  {
+    "clip": "Walking",
+    "frames": 31,
+    "skins": {
+      "Kira original - reference only": {
+        "finite": true,
+        "max_edge_stretch": 6.5113124808537,
+        "worst_p99_edge_stretch": 1.3859609425937396,
+        "worst_p001_edge_ratio": 0.5298517119153437
+      },
+      "Kira Midres - transferred skin": {
+        "finite": true,
+        "max_edge_stretch": 2.817749932087072,
+        "worst_p99_edge_stretch": 1.369471518597207,
+        "worst_p001_edge_ratio": 0.32354341540519127
+      }
+    }
+  },
+  {
+    "clip": "Running",
+    "frames": 19,
+    "skins": {
+      "Kira original - reference only": {
+        "finite": true,
+        "max_edge_stretch": 7.859057568532624,
+        "worst_p99_edge_stretch": 1.4607238320805334,
+        "worst_p001_edge_ratio": 0.33736285129702837
+      },
+      "Kira Midres - transferred skin": {
+        "finite": true,
+        "max_edge_stretch": 2.9570932002638464,
+        "worst_p99_edge_stretch": 1.4593519526814938,
+        "worst_p001_edge_ratio": 0.25855187594097834
+      }
+    }
+  }
+]

@@ -1,4 +1,5 @@
 import * as pc from 'playcanvas';
+import { KIRA } from '../src/render/athlete-config';
 const canvas = document.querySelector('canvas')!;
 const app = new pc.Application(canvas, { graphicsDeviceOptions: { preserveDrawingBuffer: true } });
 app.setCanvasFillMode(pc.FILLMODE_FILL_WINDOW);
@@ -21,7 +22,7 @@ function load(url: string): Promise<pc.ContainerResource> {
     ),
   );
 }
-const character = await load('/assets/characters/kira/Meshy_AI_Pink_Valkyrie_All_Animations.glb');
+const character = await load(`/${KIRA.characterUrl}`);
 const model = character.instantiateRenderEntity();
 app.root.addChild(model);
 model.addComponent('anim', { activate: true });
@@ -33,11 +34,11 @@ const racket = (
 ).instantiateRenderEntity();
 const socket = new pc.Entity();
 model.findByName('mixamorig:RightHand')!.addChild(socket);
-socket.setLocalPosition(0, 0.08, 0);
-socket.setLocalEulerAngles(0, 0, 90);
+socket.setLocalPosition(...KIRA.gripPosition);
+socket.setLocalEulerAngles(...KIRA.gripRotation);
 socket.addChild(racket);
-racket.setLocalScale(0.72, 0.72, 0.72);
-racket.setLocalPosition(0, 0.28, 0);
+racket.setLocalScale(KIRA.racketScale, KIRA.racketScale, KIRA.racketScale);
+racket.setLocalPosition(...KIRA.racketPosition);
 app.autoRender = false;
 (window as any).inspect = {
   app,

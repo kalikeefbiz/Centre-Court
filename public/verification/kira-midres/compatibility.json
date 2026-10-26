@@ -1,0 +1,81 @@
+{
+  "skeleton_nodes": "PASS",
+  "hierarchy": "PASS",
+  "inverse_bind_matrices": "PASS",
+  "animation_samples_byte_identical": "PASS",
+  "animation_accessors_checked": 1938,
+  "normalized_four_influence_skin": "PASS",
+  "output_bytes": 63532244,
+  "output_sha256": "f55979d3991fc1a2647df1fc63be4751c91a743f7498d37726362ae3468fd2d9",
+  "clips": [
+    {
+      "name": "Running",
+      "channels": 148,
+      "duration": 0.6333330273628235
+    },
+    {
+      "name": "Walking",
+      "channels": 148,
+      "duration": 1.0333329439163208
+    },
+    {
+      "name": "_01a16f14_df89_70e4_966f_38087b9b2ef7",
+      "channels": 148,
+      "duration": 2.9666669368743896
+    },
+    {
+      "name": "_01a16f17_0702_776b_a578_5ae634002c9e",
+      "channels": 148,
+      "duration": 2.9666669368743896
+    },
+    {
+      "name": "_01a16f19_f977_75c8_82d3_00bd61e22843",
+      "channels": 148,
+      "duration": 2.9666669368743896
+    },
+    {
+      "name": "_01a16f1f_22af_74e9_af26_8f1aec798eb5",
+      "channels": 148,
+      "duration": 2.9666669368743896
+    },
+    {
+      "name": "_01a16f20_14b9_70d3_b4cd_5b3e4d514601",
+      "channels": 148,
+      "duration": 2.9666669368743896
+    },
+    {
+      "name": "_01a16f21_3bc1_7312_b0db_d96fda6475ea",
+      "channels": 148,
+      "duration": 2.9666669368743896
+    },
+    {
+      "name": "_01a16f27_4128_711d_a437_5651121a8e2c",
+      "channels": 148,
+      "duration": 2.9666669368743896
+    },
+    {
+      "name": "_01a16f33_ae88_77f6_8f6a_d4c208041d36",
+      "channels": 148,
+      "duration": 2.9666669368743896
+    },
+    {
+      "name": "_01a16f36_0b96_76c3_ac06_6409b3e12e89",
+      "channels": 148,
+      "duration": 2.9666669368743896
+    },
+    {
+      "name": "_01a16f37_5a33_7498_91c4_55e2e1439bac",
+      "channels": 148,
+      "duration": 2.9666669368743896
+    },
+    {
+      "name": "Idle_7",
+      "channels": 148,
+      "duration": 8.733333587646484
+    }
+  ],
+  "source_geometry_after_uniform_normalization": "PASS",
+  "source_normals_uvs_indices": "PASS",
+  "source_texture_bytes": "PASS",
+  "source_pbr_materials": "PASS"
+}
