@@ -2,6 +2,9 @@ name: Verify and deploy Centre Court
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - .github/workflows/kira-preview.yml
+      - .github/workflows/pages.yml
   pull_request:
   workflow_dispatch:
 permissions:

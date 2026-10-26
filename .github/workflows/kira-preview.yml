@@ -1,0 +1,97 @@
+name: Deploy isolated Kira mid-resolution preview
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+# Share production's lock; never cancel an existing production deployment.
+concurrency:
+  group: pages-refs/heads/main
+  cancel-in-progress: false
+env:
+  PREVIEW_SHA: d3e0c5ec0ee80f608b8c5847d46212a41ec7ebbc
+  PRODUCTION_SHA: 3fe030c24a8c8d978e9aca0f4fcb3321f2e22125
+  PREVIEW_PATH: previews/kira-midres-d3e0c5e
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: d3e0c5ec0ee80f608b8c5847d46212a41ec7ebbc
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/download-artifact@v4
+        with:
+          name: github-pages
+          run-id: 40176050213
+          github-token: ${{ github.token }}
+          path: production-artifact
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium webkit
+      - run: npm run test:browser -- --retries=1
+      - name: Preserve production bytes and add isolated preview
+        env:
+          WORKFLOW_SHA: ${{ github.sha }}
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, os, pathlib, shutil, tarfile, urllib.request
+          root = pathlib.Path('pages-site')
+          root.mkdir()
+          with tarfile.open('production-artifact/artifact.tar') as archive:
+              archive.extractall(root, filter='data')
+          def digest(path):
+              return hashlib.sha256(path.read_bytes()).hexdigest()
+          manifest = {str(p.relative_to(root)): digest(p) for p in root.rglob('*') if p.is_file()}
+          expected = os.environ['PRODUCTION_SHA']
+          assert json.loads((root / 'release.json').read_text())['commit'] == expected
+          with urllib.request.urlopen('https://kalikeefbiz.github.io/Centre-Court/release.json') as response:
+              assert json.load(response)['commit'] == expected, 'Production advanced; abort instead of overwriting it'
+          destination = root / os.environ['PREVIEW_PATH']
+          assert not destination.exists()
+          shutil.copytree('dist', destination)
+          assert json.loads((destination / 'release.json').read_text())['commit'] == os.environ['PREVIEW_SHA']
+          asset = destination / 'assets/characters/kira/Kira_Midres_Rigged.glb'
+          assert digest(asset) == 'f55979d3991fc1a2647df1fc63be4751c91a743f7498d37726362ae3468fd2d9'
+          for name, sha in manifest.items():
+              assert digest(root / name) == sha, f'Production file changed: {name}'
+          proof = {'previewCommit': os.environ['PREVIEW_SHA'], 'workflowCommit': os.environ['WORKFLOW_SHA'],
+                   'productionCommit': expected, 'productionArtifactRun': 40176050213,
+                   'productionFilesPreserved': len(manifest), 'productionFilesByteIdentical': True,
+                   'previewPath': os.environ['PREVIEW_PATH'], 'characterSha256': digest(asset)}
+          (destination / 'deployment.json').write_text(json.dumps(proof, indent=2) + '\n')
+          pathlib.Path('production-manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
+          print(json.dumps(proof, indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: kira-preview-validation
+          path: |
+            test-results/
+            production-manifest.json
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          name: github-pages-kira-preview
+          path: pages-site
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: https://kalikeefbiz.github.io/Centre-Court/previews/kira-midres-d3e0c5e/
+    steps:
+      - uses: actions/configure-pages@v5
+      - uses: actions/deploy-pages@v4
+        id: deployment
+        with:
+          artifact_name: github-pages-kira-preview
