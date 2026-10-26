@@ -36,6 +36,12 @@ export interface StrokeAction {
   depth: number;
   intent: 'drive' | 'slice' | 'lob';
   timingQuality: number;
+  /** Logical input ID; zero for AI and scripted releases. */
+  gestureId: number;
+  /** Provisional tap preparation may animate but cannot change ball state. */
+  committed: boolean;
+  /** Earliest impact age; a provisional slice locks to its marker. */
+  impactAfter: number;
 }
 export function sampleRig(stroke: Stroke, time: number, out: Vec, palm = false) {
   const curve = palm ? paths.Serve.palm : paths[stroke].racket;
@@ -59,10 +65,11 @@ export function createStroke(
   depth: number,
   intent: StrokeAction['intent'],
   velocity?: Vec,
+  lead: number = STRIKE.lead,
 ): StrokeAction {
   const a = ANIMATIONS[stroke];
   const serve = stroke === 'Serve',
-    contactAt = serve ? STRIKE.serveDuration : STRIKE.lead;
+    contactAt = serve ? STRIKE.serveDuration : lead;
   const nominal = sampleRig(stroke, a.contact, vec());
   const warp = vec(
     target.x - player.x - (velocity?.x ?? 0) * contactAt - nominal.x * sign(side),
@@ -93,6 +100,9 @@ export function createStroke(
     depth,
     intent,
     timingQuality: 0,
+    gestureId: 0,
+    committed: true,
+    impactAfter: 0,
   };
 }
 /** Warp is a bounded contact reach, not movement of the athlete or ball. */

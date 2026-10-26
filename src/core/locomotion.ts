@@ -14,6 +14,10 @@ export interface LocomotionConfig {
   reversalBraking: number;
   /** Exponential convergence rate near requested velocity, per second. */
   response: number;
+  lateralAcceleration?: number;
+  lateralBraking?: number;
+  lateralReversalBraking?: number;
+  lateralResponse?: number;
 }
 export const HUMAN_LOCOMOTION: Readonly<LocomotionConfig> = {
   forwardSpeed: 6.3,
@@ -23,6 +27,10 @@ export const HUMAN_LOCOMOTION: Readonly<LocomotionConfig> = {
   braking: 32,
   reversalBraking: 36,
   response: 20,
+  lateralAcceleration: 27,
+  lateralBraking: 38,
+  lateralReversalBraking: 42,
+  lateralResponse: 24,
 };
 export const PLAYER_BOUNDS = { lateral: 6.7, net: 0.65, back: 15.3 } as const;
 export const FOOTWORK_ASSIST = { inputThreshold: 0.1, speed: 1.8, gain: 1.5 } as const;
@@ -124,7 +132,15 @@ export function stepLocomotion(
   const dx = targetX - v.x,
     dz = targetZ - v.z,
     delta = Math.hypot(dx, dz);
-  const rate = s.reversing ? c.reversalBraking : s.braking ? c.braking : c.acceleration;
+  const baseline = s.reversing ? c.reversalBraking : s.braking ? c.braking : c.acceleration;
+  const lateralRate = s.reversing
+    ? c.lateralReversalBraking
+    : s.braking
+      ? c.lateralBraking
+      : c.lateralAcceleration;
+  const lateralWeight = delta > 0 ? (dx * dx) / (delta * delta) : 0;
+  const rate = baseline + ((lateralRate ?? baseline) - baseline) * lateralWeight;
+  const response = c.response + ((c.lateralResponse ?? c.response) - c.response) * lateralWeight;
   // Bound the vector delta, not each axis independently (no diagonal acceleration bonus).
   const fraction =
     delta === 0
@@ -132,7 +148,7 @@ export function stepLocomotion(
       : Math.min(
           1,
           (rate * dt) / delta,
-          s.braking || delta <= SETTLE_SPEED ? 1 : damp(c.response, dt),
+          s.braking || delta <= SETTLE_SPEED ? 1 : damp(response, dt),
         );
   v.x += dx * fraction;
   v.z += dz * fraction;

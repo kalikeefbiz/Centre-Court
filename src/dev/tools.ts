@@ -226,7 +226,7 @@ export class DeveloperTools {
           JSON.stringify(
             {
               build: __BUILD_ID__,
-              release: 'GOAL-005',
+              release: 'GOAL-006',
               device: navigator.userAgent,
               capturedAt: new Date().toISOString(),
               ...this.snapshot(),

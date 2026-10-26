@@ -81,7 +81,7 @@
         <div id="timing-feedback"></div>
         <div id="desktop-hint">
           WASD MOVE <span>·</span> HOLD SPACE / RELEASE TO HIT <span>·</span> J L AIM
-          <span>·</span> 1 DRIVE &nbsp; 2 SLICE &nbsp; 3 LOB
+          <span>·</span> TAP SLICE · HOLD POWER · DOUBLE TAP LOB
         </div>
         <div id="touch-controls">
           <div id="joystick" role="group" aria-label="Movement joystick">
@@ -89,14 +89,12 @@
             <span>MOVE</span>
           </div>
           <div class="shot-controls">
-            <button id="shot-intent" aria-label="Cycle shot intent: standard, slice, lob">
-              STANDARD ↻
-            </button>
             <button
               id="shot-button"
-              aria-label="Tap to hit; hold to charge, drag to aim, release to swing"
+              aria-label="Tap for slice; hold and release for power; double tap for lob; drag to aim"
             >
-              <span id="shot-name">HIT</span><small id="aim-feedback">TAP · HOLD · DRAG</small>
+              <span id="shot-name">HIT</span
+              ><small id="aim-feedback">TAP SLICE · HOLD POWER · 2× LOB</small>
             </button>
             <div class="power-track"><i id="power-fill"></i><span></span></div>
           </div>
@@ -144,15 +142,15 @@
             and the landing ring.
           </p>
           <p>
-            <b>Hold, then release.</b> Tap HIT for a standard shot. Hold HIT, Space, or the court
-            with a mouse to charge power. Release when the ball is beside your athlete. Aim for the
-            marked 70% power zone.
+            <b>One HIT control.</b> Tap for slice, hold and release for power, or double tap for a
+            lob. Space and the left mouse button use the same gestures. Start your swing before the
+            ball reaches your racket. Drag while pressing to aim; the power bar shows your charge.
           </p>
           <p>
             <b>Place your return.</b> Drag from HIT to aim left / right and up / down for depth. J /
             L aim on desktop. I / K change depth on desktop. Mouse position across the court sets
-            aim. Select 1 Drive, 2 Slice, or 3 Lob; on touch tap STANDARD ↻ to cycle standard, slice
-            and lob. Forehand and backhand are automatic.
+            aim. Desktop keys 1 Drive, 2 Slice, or 3 Lob override the next shot. Forehand, backhand,
+            volleys and overheads follow the incoming ball.
           </p>
           <p>
             <b>Serve diagonally.</b> Hold and release to serve. Two faults lose the point. A net

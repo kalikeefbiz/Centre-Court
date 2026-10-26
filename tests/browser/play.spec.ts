@@ -65,12 +65,7 @@ test('renders a playable court, serves, pauses, switches camera, restarts and re
 test('practice, shot selection, movement and resize remain usable', async ({ page }, info) => {
   await page.locator('#practice').click();
   await expect(page.locator('#score-description')).toContainText('PRACTICE');
-  await page.locator('#shot-intent').click();
-  await expect(page.locator('#shot-intent')).toHaveText('SLICE ↻');
-  await page.locator('#shot-intent').click();
-  await expect(page.locator('#shot-intent')).toHaveText('LOB ↻');
-  await page.locator('#shot-intent').click();
-  await expect(page.locator('#shot-name')).toHaveText('HIT');
+  await expect(page.locator('#shot-intent')).toHaveCount(0);
   await page.keyboard.press('KeyJ');
   if (info.project.name === 'desktop-chromium') {
     await page.keyboard.down('Space');
@@ -137,10 +132,7 @@ test('independent trusted touch pointers move and charge together', async ({
 });
 
 for (const mode of ['broadcast', 'behind']) {
-  test(`secondary touch selects and aims while moving in ${mode}`, async ({
-    page,
-    context,
-  }, info) => {
+  test(`unified HIT selects and aims while moving in ${mode}`, async ({ page, context }, info) => {
     test.skip(info.project.name !== 'desktop-chromium', 'Trusted multitouch requires CDP.');
     await page.setViewportSize({ width: 390, height: 844 });
     await page.locator('#practice').click();
@@ -154,17 +146,7 @@ for (const mode of ['broadcast', 'behind']) {
       type: 'touchStart' | 'touchEnd' | 'touchMove' | 'touchCancel',
       touchPoints: { x: number; y: number; id: number }[],
     ) => cdp.send('Input.dispatchTouchEvent', { type, touchPoints });
-    const tapWithLeftHeld = async (id: string) => {
-      const r = (await page.locator(id).boundingBox())!;
-      const right = { x: r.x + r.width / 2, y: r.y + r.height / 2, id: 22 };
-      await touch('touchStart', [left, right]);
-      await touch('touchEnd', [right]);
-    };
     await touch('touchStart', [left]);
-    await tapWithLeftHeld('#shot-intent');
-    await expect(page.locator('#shot-intent')).toHaveText('SLICE ↻');
-    await tapWithLeftHeld('#shot-intent');
-    await expect(page.locator('#shot-intent')).toHaveText('LOB ↻');
 
     const r = (await page.locator('#shot-button').boundingBox())!;
     const right = { x: r.x + r.width / 2, y: r.y + r.height / 2, id: 22 };
@@ -179,8 +161,28 @@ for (const mode of ['broadcast', 'behind']) {
     await expect.poll(async () => (await snap(page)).input.x).toBe(0);
     expect((await snap(page)).input.charging).toBe(true);
     await touch('touchEnd', []);
-    await expect.poll(async () => (await snap(page)).contacts).toBe(1);
+    await expect.poll(async () => (await snap(page)).contacts).toBeGreaterThanOrEqual(1);
     expect((await snap(page)).input.charging).toBe(false);
+    await touch('touchStart', [left]);
+    // Keep the native movement pointer captured. Inject the short right-thumb pair
+    // in one browser task: sequential CDP round trips exceed 180 ms on software GL.
+    await page.evaluate(() => {
+      const button = document.querySelector('#shot-button')!;
+      for (let i = 0; i < 2; i++)
+        for (const type of ['pointerdown', 'pointerup'])
+          button.dispatchEvent(
+            new PointerEvent(type, {
+              pointerId: 71,
+              pointerType: 'touch',
+              clientX: 300,
+              clientY: 700,
+              bubbles: true,
+            }),
+          );
+    });
+    await expect.poll(async () => (await snap(page)).input.shot).toBe('lob');
+    await expect.poll(async () => (await snap(page)).input.x).toBeLessThan(-0.5);
+    await touch('touchEnd', []);
     expect((await snap(page)).camera).toBe(mode);
   });
 }
@@ -215,4 +217,45 @@ test('pointer cancellation and interruptions clear only the owned inputs', async
   await page.locator('#resume').click();
   await s.dispatchEvent('pointerup', { pointerId: 33, pointerType: 'touch' });
   expect((await snap(page)).contacts).toBe(0);
+});
+
+test('HIT maps slice, double-tap lob and charged power during an actual rally', async ({
+  page,
+}, info) => {
+  await page.locator('#practice').click();
+  await page.keyboard.press('Space');
+  await expect.poll(async () => (await snap(page)).phase).toBe('rally');
+  const gesture = async (kind: 'slice' | 'lob' | 'drive') =>
+    page.evaluate(async (kind) => {
+      const button = document.querySelector('#shot-button')!;
+      const event = (type: string) =>
+        button.dispatchEvent(
+          new PointerEvent(type, {
+            pointerId: 71,
+            pointerType: 'touch',
+            bubbles: true,
+            clientX: 30,
+            clientY: 30,
+          }),
+        );
+      const delay = (ms: number) => new Promise((r) => setTimeout(r, ms));
+      event('pointerdown');
+      if (kind === 'drive') await delay(350);
+      event('pointerup');
+      if (kind === 'lob') {
+        event('pointerdown');
+        event('pointerup');
+      }
+    }, kind);
+  await gesture('slice');
+  await expect.poll(async () => (await snap(page)).input.shot).toBe('slice');
+  await page.waitForTimeout(180);
+  await gesture('lob');
+  await expect.poll(async () => (await snap(page)).input.shot).toBe('lob');
+  expect((await snap(page)).input.provisional).toBe(false);
+  await gesture('drive');
+  await expect.poll(async () => (await snap(page)).input.shot).toBe('drive');
+  expect((await snap(page)).input.power).toBeGreaterThan(0.5);
+  await expect(page.locator('#shot-intent')).toHaveCount(0);
+  await page.screenshot({ path: `test-results/${info.project.name}-goal006-controls.png` });
 });

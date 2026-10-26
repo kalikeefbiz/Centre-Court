@@ -84,6 +84,11 @@ export const AI_LOCOMOTION = Object.fromEntries(
       lateralSpeed: (p.speed * HUMAN_LOCOMOTION.lateralSpeed) / HUMAN_LOCOMOTION.forwardSpeed,
       backwardSpeed: (p.speed * HUMAN_LOCOMOTION.backwardSpeed) / HUMAN_LOCOMOTION.forwardSpeed,
       acceleration: p.acceleration,
+      lateralAcceleration: p.acceleration,
+      lateralBraking: (p.acceleration * HUMAN_LOCOMOTION.braking) / HUMAN_LOCOMOTION.acceleration,
+      lateralReversalBraking:
+        (p.acceleration * HUMAN_LOCOMOTION.reversalBraking) / HUMAN_LOCOMOTION.acceleration,
+      lateralResponse: HUMAN_LOCOMOTION.response,
       braking: (p.acceleration * HUMAN_LOCOMOTION.braking) / HUMAN_LOCOMOTION.acceleration,
       reversalBraking:
         (p.acceleration * HUMAN_LOCOMOTION.reversalBraking) / HUMAN_LOCOMOTION.acceleration,

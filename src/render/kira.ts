@@ -285,7 +285,7 @@ export class Kira {
             sideSprint
         : 180;
     const angle = ((targetYaw - this.yaw + 540) % 360) - 180;
-    this.yaw += angle * (1 - Math.exp(-dt * (preparing ? 35 : 12)));
+    this.yaw += angle * (1 - Math.exp(-dt * (preparing ? 35 : m.braking || m.reversing ? 18 : 14)));
     this.root.setEulerAngles(0, this.yaw, 0);
     // Stroke clips have speed zero and consume Match's marker time. The native
     // graph advances the cyclic base and layer blends in one evaluation pass.

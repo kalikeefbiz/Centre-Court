@@ -17,15 +17,15 @@ export interface HitContext {
   intent: 'drive' | 'slice' | 'lob';
   serving?: boolean;
 }
-// Shared by gameplay and presentation. Intent always wins over automatic tactics.
+// Reach and incoming trajectory select the physical stroke; intent selects the ball outcome.
 export function selectStroke(c: HitContext): Stroke {
   if (c.serving) return 'Serve';
-  if (c.intent === 'slice') return 'Slice';
-  if (c.intent === 'lob') return 'Lob';
   const forehand = (c.ball.x - c.player.x) * sign(c.side) >= 0;
   if (c.ball.y > 1.9 && c.velocity.y < 0 && c.bounces === 0 && Math.abs(c.player.z) < 10)
     return 'Smash';
   if (c.bounces === 0) return forehand ? 'ForehandVolley' : 'BackhandVolley';
+  if (c.intent === 'slice') return 'Slice';
+  if (c.intent === 'lob') return 'Lob';
   return forehand ? 'Forehand' : 'Backhand';
 }
 export const CONTACT = Object.freeze({
@@ -42,7 +42,7 @@ export function inContactZone(c: HitContext, stroke = selectStroke(c)) {
   return (
     forward > -0.25 &&
     forward < 1.25 &&
-    c.ball.y >= (c.intent === 'slice' ? 0.3 : zone.minHeight) &&
+    c.ball.y >= zone.minHeight &&
     c.ball.y <= zone.maxHeight &&
     Math.hypot(c.ball.x - c.player.x, c.ball.z - c.player.z) <
       Math.min(zone.radius, c.ball.y < 0.65 ? 0.65 : zone.radius)

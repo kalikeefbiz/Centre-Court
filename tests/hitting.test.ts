@@ -32,9 +32,15 @@ describe('contextual tennis strokes', () => {
       selectStroke({ ...context, bounces: 0, player: vec(0, 0, 12), ball: vec(0.1, 2.3, 11.6) }),
     ).not.toBe('Smash');
   });
-  it('reserves slice and lob for tactical intent, and serve for serving', () => {
-    expect(selectStroke({ ...context, intent: 'slice', bounces: 0 })).toBe('Slice');
-    expect(selectStroke({ ...context, intent: 'lob', bounces: 0 })).toBe('Lob');
+  it('keeps groundstroke intent and selects contextual volleys and overheads for every gesture', () => {
+    expect(selectStroke({ ...context, intent: 'slice' })).toBe('Slice');
+    expect(selectStroke({ ...context, intent: 'lob' })).toBe('Lob');
+    for (const intent of ['drive', 'slice', 'lob'] as const) {
+      expect(selectStroke({ ...context, intent, bounces: 0 })).toBe('ForehandVolley');
+      expect(selectStroke({ ...context, intent, bounces: 0, ball: vec(0.1, 2.3, 7.6) })).toBe(
+        'Smash',
+      );
+    }
     expect(selectStroke({ ...context, serving: true, intent: 'lob' })).toBe('Serve');
   });
   it('rejects out of reach and wrong height without changing the player', () => {

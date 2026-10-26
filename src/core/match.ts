@@ -29,6 +29,7 @@ import {
   sweptContact,
   type StrokeAction,
 } from './stroke';
+import type { GestureCommand } from './shot-gesture';
 import { Score, type MatchLength } from './scoring';
 import {
   createLocomotion,
@@ -69,6 +70,7 @@ export interface Controls {
   power: number;
   shot: 'drive' | 'slice' | 'lob';
   release: boolean;
+  gestures?: GestureCommand[];
 }
 export const idleControls = (): Controls => ({
   x: 0,
@@ -120,6 +122,12 @@ export class Match {
   private tossVelocity = vec();
   private tossStarted = false;
   private aiPendingTactic: Tactic | null = null;
+  inputEpoch = 0;
+  private lastGestureSequence = 0;
+  private droppedGestureId = 0;
+  private swingGestureId = 0;
+  private swingCommitted = true;
+  private swingDelay: number = STRIKE.lead;
   private swingWindow = 0;
   private swingPower = 0.5;
   private swingAim = 0;
@@ -161,6 +169,7 @@ export class Match {
     this.noticeId++;
   }
   private prepareServe() {
+    this.resetGestureInput();
     this.phase = 'serve';
     this.pointWinner = null;
     for (const p of this.players) {
@@ -195,6 +204,7 @@ export class Match {
   }
   pause() {
     if (this.phase === 'rally' || this.phase === 'serve' || this.phase === 'pointOver') {
+      this.resetGestureInput();
       this.beforePause = this.phase;
       this.phase = 'paused';
       this.swingWindow = 0;
@@ -220,7 +230,66 @@ export class Match {
     resetLocomotion(this.players[side].locomotion);
   }
   private clearMovement() {
+    this.resetGestureInput();
     for (const p of this.players) resetLocomotion(p.locomotion);
+  }
+  private cancelGesture(id?: number) {
+    const action = this.players[0].action;
+    if (action && !action.committed && (id === undefined || action.gestureId === id))
+      this.players[0].action = null;
+    if (id === undefined || this.swingGestureId === id) {
+      this.swingWindow = 0;
+      this.swingGestureId = 0;
+      this.swingCommitted = true;
+      this.swingDelay = STRIKE.lead;
+    }
+  }
+  private resetGestureInput() {
+    this.inputEpoch++;
+    this.cancelGesture();
+  }
+  private gestureCommand(command: GestureCommand) {
+    if (command.sequence <= this.lastGestureSequence) return;
+    this.lastGestureSequence = command.sequence;
+    if (command.kind === 'cancel') {
+      this.cancelGesture(command.id);
+      return;
+    }
+    if (command.id <= this.droppedGestureId) return;
+    if (this.phase === 'serve') {
+      if (command.kind === 'commit' && this.server === 0)
+        this.beginServe(command.power, command.aim);
+      return;
+    }
+    if (this.phase !== 'rally') return;
+    const action = this.players[0].action;
+    if (command.kind === 'commit') {
+      if (action?.gestureId === command.id && !action.committed) {
+        action.committed = true;
+        return;
+      }
+      if (this.swingGestureId === command.id && this.swingWindow > 0) {
+        this.swingCommitted = true;
+        return;
+      }
+      // A resolved first tap may be followed by a distinct committed hold/lob.
+      // Never queue a second strike behind a swing already committed or in recovery.
+      if (action || this.swingWindow > 0) {
+        this.droppedGestureId = command.id;
+        return;
+      }
+    } else if (action || this.swingWindow > 0) {
+      this.droppedGestureId = command.id;
+      return;
+    }
+    this.swingGestureId = command.id;
+    this.swingCommitted = command.kind === 'commit';
+    this.swingDelay = Math.max(STRIKE.lead, command.delay);
+    this.swingWindow = CONTACT.inputWindow;
+    this.swingPower = command.power;
+    this.swingAim = command.aim;
+    this.swingDepth = command.depth;
+    this.swingShot = command.shot;
   }
   private move(side: Side, config: Readonly<LocomotionConfig>, dt: number) {
     const p = this.players[side];
@@ -306,6 +375,7 @@ export class Match {
     power: number,
     aim: number,
     depth: number,
+    lead: number = STRIKE.lead,
   ) {
     const athlete = this.players[side];
     if (athlete.action || this.lastHitter === side || this.phase !== 'rally') return false;
@@ -318,7 +388,7 @@ export class Match {
       return false;
     const future = this.predictionBall.copyFrom(this.ball);
     let bounces = this.bounces;
-    for (let i = 0; i < Math.ceil(STRIKE.lead * 120); i++) {
+    for (let i = 0; i < Math.ceil(lead * 120); i++) {
       for (const event of future.step(1 / 120, this.predictionEvents)) {
         if (event.type === 'net' && !event.grazing) return false;
         if (event.type === 'bounce') bounces++;
@@ -327,14 +397,14 @@ export class Match {
     if (bounces > 1 || (this.serveFlight && bounces === 0)) return false;
     const projected = vec(
       clamp(
-        athlete.position.x + athlete.locomotion.velocity.x * STRIKE.lead,
+        athlete.position.x + athlete.locomotion.velocity.x * lead,
         -PLAYER_BOUNDS.lateral,
         PLAYER_BOUNDS.lateral,
       ),
       0,
       sign(side) *
         clamp(
-          sign(side) * (athlete.position.z + athlete.locomotion.velocity.z * STRIKE.lead),
+          sign(side) * (athlete.position.z + athlete.locomotion.velocity.z * lead),
           PLAYER_BOUNDS.net,
           PLAYER_BOUNDS.back,
         ),
@@ -360,6 +430,7 @@ export class Match {
       depth,
       intent,
       athlete.locomotion.velocity,
+      lead,
     );
     racketPosition(action, athlete.position, side, action.racket);
     Object.assign(action.previousRacket, action.racket);
@@ -374,6 +445,8 @@ export class Match {
       if (!action) continue;
       advanceStroke(action, dt, athlete.position, side);
       if (
+        action.committed &&
+        action.age + 1e-9 >= action.impactAfter &&
         !action.contacted &&
         !action.missed &&
         action.stroke !== 'Serve' &&
@@ -400,7 +473,12 @@ export class Match {
           );
         }
       }
-      if (!action.contacted && !action.missed && action.age > action.contactAt + STRIKE.window) {
+      if (
+        action.committed &&
+        !action.contacted &&
+        !action.missed &&
+        action.age > action.contactAt + STRIKE.window
+      ) {
         action.missed = true;
         if (side === 0) {
           this.timing = 'MISSED · PREPARE EARLIER OR MOVE INTO REACH';
@@ -511,14 +589,17 @@ export class Match {
       return false;
     const p = this.players[side].position,
       b = this.ball.position;
-    return inContactZone({
-      player: p,
-      ball: b,
-      velocity: this.ball.velocity,
-      side,
-      bounces: this.bounces,
-      intent,
-    });
+    return inContactZone(
+      {
+        player: p,
+        ball: b,
+        velocity: this.ball.velocity,
+        side,
+        bounces: this.bounces,
+        intent,
+      },
+      this.players[side].action?.stroke,
+    );
   }
   private hit(
     side: Side,
@@ -560,18 +641,20 @@ export class Match {
             : 7.3 + power * 3.5 + depth * 1.6) +
       (side === 0 ? (power - 0.5) * (1 - quality) * 1.4 : this.random.range(-error, error));
     const volley = this.bounces === 0 && shot === 'drive';
-    const stroke = selectStroke({
-      player: p.position,
-      ball: b,
-      velocity: this.ball.velocity,
-      side,
-      bounces: this.bounces,
-      intent: shot as Controls['shot'],
-    });
+    const stroke =
+      p.action?.stroke ??
+      selectStroke({
+        player: p.position,
+        ball: b,
+        velocity: this.ball.velocity,
+        side,
+        bounces: this.bounces,
+        intent: shot as Controls['shot'],
+      });
     this.recordContact(side, stroke);
     this.ball.launch(
       vec(targetX, COURT.radius, targetZ),
-      stroke === 'Smash' ? 'drive' : volley ? 'volley' : shot,
+      stroke === 'Smash' && shot === 'drive' ? 'drive' : volley ? 'volley' : shot,
       power,
       quality,
       Math.hypot(this.ball.velocity.x, this.ball.velocity.y, this.ball.velocity.z),
@@ -601,6 +684,7 @@ export class Match {
     }
   }
   tick(dt: number, c: Controls) {
+    if (c.gestures) for (const command of c.gestures) this.gestureCommand(command);
     if (this.phase === 'menu' || this.phase === 'paused' || this.phase === 'result') return;
     this.timer += this.phase === 'serve' ? dt : 0;
     this.feedbackTime = Math.max(0, this.feedbackTime - dt);
@@ -648,6 +732,9 @@ export class Match {
     }
     this.move(0, HUMAN_LOCOMOTION, dt);
     if (c.release) {
+      this.swingGestureId = 0;
+      this.swingCommitted = true;
+      this.swingDelay = STRIKE.lead;
       this.swingWindow = CONTACT.inputWindow;
       this.swingPower = c.power;
       this.swingAim = c.aim;
@@ -663,11 +750,17 @@ export class Match {
           this.swingPower,
           this.swingAim,
           this.swingDepth,
+          this.swingDelay,
         )
-      )
+      ) {
+        const action = this.players[0].action!;
+        action.gestureId = this.swingGestureId;
+        action.committed = this.swingCommitted;
+        action.impactAfter = this.swingCommitted ? 0 : action.contactAt;
         this.swingWindow = 0;
-      else {
+      } else {
         this.swingWindow -= dt;
+        this.swingDelay = Math.max(STRIKE.lead, this.swingDelay - dt);
         if (this.swingWindow <= 0) {
           this.timing = 'MISSED · PREPARE EARLIER OR MOVE INTO REACH';
           this.feedbackTime = 1.2;
@@ -708,8 +801,14 @@ export class Match {
           },
           this.random,
         );
-        const stroke =
-          tactic.shot === 'drive' ? prepared.stroke : tactic.shot === 'slice' ? 'Slice' : 'Lob';
+        const stroke = selectStroke({
+          player: position,
+          ball: contact,
+          velocity: this.predictionBall.velocity,
+          side: 1,
+          bounces,
+          intent: tactic.shot,
+        });
         athlete.action = createStroke(
           prepared.id,
           stroke,

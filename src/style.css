@@ -1047,19 +1047,6 @@ h1 em {
   margin: 0 0 10px;
 }
 
-/* GOAL 002C: one hit surface and one deliberate tactical selector. */
-#shot-intent {
-  min-width: 104px;
-  min-height: 44px;
-  border: 1px solid #9fb7aa;
-  border-radius: 22px;
-  background: #173c40;
-  color: #eaf1e5;
-  touch-action: none;
-  font-size: 11px;
-  font-weight: 800;
-}
-
 .venue-settings {
   margin: 12px 0;
   display: flex;

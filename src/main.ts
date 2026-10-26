@@ -58,6 +58,7 @@ const start = (practice: boolean) => {
     $<HTMLSelectElement>('length').value as MatchLength,
     practice,
   );
+  input.setContext(match.phase, match.inputEpoch);
   input.enabled = true;
   document.activeElement instanceof HTMLElement && document.activeElement.blur();
 };
@@ -160,11 +161,13 @@ const renderUI = () => {
   }
 };
 scene.app.on('update', (dt: number) => {
+  input.setContext(match.phase, match.inputEpoch);
   input.sample(Math.min(dt, 0.1));
   if (!developer?.frozen)
     clock.advance(dt, (step) => {
       match.tick(step, input.controls);
       input.controls.release = false;
+      input.controls.gestures = undefined;
     });
   if (!developer?.frozen)
     scene.render(match, Math.min(dt, 0.1), input.charging, input.controls.shot);
@@ -198,7 +201,7 @@ if (
     value: {
       snapshot: () => ({
         build: __BUILD_ID__,
-        release: 'GOAL-005',
+        release: 'GOAL-006',
         developer: developer?.snapshot(),
         presentation: scene.playerPresentation(),
         stadium: scene.stadiumPresentation(),
@@ -210,7 +213,12 @@ if (
           ? { ...match.players[0].contact, position: { ...match.players[0].contact.position } }
           : null,
         renderedBall: scene.ballPresentation(),
-        input: { ...input.controls, charging: input.charging, held: input.held },
+        input: {
+          ...input.controls,
+          charging: input.charging,
+          held: input.held,
+          provisional: input.gesture.provisional,
+        },
         ai: match.ai.snapshot(match.difficulty, match.initialSeed),
         lastHitter: match.lastHitter,
         bounces: match.bounces,

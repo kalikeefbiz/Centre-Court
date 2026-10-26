@@ -84,7 +84,7 @@ export const BLEND_CHANNELS = [
   'BackwardRun',
 ] as const;
 export function movementWeights(m: LocomotionState, out: number[], preparing = false) {
-  const motion = clamp(m.speed / 0.65, 0, 1) * (m.reversing ? 0.88 : m.braking ? 0.95 : 1);
+  const motion = clamp(m.speed / 0.5, 0, 1) * (m.reversing ? 0.94 : m.braking ? 0.98 : 1);
   const lateral =
     Math.abs(m.velocity.x) / Math.max(1e-8, Math.abs(m.velocity.x) + Math.abs(m.velocity.z));
   const sprintSide = preparing ? 0 : clamp((m.speed - 3.8) / 2.2, 0, 1);

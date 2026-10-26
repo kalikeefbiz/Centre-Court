@@ -10,17 +10,22 @@ import {
   HUMAN_LOCOMOTION as CONFIG,
   PLAYER_BOUNDS,
   movementTravelDistance,
+  type LocomotionConfig,
 } from '../src/core/locomotion';
 
-function runner(side: Side = 0, position = vec(0, 0, 12)) {
+function runner(
+  side: Side = 0,
+  position = vec(0, 0, 12),
+  config: Readonly<LocomotionConfig> = CONFIG,
+) {
   const s = createLocomotion();
   return {
     s,
     position,
     step(x: number, z: number, ticks = 1) {
       for (let i = 0; i < ticks; i++) {
-        requestMovement(s, x, z, side, CONFIG);
-        stepLocomotion(s, position, side, CONFIG, FIXED_DT);
+        requestMovement(s, x, z, side, config);
+        stepLocomotion(s, position, side, config, FIXED_DT);
       }
     },
   };
@@ -66,7 +71,10 @@ describe('physical movement and tuning measurements at 120 Hz', () => {
     expect(r.s.speed).toBeLessThan(speed);
     r.step(0, 0, 60);
     const distance = Math.hypot(r.position.x - before.x, r.position.z - before.z);
-    expect(distance).toBeCloseTo((speed * speed) / (2 * CONFIG.braking), 3);
+    expect(distance).toBeCloseTo(
+      (speed * speed) / (2 * (x ? CONFIG.lateralBraking! : CONFIG.braking)),
+      3,
+    );
     expect(r.s.speed).toBe(0);
     expect(r.s.travelDirection).toEqual(vec());
     const stopped = { ...r.position };
@@ -85,7 +93,7 @@ describe('physical movement and tuning measurements at 120 Hz', () => {
       if (r.s.velocity.x >= 0) {
         expect(r.s.reversing).toBe(true);
         expect(previous - r.s.velocity.x).toBeLessThanOrEqual(
-          CONFIG.reversalBraking * FIXED_DT + 1e-9,
+          CONFIG.lateralReversalBraking! * FIXED_DT + 1e-9,
         );
       }
       if (r.s.velocity.x === 0) sawZero = true;
@@ -105,7 +113,7 @@ describe('physical movement and tuning measurements at 120 Hz', () => {
   it('normalizes diagonal input without a speed or acceleration bonus', () => {
     const r = runner();
     r.step(1, -1);
-    expect(r.s.speed).toBeLessThanOrEqual(CONFIG.acceleration * FIXED_DT + 1e-9);
+    expect(r.s.speed).toBeLessThanOrEqual(CONFIG.lateralAcceleration! * FIXED_DT + 1e-9);
     r.step(1, -1, 100);
     expect(r.s.speed).toBeLessThan(CONFIG.forwardSpeed);
     expect(r.s.speed).toBeGreaterThan(CONFIG.lateralSpeed);
@@ -182,6 +190,53 @@ describe('physical movement and tuning measurements at 120 Hz', () => {
   });
 });
 
+it('measures the lateral tuning against the unchanged GOAL 005 integrator', () => {
+  const measure = (config: Readonly<LocomotionConfig>) => {
+    const r = runner(0, vec(0, 0, 8), config);
+    let time99 = 0,
+      timeFull = 0;
+    for (let i = 1; i <= 120; i++) {
+      r.step(1, 0);
+      if (!time99 && r.s.speed >= config.lateralSpeed * 0.99) time99 = i * FIXED_DT;
+      if (!timeFull && r.s.speed === config.lateralSpeed) timeFull = i * FIXED_DT;
+    }
+    const x = r.position.x;
+    let stopping = 0;
+    while (r.s.speed && stopping < 120) {
+      r.step(0, 0);
+      stopping++;
+    }
+    const distance = r.position.x - x;
+    resetLocomotion(r.s);
+    r.position.x = 0;
+    r.step(1, 0, 120);
+    let zero = 0,
+      opposite = 0,
+      full = 0;
+    for (let i = 1; i < 120 && !full; i++) {
+      r.step(-1, 0);
+      if (!zero && r.s.velocity.x === 0) zero = i * FIXED_DT;
+      if (!opposite && r.s.velocity.x < 0) opposite = i * FIXED_DT;
+      if (r.s.velocity.x === -config.lateralSpeed) full = i * FIXED_DT;
+    }
+    return { time99, timeFull, stopping: stopping * FIXED_DT, distance, zero, opposite, full };
+  };
+  const before = measure({
+    ...CONFIG,
+    lateralAcceleration: undefined,
+    lateralBraking: undefined,
+    lateralReversalBraking: undefined,
+    lateralResponse: undefined,
+  });
+  const after = measure(CONFIG);
+  console.log('LATERAL_BEFORE_AFTER', JSON.stringify({ before, after }));
+  expect(after.distance).toBeLessThan(before.distance);
+  expect(after.distance).toBeGreaterThan(0.4);
+  expect(after.full).toBeLessThan(before.full);
+  expect(after.zero).toBeGreaterThan(0.1);
+  expect(after.time99).toBeGreaterThan(0.2);
+});
+
 describe('court contact', () => {
   it.each([0, 1] as const)(
     'retains every court limit and clears outward velocity on side %s',
@@ -255,7 +310,7 @@ describe('match lifecycle, controls and shared AI integration', () => {
     const z = p.position.z;
     m.tick(FIXED_DT, idleControls());
     expect(p.locomotion.speed).toBeGreaterThan(0);
-    expect(p.locomotion.speed).toBeLessThanOrEqual(CONFIG.acceleration * FIXED_DT);
+    expect(p.locomotion.speed).toBeLessThanOrEqual(CONFIG.lateralAcceleration! * FIXED_DT + 1e-9);
     expect(p.locomotion.desiredVelocity.x).toBeCloseTo(1.8, 10);
     expect(p.position.z).toBe(z);
   });
@@ -352,8 +407,11 @@ describe('match lifecycle, controls and shared AI integration', () => {
       const estimate = movementTravelDistance(
         0.5,
         CONFIG.lateralSpeed,
-        CONFIG.acceleration,
+        CONFIG.lateralAcceleration!,
         initial,
+        CONFIG.lateralReversalBraking,
+        CONFIG.lateralResponse,
+        CONFIG.lateralBraking,
       );
       expect(Math.abs(estimate - (r.position.x - before))).toBeLessThan(0.06);
     }
