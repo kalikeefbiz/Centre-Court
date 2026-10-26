@@ -90,3 +90,22 @@ test('native motion blending, readable framing and larger visual ball preserve g
   await page.screenshot({ path: `test-results/${info.project.name}-goal005-gameplay.png` });
   expect(errors).toEqual([]);
 });
+
+test('tall portrait wide chase keeps the athlete inside the camera', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/?debug');
+  await expect(page.locator('#practice')).toBeEnabled({ timeout: 45000 });
+  await page.locator('#practice').click();
+  await page.keyboard.press('Space');
+  await expect.poll(async () => (await snap(page)).contacts).toBeGreaterThanOrEqual(1);
+  await page.keyboard.down('KeyD');
+  await expect
+    .poll(async () => (await snap(page)).players[0].x, { timeout: 10000 })
+    .toBeGreaterThan(6.6);
+  const s = await snap(page);
+  expect(s.kira.bodyVisible).toBe(true);
+  expect(s.presentation.screen.x).toBeGreaterThan(15);
+  expect(s.presentation.screen.x).toBeLessThan(375);
+  expect(s.presentation.rendering.fov).toBeLessThanOrEqual(74);
+  await page.keyboard.up('KeyD');
+});

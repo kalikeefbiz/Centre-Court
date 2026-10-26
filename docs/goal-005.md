@@ -72,7 +72,9 @@ skin weights, normals, textures, skeleton and racket socket are unchanged.
 
 Portrait composition uses a shallower camera, improving athlete pixel height
 while retaining the singles playing court, opponent and ball. Wide/deep movement
-smoothly eases the framing outward. Portrait doubles-alley edges can crop;
+smoothly eases the framing outward. A projection-space fit keeps both athletes
+and the singles court inside the view while the tracking rig catches up, including
+a 390×844 viewport; field of view recovers gently after widening. Portrait doubles-alley edges can crop;
 landscape retains full court context. The portrait scoreboard is compacted to
 keep the far athlete clear of its overlay. Broadcast and behind options remain.
 Royal Rally's visual scale is 2.25 (previous default 1.5), a 1.5× increase in rendered

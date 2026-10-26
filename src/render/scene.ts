@@ -24,6 +24,8 @@ export class Scene {
   private history: Vec[] = [];
   private trailClock = 0;
   private predictionClock = 0;
+  private fitPoint = new pc.Vec3();
+  private fitScreen = new pc.Vec3();
   private courtBatch: number;
   private athleteBatch: number;
   private materials = new Map<string, pc.StandardMaterial>();
@@ -407,6 +409,7 @@ export class Scene {
       screen: { x: screen.x, y: screen.y },
       cameraPosition: this.camera.getPosition().toArray(),
       rendering: {
+        fov: this.camera.camera!.fov,
         samples: this.app.graphicsDevice.samples,
         maxPixelRatio: this.app.graphicsDevice.maxPixelRatio,
         width: this.canvas.width,
@@ -453,6 +456,39 @@ export class Scene {
       }),
     };
   }
+  /** Preserve the athletes and singles court even while the tracking rig eases.
+   * Fit in projection space so tall mobile viewports and wide chases use the
+   * same rule. Widen immediately to avoid clipping; recover the close view gently.
+   */
+  private fitGameplay(match: Match, dt: number) {
+    const camera = this.camera.camera!,
+      aspect = innerWidth / innerHeight;
+    const minimum = aspect < 0.85 ? 50 : 48;
+    const current = camera.fov;
+    let extent = 0;
+    const include = (x: number, y: number, z: number) => {
+      this.fitPoint.set(x, y, z);
+      camera.worldToScreen(this.fitPoint, this.fitScreen);
+      extent = Math.max(extent, Math.abs((this.fitScreen.x / this.canvas.clientWidth) * 2 - 1));
+    };
+    include(-COURT.halfWidth, 0, COURT.halfLength);
+    include(COURT.halfWidth, 0, COURT.halfLength);
+    include(-COURT.halfWidth, 0, -COURT.halfLength);
+    include(COURT.halfWidth, 0, -COURT.halfLength);
+    for (const athlete of match.players) {
+      include(athlete.position.x - 0.55, 0, athlete.position.z);
+      include(athlete.position.x + 0.55, 1.7, athlete.position.z);
+    }
+    const required = Math.max(
+      minimum,
+      Math.min(
+        74,
+        (Math.atan((Math.tan((current * Math.PI) / 360) * extent) / 0.91) * 360) / Math.PI,
+      ),
+    );
+    camera.fov =
+      required > current ? required : current + (required - current) * (1 - Math.exp(-dt * 3));
+  }
   ballPresentation() {
     return this.ball.getPosition().toArray();
   }
@@ -476,10 +512,11 @@ export class Scene {
       this.rig.position.z += (17.8 - this.rig.position.z) * t;
       this.rig.target = { x: -1.1, y: 0.9, z: 11 };
     } else this.rig.update(dt, match.players[0].position, p, innerWidth / innerHeight);
-    this.camera.camera!.fov = !menu && innerWidth / innerHeight < 0.85 ? 50 : 48;
+    if (menu) this.camera.camera!.fov = 48;
     const c = this.rig;
     this.camera.setPosition(c.position.x, c.position.y, c.position.z);
     this.camera.lookAt(c.target.x, c.target.y, c.target.z);
+    if (!menu) this.fitGameplay(match, dt);
     this.ball.setPosition(p.x, p.y, p.z);
     this.ball.enabled = !menu && this.royalBall.status === 'ready';
     if (match.ball.active && match.phase === 'rally')
