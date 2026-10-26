@@ -1,0 +1,910 @@
+[
+  {
+    "mode": "broadcast",
+    "build": "424f8679d129d9939267c4a1d42ea097818c797b",
+    "release": "GOAL-004",
+    "presentation": {
+      "screen": {
+        "x": 696.3562115310706,
+        "y": 738.2638714512763
+      },
+      "cameraPosition": [
+        0.20978476107120514,
+        24.906173706054688,
+        26.961116790771484
+      ],
+      "human": "Kira",
+      "temporaryHumanCount": 0,
+      "opponentCount": 1
+    },
+    "stadium": {
+      "name": "Crown Pavilion",
+      "status": "ready",
+      "quality": "reduced",
+      "sections": 24,
+      "spectatorCount": 645,
+      "fullCount": 1180,
+      "triangles": 22980,
+      "fullTriangles": 101352,
+      "reducedTriangles": 22980,
+      "allocatedTriangles": 112164,
+      "collisionComponents": 0,
+      "court": {
+        "halfLength": 11.885,
+        "halfWidth": 4.115,
+        "doublesWidth": 5.485,
+        "service": 6.4,
+        "netCentre": 0.914,
+        "netEdge": 1.07,
+        "radius": 0.0335
+      },
+      "runoff": [
+        20,
+        36
+      ],
+      "scoreboard": {
+        "server": 0,
+        "rows": [
+          {
+            "name": "KIRA",
+            "sets": 0,
+            "games": 0,
+            "points": "0"
+          },
+          {
+            "name": "OPPONENT",
+            "sets": 0,
+            "games": 0,
+            "points": "0"
+          }
+        ],
+        "caption": "FIRST SERVE · TAP OR HOLD HIT"
+      },
+      "boardUpdates": 2,
+      "reaction": 0,
+      "phase": "serve",
+      "renderedCourt": {
+        "surface": [
+          10.97,
+          0.025,
+          23.77
+        ],
+        "lines": [
+          {
+            "position": [
+              -5.485,
+              -0.009,
+              0
+            ],
+            "size": [
+              0.05,
+              0.018,
+              23.82
+            ]
+          },
+          {
+            "position": [
+              -4.115,
+              -0.009,
+              0
+            ],
+            "size": [
+              0.05,
+              0.018,
+              23.82
+            ]
+          },
+          {
+            "position": [
+              4.115,
+              -0.009,
+              0
+            ],
+            "size": [
+              0.05,
+              0.018,
+              23.82
+            ]
+          },
+          {
+            "position": [
+              5.485,
+              -0.009,
+              0
+            ],
+            "size": [
+              0.05,
+              0.018,
+              23.82
+            ]
+          },
+          {
+            "position": [
+              0,
+              -0.009,
+              -11.885
+            ],
+            "size": [
+              11.020000000000001,
+              0.018,
+              0.05
+            ]
+          },
+          {
+            "position": [
+              0,
+              -0.009,
+              -11.985
+            ],
+            "size": [
+              0.05,
+              0.018,
+              0.2
+            ]
+          },
+          {
+            "position": [
+              0,
+              -0.009,
+              11.885
+            ],
+            "size": [
+              11.020000000000001,
+              0.018,
+              0.05
+            ]
+          },
+          {
+            "position": [
+              0,
+              -0.009,
+              11.985
+            ],
+            "size": [
+              0.05,
+              0.018,
+              0.2
+            ]
+          },
+          {
+            "position": [
+              0,
+              -0.009,
+              -6.4
+            ],
+            "size": [
+              8.23,
+              0.018,
+              0.05
+            ]
+          },
+          {
+            "position": [
+              0,
+              -0.009,
+              6.4
+            ],
+            "size": [
+              8.23,
+              0.018,
+              0.05
+            ]
+          },
+          {
+            "position": [
+              0,
+              -0.009,
+              0
+            ],
+            "size": [
+              0.05,
+              0.018,
+              12.8
+            ]
+          }
+        ],
+        "netPosts": [
+          [
+            -5.03,
+            0.54,
+            0
+          ],
+          [
+            5.03,
+            0.54,
+            0
+          ]
+        ]
+      },
+      "courtCorners": [
+        {
+          "x": 0.4064641353763883,
+          "y": 0.29917521539052017
+        },
+        {
+          "x": 0.34287089617972616,
+          "y": 0.8212161077732673
+        },
+        {
+          "x": 0.5971365997834202,
+          "y": 0.300359706365524
+        },
+        {
+          "x": 0.6524232022657261,
+          "y": 0.8243382376879825
+        }
+      ],
+      "players": [
+        {
+          "x": 0.5440282902586489,
+          "y": 0.820293190501418
+        },
+        {
+          "x": 0.4784772609005469,
+          "y": 0.30076672750684336
+        }
+      ]
+    },
+    "stadiumAudio": {
+      "enabled": true,
+      "state": "running",
+      "reactions": 0
+    },
+    "phase": "serve",
+    "kira": {
+      "status": "ready",
+      "rootEnabled": true,
+      "bodyMeshCount": 1,
+      "bodyVisible": true,
+      "racketVisible": true,
+      "texturedSkin": true,
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "state": "Idle",
+      "time": 4.249900000000005,
+      "transitioning": false,
+      "clips": [
+        {
+          "name": "Running",
+          "duration": 0.6333330273628235
+        },
+        {
+          "name": "Walking",
+          "duration": 1.0333329439163208
+        },
+        {
+          "name": "_01a16f14_df89_70e4_966f_38087b9b2ef7",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f17_0702_776b_a578_5ae634002c9e",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f19_f977_75c8_82d3_00bd61e22843",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f1f_22af_74e9_af26_8f1aec798eb5",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f20_14b9_70d3_b4cd_5b3e4d514601",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f21_3bc1_7312_b0db_d96fda6475ea",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f27_4128_711d_a437_5651121a8e2c",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f33_ae88_77f6_8f6a_d4c208041d36",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f36_0b96_76c3_ac06_6409b3e12e89",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f37_5a33_7498_91c4_55e2e1439bac",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "Idle_7",
+          "duration": 8.733333587646484
+        }
+      ],
+      "textures": 6,
+      "hand": "mixamorig:RightHand",
+      "racketAttached": true,
+      "grip": "[0, 0.065, 0]",
+      "racketHead": [
+        2.25542755484581,
+        0.8710146760940551,
+        12.45087844631169
+      ],
+      "hips": [
+        1.600000023841858,
+        1.0235414505004883,
+        12.350000381469727
+      ],
+      "root": [
+        1.600000023841858,
+        0,
+        12.350000381469727
+      ],
+      "contactPose": null,
+      "contactId": -1,
+      "contactError": 0,
+      "contactAge": 5.249900000000002
+    },
+    "royalBall": {
+      "status": "ready",
+      "error": "",
+      "diameter": 0.067,
+      "visualScale": 1.5,
+      "meshDiameter": 0.10050000161752948,
+      "visualDiameter": 0.1005,
+      "collisionRadius": 0.0335,
+      "meshCount": 1,
+      "visible": true,
+      "textured": true,
+      "scale": 0.07033116505595467
+    },
+    "contact": null,
+    "renderedBall": [
+      1.600000023841858,
+      2.5999999046325684,
+      12.100000381469727
+    ],
+    "input": {
+      "x": 0,
+      "z": 0,
+      "aim": 0,
+      "depth": 0,
+      "power": 0.5,
+      "shot": "drive",
+      "release": false,
+      "charging": false,
+      "held": 0
+    },
+    "ai": {
+      "state": "return anticipation",
+      "difficulty": "normal",
+      "target": {
+        "x": -1.2800000000000002,
+        "y": 0,
+        "z": -10.4
+      },
+      "recovery": {
+        "x": -1.2800000000000002,
+        "y": 0,
+        "z": -10.4
+      },
+      "prediction": null,
+      "tactic": null,
+      "selectedTarget": null,
+      "reactionDelay": 0,
+      "configuredReaction": 0.23,
+      "confidence": 0,
+      "velocity": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "seed": 314159,
+      "time": 0,
+      "history": [
+        {
+          "time": 0,
+          "state": "return anticipation"
+        }
+      ],
+      "decisions": 0,
+      "averageDecisionMs": 0,
+      "maxDecisionMs": 0
+    },
+    "lastHitter": 0,
+    "bounces": 0,
+    "serveFlight": false,
+    "ball": {
+      "x": 1.6,
+      "y": 2.6,
+      "z": 12.1
+    },
+    "velocity": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "players": [
+      {
+        "x": 1.6,
+        "y": 0,
+        "z": 12.35
+      },
+      {
+        "x": -1.2800000000000002,
+        "y": 0,
+        "z": -10.4
+      }
+    ],
+    "server": 0,
+    "fault": 0,
+    "contacts": 0,
+    "totalPoints": 0,
+    "points": [
+      0,
+      0
+    ],
+    "games": [
+      0,
+      0
+    ],
+    "notice": "FIRST SERVE · TAP OR HOLD HIT",
+    "camera": "broadcast",
+    "drawCalls": 36,
+    "fps": 2,
+    "activeCameras": 1
+  },
+  {
+    "mode": "behind",
+    "build": "424f8679d129d9939267c4a1d42ea097818c797b",
+    "release": "GOAL-004",
+    "presentation": {
+      "screen": {
+        "x": 719.1960967108251,
+        "y": 744.9469583003638
+      },
+      "cameraPosition": [
+        0.5109642744064331,
+        10.048550605773926,
+        25.3553409576416
+      ],
+      "human": "Kira",
+      "temporaryHumanCount": 0,
+      "opponentCount": 1
+    },
+    "stadium": {
+      "name": "Crown Pavilion",
+      "status": "ready",
+      "quality": "reduced",
+      "sections": 24,
+      "spectatorCount": 645,
+      "fullCount": 1180,
+      "triangles": 22980,
+      "fullTriangles": 101352,
+      "reducedTriangles": 22980,
+      "allocatedTriangles": 112164,
+      "collisionComponents": 0,
+      "court": {
+        "halfLength": 11.885,
+        "halfWidth": 4.115,
+        "doublesWidth": 5.485,
+        "service": 6.4,
+        "netCentre": 0.914,
+        "netEdge": 1.07,
+        "radius": 0.0335
+      },
+      "runoff": [
+        20,
+        36
+      ],
+      "scoreboard": {
+        "server": 0,
+        "rows": [
+          {
+            "name": "KIRA",
+            "sets": 0,
+            "games": 0,
+            "points": "0"
+          },
+          {
+            "name": "OPPONENT",
+            "sets": 0,
+            "games": 0,
+            "points": "0"
+          }
+        ],
+        "caption": "FIRST SERVE · TAP OR HOLD HIT"
+      },
+      "boardUpdates": 2,
+      "reaction": 0,
+      "phase": "serve",
+      "renderedCourt": {
+        "surface": [
+          10.97,
+          0.025,
+          23.77
+        ],
+        "lines": [
+          {
+            "position": [
+              -5.485,
+              -0.009,
+              0
+            ],
+            "size": [
+              0.05,
+              0.018,
+              23.82
+            ]
+          },
+          {
+            "position": [
+              -4.115,
+              -0.009,
+              0
+            ],
+            "size": [
+              0.05,
+              0.018,
+              23.82
+            ]
+          },
+          {
+            "position": [
+              4.115,
+              -0.009,
+              0
+            ],
+            "size": [
+              0.05,
+              0.018,
+              23.82
+            ]
+          },
+          {
+            "position": [
+              5.485,
+              -0.009,
+              0
+            ],
+            "size": [
+              0.05,
+              0.018,
+              23.82
+            ]
+          },
+          {
+            "position": [
+              0,
+              -0.009,
+              -11.885
+            ],
+            "size": [
+              11.020000000000001,
+              0.018,
+              0.05
+            ]
+          },
+          {
+            "position": [
+              0,
+              -0.009,
+              -11.985
+            ],
+            "size": [
+              0.05,
+              0.018,
+              0.2
+            ]
+          },
+          {
+            "position": [
+              0,
+              -0.009,
+              11.885
+            ],
+            "size": [
+              11.020000000000001,
+              0.018,
+              0.05
+            ]
+          },
+          {
+            "position": [
+              0,
+              -0.009,
+              11.985
+            ],
+            "size": [
+              0.05,
+              0.018,
+              0.2
+            ]
+          },
+          {
+            "position": [
+              0,
+              -0.009,
+              -6.4
+            ],
+            "size": [
+              8.23,
+              0.018,
+              0.05
+            ]
+          },
+          {
+            "position": [
+              0,
+              -0.009,
+              6.4
+            ],
+            "size": [
+              8.23,
+              0.018,
+              0.05
+            ]
+          },
+          {
+            "position": [
+              0,
+              -0.009,
+              0
+            ],
+            "size": [
+              0.05,
+              0.018,
+              12.8
+            ]
+          }
+        ],
+        "netPosts": [
+          [
+            -5.03,
+            0.54,
+            0
+          ],
+          [
+            5.03,
+            0.54,
+            0
+          ]
+        ]
+      },
+      "courtCorners": [
+        {
+          "x": 0.38338392004480465,
+          "y": 0.42553861904202706
+        },
+        {
+          "x": 0.21031784006923976,
+          "y": 0.8594318037753976
+        },
+        {
+          "x": 0.6084091897214502,
+          "y": 0.4262226335986829
+        },
+        {
+          "x": 0.7515726182204892,
+          "y": 0.8633903542640604
+        }
+      ],
+      "players": [
+        {
+          "x": 0.5618719505553321,
+          "y": 0.8277188425559597
+        },
+        {
+          "x": 0.4678573478120917,
+          "y": 0.41105436437015525
+        }
+      ]
+    },
+    "stadiumAudio": {
+      "enabled": true,
+      "state": "running",
+      "reactions": 0
+    },
+    "phase": "serve",
+    "kira": {
+      "status": "ready",
+      "rootEnabled": true,
+      "bodyMeshCount": 1,
+      "bodyVisible": true,
+      "racketVisible": true,
+      "texturedSkin": true,
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "state": "Idle",
+      "time": 9.216599999999978,
+      "transitioning": false,
+      "clips": [
+        {
+          "name": "Running",
+          "duration": 0.6333330273628235
+        },
+        {
+          "name": "Walking",
+          "duration": 1.0333329439163208
+        },
+        {
+          "name": "_01a16f14_df89_70e4_966f_38087b9b2ef7",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f17_0702_776b_a578_5ae634002c9e",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f19_f977_75c8_82d3_00bd61e22843",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f1f_22af_74e9_af26_8f1aec798eb5",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f20_14b9_70d3_b4cd_5b3e4d514601",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f21_3bc1_7312_b0db_d96fda6475ea",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f27_4128_711d_a437_5651121a8e2c",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f33_ae88_77f6_8f6a_d4c208041d36",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f36_0b96_76c3_ac06_6409b3e12e89",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "_01a16f37_5a33_7498_91c4_55e2e1439bac",
+          "duration": 2.9666669368743896
+        },
+        {
+          "name": "Idle_7",
+          "duration": 8.733333587646484
+        }
+      ],
+      "textures": 6,
+      "hand": "mixamorig:RightHand",
+      "racketAttached": true,
+      "grip": "[0, 0.065, 0]",
+      "racketHead": [
+        2.233445825576782,
+        0.8166037119179964,
+        12.384314045011998
+      ],
+      "hips": [
+        1.600000023841858,
+        1.022079586982727,
+        12.350000381469727
+      ],
+      "root": [
+        1.600000023841858,
+        0,
+        12.350000381469727
+      ],
+      "contactPose": null,
+      "contactId": -1,
+      "contactError": 0,
+      "contactAge": 10.216599999999975
+    },
+    "royalBall": {
+      "status": "ready",
+      "error": "",
+      "diameter": 0.067,
+      "visualScale": 1.5,
+      "meshDiameter": 0.10050000161752948,
+      "visualDiameter": 0.1005,
+      "collisionRadius": 0.0335,
+      "meshCount": 1,
+      "visible": true,
+      "textured": true,
+      "scale": 0.07033116505595467
+    },
+    "contact": null,
+    "renderedBall": [
+      1.600000023841858,
+      2.5999999046325684,
+      12.100000381469727
+    ],
+    "input": {
+      "x": 0,
+      "z": 0,
+      "aim": 0,
+      "depth": 0,
+      "power": 0.5,
+      "shot": "drive",
+      "release": false,
+      "charging": false,
+      "held": 0
+    },
+    "ai": {
+      "state": "return anticipation",
+      "difficulty": "normal",
+      "target": {
+        "x": -1.2800000000000002,
+        "y": 0,
+        "z": -10.4
+      },
+      "recovery": {
+        "x": -1.2800000000000002,
+        "y": 0,
+        "z": -10.4
+      },
+      "prediction": null,
+      "tactic": null,
+      "selectedTarget": null,
+      "reactionDelay": 0,
+      "configuredReaction": 0.23,
+      "confidence": 0,
+      "velocity": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "seed": 314159,
+      "time": 0,
+      "history": [
+        {
+          "time": 0,
+          "state": "return anticipation"
+        }
+      ],
+      "decisions": 0,
+      "averageDecisionMs": 0,
+      "maxDecisionMs": 0
+    },
+    "lastHitter": 0,
+    "bounces": 0,
+    "serveFlight": false,
+    "ball": {
+      "x": 1.6,
+      "y": 2.6,
+      "z": 12.1
+    },
+    "velocity": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "players": [
+      {
+        "x": 1.6,
+        "y": 0,
+        "z": 12.35
+      },
+      {
+        "x": -1.2800000000000002,
+        "y": 0,
+        "z": -10.4
+      }
+    ],
+    "server": 0,
+    "fault": 0,
+    "contacts": 0,
+    "totalPoints": 0,
+    "points": [
+      0,
+      0
+    ],
+    "games": [
+      0,
+      0
+    ],
+    "notice": "FIRST SERVE · TAP OR HOLD HIT",
+    "camera": "behind",
+    "drawCalls": 34,
+    "fps": 1,
+    "activeCameras": 1
+  }
+]

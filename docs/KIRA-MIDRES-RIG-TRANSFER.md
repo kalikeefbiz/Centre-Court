@@ -1,6 +1,8 @@
 # Kira mid-resolution rig transfer
 
-Status: rig and local integration complete; full browser acceptance in progress.
+Status: PASS for rig transfer and tested PlayCanvas integration. All 43 executed
+browser scenarios pass, including an isolated rerun of one graphics timeout.
+The suite retains its three existing WebKit multitouch skips.
 
 The replacement uses the existing 74-joint Valkyrie rig and all 13 original tennis
 clips. No new animation system or gameplay retargeting layer was introduced.
@@ -118,7 +120,22 @@ event mapping, arm correction or racket socket parameters were changed.
 
 - Baseline: all 77 tests and production build passed before changes.
 - Updated automated suite: 79 tests passed; production build passed.
-- Full Chromium and mobile WebKit browser suite: running; final result pending.
+- Full Chromium and mobile WebKit run: 42 passed, 1 failed, 3 existing skips.
+  The failure was the Chromium visual check's 15-second camera-convergence
+  deadline while Blender was also rendering. It passed on an isolated rerun
+  without a camera, gameplay, animation or GLB change: 43 distinct executed
+  scenarios pass overall. The WebKit skips require Chromium CDP for trusted
+  multitouch and were already present in the suite.
+- Production screenshots and snapshots show the replacement textured skin and
+  attached racket in [Chromium](../public/verification/kira-midres/production/chromium/)
+  and [WebKit](../public/verification/kira-midres/production/webkit/), including
+  both shipped cameras, forehand, backhand and serve inspection.
+- A final [production pose sheet](../public/verification/kira-midres/production-poses.jpg)
+  captures all 13 states using the existing inspector and racket. The
+  [runtime samples](../public/verification/kira-midres/browser/samples.json) record
+  zero page errors, a visible textured skin and attached racket in every state,
+  and finite hand/foot markers. There are 17 PlayCanvas screenshots including
+  four side views, in addition to the 52 Blender pose renders.
 - Khronos glTF Validator: zero errors, two inherited warnings, untruncated report.
   The warnings concern runtime-generated tangent space and the original non-root
   skinned mesh. Unused-accessor informational messages are suppressed for both
@@ -129,6 +146,16 @@ Machine-readable reports: [transfer](../public/verification/kira-midres/transfer
 [byte compatibility](../public/verification/kira-midres/compatibility.json),
 [full-frame deformation](../public/verification/kira-midres/deformation.json), and
 [GLB validator](../public/verification/kira-midres/gltf-validator.json).
+
+[Test results](../public/verification/kira-midres/test-results.json) retain the
+initial timeout and isolated rerun explicitly. Full logs are saved alongside them:
+[automated tests](../public/verification/kira-midres/unit-tests.txt),
+[build](../public/verification/kira-midres/production-build.txt),
+[browser suite](../public/verification/kira-midres/browser-full-suite.txt) and
+[visual rerun](../public/verification/kira-midres/browser-visual-rerun.txt).
+The final camera evidence was built from implementation commit `424f867` with
+asset revision `6f39af91d1a2dbc3`; the larger first run carried the pre-commit build
+label `3fe030c`.
 
 Reproduce with [the transfer scripts and commands](../tools/kira-midres/README.md).
 Editable checkpoint: `artifacts/kira-midres/kira-midres-transfer.blend`; clean

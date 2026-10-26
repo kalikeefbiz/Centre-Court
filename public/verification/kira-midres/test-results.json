@@ -1,0 +1,58 @@
+{
+  "source_commit": "424f8679d129d9939267c4a1d42ea097818c797b",
+  "asset_sha256": "f55979d3991fc1a2647df1fc63be4751c91a743f7498d37726362ae3468fd2d9",
+  "unit_tests": {
+    "status": "PASS",
+    "passed": 79,
+    "files": 9
+  },
+  "production_build": {
+    "status": "PASS"
+  },
+  "browser_full_suite": {
+    "passed": 42,
+    "failed": 1,
+    "skipped": 3,
+    "duration_minutes": 22.2,
+    "failure": "Chromium camera convergence exceeded 15-second polling deadline while Blender was also rendering."
+  },
+  "browser_isolated_rerun": {
+    "status": "PASS",
+    "passed": 1,
+    "scenario": "Chromium production pixels through both shipped cameras",
+    "duration_minutes": 1.5
+  },
+  "browser_distinct_executed_scenarios": {
+    "status": "PASS",
+    "passed": 43,
+    "skipped": 3,
+    "skip_reason": "Existing WebKit trusted multitouch tests require Chromium CDP; no new test skips."
+  },
+  "blender_deformation": {
+    "status": "PASS",
+    "frames": 1213,
+    "clips": 13
+  },
+  "native_reopen": {
+    "status": "PASS",
+    "packed_images": 6
+  },
+  "gltf_validator": {
+    "status": "PASS",
+    "errors": 0,
+    "inherited_warnings": 2,
+    "truncated": false
+  },
+  "physical_iphone_safari": {
+    "status": "NOT_CHECKED"
+  },
+  "production_pose_capture": {
+    "status": "PASS",
+    "states": 13,
+    "screenshots": 17,
+    "page_errors": 0,
+    "racket_attached_all": true,
+    "textured_skin_all": true,
+    "finite_hand_foot_markers_all": true
+  }
+}
