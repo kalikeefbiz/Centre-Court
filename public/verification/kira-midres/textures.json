@@ -1,0 +1,32 @@
+[
+  {
+    "name": "normal",
+    "dimensions": [
+      4096,
+      4096
+    ],
+    "format": "PNG",
+    "bytes": 18463579,
+    "sha256": "ecb98652fd07913c585ce5ac04b1d4c9d0f0c33eb9a5f25c16879be2615a4e5e"
+  },
+  {
+    "name": "texture_0",
+    "dimensions": [
+      4096,
+      4096
+    ],
+    "format": "PNG",
+    "bytes": 20543852,
+    "sha256": "9343ee97e4fa6f6b34ce038099c7d59daefa91359e922945c3305af512c49dbe"
+  },
+  {
+    "name": "texture_0_metallic_roughness",
+    "dimensions": [
+      4096,
+      4096
+    ],
+    "format": "PNG",
+    "bytes": 9877508,
+    "sha256": "a9dd6bdc17ab105eb4df3dfaf99b14b38f631ce711d2fae8f6ab19c500ebbabb"
+  }
+]

@@ -2,6 +2,10 @@
 
 A playable mobile-first 3D arcade singles tennis game in the original Crown Pavilion stadium by **BlackHouse**, built with PlayCanvas and TypeScript. Kira uses the owner-supplied rigged character and separate racket GLBs. The AI opponent retains its temporary model.
 
+Kira's mid-resolution replacement reuses the existing 74-joint rig and all 13
+tennis animations. The previous Valkyrie remains available for rollback. See the
+[rig-transfer report, pose renders and reproduction scripts](docs/KIRA-MIDRES-RIG-TRANSFER.md).
+
 **GitHub Pages:** https://kalikeefbiz.github.io/Centre-Court/
 
 ## Run, build, verify

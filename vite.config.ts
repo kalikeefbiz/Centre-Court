@@ -2,9 +2,10 @@ import { defineConfig } from 'vitest/config';
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
+import { KIRA } from './src/render/athlete-config';
 const buildId = execFileSync('git', ['rev-parse', 'HEAD']).toString().trim();
 const assetRevision = createHash('sha256')
-  .update(readFileSync('public/assets/characters/kira/Meshy_AI_Pink_Valkyrie_All_Animations.glb'))
+  .update(readFileSync(`public/${KIRA.characterUrl}`))
   .update(
     readFileSync(
       'public/assets/equipment/rackets/Meshy_AI_Pink_and_Black_Tennis_1024095819_texture.glb',

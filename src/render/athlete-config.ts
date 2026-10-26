@@ -1,8 +1,8 @@
 import { ANIMATIONS, type AthleteState } from './animation-registry';
 export type { AthleteState } from './animation-registry';
 export const KIRA = {
-  characterUrl: 'assets/characters/kira/Meshy_AI_Pink_Valkyrie_All_Animations.glb',
-  rollbackUrl: 'assets/characters/kira/Meshy_AI_Pink_Rebel_Arena_All_Animations.glb',
+  characterUrl: 'assets/characters/kira/Kira_Midres_Rigged.glb',
+  rollbackUrl: 'assets/characters/kira/Meshy_AI_Pink_Valkyrie_All_Animations.glb',
   racketUrl: 'assets/equipment/rackets/Meshy_AI_Pink_and_Black_Tennis_1024095819_texture.glb',
   clips: Object.fromEntries(Object.entries(ANIMATIONS).map(([s, a]) => [s, a.clip])),
   hand: 'mixamorig:RightHand',
