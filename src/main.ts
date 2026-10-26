@@ -4,6 +4,7 @@ import '@fontsource/barlow/latin-800.css';
 import '@fontsource/barlow-condensed/latin-700.css';
 import './style.css';
 import { Match, FixedClock } from './core/match';
+import { vec } from './core/court';
 import { Scene } from './render/scene';
 import { Input } from './platform/input';
 import { StadiumAudio } from './platform/stadium-audio';
@@ -160,6 +161,9 @@ const renderUI = () => {
     setText('best-rally', String(match.bestRally));
   }
 };
+const aimPoint = vec(),
+  aimScreen = { x: 0, y: 0 };
+const shotTarget = $('shot-target');
 scene.app.on('update', (dt: number) => {
   input.setContext(match.phase, match.inputEpoch);
   input.sample(Math.min(dt, 0.1));
@@ -175,6 +179,34 @@ scene.app.on('update', (dt: number) => {
   if (!developer?.frozen)
     scene.render(match, Math.min(dt, 0.1), input.charging, input.controls.shot);
   else if (!developer.inspecting) scene.renderComparison(match, Math.min(dt, 0.1));
+  shotTarget.hidden =
+    !input.charging || !!developer?.frozen || (match.phase !== 'serve' && match.phase !== 'rally');
+  if (!shotTarget.hidden) {
+    match.aimTarget(
+      input.controls.shot,
+      input.controls.power,
+      input.controls.aim,
+      input.controls.depth,
+      aimPoint,
+    );
+    scene.courtToScreen(aimPoint, aimScreen);
+    shotTarget.style.left = `${aimScreen.x}px`;
+    shotTarget.style.top = `${aimScreen.y}px`;
+    const intent = input.serving
+      ? 'SERVE'
+      : input.controls.shot === 'drive'
+        ? 'POWER'
+        : input.controls.shot.toUpperCase();
+    shotTarget.querySelector('span')!.textContent =
+      intent +
+      (input.serving
+        ? ''
+        : input.controls.depth > 0.2
+          ? ' · DEEP'
+          : input.controls.depth < -0.2
+            ? ' · SHORT'
+            : '');
+  }
   developer?.update(Math.min(dt, 0.1));
   stadiumAudio.update(match);
   renderUI();
@@ -204,7 +236,7 @@ if (
     value: {
       snapshot: () => ({
         build: __BUILD_ID__,
-        release: 'GOAL-006',
+        release: 'GOAL-007',
         developer: developer?.snapshot(),
         presentation: scene.playerPresentation(),
         stadium: scene.stadiumPresentation(),
@@ -220,6 +252,7 @@ if (
           ...input.controls,
           charging: input.charging,
           serving: input.serving,
+          pointers: input.pointers,
           held: input.held,
           provisional: input.gesture.provisional,
         },

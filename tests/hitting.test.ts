@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { selectStroke, inContactZone, type HitContext } from '../src/core/hitting';
+import { selectStroke, inContactZone, shotTarget, type HitContext } from '../src/core/hitting';
 import { ANIMATIONS } from '../src/render/animation-registry';
 import { locomotionState } from '../src/render/athlete-config';
 import { ROYAL_BALL } from '../src/render/royal-ball';
@@ -70,4 +70,18 @@ describe('contextual tennis strokes', () => {
     expect(locomotionState(1, 0, -1)).toBe('Walk');
     expect(ROYAL_BALL.diameter).toBeCloseTo(COURT.radius * 2);
   });
+});
+
+it('shares intended placement with preview without changing drive, slice, lob or service-box targets', () => {
+  const out = vec();
+  expect(shotTarget(0, 'drive', 0.7, -0.8, 1, out)).toBe(out);
+  expect(out.x).toBeCloseTo(-2.68);
+  expect(out.z).toBeCloseTo(-11.35);
+  const short = shotTarget(0, 'drive', 0.7, -0.8, -1, vec());
+  expect(short.z).toBeCloseTo(-8.15);
+  expect(shotTarget(1, 'drive', 0.7, -0.8, 1, vec()).z).toBeCloseTo(11.35);
+  expect(shotTarget(0, 'slice', 0.5, 0, 0, vec()).z).toBe(-7.5);
+  expect(shotTarget(0, 'lob', 0.5, 0, 0, vec()).z).toBe(-10);
+  expect(shotTarget(0, 'serve', 0.65, 0, 0, vec(), true).x).toBe(-2);
+  expect(shotTarget(0, 'serve', 0.65, 0, 0, vec(), false).x).toBe(2);
 });

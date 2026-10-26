@@ -1,6 +1,12 @@
 import { clamp } from '../core/court';
-import { ShotGesture, HIT_GESTURE, type ShotIntent } from '../core/shot-gesture';
+import { ShotGesture, type ShotIntent } from '../core/shot-gesture';
 import { idleControls, type Controls } from '../core/match';
+export const TOUCH_INPUT = Object.freeze({
+  joystickRadius: 0.38,
+  stickTravel: 0.28,
+  aimWidth: 0.7,
+  depthHeight: 0.85,
+});
 // Capture may fail if the OS cancels a gesture before its handler runs.
 function capture(element: HTMLElement, event: PointerEvent) {
   try {
@@ -12,6 +18,9 @@ function capture(element: HTMLElement, event: PointerEvent) {
 export class Input {
   controls: Controls = idleControls();
   readonly gesture = new ShotGesture();
+  get pointers() {
+    return { movement: this.joyPointer, shot: this.chargeOwner };
+  }
   get charging() {
     return this.gesture.pressed;
   }
@@ -38,6 +47,8 @@ export class Input {
   private mouseAim = 0;
   private dragStart = { x: 0, y: 0 };
   private dragDepth = 0;
+  private joyGeometry = { x: 0, y: 0, radius: 1, travel: 1 };
+  private aimGeometry = { x: 1, y: 1 };
   private chargeOwner: number | 'keyboard' | null = null;
   constructor(
     canvas: HTMLCanvasElement,
@@ -68,59 +79,94 @@ export class Input {
     });
     const joystick = document.querySelector<HTMLElement>('#joystick')!;
     const updateJoy = (e: PointerEvent) => {
-      const r = joystick.getBoundingClientRect(),
-        radius = r.width * 0.36;
-      const x = e.clientX - r.left - r.width / 2,
-        z = e.clientY - r.top - r.height / 2,
-        n = Math.max(radius, Math.hypot(x, z));
-      this.joy = { x: x / n, z: z / n };
+      const g = this.joyGeometry,
+        x = e.clientX - g.x,
+        z = e.clientY - g.y;
+      const n = Math.max(g.radius, Math.hypot(x, z));
+      this.joy.x = x / n;
+      this.joy.z = z / n;
       document.querySelector<HTMLElement>('#stick')!.style.transform =
-        `translate(${this.joy.x * radius}px,${this.joy.z * radius}px)`;
+        `translate(${this.joy.x * g.travel}px,${this.joy.z * g.travel}px)`;
     };
     joystick.addEventListener('pointerdown', (e) => {
-      if (this.joyPointer !== null || !this.enabled) return;
+      if (
+        this.joyPointer !== null ||
+        !this.enabled ||
+        (e.pointerType === 'mouse' && e.button !== 0)
+      )
+        return;
+      const r = joystick.getBoundingClientRect();
+      Object.assign(this.joyGeometry, {
+        x: r.left + r.width / 2,
+        y: r.top + r.height / 2,
+        radius: r.width * TOUCH_INPUT.joystickRadius,
+        travel: r.width * TOUCH_INPUT.stickTravel,
+      });
       this.joyPointer = e.pointerId;
       capture(joystick, e);
       updateJoy(e);
+      joystick.classList.toggle('engaged', true);
       e.preventDefault();
     });
-    joystick.addEventListener('pointermove', (e) => {
-      if (e.pointerId === this.joyPointer) updateJoy(e);
-    });
-    const stopJoy = (e: PointerEvent) => {
-      if (e.pointerId === this.joyPointer) {
-        this.joyPointer = null;
-        this.joy = { x: 0, z: 0 };
-        document.querySelector<HTMLElement>('#stick')!.style.transform = '';
-      }
+    const moveJoy = (e: PointerEvent) => {
+      if (e.pointerId !== this.joyPointer) return;
+      updateJoy(e);
+      e.preventDefault();
+      e.stopPropagation();
     };
+    const stopJoy = (e: PointerEvent) => {
+      if (
+        e.pointerId !== this.joyPointer ||
+        (e.type === 'lostpointercapture' && e.target !== joystick)
+      )
+        return;
+      this.joyPointer = null;
+      this.joy.x = this.joy.z = 0;
+      joystick.classList.toggle('engaged', false);
+      document.querySelector<HTMLElement>('#stick')!.style.transform = '';
+      e.stopPropagation();
+    };
+    joystick.addEventListener('pointermove', moveJoy);
     joystick.addEventListener('pointerup', stopJoy);
     joystick.addEventListener('pointercancel', stopJoy);
     joystick.addEventListener('lostpointercapture', stopJoy);
     const button = document.querySelector<HTMLElement>('#shot-button')!;
     button.addEventListener('pointerdown', (e) => {
-      if (this.shotPointer !== null || !this.enabled) return;
-      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      if (
+        this.shotPointer !== null ||
+        this.charging ||
+        !this.enabled ||
+        (e.pointerType === 'mouse' && e.button !== 0)
+      )
+        return;
+      const r = button.getBoundingClientRect();
+      this.aimGeometry.x = r.width * TOUCH_INPUT.aimWidth;
+      this.aimGeometry.y = r.height * TOUCH_INPUT.depthHeight;
       this.shotPointer = e.pointerId;
-      this.dragStart = { x: e.clientX, y: e.clientY };
-      this.mouseAim = 0;
-      this.dragDepth = 0;
+      this.dragStart.x = e.clientX;
+      this.dragStart.y = e.clientY;
+      this.mouseAim = this.dragDepth = 0;
       capture(button, e);
       this.begin(e.pointerId, e.clientX, e.clientY, 'hit', this.eventTime(e));
       e.preventDefault();
     });
-    button.addEventListener('pointermove', (e) => {
+    const moveShot = (e: PointerEvent) => {
       if (e.pointerId !== this.shotPointer || e.pointerId !== this.chargeOwner) return;
-      const width = button.getBoundingClientRect().width;
-      this.mouseAim = clamp((e.clientX - this.dragStart.x) / (width * 0.65), -1, 1);
-      this.dragDepth = clamp((this.dragStart.y - e.clientY) / (width * 0.8), -1, 1);
-    });
-    button.addEventListener('pointerup', (e) => {
-      if (e.pointerId === this.shotPointer) {
-        this.shotPointer = null;
-        this.release(e.pointerId, this.eventTime(e));
-      }
-    });
+      this.mouseAim = clamp((e.clientX - this.dragStart.x) / this.aimGeometry.x, -1, 1);
+      this.dragDepth = clamp((this.dragStart.y - e.clientY) / this.aimGeometry.y, -1, 1);
+      this.gesture.move(e.clientX, e.clientY);
+      this.flushGesture();
+      e.preventDefault();
+      e.stopPropagation();
+    };
+    const endShot = (e: PointerEvent) => {
+      if (e.pointerId !== this.shotPointer) return;
+      this.shotPointer = null;
+      this.release(e.pointerId, this.eventTime(e));
+      e.stopPropagation();
+    };
+    button.addEventListener('pointermove', moveShot);
+    button.addEventListener('pointerup', endShot);
     button.addEventListener('click', (e) => {
       if (e.detail === 0 && !this.charging && this.now() - this.lastSpaceUp > 0.04) {
         this.begin('keyboard', 0, 0, 'keyboard', this.eventTime(e));
@@ -128,18 +174,22 @@ export class Input {
       }
     });
     const cancelShot = (e: PointerEvent) => {
+      if (e.type === 'lostpointercapture' && e.target !== button && e.target !== canvas) return;
       if (e.pointerId === this.shotPointer) this.shotPointer = null;
       if (e.pointerId === this.chargeOwner) {
         this.chargeOwner = null;
         this.gesture.cancel();
         this.flushGesture();
+        e.stopPropagation();
       }
     };
     button.addEventListener('pointercancel', cancelShot);
     button.addEventListener('lostpointercapture', cancelShot);
     canvas.addEventListener('pointermove', (e) => {
-      if (e.pointerType === 'mouse' && this.enabled)
+      if (e.pointerType === 'mouse' && this.enabled && this.shotPointer === null) {
         this.mouseAim = clamp((e.clientX / innerWidth - 0.5) * 2.8, -1, 1);
+        if (this.chargeOwner === e.pointerId) this.gesture.move(e.clientX, e.clientY);
+      }
     });
     canvas.addEventListener('pointerdown', (e) => {
       if (e.pointerType === 'mouse' && e.button === 0 && this.enabled) {
@@ -152,6 +202,26 @@ export class Input {
     });
     canvas.addEventListener('pointercancel', cancelShot);
     canvas.addEventListener('lostpointercapture', cancelShot);
+    // Pointer capture is primary. Owned-ID routing also survives an unavailable
+    // initial capture: leaving the element is neither a release nor a cancel.
+    // Element handlers stop propagation, so each event is processed once.
+    window.addEventListener(
+      'pointermove',
+      (e) => {
+        moveJoy(e);
+        moveShot(e);
+      },
+      { passive: false },
+    );
+    window.addEventListener('pointerup', (e) => {
+      stopJoy(e);
+      endShot(e);
+      if (e.pointerId === this.chargeOwner) this.release(e.pointerId, this.eventTime(e));
+    });
+    window.addEventListener('pointercancel', (e) => {
+      stopJoy(e);
+      cancelShot(e);
+    });
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) this.clear();
     });
@@ -210,6 +280,7 @@ export class Input {
   sample(_dt: number) {
     this.gesture.update(this.now());
     this.flushGesture();
+    if (this.charging) this.controls.power = this.gesture.power;
     const key = (...codes: string[]) => (codes.some((c) => this.keys.has(c)) ? 1 : 0);
     this.controls.x = clamp(
       this.joy.x + key('KeyD', 'ArrowRight') - key('KeyA', 'ArrowLeft'),
@@ -223,26 +294,23 @@ export class Input {
     document.querySelector<HTMLElement>('#power-fill')!.style.width =
       `${clamp(this.held / 1.05, 0, 1) * 100}%`;
     document.querySelector('#shot-name')!.textContent =
-      this.charging && this.held >= HIT_GESTURE.hold
+      this.charging || this.gesture.provisional || this.now() < this.feedbackUntil
         ? this.serving
           ? 'SERVE'
-          : 'POWER'
-        : this.gesture.provisional || this.now() < this.feedbackUntil
-          ? this.serving
-            ? 'SERVE'
-            : this.controls.shot === 'drive'
-              ? 'POWER'
-              : this.controls.shot.toUpperCase()
-          : 'HIT';
+          : this.controls.shot === 'drive'
+            ? 'POWER'
+            : this.controls.shot.toUpperCase()
+        : 'HIT';
     document.querySelector('#aim-feedback')!.textContent = this.charging
-      ? `${this.controls.aim < -0.15 ? '←' : this.controls.aim > 0.15 ? '→' : '↑'} ${this.controls.depth > 0.2 ? 'DEEP' : this.controls.depth < -0.2 ? 'SHORT' : 'AIM'} · ${Math.round((0.45 + (Math.max(0, this.held - 0.15) / 1.05) * 0.55) * 100)}%`
+      ? `${this.controls.aim < -0.15 ? '←' : this.controls.aim > 0.15 ? '→' : '↑'} ${this.controls.depth > 0.2 ? 'DEEP' : this.controls.depth < -0.2 ? 'SHORT' : 'AIM'} · ${Math.round(this.gesture.power * 100)}%`
       : this.serving
         ? 'TAP OR HOLD · SERVE'
         : 'TAP SLICE · HOLD POWER · 2× LOB';
   }
   clear() {
     this.keys.clear();
-    this.joy = { x: 0, z: 0 };
+    this.joy.x = this.joy.z = 0;
+    document.querySelector('#joystick')!.classList.toggle('engaged', false);
     this.gesture.cancel();
     this.controls.gestures = this.gesture.drain();
     this.chargeOwner = null;

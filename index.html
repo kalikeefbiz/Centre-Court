@@ -83,6 +83,13 @@
           WASD MOVE <span>·</span> HOLD SPACE / RELEASE TO HIT <span>·</span> J L AIM
           <span>·</span> TAP SLICE · HOLD POWER · DOUBLE TAP LOB
         </div>
+        <div id="shot-target" aria-hidden="true" hidden>
+          <svg viewBox="0 0 28 28">
+            <circle cx="14" cy="14" r="8" />
+            <path d="M14 0v7m0 14v7M0 14h7m14 0h7" />
+          </svg>
+          <span>AIM</span>
+        </div>
         <div id="touch-controls">
           <div id="joystick" role="group" aria-label="Movement joystick">
             <div id="stick"></div>
@@ -145,6 +152,7 @@
             <b>One HIT control.</b> Tap for slice, hold and release for power, or double tap for a
             lob. Space and the left mouse button use the same gestures. Start your swing before the
             ball reaches your racket. Drag while pressing to aim; the power bar shows your charge.
+            Your thumb can travel beyond HIT while aiming; only release commits the shot.
           </p>
           <p>
             <b>Place your return.</b> Drag from HIT to aim left / right and up / down for depth. J /

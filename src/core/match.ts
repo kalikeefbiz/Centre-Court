@@ -1,4 +1,4 @@
-import { selectStroke, inContactZone, CONTACT, type Stroke } from './hitting';
+import { selectStroke, inContactZone, shotTarget, CONTACT, type Stroke } from './hitting';
 import { Ball, GRAVITY, type Shot, type BallEvent } from './ball';
 import {
   OpponentAI,
@@ -490,17 +490,10 @@ export class Match {
     }
   }
   private serve(power: number, aim: number) {
-    const s = sign(this.server),
-      targetSign = (this.score.deuce ? -1 : 1) * s;
     const error =
       this.server === 1 ? PRESETS[this.difficulty].precision * 0.7 : Math.abs(power - 0.65) * 0.8;
-    const target = vec(
-      targetSign * 2.0 +
-        aim * 1.55 +
-        (this.server === 0 ? (power - 0.65) * 0.7 : this.random.range(-error, error)),
-      COURT.radius,
-      -s * (4.0 + power * 1.2),
-    );
+    const target = shotTarget(this.server, 'serve', power, aim, 0, vec(), this.score.deuce);
+    target.x += this.server === 0 ? (power - 0.65) * 0.7 : this.random.range(-error, error);
     // A real launch from the held ball at the server's racket, followed by continuous integration.
     this.recordContact(this.server, 'Serve');
     this.ball.launch(target, 'serve', power);
@@ -611,8 +604,7 @@ export class Match {
     execution = 1,
   ) {
     const p = this.players[side],
-      b = this.ball.position,
-      s = sign(side);
+      b = this.ball.position;
     const distance = Math.hypot(p.position.x - b.x, p.position.z - b.z);
     const quality = clamp(
       (1 - Math.abs(b.y - 1.15) * 0.2 - Math.max(0, distance - 0.8) * 0.3) * execution,
@@ -627,19 +619,14 @@ export class Match {
     if (side === 1 && tactic && this.random.next() < tactic.errorProbability) {
       error += this.random.range(3, 5);
     }
-    const targetX =
-      clamp(aim, -1, 1) * 3.35 +
-      (side === 0
+    const target = shotTarget(side, shot, power, aim, depth, vec());
+    target.x +=
+      side === 0
         ? (1 - quality) * Math.sign(b.x - p.position.x || 1) * 0.8
-        : this.random.range(-error, error));
-    const targetZ =
-      -s *
-        (shot === 'lob'
-          ? 10
-          : shot === 'slice'
-            ? 6.5 + power * 2
-            : 7.3 + power * 3.5 + depth * 1.6) +
-      (side === 0 ? (power - 0.5) * (1 - quality) * 1.4 : this.random.range(-error, error));
+        : this.random.range(-error, error);
+    target.z += side === 0 ? (power - 0.5) * (1 - quality) * 1.4 : this.random.range(-error, error);
+    const targetX = target.x,
+      targetZ = target.z;
     const volley = this.bounces === 0 && shot === 'drive';
     const stroke =
       p.action?.stroke ??
@@ -653,7 +640,7 @@ export class Match {
       });
     this.recordContact(side, stroke);
     this.ball.launch(
-      vec(targetX, COURT.radius, targetZ),
+      target,
       stroke === 'Smash' && shot === 'drive' ? 'drive' : volley ? 'volley' : shot,
       power,
       quality,
@@ -682,6 +669,17 @@ export class Match {
       this.feedbackTime = 1.2;
       this.announce(p.stroke);
     }
+  }
+  aimTarget(shot: Controls['shot'], power: number, aim: number, depth: number, out: Vec) {
+    return shotTarget(
+      0,
+      this.phase === 'serve' && this.server === 0 ? 'serve' : shot,
+      power,
+      aim,
+      depth,
+      out,
+      this.score.deuce,
+    );
   }
   tick(dt: number, c: Controls) {
     if (c.gestures) for (const command of c.gestures) this.gestureCommand(command);

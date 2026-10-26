@@ -1,5 +1,5 @@
 import { beforeEach, afterEach, describe, it, expect, vi } from 'vitest';
-import { Input } from '../src/platform/input';
+import { Input, TOUCH_INPUT } from '../src/platform/input';
 
 // EventTarget supplies dispatch/cancellation semantics; only layout is stubbed.
 // Trusted browser multitouch is covered separately.
@@ -8,8 +8,9 @@ class Control extends EventTarget {
   classList = { toggle: () => {} };
   textContent = '';
   setPointerCapture() {}
+  rect = { left: 0, top: 0, width: 100, height: 100 };
   getBoundingClientRect() {
-    return { left: 0, top: 0, width: 100, height: 100 };
+    return this.rect;
   }
 }
 const send = (target: EventTarget, type: string, props: Record<string, unknown> = {}) => {
@@ -69,7 +70,7 @@ const moveAndCharge = () => {
 describe('independent input owners', () => {
   it('keeps movement and current drag aim/depth on release, without waiting for a render sample', () => {
     moveAndCharge();
-    send(controls.get('#shot-button')!, 'pointermove', { pointerId: 2, clientX: 65, clientY: -30 });
+    send(controls.get('#shot-button')!, 'pointermove', { pointerId: 2, clientX: 70, clientY: -35 });
     touch('pointerup');
     expect(drain()).toEqual([
       expect.objectContaining({ kind: 'commit', shot: 'drive', aim: 1, depth: 1 }),
@@ -240,5 +241,102 @@ describe('one HIT control', () => {
     touch('pointercancel');
     advance(0.5);
     expect(drain().map((c) => c.kind)).toEqual(['cancel']);
+  });
+});
+
+describe('large mobile surfaces and owned dragging', () => {
+  const setup = () => {
+    controls.get('#joystick')!.rect = { left: 12, top: 450, width: 164, height: 164 };
+    controls.get('#shot-button')!.rect = { left: 214, top: 466, width: 164, height: 148 };
+  };
+  const finger = (target: EventTarget, type: string, id: number, x: number, y: number) =>
+    send(target, type, {
+      pointerId: id,
+      pointerType: 'touch',
+      clientX: x,
+      clientY: y,
+      width: 44,
+      height: 50,
+      pressure: 0.65,
+      isPrimary: id === 1,
+    });
+  it('uses a larger analog range, preserves diagonals and owns extended movement', () => {
+    setup();
+    const joy = controls.get('#joystick')!;
+    finger(joy, 'pointerdown', 1, 94, 532);
+    finger(window, 'pointermove', 1, 94 + 164 * TOUCH_INPUT.joystickRadius * 0.5, 532);
+    advance(0.1);
+    expect(input.controls.x).toBeCloseTo(0.5);
+    expect(input.controls.z).toBe(0);
+    finger(window, 'pointermove', 1, 350, 788);
+    advance(1);
+    expect(input.controls.x).toBeCloseTo(Math.SQRT1_2);
+    expect(input.controls.z).toBeCloseTo(Math.SQRT1_2);
+    finger(window, 'pointerup', 99, 0, 0);
+    advance(0.2);
+    expect(input.controls.x).toBeGreaterThan(0.7);
+    finger(window, 'pointerup', 1, 350, 788);
+    advance(0);
+    expect(input.controls.x).toBe(0);
+  });
+  it('continues charging and aiming far outside HIT while an independent thumb moves', () => {
+    setup();
+    finger(controls.get('#joystick')!, 'pointerdown', 1, 40, 532);
+    finger(controls.get('#shot-button')!, 'pointerdown', 2, 296, 540);
+    finger(window, 'pointermove', 2, 100, 300);
+    advance(0.8);
+    expect(input.charging).toBe(true);
+    expect(input.controls.x).toBeLessThan(-0.5);
+    expect(input.controls.aim).toBe(-1);
+    expect(input.controls.depth).toBe(1);
+    expect(drain()).toEqual([]);
+    finger(window, 'pointerup', 2, 100, 300);
+    expect(drain()).toEqual([
+      expect.objectContaining({ kind: 'commit', shot: 'drive', aim: -1, depth: 1 }),
+    ]);
+    advance(0);
+    expect(input.controls.x).toBeLessThan(-0.5);
+  });
+  it('does not turn an intentional short aiming drag into a tap or pending double tap', () => {
+    setup();
+    finger(controls.get('#shot-button')!, 'pointerdown', 2, 296, 540);
+    finger(window, 'pointermove', 2, 330, 510);
+    advance(0.1);
+    finger(window, 'pointerup', 2, 330, 510);
+    expect(drain()).toEqual([expect.objectContaining({ kind: 'commit', shot: 'drive' })]);
+    advance(0.04);
+    tap();
+    expect(drain().map((e) => e.kind)).toEqual(['provisional']);
+  });
+  it.each(['pointercancel', 'lostpointercapture'])(
+    'never commits an aimed charge on %s',
+    (type) => {
+      setup();
+      const shot = controls.get('#shot-button')!;
+      finger(shot, 'pointerdown', 2, 296, 540);
+      finger(window, 'pointermove', 2, 100, 300);
+      advance(0.6);
+      finger(type === 'pointercancel' ? window : shot, type, 2, 100, 300);
+      finger(window, 'pointerup', 2, 100, 300);
+      advance(0.5);
+      expect(input.charging).toBe(false);
+      expect(drain().map((e) => e.kind)).toEqual(['cancel']);
+    },
+  );
+  it('latches aim geometry even if the visible surface or viewport changes mid-hold', () => {
+    setup();
+    const shot = controls.get('#shot-button')!;
+    finger(shot, 'pointerdown', 2, 296, 540);
+    shot.rect = { left: 100, top: 200, width: 100, height: 100 };
+    finger(
+      window,
+      'pointermove',
+      2,
+      296 + 164 * TOUCH_INPUT.aimWidth * 0.5,
+      540 - 148 * TOUCH_INPUT.depthHeight * 0.5,
+    );
+    advance(0.4);
+    expect(input.controls.aim).toBeCloseTo(0.5);
+    expect(input.controls.depth).toBeCloseTo(0.5);
   });
 });

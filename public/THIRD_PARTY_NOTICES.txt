@@ -134,3 +134,11 @@ MDN Pointer Events and dblclick documentation informed pointer capture,
 cancellation, touch-action and synthetic click handling:
 https://developer.mozilla.org/en-US/docs/Web/API/Pointer_events
 https://developer.mozilla.org/en-US/docs/Web/API/Element/dblclick_event
+
+GOAL 007 touch lifecycle references (documentation review; no source copied):
+https://www.w3.org/TR/pointerevents3/#pointer-capture
+https://www.w3.org/TR/pointerevents3/#the-pointercancel-event
+https://developer.mozilla.org/en-US/docs/Web/API/Element/setPointerCapture
+The input changes retain pointer-ID ownership, capture, explicit cancellation and
+native touch-action handling without adding a gesture dependency. The corrected
+lob timing uses only the existing owned animation and rig-motion samples.

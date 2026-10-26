@@ -402,6 +402,13 @@ export class Scene {
     this.ball.enabled = this.royalBall.status === 'ready';
     this.ballShadow.setPosition(p[0], 0.006, p[2]);
   }
+  courtToScreen(point: Vec, out: { x: number; y: number }) {
+    this.fitPoint.set(point.x, 0.06, point.z);
+    this.camera.camera!.worldToScreen(this.fitPoint, this.fitScreen);
+    out.x = this.fitScreen.x;
+    out.y = this.fitScreen.y;
+    return out;
+  }
   playerPresentation() {
     const p = this.kira.root.getPosition();
     const screen = this.camera.camera!.worldToScreen(new pc.Vec3(p.x, p.y + 0.9, p.z));

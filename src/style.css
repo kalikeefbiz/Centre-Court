@@ -428,116 +428,146 @@ h1 em {
   color: var(--orange);
 }
 #touch-controls {
+  --control-size: clamp(144px, 44vw, 164px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
   position: absolute;
-  bottom: calc(78px + env(safe-area-inset-bottom));
-  left: 5%;
-  right: 5%;
+  bottom: calc(24px + var(--safe-bottom));
+  left: max(12px, var(--safe-left));
+  right: max(12px, var(--safe-right));
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   pointer-events: none;
 }
+#joystick,
+#shot-button {
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
 #joystick {
-  width: 122px;
-  height: 122px;
+  width: var(--control-size);
+  height: var(--control-size);
   border-radius: 50%;
-  border: 1px solid #ebf3dd55;
-  background: #10282c55;
   position: relative;
   pointer-events: auto;
-  touch-action: none;
-  box-shadow: inset 0 0 0 22px #ffffff03;
+}
+#joystick::before {
+  content: '';
+  position: absolute;
+  inset: 14px;
+  border-radius: 50%;
+  border: 1px solid #ebf3dd66;
+  background: #10282c55;
+  box-shadow: inset 0 0 0 24px #ffffff03;
+  pointer-events: none;
+}
+#joystick.engaged::before {
+  border-color: #dfeb9dcc;
+  background: #193b3c88;
 }
 #stick {
   position: absolute;
-  width: 48px;
-  height: 48px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
-  left: 36px;
-  top: 36px;
+  left: calc(50% - 32px);
+  top: calc(50% - 32px);
   background: #e8eedb48;
   border: 1px solid #e6eedb88;
   pointer-events: none;
 }
+#joystick.engaged #stick {
+  background: #dfeb9d80;
+  border-color: #eef6d5;
+}
 #joystick > span {
   position: absolute;
-  bottom: -23px;
+  bottom: 0;
   left: 0;
   right: 0;
   text-align: center;
   font-size: 8px;
   letter-spacing: 0.18em;
   color: #ccdad1;
+  pointer-events: none;
 }
 .shot-controls {
-  width: 132px;
-  pointer-events: auto;
-  touch-action: none;
-}
-.aim-row,
-.shot-row {
-  display: flex;
-  gap: 7px;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 8px;
-}
-.aim-row button,
-.shot-row button {
-  border: 1px solid #e4edda55;
-  background: #132b32b3;
-  border-radius: 4px;
-  height: 35px;
-  min-width: 42px;
-  font-size: 16px;
-  touch-action: none;
-}
-.aim-row span {
-  font-size: 9px;
-  color: #d5dfcf;
-  letter-spacing: 0.1em;
-}
-.shot-row button {
-  font-size: 9px;
-  letter-spacing: 0.08em;
-  width: 50%;
-  height: 32px;
-}
-.shot-row button.selected {
-  background: #d9e98b;
-  color: #173039;
-}
-.aim-row button.selected {
-  background: var(--orange);
-  color: #14292e;
+  width: var(--control-size);
+  pointer-events: none;
 }
 #shot-button {
+  position: relative;
   width: 100%;
-  height: 91px;
-  background: #ef8858e8;
-  border: 1px solid #ffc8a5;
-  border-radius: 50px;
+  height: 148px;
+  padding: 20px;
+  background: transparent;
+  border: 0;
+  border-radius: 48px;
   color: #152d31;
-  touch-action: none;
+  pointer-events: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 8px;
+}
+#shot-button::before {
+  content: '';
+  position: absolute;
+  inset: 12px;
+  border-radius: 50%;
+  background: #ef8858e8;
+  border: 1px solid #ffc8a5;
   box-shadow: 0 4px 24px #0002;
+  pointer-events: none;
+}
+#shot-button > * {
+  position: relative;
+  pointer-events: none;
 }
 #shot-name {
-  font-size: 18px;
+  font-size: 20px;
   letter-spacing: 0.1em;
   font-weight: 800;
 }
 #shot-button small {
-  font-size: 7px;
-  letter-spacing: 0.13em;
+  font-size: 8px;
+  line-height: 1.5;
+  letter-spacing: 0.07em;
 }
-#shot-button.charging {
+#shot-button.charging::before {
   background: #deec9a;
-  transform: scale(0.97);
+  border-color: #f7fcd9;
+}
+#shot-target {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  color: #ffd2a4;
+  filter: drop-shadow(0 1px 2px #10282c);
+}
+#shot-target svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+}
+#shot-target span {
+  position: absolute;
+  top: 29px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
 }
 .power-track {
   height: 5px;
@@ -658,6 +688,13 @@ h1 em {
   }
   #shot-button {
     height: 62px;
+    padding: 4px;
+  }
+  #shot-button::before {
+    inset: 0;
+  }
+  #shot-button small {
+    font-size: 7px;
   }
   .shot-row button {
     font-size: 8px;
@@ -808,21 +845,7 @@ h1 em {
     padding: 18px;
   }
   #touch-controls {
-    bottom: calc(37px + env(safe-area-inset-bottom));
-  }
-  #joystick {
-    width: 110px;
-    height: 110px;
-  }
-  #stick {
-    left: 30px;
-    top: 30px;
-  }
-  .shot-controls {
-    width: 121px;
-  }
-  #shot-button {
-    height: 85px;
+    bottom: calc(24px + var(--safe-bottom));
   }
   .topbar {
     padding-top: env(safe-area-inset-top);
@@ -887,26 +910,16 @@ h1 em {
     top: 64px;
   }
   #touch-controls {
-    bottom: 22px;
-    left: 4%;
-    right: 4%;
-  }
-  #joystick {
-    width: 100px;
-    height: 100px;
-  }
-  #stick {
-    left: 25px;
-    top: 25px;
-  }
-  #joystick > span {
-    bottom: -16px;
+    --control-size: 148px;
+    bottom: calc(16px + var(--safe-bottom));
+    left: max(20px, var(--safe-left));
+    right: max(20px, var(--safe-right));
   }
   .shot-controls {
-    width: 110px;
+    width: 164px;
   }
   #shot-button {
-    height: 66px;
+    height: 132px;
   }
   .shot-row button {
     height: 27px;

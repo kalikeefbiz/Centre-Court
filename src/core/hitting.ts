@@ -1,4 +1,5 @@
-import { sign, type Side, type Vec } from './court';
+import { COURT, clamp, sign, type Side, type Vec } from './court';
+import type { Shot } from './ball';
 export type Stroke =
   | 'Forehand'
   | 'Backhand'
@@ -47,4 +48,29 @@ export function inContactZone(c: HitContext, stroke = selectStroke(c)) {
     Math.hypot(c.ball.x - c.player.x, c.ball.z - c.player.z) <
       Math.min(zone.radius, c.ball.y < 0.65 ? 0.65 : zone.radius)
   );
+}
+
+/** Intended placement before execution error. Shared with the lightweight aim marker. */
+export function shotTarget(
+  side: Side,
+  shot: Shot,
+  power: number,
+  aim: number,
+  depth: number,
+  out: Vec,
+  deuce = true,
+) {
+  out.x =
+    shot === 'serve' ? (deuce ? -1 : 1) * sign(side) * 2 + aim * 1.55 : clamp(aim, -1, 1) * 3.35;
+  out.y = COURT.radius;
+  out.z =
+    -sign(side) *
+    (shot === 'serve'
+      ? 4 + power * 1.2
+      : shot === 'lob'
+        ? 10
+        : shot === 'slice'
+          ? 6.5 + power * 2
+          : 7.3 + power * 3.5 + depth * 1.6);
+  return out;
 }

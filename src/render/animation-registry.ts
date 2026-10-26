@@ -27,7 +27,9 @@ export const ANIMATIONS = {
   Smash: action('_01a16f20_14b9_70d3_b4cd_5b3e4d514601', 26, 18, 53, 'high'),
   Serve: action('_01a16f21_3bc1_7312_b0db_d96fda6475ea', 46, 36, 65, 'high'),
   Slice: action('_01a16f27_4128_711d_a437_5651121a8e2c', 27, 20, 57, 'medium'),
-  Lob: action('_01a16f33_ae88_77f6_8f6a_d4c208041d36', 37, 27, 61, 'medium'),
+  // The first forward/upward scoop is frame 17. Frame 37 is a later overhead
+  // flourish, 2.18 m high. Stop before that second action; keep the source intact.
+  Lob: action('_01a16f33_ae88_77f6_8f6a_d4c208041d36', 17, 10, 32, 'high'),
   ShuffleLeft: {
     clip: '_01a16f36_0b96_76c3_ac06_6409b3e12e89',
     duration: 2.9666669368743896,

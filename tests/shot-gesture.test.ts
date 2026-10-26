@@ -272,3 +272,43 @@ describe('gesture buffering through timed racket contact', () => {
     }
   });
 });
+
+it('distinguishes intentional aiming drags from tap jitter without changing time thresholds', () => {
+  const g = new ShotGesture();
+  g.down(1, 100, 100);
+  g.move(109, 105);
+  g.up(1.1);
+  expect(g.drain()[0]).toMatchObject({ kind: 'provisional', shot: 'slice' });
+  g.cancel();
+  g.drain();
+  g.down(2, 100, 100);
+  g.move(125, 100);
+  g.up(2.1, 0.4, 0.7);
+  expect(g.drain()).toEqual([
+    expect.objectContaining({ kind: 'commit', shot: 'drive', aim: 0.4, depth: 0.7 }),
+  ]);
+  g.update(3);
+  expect(g.drain()).toEqual([]);
+});
+it('aims a deliberately paired short lob and retains power priority for a held second press', () => {
+  for (const duration of [0.1, 0.4]) {
+    const g = new ShotGesture();
+    g.down(1, 100, 100);
+    g.up(1.03);
+    g.down(1.07, 100, 100);
+    g.move(160, 60);
+    g.up(1.07 + duration, 0.8, 0.3);
+    const e = g.drain();
+    expect(e.map((c) => c.kind)).toEqual(['provisional', 'cancel', 'commit']);
+    expect(e[2]).toMatchObject({ shot: duration < 0.18 ? 'lob' : 'drive', aim: 0.8, depth: 0.3 });
+  }
+});
+it('cancels a dragged charge without any release action', () => {
+  const g = new ShotGesture();
+  g.down(1);
+  g.move(100, 100);
+  g.update(2);
+  g.cancel();
+  g.up(2.01);
+  expect(g.drain().map((c) => c.kind)).toEqual(['cancel']);
+});
