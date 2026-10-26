@@ -198,7 +198,7 @@ if (
     value: {
       snapshot: () => ({
         build: __BUILD_ID__,
-        release: 'GOAL-004',
+        release: 'GOAL-005A',
         developer: developer?.snapshot(),
         presentation: scene.playerPresentation(),
         stadium: scene.stadiumPresentation(),
@@ -218,6 +218,13 @@ if (
         ball: { ...match.ball.position },
         velocity: { ...match.ball.velocity },
         players: match.players.map((p) => ({ ...p.position })),
+        locomotion: match.players.map(({ locomotion: m }) => ({
+          ...m,
+          velocity: { ...m.velocity },
+          desiredVelocity: { ...m.desiredVelocity },
+          acceleration: { ...m.acceleration },
+          travelDirection: { ...m.travelDirection },
+        })),
         server: match.server,
         fault: match.fault,
         contacts: match.contacts,

@@ -1,5 +1,15 @@
 import { clamp, COURT, Random, vec, type Vec } from './court';
 import { Ball, type Shot, type BallEvent } from './ball';
+import {
+  createLocomotion,
+  resetLocomotion,
+  requestMovement,
+  directionalSpeed,
+  movementTravelDistance,
+  HUMAN_LOCOMOTION,
+  type LocomotionState,
+  type LocomotionConfig,
+} from './locomotion';
 import { CONTACT, inContactZone } from './hitting';
 
 export type Difficulty = 'easy' | 'normal' | 'hard';
@@ -63,10 +73,23 @@ export interface Interception {
   confidence: number;
 }
 const legal = (p: Vec) => Math.abs(p.x) <= 6.7 && p.z <= -0.65 && p.z >= -15.3;
-export function travelDistance(time: number, speed: number, acceleration: number, initial = 0) {
-  const ramp = Math.min(time, Math.max(0, (speed - initial) / acceleration));
-  return initial * ramp + 0.5 * acceleration * ramp * ramp + speed * (time - ramp);
-}
+export const travelDistance = movementTravelDistance;
+/** Keep existing difficulty pace/agility, with the shared directional proportions. */
+export const AI_LOCOMOTION = Object.fromEntries(
+  Object.entries(PRESETS).map(([difficulty, p]) => [
+    difficulty,
+    {
+      ...HUMAN_LOCOMOTION,
+      forwardSpeed: p.speed,
+      lateralSpeed: (p.speed * HUMAN_LOCOMOTION.lateralSpeed) / HUMAN_LOCOMOTION.forwardSpeed,
+      backwardSpeed: (p.speed * HUMAN_LOCOMOTION.backwardSpeed) / HUMAN_LOCOMOTION.forwardSpeed,
+      acceleration: p.acceleration,
+      braking: (p.acceleration * HUMAN_LOCOMOTION.braking) / HUMAN_LOCOMOTION.acceleration,
+      reversalBraking:
+        (p.acceleration * HUMAN_LOCOMOTION.reversalBraking) / HUMAN_LOCOMOTION.acceleration,
+    },
+  ]),
+) as Record<Difficulty, Readonly<LocomotionConfig>>;
 /** Uses Ball.step at the authoritative 120 Hz; stops at a second bounce or dead net.
  * One scratch ball per controller, no per-frame prediction or array of trajectory samples. */
 export function planInterception(
@@ -81,6 +104,13 @@ export function planInterception(
   scratch = new Ball(),
   velocity = vec(),
   events: BallEvent[] = [],
+  movement: Readonly<LocomotionConfig> = {
+    ...HUMAN_LOCOMOTION,
+    forwardSpeed: speed,
+    lateralSpeed: (speed * HUMAN_LOCOMOTION.lateralSpeed) / HUMAN_LOCOMOTION.forwardSpeed,
+    backwardSpeed: (speed * HUMAN_LOCOMOTION.backwardSpeed) / HUMAN_LOCOMOTION.forwardSpeed,
+    acceleration,
+  },
 ): Interception {
   Object.assign(scratch.position, ball.position);
   Object.assign(scratch.velocity, ball.velocity);
@@ -136,15 +166,22 @@ export function planInterception(
       fallbackDistance = distance;
     }
     const available = Math.max(0, time - reaction);
-    // Reserve settling time; don't assume current velocity points in the new direction.
-    const initial =
-      distance > 0
-        ? Math.max(
-            0,
-            ((target.x - player.x) * velocity.x + (target.z - player.z) * velocity.z) / distance,
-          )
-        : 0;
-    const reach = travelDistance(Math.max(0, available - 0.08), speed, acceleration, initial);
+    // Project authoritative momentum, retaining negative velocity on reversals.
+    const ux = distance > 0 ? (target.x - player.x) / distance : 0;
+    const uz = distance > 0 ? (target.z - player.z) / distance : 0;
+    const initial = ux * velocity.x + uz * velocity.z;
+    // Conservative time to shed transverse momentum before settling at contact.
+    const turnTime = Math.abs(ux * velocity.z - uz * velocity.x) / movement.braking;
+    const pace = distance > 0 ? directionalSpeed(ux, uz, 1, movement) : speed;
+    const reach = travelDistance(
+      Math.max(0, available - 0.08 - turnTime),
+      pace,
+      acceleration,
+      initial,
+      movement.reversalBraking,
+      movement.response,
+      movement.braking,
+    );
     if (distance > reach + 0.65) continue;
     const cost =
       distance * 0.12 +
@@ -348,7 +385,10 @@ export class OpponentAI {
   state: AIState = 'point conclusion and reset';
   target = vec(0, 0, -10.5);
   recovery = vec(0, 0, -10.5);
-  velocity = vec();
+  constructor(readonly locomotion: LocomotionState = createLocomotion()) {}
+  get velocity() {
+    return this.locomotion.velocity;
+  }
   prediction: Interception | null = null;
   tactic: Tactic | null = null;
   selectedTarget: Vec | null = null;
@@ -367,7 +407,7 @@ export class OpponentAI {
   reset(server: number, position = vec(0, 0, -10.5)) {
     this.target = { ...position };
     this.recovery = { ...position };
-    this.velocity.x = this.velocity.z = 0;
+    resetLocomotion(this.locomotion);
     this.observed = -1;
     this.reaction = this.think = this.execution = 0;
     this.prediction = null;
@@ -386,7 +426,7 @@ export class OpponentAI {
   }
   conclude() {
     this.transition('point conclusion and reset');
-    this.velocity.x = this.velocity.z = 0;
+    resetLocomotion(this.locomotion);
   }
   served(c: AIContext, target: Vec) {
     this.selectedTarget = { ...target };
@@ -461,6 +501,7 @@ export class OpponentAI {
           this.scratch,
           this.velocity,
           this.events,
+          AI_LOCOMOTION[c.difficulty],
         );
         const next = this.prediction.target;
         // Fixed perception offset per observed shot; keep intent stable between decision steps.
@@ -486,21 +527,27 @@ export class OpponentAI {
       );
     }
   }
-  /** Arrive steering, acceleration-limited including reversals. Returns velocity, never position. */
-  steer(dt: number, player: Vec, difficulty: Difficulty) {
-    const p = PRESETS[difficulty],
-      dx = this.target.x - player.x,
+  /** Desired velocity only. Match owns the single shared physical integrator.
+   * The arrival envelope leaves enough distance to brake and retains the original
+   * proportional settling near the target. Never accelerate the steering twice.
+   */
+  steer(player: Vec, difficulty: Difficulty) {
+    const config = AI_LOCOMOTION[difficulty];
+    const dx = this.target.x - player.x,
       dz = this.target.z - player.z;
-    const distance = Math.hypot(dx, dz),
-      speed = Math.min(p.speed, distance * 4);
-    const vx = distance > 0.04 ? (dx / distance) * speed : 0;
-    const vz = distance > 0.04 ? (dz / distance) * speed : 0;
-    const ax = vx - this.velocity.x,
-      az = vz - this.velocity.z;
-    const ratio = Math.min(1, (p.acceleration * dt) / Math.max(0.0001, Math.hypot(ax, az)));
-    this.velocity.x += ax * ratio;
-    this.velocity.z += az * ratio;
-    return this.velocity;
+    const distance = Math.hypot(dx, dz);
+    if (distance <= 0.04) {
+      requestMovement(this.locomotion, 0, 0, 1, config);
+    } else {
+      const pace = directionalSpeed(dx / distance, dz / distance, 1, config);
+      const speed = Math.min(
+        pace,
+        distance * 4,
+        Math.sqrt(2 * config.braking * Math.max(0, distance - 0.04)),
+      );
+      requestMovement(this.locomotion, dx / distance, dz / distance, 1, config, speed / pace);
+    }
+    return this.locomotion.desiredVelocity;
   }
   snapshot(difficulty: Difficulty, seed: number) {
     return {

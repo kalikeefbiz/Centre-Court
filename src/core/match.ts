@@ -1,6 +1,13 @@
 import { selectStroke, inContactZone, CONTACT, type Stroke } from './hitting';
 import { Ball, type Shot } from './ball';
-import { OpponentAI, chooseServe, PRESETS, type Difficulty, type Tactic } from './ai';
+import {
+  OpponentAI,
+  chooseServe,
+  PRESETS,
+  AI_LOCOMOTION,
+  type Difficulty,
+  type Tactic,
+} from './ai';
 import {
   COURT,
   clamp,
@@ -14,6 +21,16 @@ import {
   type Vec,
 } from './court';
 import { Score, type MatchLength } from './scoring';
+import {
+  createLocomotion,
+  resetLocomotion,
+  requestMovement,
+  stepLocomotion,
+  HUMAN_LOCOMOTION,
+  FOOTWORK_ASSIST,
+  type LocomotionState,
+  type LocomotionConfig,
+} from './locomotion';
 export type Phase = 'menu' | 'serve' | 'rally' | 'pointOver' | 'paused' | 'result';
 export interface ShotContact {
   id: number;
@@ -25,6 +42,7 @@ export interface ShotContact {
 export interface Athlete {
   contact: ShotContact | null;
   position: Vec;
+  locomotion: LocomotionState;
   swing: number;
   stroke: string;
   distance: number;
@@ -54,6 +72,7 @@ export class Match {
   ball = new Ball();
   players: Athlete[] = [0, 1].map((i) => ({
     contact: null,
+    locomotion: createLocomotion(),
     position: vec(0, 0, i === 0 ? 11 : -11),
     swing: 0,
     stroke: 'READY',
@@ -83,7 +102,7 @@ export class Match {
   private swingAim = 0;
   private swingDepth = 0;
   private swingShot: Shot = 'drive';
-  ai = new OpponentAI();
+  ai = new OpponentAI(this.players[1].locomotion);
   initialSeed = 314159;
   private aiContext() {
     return {
@@ -104,7 +123,7 @@ export class Match {
     this.practice = practice;
     this.random = new Random(seed);
     this.initialSeed = seed;
-    this.ai = new OpponentAI();
+    this.ai = new OpponentAI(this.players[1].locomotion);
     this.score = new Score(length);
     this.fault = 0;
     this.contacts = 0;
@@ -122,6 +141,7 @@ export class Match {
     this.phase = 'serve';
     this.pointWinner = null;
     for (const p of this.players) {
+      resetLocomotion(p.locomotion);
       p.contact = null;
       p.swing = 0;
     }
@@ -134,8 +154,8 @@ export class Match {
     this.timer = 0;
     this.swingWindow = 0;
     const sx = (this.score.deuce ? 1 : -1) * sign(this.server) * 1.6;
-    this.players[this.server].position = vec(sx, 0, sign(this.server) * 12.35);
-    this.players[other(this.server)].position = vec(-sx * 0.8, 0, -sign(this.server) * 10.4);
+    this.repositionPlayer(this.server, vec(sx, 0, sign(this.server) * 12.35));
+    this.repositionPlayer(other(this.server), vec(-sx * 0.8, 0, -sign(this.server) * 10.4));
     this.ball.active = false;
     this.ball.position = vec(sx, 2.6, sign(this.server) * 12.1);
     this.ball.velocity = vec();
@@ -158,16 +178,21 @@ export class Match {
   }
   menu() {
     this.phase = 'menu';
+    this.clearMovement();
     this.ball.active = false;
     this.swingWindow = 0;
   }
-  private move(side: Side, x: number, z: number, speed: number, dt: number) {
-    const p = this.players[side].position,
-      n = Math.max(1, Math.hypot(x, z));
-    const before = { ...p };
-    p.x = clamp(p.x + (x / n) * speed * dt, -6.7, 6.7);
-    p.z = sign(side) * clamp(sign(side) * (p.z + (z / n) * speed * dt), 0.65, 15.3);
-    this.players[side].distance += Math.hypot(p.x - before.x, p.z - before.z);
+  /** Intentional placement (serve setup/developer fixtures), never gameplay travel. */
+  repositionPlayer(side: Side, position: Vec) {
+    Object.assign(this.players[side].position, position);
+    resetLocomotion(this.players[side].locomotion);
+  }
+  private clearMovement() {
+    for (const p of this.players) resetLocomotion(p.locomotion);
+  }
+  private move(side: Side, config: Readonly<LocomotionConfig>, dt: number) {
+    const p = this.players[side];
+    p.distance += stepLocomotion(p.locomotion, p.position, side, config, dt);
   }
   private recordContact(side: Side, stroke: Stroke) {
     this.players[side].contact = {
@@ -202,6 +227,7 @@ export class Match {
   }
   private endPoint(winner: Side, reason: string) {
     if (this.phase !== 'rally') return; // Point resolution is idempotent.
+    this.clearMovement();
     this.ai.conclude();
     this.pointWinner = winner;
     this.totalPoints++;
@@ -227,6 +253,7 @@ export class Match {
       return;
     }
     this.fault = 1;
+    this.clearMovement();
     this.ai.conclude();
     this.phase = 'pointOver';
     this.timer = 1.65;
@@ -241,6 +268,7 @@ export class Match {
         return;
       }
       if (this.ball.netTouched) {
+        this.clearMovement();
         this.ai.conclude();
         this.phase = 'pointOver';
         this.timer = 1.5;
@@ -356,18 +384,29 @@ export class Match {
       return;
     }
     this.rallyTime += dt;
-    this.move(0, c.x, c.z, 6.3, dt);
+
     // Limited X-only footwork assistance; no Z movement or automatic shots.
     const b = this.ball.position,
       user = this.players[0].position;
     if (
-      Math.hypot(c.x, c.z) < 0.1 &&
+      Math.hypot(c.x, c.z) < FOOTWORK_ASSIST.inputThreshold &&
       this.lastHitter === 1 &&
       b.z > 4 &&
       Math.abs(b.z - user.z) < 3 &&
       Math.abs(b.x - user.x) < 3.2
-    )
-      this.move(0, clamp((b.x - user.x) * 1.5, -1, 1), 0, 1.8, dt);
+    ) {
+      requestMovement(
+        this.players[0].locomotion,
+        clamp((b.x - user.x) * FOOTWORK_ASSIST.gain, -1, 1),
+        0,
+        0,
+        HUMAN_LOCOMOTION,
+        FOOTWORK_ASSIST.speed / HUMAN_LOCOMOTION.lateralSpeed,
+      );
+    } else {
+      requestMovement(this.players[0].locomotion, c.x, c.z, 0, HUMAN_LOCOMOTION);
+    }
+    this.move(0, HUMAN_LOCOMOTION, dt);
     if (c.release) {
       this.swingWindow = CONTACT.inputWindow;
       this.swingPower = c.power;
@@ -389,14 +428,8 @@ export class Match {
       }
     }
     this.ai.update(dt, this.aiContext(), this.random);
-    const v = this.ai.steer(dt, this.players[1].position, this.difficulty);
-    this.move(
-      1,
-      v.x / PRESETS[this.difficulty].speed,
-      v.z / PRESETS[this.difficulty].speed,
-      PRESETS[this.difficulty].speed,
-      dt,
-    );
+    this.ai.steer(this.players[1].position, this.difficulty);
+    this.move(1, AI_LOCOMOTION[this.difficulty], dt);
     if (
       this.ai.reaction <= 0 &&
       this.canHit(1) &&

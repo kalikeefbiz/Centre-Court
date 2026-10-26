@@ -62,8 +62,6 @@ export class Kira {
     transitioning: boolean;
     head: number[];
   } | null = null;
-  private lastDistance = 0;
-  private previous = { x: 0, z: 11 };
   private lastSwing = 0;
   private swingTime = 0;
   private contactOffset = new pc.Vec3();
@@ -209,12 +207,8 @@ export class Kira {
     const athlete = match.players[0];
     this.root.setPosition(athlete.position.x, 0, athlete.position.z);
     if (match.phase === 'paused' || match.phase === 'result') return;
-    const dx = athlete.position.x - this.previous.x,
-      dz = athlete.position.z - this.previous.z;
-    this.previous = { ...athlete.position };
-    const speed = Math.max(0, athlete.distance - this.lastDistance) / Math.max(dt, 0.001);
-    this.lastDistance = athlete.distance;
-    const moving = locomotionState(speed, dx, dz);
+    const movement = athlete.locomotion;
+    const moving = locomotionState(movement.speed, movement.velocity.x, movement.velocity.z);
     const context = selectStroke({
       player: athlete.position,
       ball: match.ball.position,
@@ -274,7 +268,7 @@ export class Kira {
       }
       if (charging && (!contact || contact.age > 0.4)) {
         // Lateral/full movement remains independent of stationary preparation.
-        if (speed < 0.15) {
+        if (movement.speed < 0.15) {
           this.transition(context);
           this.swingTime = ANIMATIONS[context].prepare;
           this.layer.activeStateCurrentTime = this.swingTime;

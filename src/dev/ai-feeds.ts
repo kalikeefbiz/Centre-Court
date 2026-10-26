@@ -12,8 +12,8 @@ export function feedAI(match: Match, feed: AIFeed, seed: number) {
   match.contacts = 1;
   const wide = feed === 'Wide defence',
     short = feed === 'Short ball';
-  match.players[0].position = vec(feed === 'Open court' ? 3.5 : -1, 0, short ? 7 : 10);
-  match.players[1].position = vec(wide ? 0.5 : 0, 0, short ? -7.2 : -10);
+  match.repositionPlayer(0, vec(feed === 'Open court' ? 3.5 : -1, 0, short ? 7 : 10));
+  match.repositionPlayer(1, vec(wide ? 0.5 : 0, 0, short ? -7.2 : -10));
   match.ai.reset(0, match.players[1].position);
   match.ball.position = vec(wide ? 3 : 0, 1.4, short ? 7 : 9);
   match.ball.launch(

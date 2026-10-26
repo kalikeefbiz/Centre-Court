@@ -7,12 +7,14 @@ import {
   OpponentAI,
   planInterception,
   PRESETS,
+  AI_LOCOMOTION,
   recoveryTarget,
   selectTactic,
   shotErrorProbability,
   chooseServe,
   type TacticalContext,
 } from '../src/core/ai';
+import { stepLocomotion } from '../src/core/locomotion';
 import { Match, FIXED_DT, idleControls } from '../src/core/match';
 const incoming = (x = 0, z = -9, shot: 'drive' | 'slice' | 'lob' = 'drive') => {
   const b = new Ball();
@@ -236,13 +238,13 @@ describe('difficulty, serve and fair execution', () => {
     for (let i = 0; i < 300; i++) {
       if (i === 150) ai.target.x = -6;
       const before = { ...ai.velocity };
-      const v = ai.steer(FIXED_DT, p, 'hard');
+      ai.steer(p, 'hard');
+      stepLocomotion(ai.locomotion, p, 1, AI_LOCOMOTION.hard, FIXED_DT);
+      const v = ai.velocity;
       expect(Math.hypot(v.x, v.z)).toBeLessThanOrEqual(PRESETS.hard.speed + 1e-9);
       expect(Math.hypot(v.x - before.x, v.z - before.z)).toBeLessThanOrEqual(
-        PRESETS.hard.acceleration * FIXED_DT + 1e-9,
+        AI_LOCOMOTION.hard.reversalBraking * FIXED_DT + 1e-9,
       );
-      p.x += v.x * FIXED_DT;
-      p.z += v.z * FIXED_DT;
     }
   });
   it('reacts only after ball release, returns a legal serve, recovers, concludes and resets', () => {

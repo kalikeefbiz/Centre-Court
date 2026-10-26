@@ -1,0 +1,80 @@
+# Locomotion references and attribution
+
+PlayCanvas engine `scripts/esm/third-person-controller.mjs`, examined at
+209ce5752527ab5050ec9632ca6dc1272542b70d:
+https://github.com/playcanvas/engine/blob/209ce5752527ab5050ec9632ca6dc1272542b70d/scripts/esm/third-person-controller.mjs
+
+`damp` and `_updateController` informed the time-based exponential velocity feedback,
+horizontal speed and travel direction. Centre Court expresses the damping as a
+per-second rate, converges on a desired velocity with a bounded acceleration,
+and uses its existing AI vector-delta limiter. Input uses the upstream normalized
+direction technique while preserving analog length. No rigidbody, camera or jump code.
+
+Copyright (c) 2011-2026 PlayCanvas Ltd.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+
+OpenTennis `crates/hst-sim/src/player.rs`, `crates/hst-sim/src/motion.rs`, and
+`research/journal/2026-10-07-p7-movement/README.md`, examined at
+50585580ef2d5748d2b44ee37184c9520bf299b2:
+https://github.com/FIZL0/opentennis/tree/50585580ef2d5748d2b44ee37184c9520bf299b2
+
+Examined `run_speed`, `run_velocity`, `angle`, `run_motion`, `Body::step/go/toward`,
+`recovery`, `follow_over`, `serve_recovery`, and `serve_over`. Used only as a
+behavioral/state-organization reference: shared human/AI running, separate physical
+travel and directional motion, agility versus pace, and explicit stroke states.
+The run code immediately assigns direction and uses per-frame speeds and commercial
+motion paths; those algorithms, constants, character stats and data were not ported.
+Forward/lateral/backward speed differences are Centre Court tuning, not an upstream
+biomechanical claim. No stamina, dash, root motion or new stroke locks were added.
+Original project code is dual MIT/Apache-2.0; the MIT option applies to any adaptation.
+
+MIT License
+
+Copyright (c) 2026 Fizlo
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+Compatibility references examined:
+- https://developer.playcanvas.com/user-manual/animation/
+- https://api.playcanvas.com/engine/classes/AnimComponent.html
+
+Additional design reference examined: https://github.com/ryogrid/tetetennis
+(`src/entities/player.js` rendering/logic separation and `logic/game/player.js.mbt`
+movement). No source or assets copied; immediate velocity assignment is unsuitable
+for this milestone. No commercial assets, motion data, fixtures or animation files
+were retrieved from any reference project.
