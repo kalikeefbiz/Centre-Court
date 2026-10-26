@@ -161,7 +161,7 @@ modifier.object = arm
 mesh.parent = arm
 arm.data.pose_position = 'REST'
 for image in bpy.data.images:
-    if image.source == 'FILE':
+    if image.source == 'FILE' and not image.packed_file:
         image.pack()
 bpy.ops.wm.save_as_mainfile(filepath=str(WORK / 'kira-midres-transfer.blend'))
 report = {

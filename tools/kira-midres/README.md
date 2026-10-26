@@ -9,6 +9,7 @@ Source release: https://github.com/kalikeefbiz/Centre-Court/releases/tag/kira-mi
 mkdir -p artifacts/kira-midres
 curl --fail --location 'https://github.com/kalikeefbiz/Centre-Court/releases/download/kira-midres-source/Pink.Valkyrie_Meshy_AI_2026-10-25_b2abe2.glb' --output artifacts/kira-midres/source.glb
 blender -b --factory-startup --python tools/kira-midres/transfer.py -- artifacts/kira-midres/source.glb
+blender -b artifacts/kira-midres/kira-midres-transfer.blend --python tools/kira-midres/check-native.py
 python tools/kira-midres/audit.py artifacts/kira-midres/source.glb
 blender -b artifacts/kira-midres/kira-midres-transfer.blend --python tools/kira-midres/measure.py
 blender -b --factory-startup --python tools/kira-midres/render.py

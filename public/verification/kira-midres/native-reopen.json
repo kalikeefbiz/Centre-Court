@@ -1,0 +1,49 @@
+{
+  "native_reopen": "PASS",
+  "bones": 74,
+  "clips": 13,
+  "packed_images": [
+    {
+      "name": "Image_0",
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "Image_1",
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "Image_2",
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "normal",
+      "size": [
+        4096,
+        4096
+      ]
+    },
+    {
+      "name": "texture_0",
+      "size": [
+        4096,
+        4096
+      ]
+    },
+    {
+      "name": "texture_0_metallic_roughness",
+      "size": [
+        4096,
+        4096
+      ]
+    }
+  ]
+}

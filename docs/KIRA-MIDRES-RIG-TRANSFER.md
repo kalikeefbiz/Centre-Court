@@ -95,6 +95,14 @@ views remain possible. Source stylization, existing contact reach limitations an
 gameplay locomotion speed are unchanged. Identical skeleton trajectories and root
 cancellation preserve foot/racket timing; no new foot-lock system was added.
 
+The largest measured local stretch occurs at the left underarm during the smash
+at 1.367 s. A [matched close-up comparison](../public/verification/kira-midres/underarm-comparison.jpg)
+was rendered from the original and replacement skins using the same rig, pose,
+camera and lighting; the replacement retains a continuous shoulder/torso contour.
+The editable checkpoint was reopened in a fresh Blender process with all six
+original/reference and replacement texture images embedded; see the
+[native reopen check](../public/verification/kira-midres/native-reopen.json).
+
 ## Integration and rollback
 
 `KIRA.characterUrl` selects the new GLB; `KIRA.rollbackUrl` points to the immediately
