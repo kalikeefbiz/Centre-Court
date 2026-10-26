@@ -107,3 +107,9 @@ aiming, independent pointers, cancellation, serving, pause, layout and safe area
 Chromium provides native multi-contact injection; WebKit also tests real mouse
 pointer capture plus touch-event ownership. Emulation does not establish physical
 iPhone comfort or OS touch behavior. No physical hardware validation was performed.
+
+Two GitHub-hosted setup attempts downloaded Ubuntu browser dependencies very
+slowly from the Azure HTTP mirror. The existing Pages workflow now selects the
+official Ubuntu HTTPS archive/security mirrors through the runner's existing APT
+mirror lists. Repository signatures, package requirements, all checks and the
+production deployment jobs remain unchanged; no new pipeline was introduced.

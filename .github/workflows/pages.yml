@@ -31,6 +31,17 @@ jobs:
       - if: ${{ !inputs.verified_kira }}
         run: npm test
       - run: npm run build
+      # Azure's HTTP mirror stalled two browser-setup attempts. Preserve Ubuntu's
+      # signed repository configuration and use its official HTTPS mirrors.
+      - name: Use official Ubuntu package mirrors
+        if: ${{ !inputs.verified_kira }}
+        run: |
+          if [ -f /etc/apt/apt-mirrors.txt ]; then
+            printf '%s\n' 'https://archive.ubuntu.com/ubuntu/' | sudo tee /etc/apt/apt-mirrors.txt
+          fi
+          if [ -f /etc/apt/apt-mirrors-security.txt ]; then
+            printf '%s\n' 'https://security.ubuntu.com/ubuntu/' | sudo tee /etc/apt/apt-mirrors-security.txt
+          fi
       - if: ${{ !inputs.verified_kira }}
         run: npx playwright install --with-deps chromium webkit
       - if: ${{ !inputs.verified_kira }}
