@@ -224,27 +224,44 @@ test('HIT maps slice, double-tap lob and charged power during an actual rally', 
 }, info) => {
   await page.locator('#practice').click();
   await page.keyboard.press('Space');
-  await expect.poll(async () => (await snap(page)).phase).toBe('rally');
+  // Observe the first rally frame, not a later polling interval: serve semantics
+  // must already be cleared before the next native pointer event can arrive.
+  const servingAtRally = await page.evaluate(
+    () =>
+      new Promise<boolean>((resolve) => {
+        const check = () => {
+          const s = (window as any).centreCourt.snapshot();
+          if (s.phase === 'rally') resolve(s.input.serving);
+          else requestAnimationFrame(check);
+        };
+        requestAnimationFrame(check);
+      }),
+  );
+  expect(servingAtRally).toBe(false);
   const gesture = async (kind: 'slice' | 'lob' | 'drive') =>
     page.evaluate(async (kind) => {
       const button = document.querySelector('#shot-button')!;
-      const event = (type: string) =>
-        button.dispatchEvent(
-          new PointerEvent(type, {
-            pointerId: 71,
-            pointerType: 'touch',
-            bubbles: true,
-            clientX: 30,
-            clientY: 30,
-          }),
-        );
+      // Explicit native-style timestamps describe the intended human gesture;
+      // software-GL/GC stalls must not stretch a synthetic tap into a hold.
+      const base = performance.now();
+      const event = (type: string, elapsed: number) => {
+        const e = new PointerEvent(type, {
+          pointerId: 71,
+          pointerType: 'touch',
+          bubbles: true,
+          clientX: 30,
+          clientY: 30,
+        });
+        Object.defineProperty(e, 'timeStamp', { value: base + elapsed });
+        button.dispatchEvent(e);
+      };
       const delay = (ms: number) => new Promise((r) => setTimeout(r, ms));
-      event('pointerdown');
+      event('pointerdown', 0);
       if (kind === 'drive') await delay(350);
-      event('pointerup');
+      event('pointerup', kind === 'drive' ? 350 : 30);
       if (kind === 'lob') {
-        event('pointerdown');
-        event('pointerup');
+        event('pointerdown', 70);
+        event('pointerup', 100);
       }
     }, kind);
   await gesture('slice');

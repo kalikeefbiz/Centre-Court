@@ -169,6 +169,9 @@ scene.app.on('update', (dt: number) => {
       input.controls.release = false;
       input.controls.gestures = undefined;
     });
+  // A serve/point may transition during this update. Next DOM events must see
+  // the resulting phase, even before another rendered frame samples controls.
+  input.setContext(match.phase, match.inputEpoch);
   if (!developer?.frozen)
     scene.render(match, Math.min(dt, 0.1), input.charging, input.controls.shot);
   else if (!developer.inspecting) scene.renderComparison(match, Math.min(dt, 0.1));
@@ -216,6 +219,7 @@ if (
         input: {
           ...input.controls,
           charging: input.charging,
+          serving: input.serving,
           held: input.held,
           provisional: input.gesture.provisional,
         },

@@ -29,7 +29,9 @@ all athlete movement, swing markers, racket sweeps, serving and ball physics at
   clear incomplete gestures and buffers; committed strokes freeze on pause.
 - Tap or hold during serve commits the existing serve action immediately on
   release, preserving hand hold, toss, overhead contact and follow-through. Rally
-  double-tap recognition does not delay or replace the serve sequence.
+  double-tap recognition does not delay or replace the serve sequence. Input
+  context is synchronized both before and after fixed-step updates, so the first
+  rally frame immediately accepts rally gestures without stale serve semantics.
 
 The visible selector is removed. HIT shows SLICE / POWER / LOB feedback. Space and
 mouse use the same gestures; 1/2/3 remain explicit next-press overrides. Stroke
