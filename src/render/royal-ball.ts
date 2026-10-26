@@ -11,7 +11,7 @@ export class RoyalBall {
   readonly root = new pc.Entity('Royal Rally ball: visual only');
   status: 'loading' | 'ready' | 'error' = 'loading';
   error = '';
-  visualScale = 1.5;
+  visualScale = 2.25;
   setVisualScale(value: number) {
     if (!validBallScale(value)) return;
     this.visualScale = value;

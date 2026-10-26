@@ -26,7 +26,7 @@ export class FrameWindow {
     };
   }
 }
-export const BALL_SCALES = [1, 1.25, 1.5, 1.75] as const;
+export const BALL_SCALES = [1, 1.25, 1.5, 1.75, 2.25] as const;
 export function validBallScale(value: number) {
   return BALL_SCALES.some((x) => x === value);
 }

@@ -1091,3 +1091,42 @@ h1 em {
   min-height: 44px;
   font-size: 11px;
 }
+
+/* Keep the far athlete clear of the scoreboard in the closer portrait framing. */
+@media (max-width: 600px) and (orientation: portrait) {
+  .scoreboard {
+    top: 76px;
+    left: 12px;
+    width: 154px;
+  }
+  .score-head {
+    padding: 7px 8px 5px;
+    font-size: 6px;
+    letter-spacing: 0.04em;
+  }
+  .score-head b {
+    margin-left: 4px;
+  }
+  .score-row {
+    height: 27px;
+    padding: 0 8px;
+    font-size: 9px;
+  }
+  .score-row > span,
+  .score-row > div {
+    gap: 5px;
+  }
+  .score-row b {
+    width: 10px;
+  }
+  .score-row strong {
+    width: 24px;
+    height: 27px;
+    font-size: 14px;
+  }
+  #score-description {
+    padding: 6px 8px;
+    font-size: 7px;
+    letter-spacing: 0.05em;
+  }
+}

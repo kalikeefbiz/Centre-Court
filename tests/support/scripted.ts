@@ -1,6 +1,7 @@
 import { Ball } from '../../src/core/ball';
 import { planInterception, type Difficulty } from '../../src/core/ai';
 import { Match, FIXED_DT, idleControls } from '../../src/core/match';
+import { STRIKE } from '../../src/core/stroke';
 import { inContactZone } from '../../src/core/hitting';
 import { Random, vec } from '../../src/core/court';
 /** Scripted human uses only normal Controls. Mirroring lets it reuse the predictor, not hit cheats. */
@@ -28,6 +29,8 @@ export function scriptedPlayer(
     const mirror = m.ball.clone();
     mirror.position.z *= -1;
     mirror.velocity.z *= -1;
+    mirror.spin.x *= -1;
+    mirror.spin.y *= -1;
     const plan = planInterception(mirror, vec(p.x, 0, -p.z), 6.3, m.serveFlight, m.bounces);
     memory.target = vec(plan.target.x, 0, -plan.target.z);
   } else if (m.lastHitter === 0) memory.target = vec(0, 0, 10.8);
@@ -36,15 +39,29 @@ export function scriptedPlayer(
     n = Math.max(1, Math.hypot(dx, dz));
   c.x = (dx / n) * 0.87;
   c.z = (dz / n) * 0.87;
+  // Release ahead of the contact, using ordinary controls and the production
+  // trajectory. A swing now has a real wind-up instead of an instantaneous hit.
+  if (
+    m.lastHitter !== 1 ||
+    m.players[0].action ||
+    Math.hypot(m.ball.position.x - p.x, m.ball.position.z - p.z) > 4.5
+  )
+    return c;
+  const future = m.ball.clone();
+  let bounces = m.bounces;
+  for (let i = 0; i < Math.ceil(STRIKE.lead * 120); i++)
+    for (const e of future.step(FIXED_DT)) if (e.type === 'bounce') bounces++;
   if (
     m.lastHitter === 1 &&
-    !m.serveFlight &&
+    !m.players[0].action &&
+    bounces <= 1 &&
+    (!m.serveFlight || bounces > 0) &&
     inContactZone({
       player: p,
-      ball: m.ball.position,
-      velocity: m.ball.velocity,
+      ball: future.position,
+      velocity: future.velocity,
       side: 0,
-      bounces: m.bounces,
+      bounces,
       intent: 'drive',
     })
   ) {

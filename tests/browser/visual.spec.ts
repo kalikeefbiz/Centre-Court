@@ -22,7 +22,7 @@ test('production pixels show textured Kira in a match through both shipped camer
   const audit = [];
   for (const mode of ['broadcast', 'behind']) {
     if ((await snap(page)).camera !== mode) await page.locator('#camera-button').click();
-    const y = mode === 'broadcast' ? 25 : 10;
+    const y = mode === 'broadcast' ? 19 : 9.5;
     await expect
       .poll(async () => Math.abs((await snap(page)).presentation.cameraPosition[1] - y), {
         timeout: 15000,

@@ -198,7 +198,7 @@ if (
     value: {
       snapshot: () => ({
         build: __BUILD_ID__,
-        release: 'GOAL-005A',
+        release: 'GOAL-005',
         developer: developer?.snapshot(),
         presentation: scene.playerPresentation(),
         stadium: scene.stadiumPresentation(),
@@ -218,6 +218,18 @@ if (
         ball: { ...match.ball.position },
         velocity: { ...match.ball.velocity },
         players: match.players.map((p) => ({ ...p.position })),
+        actions: match.players.map((p) =>
+          p.action
+            ? {
+                ...p.action,
+                warp: { ...p.action.warp },
+                target: { ...p.action.target },
+                racket: { ...p.action.racket },
+                previousRacket: { ...p.action.previousRacket },
+              }
+            : null,
+        ),
+        spin: { ...match.ball.spin },
         locomotion: match.players.map(({ locomotion: m }) => ({
           ...m,
           velocity: { ...m.velocity },

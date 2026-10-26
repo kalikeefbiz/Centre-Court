@@ -78,3 +78,47 @@ Additional design reference examined: https://github.com/ryogrid/tetetennis
 movement). No source or assets copied; immediate velocity assignment is unsuitable
 for this milestone. No commercial assets, motion data, fixtures or animation files
 were retrieved from any reference project.
+
+
+GOAL 005 additions
+
+PlayCanvas native AnimStateGraph, ANIM_BLEND_DIRECT, AnimComponentLayer masks,
+AnimTrack/AnimData/AnimCurve and transition APIs are used in tennis-animation.ts
+and kira.ts. Native API setup was adapted from the official AnimComponent example
+and Anim State Graph Blending tutorial; parameter/weight safety follows the
+PlayCanvas configure-animation skill. No additional animation engine is used.
+https://developer.playcanvas.com/tutorials/anim-blending/
+https://api.playcanvas.com/engine/classes/AnimComponent.html
+https://github.com/playcanvas/skills/blob/main/skills/configure-animation/SKILL.md
+https://github.com/playcanvas/skills/blob/main/skills/configure-animation/references/direct-engine.md
+Engine implementation examined: framework/anim/controller/anim-blend-tree-direct.js,
+anim-state.js, components/anim/component-layer.js and anim/binder/default-anim-binder.js
+from the installed PlayCanvas 2.x package. The PlayCanvas MIT notice above applies.
+
+OpenTennis ball.rs (Ball::accelerate/fly, Flight::respond), player.rs and motion.rs
+(recovery/follow_over/serve_over), examined at 50585580ef2d5748d2b44ee37184c9520bf299b2:
+https://github.com/FIZL0/opentennis/blob/50585580ef2d5748d2b44ee37184c9520bf299b2/crates/hst-sim/src/ball.rs
+Informed separation of flight, collision response, stroke contact and recovery.
+No PS2-specific arithmetic, commercial constants, fixtures or asset data were
+ported. Original SI-unit midpoint integration, target shooting solver, relative
+racket/ball sweep and state timing were developed for Centre Court. OpenTennis
+MIT option and notice above remain available for behavioral adaptations.
+
+Conceptual/mathematical references only (no source copied; no verified repository-
+wide reuse license):
+https://github.com/ryogrid/tetetennis/blob/master/logic/physics/ball.mbt
+https://github.com/ryogrid/tetetennis/blob/master/logic/physics/bounce.mbt
+https://github.com/ryogrid/tetetennis/blob/master/immersion/01-player-motion-articulation.md
+https://github.com/ryogrid/tetetennis/blob/master/immersion/02-motion-capture-data-pipeline.md
+Flight uses quadratic drag F=0.5*rho*Cd*A*v^2 and spin-ratio-dependent lift along
+omega cross velocity, capped at Cl=0.28. Bounce uses Coulomb friction acting on
+contact-point slip with hollow-sphere inertia I=(2/3)*m*r^2: the no-slip impulse
+per unit mass is -2/5 times slip, capped at mu*(1+e)*normal impact speed. Normal
+restitution decreases with impact speed. Coefficients are centrally tunable game
+calibration, not claims of an empirically fitted professional-tennis simulator.
+
+Kira's source GLB, all original animation tracks, skin, mesh, textures, rig and
+racket socket remain unchanged. Racket/hand curves and short shuffle loops are
+derived only from the game's existing owned assets using the included sampling
+tool and native AnimTrack data. No external animation or commercial game data
+were downloaded or copied.

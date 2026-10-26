@@ -18,7 +18,7 @@ test('developer tools require explicit dev=1 and scale resets on ordinary visits
   expect((await snap(page)).royalBall.visualScale).toBe(1.75);
   await page.goto('/?dev=0&debug');
   await expect(page.locator('#play')).toBeEnabled({ timeout: 45000 });
-  expect((await snap(page)).royalBall.visualScale).toBe(1.5);
+  expect((await snap(page)).royalBall.visualScale).toBe(2.25);
   await expect(page.locator('#dev-tools')).toHaveCount(0);
   await page.goto('/');
   await expect(page.locator('#play')).toBeEnabled({ timeout: 45000 });
@@ -137,7 +137,7 @@ test('visual presets preserve physics and cameras, diagnostics export and touch 
   await page.locator('#dev-toggle').click();
   await page.locator('#dev-comparison').selectOption('near');
   const baseline = await snap(page);
-  for (const scale of [1, 1.25, 1.5, 1.75]) {
+  for (const scale of [1, 1.25, 1.5, 1.75, 2.25]) {
     await page.locator('#dev-scale').selectOption(String(scale));
     await expect.poll(async () => (await snap(page)).royalBall.visualScale).toBe(scale);
     const s = await snap(page);

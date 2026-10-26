@@ -23,7 +23,8 @@ test('Valkyrie and Royal Rally render, prepare, contact, move in place and freez
   await page.keyboard.down('Space');
   await expect.poll(async () => (await snap(page)).kira.state).toBe('Serve');
   await page.waitForTimeout(400);
-  expect((await snap(page)).kira.time).toBeCloseTo(1.2, 1);
+  expect((await snap(page)).kira.strokeTime).toBeCloseTo(0, 2);
+  expect((await snap(page)).ball.y).toBeLessThan(1.3);
   await page.keyboard.up('Space');
   await expect.poll(async () => (await snap(page)).contacts).toBe(1);
   s = await snap(page);

@@ -43,7 +43,7 @@ test('stadium builds locally, preserves dimensions, scales crowd and clears both
   for (const mode of ['broadcast', 'behind']) {
     if ((await snap(page)).camera !== mode) await page.locator('#camera-button').click();
     const portrait = page.viewportSize()!.width / page.viewportSize()!.height < 0.85;
-    const expectedY = mode === 'broadcast' ? (portrait ? 32 : 25) : portrait ? 15 : 10;
+    const expectedY = mode === 'broadcast' ? (portrait ? 12.07 : 19) : portrait ? 10 : 9.5;
     await expect
       .poll(async () => Math.abs((await snap(page)).presentation.cameraPosition[1] - expectedY), {
         timeout: 20000,
@@ -60,9 +60,9 @@ test('stadium builds locally, preserves dimensions, scales crowd and clears both
       expect(p.y).toBeGreaterThan(0);
       expect(p.y).toBeLessThan(1);
     }
-    // Behind portrait intentionally crops doubles alley edges, as in the accepted camera.
+    // Portrait fits the singles playing court; doubles alley edges may crop for athlete readability.
     if (mode === 'broadcast')
-      for (const p of s.stadium.courtCorners) {
+      for (const p of portrait ? s.stadium.singlesCourtCorners : s.stadium.courtCorners) {
         expect(p.x).toBeGreaterThan(0);
         expect(p.x).toBeLessThan(1);
         expect(p.y).toBeGreaterThan(0);

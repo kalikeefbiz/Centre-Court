@@ -149,6 +149,8 @@ describe('match transitions and recovery', () => {
     m.start('normal', 'short');
     expect(m.phase).toBe('serve');
     m.tick(FIXED_DT, { ...idleControls(), release: true, power: 0.65 });
+    expect(m.players[0].action?.stroke).toBe('Serve');
+    advance(m, 0.9);
     expect(m.phase).toBe('rally');
     m.pause();
     const b = JSON.stringify(m.ball);
@@ -167,6 +169,7 @@ describe('match transitions and recovery', () => {
     const m = new Match();
     m.start('normal', 'short');
     m.tick(FIXED_DT, { ...idleControls(), release: true, power: 0.65 });
+    advance(m, 0.9);
     expect(m.serveFlight).toBe(true);
     advance(m, 0.4);
     expect(m.contacts).toBe(1);
@@ -361,6 +364,7 @@ describe('serve aiming consistency', () => {
       const m = new Match();
       m.start('normal', 'short');
       m.tick(FIXED_DT, { ...idleControls(), release: true, power: 0.65, aim });
+      advance(m, 0.9);
       return m.ball.velocity.x;
     };
     expect(launch(1)).toBeGreaterThan(launch(-1));

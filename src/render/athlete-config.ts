@@ -13,10 +13,6 @@ export const KIRA = {
   racketScale: 0.72,
   racketPosition: [0, 0.28, 0] as const,
   sweetSpot: [0, 0.22, 0] as const,
-  swingSpeed: 1.65,
-  blendTime: 0.1,
-  visualContactSeconds: 0.065,
-  maxVisualCorrection: 0.18,
 };
 export function locomotionState(speed: number, x = 0, z = 0): AthleteState {
   if (speed > 0.15 && Math.abs(x) > Math.abs(z) * 1.6)

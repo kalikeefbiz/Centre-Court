@@ -315,7 +315,7 @@ describe('developer reproduction and serving lifecycle', () => {
     m.timer = 0;
     m.tick(FIXED_DT, idleControls());
     expect(m.ai.state).toBe('serve preparation');
-    for (let i = 0; i < 164; i++) m.tick(FIXED_DT, idleControls());
+    for (let i = 0; i < 271; i++) m.tick(FIXED_DT, idleControls());
     expect(m.ai.state).toBe('serve execution');
     expect(m.serveFlight).toBe(true);
     expect(m.contacts).toBe(1);

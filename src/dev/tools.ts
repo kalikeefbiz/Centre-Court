@@ -104,7 +104,7 @@ export class DeveloperTools {
           <label>Royal Rally visual scale<select id="dev-scale">${BALL_SCALES.map((x) => `<option value="${x}">${x.toFixed(2)}×</option>`).join('')}</select></label>
           <label>Gameplay camera<select id="dev-camera"><option value="broadcast">Broadcast</option><option value="behind">Behind player</option></select></label>
           <label>Readability comparison<select id="dev-comparison"><option value="live">Live gameplay</option><option value="frozen">Freeze current rally / serve</option><option value="serve">Serve reference · 2.6 m</option><option value="near">Near court · 1 m high</option><option value="far">Far court · 1 m high</option></select></label>
-          <p>References freeze simulation and move only the rendered ball. Return to Live before playing. 1.50× is the default, based on owner iPhone readability feedback; collision radius is unchanged.</p>
+          <p>References freeze simulation and move only the rendered ball. Return to Live before playing. 2.25× is the default, based on owner iPhone readability feedback; collision radius is unchanged.</p>
         </div>
         <label>Stadium inspection<select id="dev-stadium"><option value="gameplay">Gameplay camera</option><option value="overview">Full stadium overview</option><option value="net">Court surface and net</option><option value="seating">Seating and crowd</option><option value="courtside">Courtside equipment</option><option value="scoreboard">Live scoreboard</option></select></label>
         <p>Stadium views freeze the match. Select Gameplay camera to resume.</p>
@@ -226,7 +226,7 @@ export class DeveloperTools {
           JSON.stringify(
             {
               build: __BUILD_ID__,
-              release: 'GOAL-005A',
+              release: 'GOAL-005',
               device: navigator.userAgent,
               capturedAt: new Date().toISOString(),
               ...this.snapshot(),

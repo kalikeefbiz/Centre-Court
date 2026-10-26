@@ -1,0 +1,174 @@
+{
+  "environment": "Linux Playwright WebKit iPhone 13 profile, DPR 2; not physical hardware",
+  "evidence": [
+    {
+      "name": "baseline",
+      "view": "portrait",
+      "source": "https://kalikeefbiz.github.io/Centre-Court/",
+      "build": "59975ed138c7b0d8cb188a3cba9148675f4cb1b5",
+      "workingTree": false,
+      "presentation": {
+        "screen": {
+          "x": 226.27735540525873,
+          "y": 494.7001477087797
+        },
+        "cameraPosition": [
+          0.19580578804016113,
+          31.973588943481445,
+          32.98625183105469
+        ],
+        "human": "Kira",
+        "temporaryHumanCount": 0,
+        "opponentCount": 1
+      },
+      "ball": {
+        "status": "ready",
+        "error": "",
+        "diameter": 0.067,
+        "visualScale": 1.5,
+        "meshDiameter": 0.10050000161752948,
+        "visualDiameter": 0.1005,
+        "collisionRadius": 0.0335,
+        "meshCount": 1,
+        "visible": true,
+        "textured": true,
+        "scale": 0.07033116505595467
+      },
+      "kira": {
+        "clips": 13,
+        "head": [
+          2.2517278373241423,
+          0.8576985412836075,
+          12.414916904121638
+        ],
+        "root": [
+          1.600000023841858,
+          0,
+          12.350000381469727
+        ]
+      },
+      "errors": []
+    },
+    {
+      "name": "integrated",
+      "view": "portrait",
+      "source": "http://127.0.0.1:5173/",
+      "build": "59975ed138c7b0d8cb188a3cba9148675f4cb1b5",
+      "workingTree": true,
+      "presentation": {
+        "screen": {
+          "x": 249.77237341995738,
+          "y": 437.5834084923795
+        },
+        "cameraPosition": [
+          0.3672671914100647,
+          12.063385009765625,
+          28.23754119873047
+        ],
+        "rendering": {
+          "samples": 4,
+          "maxPixelRatio": 1.5,
+          "width": 585,
+          "height": 996
+        },
+        "athletePixels": 52.04567103796143,
+        "human": "Kira",
+        "temporaryHumanCount": 0,
+        "opponentCount": 1
+      },
+      "ball": {
+        "status": "ready",
+        "error": "",
+        "diameter": 0.067,
+        "visualScale": 2.25,
+        "meshDiameter": 0.1507499953286029,
+        "visualDiameter": 0.15075,
+        "collisionRadius": 0.0335,
+        "meshCount": 1,
+        "visible": true,
+        "textured": true,
+        "scale": 0.07033116505595467
+      },
+      "kira": {
+        "clips": 13,
+        "head": [
+          1.355120587348938,
+          0.8810157488286495,
+          12.461978355646133
+        ],
+        "root": [
+          1.600000023841858,
+          0,
+          12.350000381469727
+        ],
+        "blend": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "upperMask": {
+          "target_character/mixamorig:Hips/mixamorig:Spine": {
+            "children": true
+          }
+        }
+      },
+      "errors": []
+    },
+    {
+      "name": "integrated",
+      "view": "behind portrait",
+      "presentation": {
+        "screen": {
+          "x": 244.06929003803728,
+          "y": 432.80140418157606
+        },
+        "cameraPosition": [
+          0.511877715587616,
+          10.001714706420898,
+          28.349912643432617
+        ],
+        "rendering": {
+          "samples": 4,
+          "maxPixelRatio": 1.5,
+          "width": 585,
+          "height": 996
+        },
+        "athletePixels": 58.22097159883532,
+        "human": "Kira",
+        "temporaryHumanCount": 0,
+        "opponentCount": 1
+      },
+      "errors": []
+    },
+    {
+      "name": "integrated",
+      "view": "behind landscape",
+      "presentation": {
+        "screen": {
+          "x": 459.2664110024367,
+          "y": 330.3295994653185
+        },
+        "cameraPosition": [
+          0.5119998455047607,
+          9.500716209411621,
+          24.355709075927734
+        ],
+        "rendering": {
+          "samples": 4,
+          "maxPixelRatio": 1.5,
+          "width": 1266,
+          "height": 585
+        },
+        "athletePixels": 44.82524941556352,
+        "human": "Kira",
+        "temporaryHumanCount": 0,
+        "opponentCount": 1
+      },
+      "errors": []
+    }
+  ]
+}

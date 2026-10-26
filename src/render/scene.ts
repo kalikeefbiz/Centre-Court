@@ -31,7 +31,7 @@ export class Scene {
     this.app = new pc.Application(canvas, {
       graphicsDeviceOptions: {
         alpha: false,
-        antialias: devicePixelRatio < 2,
+        antialias: true,
         powerPreference: 'high-performance',
         preserveDrawingBuffer: false,
       },
@@ -406,6 +406,16 @@ export class Scene {
     return {
       screen: { x: screen.x, y: screen.y },
       cameraPosition: this.camera.getPosition().toArray(),
+      rendering: {
+        samples: this.app.graphicsDevice.samples,
+        maxPixelRatio: this.app.graphicsDevice.maxPixelRatio,
+        width: this.canvas.width,
+        height: this.canvas.height,
+      },
+      athletePixels: Math.abs(
+        this.camera.camera!.worldToScreen(new pc.Vec3(p.x, 1.7, p.z)).y -
+          this.camera.camera!.worldToScreen(new pc.Vec3(p.x, 0, p.z)).y,
+      ),
       human: 'Kira',
       temporaryHumanCount: this.app.root.find((n) => n.name === 'Temporary humanoid athlete')
         .length,
@@ -415,7 +425,7 @@ export class Scene {
   stadiumPresentation() {
     const project = (x: number, y: number, z: number) => {
       const p = this.camera.camera!.worldToScreen(new pc.Vec3(x, y, z));
-      return { x: p.x / this.canvas.width, y: p.y / this.canvas.height };
+      return { x: p.x / this.canvas.clientWidth, y: p.y / this.canvas.clientHeight };
     };
     return {
       ...this.stadium.snapshot(),
@@ -431,6 +441,9 @@ export class Scene {
           .find((n) => n.name === 'Net post')
           .map((e) => e.getLocalPosition().toArray()),
       },
+      singlesCourtCorners: [-1, 1].flatMap((x) =>
+        [-1, 1].map((z) => project(x * COURT.halfWidth, 0, z * COURT.halfLength)),
+      ),
       courtCorners: [-1, 1].flatMap((x) =>
         [-1, 1].map((z) => project(x * COURT.doublesWidth, 0, z * COURT.halfLength)),
       ),
@@ -450,6 +463,11 @@ export class Scene {
     this.stadium.update(match, dt);
     this.kira.update(match, dt, charging, intent);
     const menu = match.phase === 'menu';
+    const resolutionBudget = Math.min(window.devicePixelRatio, menu ? 1.75 : 1.5);
+    if (this.app.graphicsDevice.maxPixelRatio !== resolutionBudget) {
+      this.app.graphicsDevice.maxPixelRatio = resolutionBudget;
+      this.app.resizeCanvas();
+    }
     const p = match.ball.position;
     if (menu) {
       const t = 1 - Math.exp(-dt * 3);
@@ -458,13 +476,18 @@ export class Scene {
       this.rig.position.z += (17.8 - this.rig.position.z) * t;
       this.rig.target = { x: -1.1, y: 0.9, z: 11 };
     } else this.rig.update(dt, match.players[0].position, p, innerWidth / innerHeight);
+    this.camera.camera!.fov = !menu && innerWidth / innerHeight < 0.85 ? 50 : 48;
     const c = this.rig;
     this.camera.setPosition(c.position.x, c.position.y, c.position.z);
     this.camera.lookAt(c.target.x, c.target.y, c.target.z);
-    const offset = this.kira.ballOffset(p);
-    this.ball.setPosition(p.x + offset.x, p.y + offset.y, p.z + offset.z);
+    this.ball.setPosition(p.x, p.y, p.z);
     this.ball.enabled = !menu && this.royalBall.status === 'ready';
-    if (match.ball.active && match.phase === 'rally') this.ball.rotate(dt * 200, dt * 130, 0);
+    if (match.ball.active && match.phase === 'rally')
+      this.ball.rotate(
+        (match.ball.spin.x * dt * 180) / Math.PI,
+        (match.ball.spin.y * dt * 180) / Math.PI,
+        (match.ball.spin.z * dt * 180) / Math.PI,
+      );
     this.ballShadow.setPosition(p.x, 0.006, p.z);
     this.ballShadow.setLocalScale(0.075 + p.y * 0.012, 0.004, 0.075 + p.y * 0.012);
     this.ballShadow.enabled = !menu;

@@ -93,21 +93,25 @@ describe('authoritative production GLBs', () => {
   });
 });
 describe('presentation contact events preserve gameplay', () => {
-  it('emits once at the actual serve launch, with no added delay; pauses and resets safely', () => {
+  it('emits once after the toss reaches racket height; pauses and resets safely', () => {
     const m = new Match();
     m.start('normal', 'short');
     const origin = { ...m.ball.position };
     m.tick(FIXED_DT, { ...idleControls(), release: true, power: 0.65, aim: 0.5 });
+    expect(m.phase).toBe('serve');
+    expect(m.players[0].contact).toBeNull();
+    for (let i = 0; i < 120 && m.phase === 'serve'; i++) m.tick(FIXED_DT, idleControls());
     expect(m.phase).toBe('rally');
     const event = m.players[0].contact!;
-    expect(event.position).toEqual(origin);
+    expect(event.position.y).toBeGreaterThan(origin.y + 1);
+    expect(event.position.y).toBeCloseTo(2.17472, 4);
     expect(event.age).toBe(0);
     expect(m.ball.active).toBe(true);
     const velocity = { ...m.ball.velocity };
     m.tick(FIXED_DT, idleControls());
     expect(m.players[0].contact!.id).toBe(event.id);
     expect(event.age).toBeCloseTo(FIXED_DT);
-    expect(m.ball.velocity.x).toBeCloseTo(velocity.x);
+    expect(Math.abs(m.ball.velocity.x)).toBeLessThan(Math.abs(velocity.x));
     m.pause();
     m.tick(1, idleControls());
     expect(event.age).toBeCloseTo(FIXED_DT);
@@ -115,6 +119,7 @@ describe('presentation contact events preserve gameplay', () => {
     expect(m.players[0].contact).toBeNull();
     expect(m.players[0].swing).toBe(0);
     m.tick(FIXED_DT, { ...idleControls(), release: true });
+    for (let i = 0; i < 120 && m.phase === 'serve'; i++) m.tick(FIXED_DT, idleControls());
     expect(m.players[0].contact!.id).toBeGreaterThan(event.id);
   });
   it('records a rally return at the ball, without duplicating contacts for a held window', () => {
@@ -127,7 +132,11 @@ describe('presentation contact events preserve gameplay', () => {
     m.ball.active = true;
     const contact = { ...m.ball.position };
     m.tick(FIXED_DT, { ...idleControls(), release: true, shot: 'slice', aim: -0.8, power: 0.7 });
-    expect(m.players[0].contact?.position).toEqual(contact);
+    expect(m.players[0].contact).toBeNull();
+    for (let i = 0; i < 30 && !m.players[0].contact; i++) m.tick(FIXED_DT, idleControls());
+    expect(m.players[0].contact?.position.x).toBeCloseTo(contact.x, 4);
+    expect(m.players[0].contact?.position.z).toBeCloseTo(contact.z, 4);
+    expect(m.players[0].contact!.age).toBe(0);
     expect(m.contacts).toBe(1);
     expect(m.lastHitter).toBe(0);
     const id = m.players[0].contact!.id;

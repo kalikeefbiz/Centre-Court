@@ -112,11 +112,7 @@ export function planInterception(
     acceleration,
   },
 ): Interception {
-  Object.assign(scratch.position, ball.position);
-  Object.assign(scratch.velocity, ball.velocity);
-  scratch.active = ball.active;
-  scratch.shot = ball.shot;
-  scratch.netTouched = ball.netTouched;
+  scratch.copyFrom(ball);
   let count = bounces,
     bounce: Vec | null = null,
     bounceTime: number | null = null;
