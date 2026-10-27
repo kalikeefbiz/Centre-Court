@@ -349,7 +349,7 @@ scene.app.on('update', (dt: number) => {
   if (!developer?.frozen)
     scene.render(match, Math.min(dt, 0.1), input.charging, input.controls.shot);
   else if (!developer.inspecting) scene.renderComparison(match, Math.min(dt, 0.1));
-  if (previewing && match.phase === 'menu') scene.inspectCamera(previewAngle);
+  if (previewing && match.phase === 'menu') scene.inspectCamera(previewAngle, true);
   shotTarget.hidden =
     !input.charging || !!developer?.frozen || (match.phase !== 'serve' && match.phase !== 'rally');
   if (!shotTarget.hidden) {

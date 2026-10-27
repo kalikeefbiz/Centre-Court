@@ -332,7 +332,7 @@ export class Scene {
     this.camera.setPosition(p[0], p[1], p[2]);
     this.camera.lookAt(target[0], target[1], target[2]);
   }
-  inspectCamera(angle: string) {
+  inspectCamera(angle: string, rosterPreview = false) {
     const views: Record<string, number[]> = {
       front: [0, 1.8, 6.6],
       side: [4.4, 1.8, 11],
@@ -344,9 +344,9 @@ export class Scene {
     // Inspection-only framing leaves the lower phone panel clear of the athlete.
     // Gameplay CameraRig and its saved transforms are never changed here.
     const portrait = innerWidth < 600 && innerHeight > innerWidth;
-    const target = new pc.Vec3(0, portrait ? 0.1 : 1.1, 11);
+    const target = new pc.Vec3(0, portrait ? (rosterPreview ? 0.65 : 0.1) : 1.1, 11);
     this.camera.lookAt(target);
-    if (innerHeight < 500) {
+    if (innerHeight < 500 && !rosterPreview) {
       target.add(this.camera.right.clone().mulScalar(0.8));
       this.camera.lookAt(target);
     }
@@ -440,15 +440,21 @@ export class Scene {
     const include = (x: number, y: number, z: number) => {
       this.fitPoint.set(x, y, z);
       camera.worldToScreen(this.fitPoint, this.fitScreen);
-      extent = Math.max(extent, Math.abs((this.fitScreen.x / this.canvas.clientWidth) * 2 - 1));
+      extent = Math.max(
+        extent,
+        Math.abs((this.fitScreen.x / this.canvas.clientWidth) * 2 - 1),
+        Math.abs((this.fitScreen.y / this.canvas.clientHeight) * 2 - 1),
+      );
     };
     include(-COURT.halfWidth, 0, COURT.halfLength);
     include(COURT.halfWidth, 0, COURT.halfLength);
     include(-COURT.halfWidth, 0, -COURT.halfLength);
     include(COURT.halfWidth, 0, -COURT.halfLength);
     for (const athlete of match.players) {
-      include(athlete.position.x - 0.55, 0, athlete.position.z);
-      include(athlete.position.x + 0.55, 1.7, athlete.position.z);
+      for (const x of [-0.55, 0.55]) {
+        include(athlete.position.x + x, 0, athlete.position.z);
+        include(athlete.position.x + x, 1.7, athlete.position.z);
+      }
     }
     const required = Math.max(
       minimum,

@@ -196,3 +196,11 @@ All thirteen Nova clips were swept at 30 Hz (1,213 samples); coordinates remain
 finite. The largest observed edge extension (~0.336 m in an extreme smash) and
 worst-strain view are preserved explicitly; this is why Nova remains a beta rig,
 not a claim of final artist-approved skinning.
+
+The first full CI browser run completed with 63 passes, four established skips
+and one desktop framing failure: the near athlete projected 0.58% below the
+viewport. The projection fit now includes vertical bounds and all four athlete
+bounding corners. The unchanged failing camera case and three related desktop
+camera/serve-flow cases pass locally after correction. Three mobile WebKit roster,
+Signature and save scenarios also pass after the final preview-caption adjustment.
+Signature contact announcements now include the athlete and move name.

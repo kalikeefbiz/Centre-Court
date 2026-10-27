@@ -88,6 +88,7 @@ describe('authoritative heat and signatures', () => {
     expect(m.players[0].contact).not.toBeNull();
     expect(m.meters[0]).toBe(0);
     expect(m.events.filter((e) => e.type === 'signature')).toHaveLength(1);
+    expect(m.notice).toContain('DRIFT BREAK');
     expect(m.returns).toBe(1);
     m.start('normal', 'short');
     expect(m.meters).toEqual([0, 0]);

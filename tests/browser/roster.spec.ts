@@ -25,6 +25,12 @@ test('production roster loads only requested athletes, animates both sides, and 
     await page.screenshot({ path: `test-results/${info.project.name}-${id}-roster.png` });
     await page.locator('#preview-athlete').click();
     await expect(page.locator('#athlete-preview')).toBeVisible();
+    await page.evaluate(
+      () =>
+        new Promise<void>((resolve) =>
+          requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
+        ),
+    );
     await page.screenshot({ path: `test-results/${info.project.name}-${id}-athlete.png` });
     await page.locator('#preview-close').click();
     if (id !== 'kira') {

@@ -1,4 +1,4 @@
-import { type CharacterId } from './roster';
+import { ROSTER, type CharacterId } from './roster';
 import { METER, heatLevel, signatureShot } from './signature';
 import { selectStroke, inContactZone, shotTarget, CONTACT, type Stroke } from './hitting';
 import { Ball, GRAVITY, type Shot, type BallEvent } from './ball';
@@ -739,6 +739,10 @@ export class Match {
                 : 'GOOD CONTACT';
       this.feedbackTime = 1.2;
       this.announce(p.stroke);
+    }
+    if (signature) {
+      const profile = ROSTER[this.characters[side]];
+      this.announce(`${profile.name} · ${profile.signature}`.toUpperCase());
     }
   }
   aimTarget(shot: Controls['shot'], power: number, aim: number, depth: number, out: Vec) {
