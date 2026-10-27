@@ -83,8 +83,16 @@ const start = async (practice: boolean, rematch = false) => {
   } else
     rival = rematch ? match.characters[1] : ($<HTMLSelectElement>('opponent').value as CharacterId);
   loadingOpponent = true;
-  await scene.selectOpponent(rival);
-  loadingOpponent = false;
+  const pendingControls = Array.from(
+    $('menu').querySelectorAll<HTMLButtonElement | HTMLSelectElement>('button, select'),
+  ).map((element) => ({ element, disabled: element.disabled }));
+  pendingControls.forEach(({ element }) => (element.disabled = true));
+  try {
+    await scene.selectOpponent(rival);
+  } finally {
+    loadingOpponent = false;
+    pendingControls.forEach(({ element, disabled }) => (element.disabled = disabled));
+  }
   if (scene.opponent?.status !== 'ready') return;
   match.characters = [selected, rival];
   circuitMatch = !practice && $<HTMLSelectElement>('competition').value === 'circuit';
@@ -261,7 +269,8 @@ const renderUI = () => {
   setText('heat-indicator', match.heat === 2 ? 'RALLY HEAT · FIRE' : 'RALLY HEAT · BUILDING');
   $('menu').hidden = match.phase !== 'menu' || previewing;
   $('athlete-preview').hidden = !previewing;
-  $<HTMLButtonElement>('preview-athlete').disabled = scene.kira.status !== 'ready';
+  $<HTMLButtonElement>('preview-athlete').disabled =
+    loadingOpponent || scene.kira.status !== 'ready';
   setText('preview-title', `${ROSTER[selected].name} · ${ROSTER[selected].title}`);
   setText('preview-archetype', ROSTER[selected].archetype);
   $('menu-note').hidden = match.phase !== 'menu' || previewing;
