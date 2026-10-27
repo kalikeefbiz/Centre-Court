@@ -49,5 +49,9 @@
       "p99ExtensionM": 0.022080319549380507
     }
   ],
-  "visualAcceptance": "REQUIRES_RENDERED_INSPECTION"
+  "visualAcceptance": "CONTROLLED_POSES_INSPECTED",
+  "visualLimitations": [
+    "Extreme upper-arm/armpit poses retain residual stretching; no final artist or physical-device acceptance is implied.",
+    "Hair and clothing have inherited intersections; no cloth simulation was added."
+  ]
 }

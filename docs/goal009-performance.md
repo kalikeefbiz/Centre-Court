@@ -1,5 +1,8 @@
 # GOAL 009 mobile performance investigation
 
+> Saved specialist handoff (historical). The integrated implementation and final results are recorded in [GOAL-009.md](GOAL-009.md). Pending/not-run statements below describe the specialist handoff time.
+
+
 Role: saved `mobile_performance_engineer` profile, invoked by the coordinator
 through the current hosted collaboration tools. Work is bounded to measurement,
 evidence, and rendering recommendations; the coordinator owns integrated runtime

@@ -92,7 +92,10 @@ describe('GOAL 009 hand calibration provenance and bounded skin data', () => {
         expect(patch.bindings.length).toBeGreaterThan(0);
         expect(patch.bindings.every((binding) => binding.name.includes('HandThumb'))).toBe(true);
       }
-    });
+    // Hashing/inflating the unchanged full-detail source is bounded file I/O,
+    // not a gameplay performance assertion. Slow cloud disks exceed Vitest's
+    // default five seconds; all provenance/skin/transform assertions remain.
+    }, 30000);
 
   it('rejects wrong-character, duplicate/out-of-range and unnormalized sparse rows before skin mutation', () => {
     const source = patchFor('kira');
@@ -116,6 +119,16 @@ describe('GOAL 009 hand calibration provenance and bounded skin data', () => {
 
 describe('GOAL 009 hand frame preserves the actual socket transform', () => {
   afterEach(() => vi.unstubAllGlobals());
+
+  it('rejects render components whose skin was torn down by disabling the athlete', async () => {
+    vi.stubGlobal('document', { baseURI: 'https://centre-court.test/' });
+    vi.stubGlobal('fetch', vi.fn(async () => ({ ok: true, json: async () => patchFor('rico') })));
+    const root = new pc.GraphNode('inactive skin fixture') as pc.Entity;
+    (root as any).findComponents = () => [{ meshInstances: [{ skinInstance: null }] }];
+    const hand = new pc.GraphNode('mixamorig:RightHand'); root.addChild(hand);
+    const socket = new pc.GraphNode('racket socket') as pc.Entity; hand.addChild(socket);
+    await expect(new AthleteGrip(root, 'rico', socket).ready).rejects.toThrow('skin must be active');
+  });
 
   it('keeps grip and sweet spot fixed across wrist poses and repeated application', async () => {
     // This deliberately tests the real post-animation layer with GraphNodes,

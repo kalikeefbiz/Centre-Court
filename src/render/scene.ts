@@ -92,7 +92,7 @@ export class Scene {
     this.characterFill.addComponent('light', {
       type: 'directional',
       color: new pc.Color(0.76, 0.86, 1),
-      intensity: 0.35,
+      intensity: 0.8,
       castShadows: false,
     });
     this.characterFill.setEulerAngles(25, 145, 0);
@@ -356,6 +356,10 @@ export class Scene {
     this.camera.lookAt(target[0], target[1], target[2]);
   }
   inspectCamera(angle: string, rosterPreview = false) {
+    if (angle === 'grip') {
+      this.equipmentCamera('grip', false);
+      return;
+    }
     const views: Record<string, number[]> = {
       front: [0, 1.8, 6.6],
       side: [4.4, 1.8, 11],
@@ -377,7 +381,7 @@ export class Scene {
   /** A dedicated cosmetic close-up reuses the live selected rig and racket.
    * It never changes CameraRig's saved gameplay framing or loads another model.
    */
-  equipmentCamera(mode: 'athlete' | 'grip') {
+  equipmentCamera(mode: 'athlete' | 'grip', reserveControls = true) {
     if (mode === 'athlete') {
       this.inspectCamera('quarter', true);
       return;
@@ -386,11 +390,18 @@ export class Scene {
     if (!grip || !head) return;
     const portrait = innerWidth < 600 && innerHeight > innerWidth;
     const direction = head.clone().sub(grip);
-    const target = grip.clone().add(direction.mulScalar(0.3));
+    const target = grip.clone().add(direction.mulScalar(reserveControls ? 0.3 : 0));
     // Side/front view keeps the palm, handle and frame visible; on a phone the
     // lower half is reserved for equipment controls rather than covering them.
-    this.camera.setPosition(target.x + 0.72, target.y + 0.26, target.z - 0.95);
-    this.camera.lookAt(target.x, target.y - (portrait ? 0.3 : 0), target.z);
+    const distance = reserveControls ? 1 : 0.6;
+    if (!reserveControls) {
+      const outward = grip.clone().sub(this.kira.root.getPosition());
+      outward.y = 0;
+      if (outward.length() < 0.1) outward.set(1, 0, -1);
+      outward.normalize().mulScalar(0.65);
+      this.camera.setPosition(target.x + outward.x, target.y + 0.2, target.z + outward.z);
+    } else this.camera.setPosition(target.x + 0.72 * distance, target.y + 0.26 * distance, target.z - 0.95 * distance);
+    this.camera.lookAt(target.x, target.y - (portrait && reserveControls ? 0.22 : 0), target.z);
     this.camera.camera!.fov = 42;
   }
   inspectionBall(position?: number[]) {
@@ -530,12 +541,12 @@ export class Scene {
     if (presentation !== this.characterPresentation) {
       this.characterPresentation = presentation;
       this.characterFill.enabled = presentation;
-      const ambient = presentation ? [0.32, 0.36, 0.4] : [0.48, 0.54, 0.59];
+      const ambient = [0.48, 0.54, 0.59];
       this.app.scene.ambientLight.set(ambient[0], ambient[1], ambient[2]);
       this.camera.camera!.toneMapping = presentation ? pc.TONEMAP_NEUTRAL : pc.TONEMAP_LINEAR;
     }
     this.stadium.update(match, dt);
-    this.kira.update(match, dt, charging, intent);
+    this.kira.update(match, dt, charging, intent, presentation);
     this.opponent?.update(match, dt, false);
     const menu = match.phase === 'menu' && !this.preparingMatch;
     const resolutionBudget = Math.min(window.devicePixelRatio, menu ? 1.75 : 1.5);

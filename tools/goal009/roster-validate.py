@@ -68,6 +68,17 @@ if not hand_only:
  scene.render.filepath=str(out/'source-neutral.png');bpy.ops.render.render(write_still=True)
  for image in bpy.data.images:
   if image.source=='FILE' and not image.packed_file:image.pack()
+ # Open the saved authoring checkpoint on a useful stroke rather than the
+ # source-comparison pose. Retain the imported rig/actions for further editing.
+ contact=next(i for i,state in enumerate(report['states']) if state['state']=='Forehand')
+ geometry.vertices.foreach_set('co',converted(data['vertices'][contact]).reshape(-1))
+ geometry.normals_split_custom_set_from_vertices(converted(data['normals'][contact]).tolist());geometry.update()
+ racket.matrix_world=C@Matrix(data['equipment'][contact])@C.inverted()
+ for obj in objects:obj.hide_render=False
+ camera.location=(2,-5,1.7);look(camera,(0,0,1.1));camera.data.ortho_scale=3.0
+ notes=bpy.data.texts.new('GOAL009 calibration and provenance.json')
+ notes.write((ROOT/f'public/assets/characters/grips/{name}.json').read_text())
+ notes=bpy.data.texts.new('GOAL009 pose inspection.json');notes.write(json.dumps(report,indent=2))
  bpy.ops.wm.save_as_mainfile(filepath=str(work/'roster-grip-validated.blend'))
 (out/'poses.json').write_text(json.dumps(report,indent=2))
 print(name,len(report['states']),'STATE INSPECTION COMPLETE',flush=True)

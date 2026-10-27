@@ -168,7 +168,11 @@ test('visual presets preserve physics and cameras, diagnostics export and touch 
   await page.locator('#dev-export').click();
   expect((await download).suggestedFilename()).toContain('004');
   const s = await snap(page);
-  expect(s.developer.assets.filter((a: any) => !a.path.startsWith('procedural:'))).toHaveLength(5);
+  // Preserve the original five GLB load records; the new selected-athlete hand
+  // calibrations are separate lightweight assets, not extra character models.
+  expect(s.developer.assets.filter((a: any) => a.path.endsWith('.glb'))).toHaveLength(5);
+  expect(s.developer.assets.filter((a: any) => a.path.endsWith('.json')).map((a: any) => a.path).sort())
+    .toEqual(['assets/characters/grips/kira.json', 'assets/characters/grips/rico.json']);
   expect(
     s.developer.assets.some(
       (a: any) => a.path === 'procedural:Crown-Pavilion' && a.status === 'ready',

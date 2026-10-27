@@ -59,6 +59,7 @@ test('real cosmetic equipment preview, persistence and match attachment preserve
     'true',
   );
   await expect(page.locator('#equipment-equip')).toBeEnabled();
+  await expect.poll(async () => (await snapshot(page)).kira.state).toBe('ForehandVolley');
   await expect(page.locator('#equipment-view-grip')).toHaveAttribute('aria-pressed', 'true');
   await page.locator('#equipment-view-athlete').click();
   await expect(page.locator('#equipment-view-athlete')).toHaveAttribute('aria-pressed', 'true');

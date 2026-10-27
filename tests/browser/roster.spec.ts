@@ -19,9 +19,16 @@ test('production roster loads only requested athletes, animates both sides, and 
       .toBe('ready');
     const s = await snap(page);
     expect(s.kira.character).toBe(id);
+    await expect.poll(async () => (await snap(page)).kira.state).toBe('ForehandVolley');
     expect(s.kira.texturedSkin).toBe(true);
     expect(s.kira.racketAttached).toBe(true);
     expect(s.kira.clips).toHaveLength(13);
+    expect(s.kira.handGrip.ready).toBe(true);
+    expect(s.kira.handGrip.skinInstancesPatched).toBeGreaterThan(0);
+    expect(s.kira.handGrip.digits).toBe(5);
+    expect(s.kira.handGrip.fingerJoints).toBeGreaterThanOrEqual(15);
+    expect(Math.abs(s.kira.handGrip.equipmentFrameError)).toBeLessThan(0.000001);
+    expect(s.kira.handGrip.correctedShoulderVertices).toBe(id === 'nova' ? 1880 : 0);
     await page.screenshot({ path: `test-results/${info.project.name}-${id}-roster.png` });
     await page.locator('#preview-athlete').click();
     await expect(page.locator('#athlete-preview')).toBeVisible();
@@ -33,6 +40,16 @@ test('production roster loads only requested athletes, animates both sides, and 
     );
     await page.screenshot({ path: `test-results/${info.project.name}-${id}-athlete.png` });
     await page.locator('#preview-close').click();
+    await page.locator('#racket-equipment-open').click();
+    await expect(page.locator('#equipment-equip')).toBeEnabled();
+    await expect(page.locator('#equipment-view-grip')).toHaveAttribute('aria-pressed', 'true');
+    await page.evaluate(
+      () => new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve()))),
+    );
+    await page.screenshot({ path: `test-results/${info.project.name}-${id}-equipment-grip.png` });
+    await page.locator('#equipment-equip').click();
+    await expect(page.locator('#equipment-status')).toContainText('saved on this device');
+    await page.locator('#equipment-close').click();
     if (id !== 'kira') {
       await page.selectOption('#opponent', 'kira');
       await page.locator('#play').click();
@@ -44,6 +61,7 @@ test('production roster loads only requested athletes, animates both sides, and 
         .poll(async () => (await snap(page)).contact?.stroke, { timeout: 30000 })
         .toBe('Serve');
       expect((await snap(page)).kira.racketAttached).toBe(true);
+      await page.screenshot({ path: `test-results/${info.project.name}-${id}-equipped-serve.png` });
       await page.locator('#pause-button').click();
       await page.locator('#menu-pause').click();
     }

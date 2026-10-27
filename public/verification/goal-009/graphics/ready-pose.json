@@ -1,0 +1,47 @@
+[
+  {
+    "character": "kira",
+    "handM": [
+      -0.14269174004231855,
+      1.6008043983388083,
+      0.4377015183978066
+    ],
+    "method": "Existing ForehandVolley preparation upper-body subtree on native Idle hips; source states/markers/contact unchanged."
+  },
+  {
+    "character": "zuri",
+    "handM": [
+      -0.25917001073599394,
+      1.6337160325414066,
+      0.3179972397997715
+    ],
+    "method": "Existing ForehandVolley preparation upper-body subtree on native Idle hips; source states/markers/contact unchanged."
+  },
+  {
+    "character": "dante",
+    "handM": [
+      -0.29758910593846316,
+      1.6006089515617978,
+      0.35082457497060704
+    ],
+    "method": "Existing ForehandVolley preparation upper-body subtree on native Idle hips; source states/markers/contact unchanged."
+  },
+  {
+    "character": "rico",
+    "handM": [
+      -0.22834720774036887,
+      1.5930222526793738,
+      0.3611259863835562
+    ],
+    "method": "Existing ForehandVolley preparation upper-body subtree on native Idle hips; source states/markers/contact unchanged."
+  },
+  {
+    "character": "nova",
+    "handM": [
+      -0.16188085606163144,
+      1.5750049281387495,
+      0.5456466657912624
+    ],
+    "method": "Existing ForehandVolley preparation upper-body subtree on native Idle hips; source states/markers/contact unchanged."
+  }
+]

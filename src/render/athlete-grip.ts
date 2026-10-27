@@ -55,6 +55,7 @@ export class AthleteGrip {
   private initialized = false;
   private jointTargets: { node: pc.GraphNode; position: pc.Vec3; grip: pc.Quat; source: pc.Quat; wasPosed: boolean; right: boolean }[] = [];
   private patchedVertices = 0;
+  private skinInstancesPatched = 0;
   private frameError = 0;
   private secondaryContact = false;
   private secondaryDistance = Infinity;
@@ -85,6 +86,7 @@ export class AthleteGrip {
     const components = this.model.findComponents('render') as pc.RenderComponent[];
     for (const instance of components.flatMap((component) => component.meshInstances)) {
       if (!instance.skinInstance) continue;
+      this.skinInstancesPatched++;
       const mesh = instance.mesh;
       if (!mesh) throw new Error('Athlete skin is missing its render mesh');
       const buffer = mesh.vertexBuffer;
@@ -118,8 +120,14 @@ export class AthleteGrip {
         corrected.inverseBindPose[index].set(binding.matrix);
       }
       instance.skinInstance.skin = corrected;
+      // Render components recreate SkinInstances on disable/enable (for example
+      // inspector isolation). Keep the same per-asset calibration on that path.
+      // Matrices above are absolute, so shared-athlete instances cannot compound it.
+      mesh.skin = corrected;
     }
-    this.patchedVertices = patch.vertices.length;
+    if (components.length && !this.skinInstancesPatched)
+      throw new Error('The athlete skin must be active before hand calibration');
+    this.patchedVertices = this.skinInstancesPatched ? patch.vertices.length : 0;
   }
   /** Call after equipment.fit has installed its fresh uncorrected socket pose. */
   setSocket(socket: pc.Entity) {
@@ -165,6 +173,7 @@ export class AthleteGrip {
     return {
       ready: this.initialized,
       correctedVertices: this.patchedVertices,
+      skinInstancesPatched: this.skinInstancesPatched,
       correctedShoulderVertices: this.patch?.shoulderVertices?.length ?? 0,
       fingerJoints: this.jointTargets.filter((j) => j.right).length,
       digits: this.digitCount,

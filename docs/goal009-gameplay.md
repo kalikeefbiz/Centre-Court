@@ -1,5 +1,8 @@
 # GOAL 009 Gameplay specialist handoff
 
+> Saved specialist handoff (historical). The integrated implementation and final results are recorded in [GOAL-009.md](GOAL-009.md). Pending/not-run statements below describe the specialist handoff time.
+
+
 Profile loaded: `.codex/agents/gameplay_engineer.toml`. Starting gameplay baseline:
 `f7fdda3e75a1d93b053da2e5ad941618547793da`. Shared-file integration belongs to the lead.
 

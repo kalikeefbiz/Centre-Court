@@ -40,6 +40,7 @@ These maps record verified discovery at the baseline commit. Confirm affected so
 - Preserve supplied visual quality. Do not impose arbitrary polygon/file-size limits or automatically choose lower-quality models. Inspect platform compatibility and measure costs first. Investigate shared skeleton/animation reuse before proposing new rigging; names alone do not prove compatibility.
 - Distinguish download size, decoded runtime memory, GPU residency and rendering complexity. Measure before optimization. Do not fabricate performance results or claim physical iPhone/Safari validation from desktop/Linux WebKit tests.
 - Preserve the current loading gate and explicit failure state. Do not silently replace required characters with placeholders or change asset URLs, registry markers, sockets, rig samples, physics scale or deployment identity outside authorized scope.
+- Hand calibration requires active PlayCanvas SkinInstances. Hide mesh visibility during initialization; disabling the model entity tears down its skins. Preserve calibrated mesh skin metadata across disable/enable, and verify rendered grips as well as calibration counters. See docs/GOAL-009.md.
 
 ## Verification and handoff
 

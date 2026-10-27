@@ -94,6 +94,9 @@ try {
       localStorage.setItem('centre-court-circuit-v1', JSON.stringify({ version: 1, player: character, stage: 0, wins: 0, losses: 0, completed: false, results: [] }));
     }, character);
     const page = await context.newPage();
+    // First-time full-detail shader initialization is slow on this software GL
+    // host. This bounded action allowance does not alter acceptance tests.
+    page.setDefaultTimeout(90000);
     activePage = page;
     const errors = [], requestedCharacters = [], requestedEquipment = [];
     page.on('pageerror', (error) => errors.push(error.message));
@@ -134,6 +137,8 @@ try {
       };
     });
     const result = { character, readyMs, initialRequests, runtime, scenarios: [], errors };
+    // Retain completed windows if a later UI scenario cannot finish.
+    output.results.push(result);
     result.scenarios.push(await record(page, `${character}-menu`));
     await page.locator('#preview-athlete').click();
     result.scenarios.push(await record(page, `${character}-closeup`));
@@ -183,7 +188,6 @@ try {
     result.requestedCharacters = requestedCharacters;
     result.requestedEquipment = requestedEquipment;
     result.finalJSHeap = await page.evaluate(() => performance.memory ? { used: performance.memory.usedJSHeapSize, total: performance.memory.totalJSHeapSize, limit: performance.memory.jsHeapSizeLimit } : null);
-    output.results.push(result);
     writeFileSync(resolve(out, 'measurements.json'), JSON.stringify(output, null, 2));
     await context.close();
     activePage = undefined;

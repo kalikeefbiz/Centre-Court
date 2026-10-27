@@ -1,0 +1,11 @@
+{
+  "character": "nova",
+  "checkpoint": "artifacts/goal-009/graphics/nova/roster-grip-validated.blend",
+  "reopened": true,
+  "vertices": 138224,
+  "triangles": 102942,
+  "armatures": 1,
+  "actions": 13,
+  "packedImages": 6,
+  "sourceGLBExported": false
+}

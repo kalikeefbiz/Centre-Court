@@ -1,0 +1,11 @@
+{
+  "character": "kira",
+  "checkpoint": "artifacts/goal-009/graphics/kira/roster-grip-validated.blend",
+  "reopened": true,
+  "vertices": 46890,
+  "triangles": 30463,
+  "armatures": 1,
+  "actions": 13,
+  "packedImages": 6,
+  "sourceGLBExported": false
+}

@@ -36,6 +36,7 @@ def finger_path(root,lengths,angles):
 
 reports=[]
 for character,relative in FILES.items():
+ if len(sys.argv)>1 and character not in sys.argv[1:]:continue
  source=ROOT/'public/assets/characters'/relative;g=GLB(source);ns=g.json['nodes'];parents={c:i for i,n in enumerate(ns) for c in n.get('children',[])}
  @lru_cache(None)
  def world(i):return world(parents[i])@mat(ns[i]) if i in parents else mat(ns[i])
@@ -44,7 +45,7 @@ for character,relative in FILES.items():
  for side in ['Right','Left']:
   handname=f'mixamorig:{side}Hand';hi=names[handname];hand=worlds[hi];invhand=np.linalg.inv(hand);local=(invhand@np.c_[positions,np.ones(len(positions))].T).T[:,:3];fit=FITS[character];translation=np.array(fit['translation'])*np.array([1,1,1 if side=='Right' else -1]);correction=np.eye(4);correction[:3,3]=translation
   # Native left hand coordinates are mirrored about their palm-normal axis.
-  handids=[i for i,n in enumerate(jn) if n.startswith(handname)];handweight=np.where(np.isin(ji,handids),jw,0).sum(1);mask=(handweight>.05)&(local[:,1]>-.005)&(local[:,1]<.25)
+  handids=[i for i,n in enumerate(jn) if n.startswith(handname)];handweight=np.where(np.isin(ji,handids),jw,0).sum(1);mask=(handweight>.05)&(local[:,1]>(-.12 if character=='nova' else -.005))&(local[:,1]<.25)
   aligned=local+translation;all_chains=[]
   for finger in ['Index','Middle','Ring','Pinky','Thumb']:
    ids=[names[f'{handname}{finger}{k}'] for k in range(1,5)]
@@ -127,7 +128,7 @@ for character,relative in FILES.items():
     if best is None or score<best[0]:best=(score,fi,dist,t)
    # Bad inherited non-hand weights must not pull glove webbing toward the arm
    # or torso. The wrist is the only transition: blend smoothly to this forearm.
-   u=float(np.clip((local[vi,1]+.005)/.045,0,1));total=u*u*(3-2*u)
+   u=float(np.clip((local[vi,1]+(.08 if character=='nova' else .005))/(.12 if character=='nova' else .045),0,1));total=u*u*(3-2*u)
    forearm=jn.index(f'mixamorig:{side}ForeArm')
    influences={forearm:1-total} if total<1 else {}
    hand_joint=jn.index(handname)
@@ -148,4 +149,7 @@ for character,relative in FILES.items():
  (OUT/f'{character}.json').write_text(json.dumps(payload,separators=(',',':')))
  report={'character':character,'vertexCount':len(positions),'patchedHandVertices':len(records),'sourceSha256':payload['sourceSha256'],'rightHandSourceInfluences':{n:float(np.where(ji==i,jw,0).sum()) for i,n in enumerate(jn) if 'RightHand' in n},'fit':fit,'fingers':finger_report,'preserved':['POSITION','NORMAL','TANGENT','TEXCOORD_0','indices','materials','images','animations','source GLB bytes']}
  reports.append(report);print(character,'PATCH',len(records),'vertices',flush=True)
-(REPORT/'grip-bind-audit.json').write_text(json.dumps(reports,indent=2))
+audit=REPORT/'grip-bind-audit.json'
+if len(sys.argv)>1 and audit.exists():
+ previous=json.loads(audit.read_text());updated={r['character']:r for r in reports};reports=[updated.get(r['character'],r) for r in previous]
+audit.write_text(json.dumps(reports,indent=2))

@@ -29,3 +29,13 @@ claims were repeated here. Discovery covers 58 commits on main through `152c72c`
 Existing reports remain intact. Add one concise row per completed major decision
 or GOAL, link detailed evidence, and record the accepted commit after review.
 Avoid duplicating transcripts, unverified benchmarks or invented goal numbers.
+
+
+## GOAL 009 — roster grip and equipment integration
+
+Based on owner-verified f7fdda3 (GOAL 008). Added five-athlete calibrated hand/bind
+patches, localized full-detail Nova shoulder repair, independent racket definitions
+and per-athlete cosmetic selection/persistence. Retained all source GLBs, textures,
+13 clips, authoritative gameplay and the existing Pages workflow. Final work ran
+as one coordinator after preserving the five specialists' earlier contributions.
+See [GOAL-009](GOAL-009.md) for actual rendered evidence, limits and release checks.

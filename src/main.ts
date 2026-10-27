@@ -85,13 +85,19 @@ const equipmentUI = new EquipmentUI(document.body, equipment, {
   },
   close: () => {
     previewing = false;
+    // Restore the launcher's visible menu before the dialog restores focus.
+    renderUI();
   },
   view: (mode) => {
     equipmentView = mode;
   },
 });
 $('racket-equipment-open').onclick = () => {
-  if (scene.kira.status === 'ready') equipmentUI.open();
+  if (scene.kira.status === 'ready') {
+    // Touch WebKit does not always focus a clicked button automatically.
+    $('racket-equipment-open').focus();
+    equipmentUI.open();
+  }
 };
 const start = async (practice: boolean, rematch = false) => {
   stadiumAudio.unlock();

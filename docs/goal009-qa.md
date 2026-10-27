@@ -1,5 +1,8 @@
 # GOAL 009 — QA and regression evidence
 
+> Saved specialist handoff (historical). The integrated implementation and final results are recorded in [GOAL-009.md](GOAL-009.md). Pending/not-run statements below describe the specialist handoff time.
+
+
 Baseline: `f7fdda3e75a1d93b053da2e5ad941618547793da`.
 The QA specialist loaded and adopted `.codex/agents/qa_regression_engineer.toml`
 and root `AGENTS.md` in the GOAL 009 worktree. This is a real bounded specialist

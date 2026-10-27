@@ -266,7 +266,7 @@
   {
     "character": "nova",
     "vertexCount": 138224,
-    "patchedHandVertices": 2588,
+    "patchedHandVertices": 4157,
     "sourceSha256": "fb904e67374b70bff283809e72f33fb68ab654e9c3502b8dd3391813ada7ceb8",
     "rightHandSourceInfluences": {
       "mixamorig:RightHand": 1710.132080078125,

@@ -1,0 +1,11 @@
+{
+  "character": "rico",
+  "checkpoint": "artifacts/goal-009/graphics/rico/roster-grip-validated.blend",
+  "reopened": true,
+  "vertices": 30133,
+  "triangles": 25600,
+  "armatures": 1,
+  "actions": 13,
+  "packedImages": 6,
+  "sourceGLBExported": false
+}

@@ -1,0 +1,11 @@
+{
+  "character": "zuri",
+  "checkpoint": "artifacts/goal-009/graphics/zuri/roster-grip-validated.blend",
+  "reopened": true,
+  "vertices": 32987,
+  "triangles": 30672,
+  "armatures": 1,
+  "actions": 13,
+  "packedImages": 6,
+  "sourceGLBExported": false
+}

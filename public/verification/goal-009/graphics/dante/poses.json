@@ -1,0 +1,262 @@
+{
+  "character": "dante",
+  "sourceSha256": "806ab3b44a7201902d5ec84aa7d059aba335db5275bbd4088c605b453d9e2edb",
+  "vertices": 37050,
+  "triangles": 30868,
+  "method": "Exact glTF linear blend skinning; actual source clips/registry markers, carry wrist and current grip patch. No Match/arm-CCD simulation; Blender images are controlled pose inspection, not browser gameplay proof.",
+  "states": [
+    {
+      "state": "Idle",
+      "seconds": 0.6,
+      "samples": [
+        {
+          "seconds": 0.6,
+          "worldSweetSpotErrorM": 2.7755575615628914e-17,
+          "secondaryHandContact": false,
+          "finiteSurface": true
+        }
+      ]
+    },
+    {
+      "state": "Walk",
+      "seconds": 0.3,
+      "samples": [
+        {
+          "seconds": 0.3,
+          "worldSweetSpotErrorM": 5.551115123125783e-17,
+          "secondaryHandContact": false,
+          "finiteSurface": true
+        }
+      ]
+    },
+    {
+      "state": "Run",
+      "seconds": 0.25,
+      "samples": [
+        {
+          "seconds": 0.25,
+          "worldSweetSpotErrorM": 2.306595211858756e-16,
+          "secondaryHandContact": false,
+          "finiteSurface": true
+        }
+      ]
+    },
+    {
+      "state": "ShuffleLeft",
+      "seconds": 1.8,
+      "samples": [
+        {
+          "seconds": 1.8,
+          "worldSweetSpotErrorM": 1.1443916996305594e-16,
+          "secondaryHandContact": false,
+          "finiteSurface": true
+        }
+      ]
+    },
+    {
+      "state": "ShuffleRight",
+      "seconds": 1.5,
+      "samples": [
+        {
+          "seconds": 1.5,
+          "worldSweetSpotErrorM": 0.0,
+          "secondaryHandContact": false,
+          "finiteSurface": true
+        }
+      ]
+    },
+    {
+      "state": "Forehand",
+      "seconds": 0.9333333333333333,
+      "samples": [
+        {
+          "seconds": 0.6666666666666666,
+          "worldSweetSpotErrorM": 1.2412670766236366e-16,
+          "secondaryHandContact": false,
+          "finiteSurface": true
+        },
+        {
+          "seconds": 0.9333333333333333,
+          "worldSweetSpotErrorM": 1.1443916996305594e-16,
+          "secondaryHandContact": false,
+          "finiteSurface": true
+        },
+        {
+          "seconds": 1.8333333333333333,
+          "worldSweetSpotErrorM": 1.1102230246251565e-16,
+          "secondaryHandContact": false,
+          "finiteSurface": true
+        }
+      ]
+    },
+    {
+      "state": "Backhand",
+      "seconds": 1.0,
+      "samples": [
+        {
+          "seconds": 0.7333333333333333,
+          "worldSweetSpotErrorM": 1.1102230246251565e-16,
+          "secondaryHandContact": false,
+          "finiteSurface": true
+        },
+        {
+          "seconds": 1.0,
+          "worldSweetSpotErrorM": 2.0770370905276122e-16,
+          "secondaryHandContact": false,
+          "finiteSurface": true
+        },
+        {
+          "seconds": 1.9,
+          "worldSweetSpotErrorM": 0.0,
+          "secondaryHandContact": false,
+          "finiteSurface": true
+        }
+      ]
+    },
+    {
+      "state": "ForehandVolley",
+      "seconds": 0.9666666666666667,
+      "samples": [
+        {
+          "seconds": 0.7333333333333333,
+          "worldSweetSpotErrorM": 1.2412670766236366e-16,
+          "secondaryHandContact": false,
+          "finiteSurface": true
+        },
+        {
+          "seconds": 0.9666666666666667,
+          "worldSweetSpotErrorM": 2.482534153247273e-16,
+          "secondaryHandContact": false,
+          "finiteSurface": true
+        },
+        {
+          "seconds": 1.4333333333333333,
+          "worldSweetSpotErrorM": 1.1102230246251565e-16,
+          "secondaryHandContact": false,
+          "finiteSurface": true
+        }
+      ]
+    },
+    {
+      "state": "BackhandVolley",
+      "seconds": 0.9666666666666667,
+      "samples": [
+        {
+          "seconds": 0.7666666666666667,
+          "worldSweetSpotErrorM": 1.1443916996305594e-16,
+          "secondaryHandContact": false,
+          "finiteSurface": true
+        },
+        {
+          "seconds": 0.9666666666666667,
+          "worldSweetSpotErrorM": 2.482534153247273e-16,
+          "secondaryHandContact": false,
+          "finiteSurface": true
+        },
+        {
+          "seconds": 1.4666666666666666,
+          "worldSweetSpotErrorM": 1.1102230246251565e-16,
+          "secondaryHandContact": false,
+          "finiteSurface": true
+        }
+      ]
+    },
+    {
+      "state": "Slice",
+      "seconds": 0.9,
+      "samples": [
+        {
+          "seconds": 0.6666666666666666,
+          "worldSweetSpotErrorM": 1.1102230246251565e-16,
+          "secondaryHandContact": false,
+          "finiteSurface": true
+        },
+        {
+          "seconds": 0.9,
+          "worldSweetSpotErrorM": 1.3877787807814457e-16,
+          "secondaryHandContact": false,
+          "finiteSurface": true
+        },
+        {
+          "seconds": 1.9,
+          "worldSweetSpotErrorM": 1.2412670766236366e-16,
+          "secondaryHandContact": false,
+          "finiteSurface": true
+        }
+      ]
+    },
+    {
+      "state": "Lob",
+      "seconds": 0.5666666666666667,
+      "samples": [
+        {
+          "seconds": 0.3333333333333333,
+          "worldSweetSpotErrorM": 7.850462293418876e-17,
+          "secondaryHandContact": false,
+          "finiteSurface": true
+        },
+        {
+          "seconds": 0.5666666666666667,
+          "worldSweetSpotErrorM": 1.5700924586837752e-16,
+          "secondaryHandContact": false,
+          "finiteSurface": true
+        },
+        {
+          "seconds": 1.0666666666666667,
+          "worldSweetSpotErrorM": 2.482534153247273e-16,
+          "secondaryHandContact": false,
+          "finiteSurface": true
+        }
+      ]
+    },
+    {
+      "state": "Smash",
+      "seconds": 0.8666666666666667,
+      "samples": [
+        {
+          "seconds": 0.6,
+          "worldSweetSpotErrorM": 1.2412670766236366e-16,
+          "secondaryHandContact": false,
+          "finiteSurface": true
+        },
+        {
+          "seconds": 0.8666666666666667,
+          "worldSweetSpotErrorM": 5.551115123125783e-17,
+          "secondaryHandContact": false,
+          "finiteSurface": true
+        },
+        {
+          "seconds": 1.7666666666666666,
+          "worldSweetSpotErrorM": 1.2177709378935645e-16,
+          "secondaryHandContact": false,
+          "finiteSurface": true
+        }
+      ]
+    },
+    {
+      "state": "Serve",
+      "seconds": 1.5333333333333334,
+      "samples": [
+        {
+          "seconds": 1.2,
+          "worldSweetSpotErrorM": 1.1102230246251565e-16,
+          "secondaryHandContact": false,
+          "finiteSurface": true
+        },
+        {
+          "seconds": 1.5333333333333334,
+          "worldSweetSpotErrorM": 1.1102230246251565e-16,
+          "secondaryHandContact": false,
+          "finiteSurface": true
+        },
+        {
+          "seconds": 2.1666666666666665,
+          "worldSweetSpotErrorM": 4.47545209131181e-16,
+          "secondaryHandContact": false,
+          "finiteSurface": true
+        }
+      ]
+    }
+  ],
+  "sourceUnchanged": true
+}

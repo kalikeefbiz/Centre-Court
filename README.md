@@ -1,6 +1,15 @@
-# Centre Court · GOAL 004
+# Centre Court · GOAL 009
 
-A playable mobile-first 3D arcade singles tennis game in the original Crown Pavilion stadium by **BlackHouse**, built with PlayCanvas and TypeScript. Kira uses the owner-supplied rigged character and separate racket GLBs. The AI opponent retains its temporary model.
+A playable mobile-first 3D arcade singles tennis game in the original Crown Pavilion stadium by **BlackHouse**, built with PlayCanvas and TypeScript. Kira, Zuri, Dante, Rico and Nova use the supplied production rigs on both sides of the court; Jax's model remains unavailable.
+
+GOAL 009 adds individual hand/skin calibration, independent cosmetic equipment,
+per-athlete racket persistence and closer character/equipment presentation. One
+distinct Pink / Black racket is currently supplied. The accepted GOAL 008 tennis,
+audio, Signature Strikes, Rally Heat and progression systems are preserved.
+See the [integrated handoff](docs/GOAL-009.md),
+[visual evidence](https://kalikeefbiz.github.io/Centre-Court/verification/goal-009/), and
+[prior gameplay baseline](docs/GOAL-008.md). Older GOAL 002–004 sections below
+retain their historical context.
 
 Kira's mid-resolution replacement reuses the existing 74-joint rig and all 13
 tennis animations, with 46,890 vertices, 30,463 triangles and the supplied 4096 px

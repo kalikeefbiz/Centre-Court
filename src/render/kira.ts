@@ -149,8 +149,10 @@ export class AthleteRenderer {
       return { state, track };
     });
     this.model = character.instantiateRenderEntity({ castShadows: false });
-    this.model.enabled = false;
     this.root.addChild(this.model);
+    // Disabling this entity tears down PlayCanvas SkinInstances. Keep its
+    // skeleton alive while calibration loads; hide only the render meshes.
+    this.meshes(this.model).forEach((mesh) => { mesh.visible = false; });
     this.hips = this.model.findByName(this.config.hips)!;
     const hand = this.model.findByName(this.config.hand);
     if (!hand || !this.hips) throw new Error('Kira skeleton is missing the hand or hips');
@@ -160,6 +162,7 @@ export class AthleteRenderer {
     this.socket.setLocalPosition(...this.config.gripPosition);
     this.socket.setLocalEulerAngles(...this.config.gripRotation);
     this.racket = equipment.instantiateRenderEntity({ castShadows: false });
+    this.meshes(this.racket).forEach((mesh) => { mesh.visible = false; });
     this.racket.name = getRacket(this.equipmentId).name + ' production racket';
     this.socket.addChild(this.racket);
     this.fitEquipment(this.racket, this.equipmentId);
@@ -209,7 +212,7 @@ export class AthleteRenderer {
     this.clearWrist(0);
     this.inPlace();
     this.grip.apply('Idle');
-    this.model.enabled = true;
+    this.meshes(this.model).forEach((mesh) => { mesh.visible = true; });
     this.bodyMeshes = this.meshes(this.model).filter((m) => !this.meshes(this.racket).includes(m));
     this.racketMeshes = this.meshes(this.racket);
     for (const texture of character.textures) {
@@ -406,7 +409,7 @@ export class AthleteRenderer {
       return { name: m.name, useMetalness: m.useMetalness, metalness: m.metalness, maps };
     });
   }
-  update(match: Match, dt: number, charging: boolean, intent: 'drive' | 'slice' | 'lob' = 'drive') {
+  update(match: Match, dt: number, charging: boolean, intent: 'drive' | 'slice' | 'lob' = 'drive', presentationPose = false) {
     if (this.status !== 'ready') return;
     const athlete = match.players[this.side],
       m = athlete.locomotion,
@@ -414,7 +417,11 @@ export class AthleteRenderer {
     this.root.setPosition(athlete.position.x, 0, athlete.position.z);
     if (match.phase === 'paused' || match.phase === 'result') return;
     const serving = match.phase === 'serve' && match.server === this.side;
-    const preparing = charging || serving || !!action;
+    // The supplied idle holds the hand beside bulky clothing on some athletes.
+    // Reuse a verified volley pose for cosmetic inspection, without moving the
+    // authoritative player or changing any match/animation contact timing.
+    const presenting = presentationPose && match.phase === 'menu';
+    const preparing = charging || serving || !!action || presenting;
     const sideSprint = movementWeights(m, this.movementBlend, preparing);
     for (let i = 0; i < BLEND_CHANNELS.length; i++)
       this.model.anim!.setFloat('weight' + BLEND_CHANNELS[i], clamp(this.movementBlend[i], 0, 1));
@@ -430,8 +437,12 @@ export class AthleteRenderer {
       intent,
       serving,
     });
-    const stroke = action?.stroke ?? (preparing ? context : null);
-    const fullBody = serving || action?.stroke === 'Serve';
+    // Keep the stationary ready hand ahead of the torso rather than buried in
+    // the supplied casual-idle clothing pose. Legs retain authoritative native
+    // locomotion; a real preparation/action immediately takes precedence.
+    const readyPose = !preparing && m.speed < 0.15;
+    const stroke = action?.stroke ?? (presenting || readyPose ? 'ForehandVolley' : preparing ? context : null);
+    const fullBody = presenting || serving || action?.stroke === 'Serve';
     if (stroke) {
       if (stroke !== this.upperState || (action && action.id !== this.actionId)) {
         upper.transition(stroke, 0.055);
@@ -442,7 +453,7 @@ export class AthleteRenderer {
       if (upper.mask !== expectedMask) upper.mask = expectedMask as unknown as object;
       const fade = action ? clamp((action.contactAt + 0.58 - action.age) / 0.18, 0, 1) : 1;
       upper.weight += (fade - upper.weight) * (1 - Math.exp(-dt * 35));
-      upper.activeStateCurrentTime = action?.clipTime ?? (serving ? 0 : ANIMATIONS[stroke].prepare);
+      upper.activeStateCurrentTime = action?.clipTime ?? (presenting || readyPose ? ANIMATIONS.ForehandVolley.prepare : serving ? 0 : ANIMATIONS[stroke].prepare);
       this.state = stroke;
     } else upper.weight += (0 - upper.weight) * (1 - Math.exp(-dt * 22));
     const targetYaw =

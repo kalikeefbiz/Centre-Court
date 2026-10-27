@@ -96,7 +96,7 @@ export class DeveloperTools {
           <button id="dev-contact-seek">Seek estimated contact</button>
           <label><input type="checkbox" id="dev-serve-prototype"> Serve feasibility prototype (Serve clip only)</label>
           <p id="dev-serve-note" hidden>Isolated Royal Rally ball: candidate palm socket, release at 0.900 s, ballistic toss fitted to source racket contact. No hand editing; no production ball, scoring or serve changes. Grip and release need calibration.</p>
-          <label>Inspection view<select id="dev-angle"><option value="quarter">Three quarter</option><option value="front">Front</option><option value="side">Side</option><option value="rear">Rear</option></select></label>
+          <label>Inspection view<select id="dev-angle"><option value="quarter">Three quarter</option><option value="front">Front</option><option value="side">Side</option><option value="rear">Rear</option><option value="grip">Racket grip close-up</option></select></label>
           <label><input type="checkbox" id="dev-markers"> Root / grip / racket region / forward / left hand</label>
           <p id="dev-marker-text" hidden>Red: root · cyan: grip · lime: racket region (guide only) · yellow: forward · pink: estimated contact position · white: left hand. Source shot pose; no live contact correction.</p>
         </div>
