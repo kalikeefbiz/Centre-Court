@@ -6,6 +6,10 @@ import { KIRA } from './src/render/athlete-config';
 const buildId = execFileSync('git', ['rev-parse', 'HEAD']).toString().trim();
 const assetRevision = createHash('sha256')
   .update(readFileSync(`public/${KIRA.characterUrl}`))
+  .update(readFileSync('assets/characters/nova/Nova_Fullres_Rigged.glb.gz'))
+  .update(readFileSync('public/assets/characters/dante/Dante_Tennis.glb'))
+  .update(readFileSync('public/assets/characters/rico/Rico_Tennis.glb'))
+  .update(readFileSync('public/assets/characters/zuri/Zuri_Tennis.glb'))
   .update(
     readFileSync(
       'public/assets/equipment/rackets/Meshy_AI_Pink_and_Black_Tennis_1024095819_texture.glb',
@@ -29,7 +33,7 @@ export default defineConfig({
         this.emitFile({
           type: 'asset',
           fileName: 'release.json',
-          source: JSON.stringify({ release: 'GOAL-007', commit: buildId, assetRevision }),
+          source: JSON.stringify({ release: 'GOAL-008', commit: buildId, assetRevision }),
         });
       },
     },

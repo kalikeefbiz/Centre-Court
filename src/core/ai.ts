@@ -1,3 +1,4 @@
+import { ROSTER, type CharacterId } from './roster';
 import { clamp, COURT, Random, vec, type Vec } from './court';
 import { Ball, type Shot, type BallEvent } from './ball';
 import {
@@ -237,6 +238,7 @@ export interface TacticalContext {
   quality: number;
   difficulty: Difficulty;
   previous?: string;
+  character?: CharacterId;
 }
 export function shotErrorProbability(difficulty: Difficulty, quality: number, risk: number) {
   return clamp(PRESETS[difficulty].errorChance + (1 - quality) * 0.16 + risk * 0.065, 0, 0.5);
@@ -244,6 +246,7 @@ export function shotErrorProbability(difficulty: Difficulty, quality: number, ri
 /** Normalized considerations, weighted sums, small repeat penalty and bounded tie variation.
  * Lob/slice/drive and automatic volley/Smash all go through the existing Match.hit. */
 export function selectTactic(c: TacticalContext, rng: Random): Tactic {
+  const profile = c.character ? ROSTER[c.character] : undefined;
   const p = PRESETS[c.difficulty],
     quality = clamp(c.quality, 0, 1);
   const pressure = clamp(
@@ -335,7 +338,11 @@ export function selectTactic(c: TacticalContext, rng: Random): Tactic {
   for (const option of candidates) {
     // Drive can become an overhead. Lob/slice must not borrow its taller contact window.
     if (c.bounces === 0 && c.ball.y > CONTACT.volley.maxHeight && option.shot !== 'drive') continue;
-    const score = option.score - (c.previous === option.name ? 0.08 : 0) + rng.range(0, p.variety);
+    const score =
+      option.score +
+      (profile?.tactics[option.name] ?? 0) -
+      (c.previous === option.name ? 0.08 : 0) +
+      rng.range(0, p.variety);
     if (score > utility) {
       best = option;
       utility = score;
@@ -346,12 +353,23 @@ export function selectTactic(c: TacticalContext, rng: Random): Tactic {
     shot: best.shot,
     aim: best.aim,
     depth: best.depth,
-    power: clamp(0.38 + quality * p.aggression * 0.4 - pressure * 0.12, 0.3, 0.78),
+    power: clamp(
+      0.38 + quality * p.aggression * 0.4 - pressure * 0.12 + (profile?.power ?? 0),
+      0.3,
+      0.9,
+    ),
     utility,
     defensive: pressure > 0.42 || best.shot === 'lob' || best.shot === 'slice',
     approach:
-      weak > 0.32 && pressure < 0.45 && best.shot === 'drive' && rng.next() < p.aggression * 0.65,
-    errorProbability: shotErrorProbability(c.difficulty, quality, best.risk),
+      weak > 0.32 &&
+      pressure < 0.45 &&
+      best.shot === 'drive' &&
+      rng.next() < clamp(p.aggression * 0.65 + (profile?.approach ?? 0), 0, 0.85),
+    errorProbability: clamp(
+      shotErrorProbability(c.difficulty, quality, best.risk) + (profile?.risk ?? 0),
+      0.01,
+      0.5,
+    ),
   };
 }
 export function recoveryTarget(
@@ -381,6 +399,7 @@ export interface AIContext {
   bounces: number;
   serveFlight: boolean;
   difficulty: Difficulty;
+  character?: CharacterId;
 }
 export class OpponentAI {
   state: AIState = 'point conclusion and reset';
@@ -437,7 +456,7 @@ export class OpponentAI {
       target.x,
       false,
       false,
-      PRESETS[c.difficulty].recovery,
+      PRESETS[c.difficulty].recovery * (c.character ? ROSTER[c.character].recovery : 1),
     );
     this.target = { ...this.recovery };
     this.execution = 0.18;
@@ -453,7 +472,7 @@ export class OpponentAI {
       target.x,
       tactic.defensive,
       tactic.approach,
-      PRESETS[c.difficulty].recovery,
+      PRESETS[c.difficulty].recovery * (c.character ? ROSTER[c.character].recovery : 1),
     );
     this.target = { ...this.recovery };
     this.transition('shot execution');

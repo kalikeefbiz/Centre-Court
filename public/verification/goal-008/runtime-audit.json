@@ -1,0 +1,173 @@
+{
+  "kira": {
+    "path": "public/assets/characters/kira/Kira_Midres_Rigged.glb",
+    "bytes": 63532244,
+    "sha256": "f55979d3991fc1a2647df1fc63be4751c91a743f7498d37726362ae3468fd2d9",
+    "triangles": 30463,
+    "materials": 1,
+    "primitives": 1,
+    "joints": 74,
+    "clips": 13,
+    "images": [
+      {
+        "size": [
+          4096,
+          4096
+        ],
+        "sha256": "ecb98652fd07913c585ce5ac04b1d4c9d0f0c33eb9a5f25c16879be2615a4e5e"
+      },
+      {
+        "size": [
+          4096,
+          4096
+        ],
+        "sha256": "9343ee97e4fa6f6b34ce038099c7d59daefa91359e922945c3305af512c49dbe"
+      },
+      {
+        "size": [
+          4096,
+          4096
+        ],
+        "sha256": "a9dd6bdc17ab105eb4df3dfaf99b14b38f631ce711d2fae8f6ab19c500ebbabb"
+      }
+    ],
+    "estimated_RGBA8_texture_bytes_with_mips": 268435455
+  },
+  "dante": {
+    "path": "public/assets/characters/dante/Dante_Tennis.glb",
+    "bytes": 27888380,
+    "sha256": "806ab3b44a7201902d5ec84aa7d059aba335db5275bbd4088c605b453d9e2edb",
+    "triangles": 30868,
+    "materials": 1,
+    "primitives": 1,
+    "joints": 66,
+    "clips": 13,
+    "images": [
+      {
+        "size": [
+          4096,
+          4096
+        ],
+        "sha256": "25d93cdda0df32fbbe00f61455883817c630b8851f944400691dc484b93d338b"
+      },
+      {
+        "size": [
+          4096,
+          4096
+        ],
+        "sha256": "1f7c847f604678950ed91749355796ed0f166c0be4c308da1c17492887f7f161"
+      },
+      {
+        "size": [
+          2048,
+          2048
+        ],
+        "sha256": "342cace3a52827ffedde87e06c6ee2ccad3e26cc6a4bf9096eb6d20cd875fd72"
+      }
+    ],
+    "estimated_RGBA8_texture_bytes_with_mips": 201326591
+  },
+  "rico": {
+    "path": "public/assets/characters/rico/Rico_Tennis.glb",
+    "bytes": 28208824,
+    "sha256": "9142d4f3cfb010d00d59e63191d4bbf411823f6df87412d1766f5b514e426a6a",
+    "triangles": 25600,
+    "materials": 1,
+    "primitives": 1,
+    "joints": 66,
+    "clips": 13,
+    "images": [
+      {
+        "size": [
+          4096,
+          4096
+        ],
+        "sha256": "6a6fdcb0e633fc208c8ac5a28c79f83fb192b3e0d50ec85fdfbce2d573b38b7e"
+      },
+      {
+        "size": [
+          4096,
+          4096
+        ],
+        "sha256": "3a63976b14f13155cde498986c8968ac5f5185c5189e247f5c7a64e2adf51361"
+      },
+      {
+        "size": [
+          2048,
+          2048
+        ],
+        "sha256": "fe565f3b02f66f3c5153a2594667fe7bbf6355ce1f446dd75bec616951499bc9"
+      }
+    ],
+    "estimated_RGBA8_texture_bytes_with_mips": 201326591
+  },
+  "zuri": {
+    "path": "public/assets/characters/zuri/Zuri_Tennis.glb",
+    "bytes": 26344484,
+    "sha256": "8c5cf87b00dff0d1de8609c2831f321953808633089f4ae35b92929a99fc3429",
+    "triangles": 30672,
+    "materials": 1,
+    "primitives": 1,
+    "joints": 72,
+    "clips": 13,
+    "images": [
+      {
+        "size": [
+          4096,
+          4096
+        ],
+        "sha256": "a48a563ccda49ef4b8e676c5e911f436abcd1e73de2c8c9fea7946d9f14c56f8"
+      },
+      {
+        "size": [
+          4096,
+          4096
+        ],
+        "sha256": "9dfcd9cd755b1f29ad53a3523b4a6465dac5bbc02a6b12b93a0bd61033063549"
+      },
+      {
+        "size": [
+          2048,
+          2048
+        ],
+        "sha256": "c8f7a32db3b8adb2512d4b6e0f471da12b343aa2d645dc19790ae10ecd5a633b"
+      }
+    ],
+    "estimated_RGBA8_texture_bytes_with_mips": 201326591
+  },
+  "nova": {
+    "path": "public/assets/characters/nova/Nova_Fullres_Rigged.glb",
+    "bytes": 112206444,
+    "sha256": "6a772b90356a83c92ab81d6bffedccc751d4fc2e7d5819cd440f19b9c0aaeb15",
+    "triangles": 102942,
+    "materials": 1,
+    "primitives": 1,
+    "joints": 74,
+    "clips": 13,
+    "images": [
+      {
+        "size": [
+          4096,
+          4096
+        ],
+        "sha256": "84745d2796f80fe5e41ce121f198368793a79c33a5708816e6cb29af3ef07e41"
+      },
+      {
+        "size": [
+          8192,
+          8192
+        ],
+        "sha256": "015d401cb3443184893df42a9af2ab044921167aeb75f9fc7dbc38eb3a8a5c11"
+      },
+      {
+        "size": [
+          4096,
+          4096
+        ],
+        "sha256": "e5c5a0d435b6479d3b36f90de3226a573b1e32b199d1ab0784d60e97d5fb9703"
+      }
+    ],
+    "estimated_RGBA8_texture_bytes_with_mips": 536870911,
+    "original_image_bytes_identical": true
+  }
+}

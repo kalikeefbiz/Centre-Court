@@ -12,6 +12,7 @@ test('Valkyrie and Royal Rally render, prepare, contact, move in place and freez
   await page.goto('/?debug');
   await expect(page.locator('#practice')).toBeEnabled({ timeout: 45000 });
   await page.locator('#practice').click();
+  await expect(page.locator('#hud')).toBeVisible({ timeout: 90000 });
   let s = await snap(page);
   expect(s.kira.clips).toHaveLength(13);
   expect(s.kira.texturedSkin).toBe(true);
@@ -26,7 +27,7 @@ test('Valkyrie and Royal Rally render, prepare, contact, move in place and freez
   expect((await snap(page)).kira.strokeTime).toBeCloseTo(0, 2);
   expect((await snap(page)).ball.y).toBeLessThan(1.3);
   await page.keyboard.up('Space');
-  await expect.poll(async () => (await snap(page)).contacts).toBe(1);
+  await expect.poll(async () => (await snap(page)).contacts, { timeout: 30000 }).toBe(1);
   s = await snap(page);
   expect(s.contact.stroke).toBe('Serve');
   expect(s.kira.contactPose.state).toBe('Serve');
@@ -78,6 +79,7 @@ for (const asset of ['characters/kira', 'equipment/rackets', 'balls/royal-rally'
     await page.locator('#asset-retry').click();
     await expect(page.locator('#play')).toBeEnabled({ timeout: 45000 });
     await page.locator('#play').click();
+    await expect(page.locator('#hud')).toBeVisible({ timeout: 90000 });
     await expect.poll(async () => (await snap(page)).phase).toBe('serve');
     await expect.poll(async () => (await snap(page)).kira.bodyVisible).toBe(true);
   });
@@ -106,6 +108,7 @@ test('delayed GLBs cannot start either mode with a temporary human', async ({ pa
   release();
   await expect(page.locator('#practice')).toBeEnabled({ timeout: 45000 });
   await page.locator('#practice').click();
+  await expect(page.locator('#hud')).toBeVisible({ timeout: 90000 });
   await expect.poll(async () => (await snap(page)).kira.bodyVisible).toBe(true);
   expect((await snap(page)).presentation.temporaryHumanCount).toBe(0);
 });

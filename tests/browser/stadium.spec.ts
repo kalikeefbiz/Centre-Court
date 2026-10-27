@@ -27,6 +27,7 @@ test('stadium builds locally, preserves dimensions, scales crowd and clears both
   expect(s.stadium.renderedCourt.lines).toHaveLength(11);
   expect(s.stadium.renderedCourt.netPosts.map((p: number[]) => p[0])).toEqual([-5.03, 5.03]);
   await page.locator('#play').click();
+  await expect(page.locator('#hud')).toBeVisible({ timeout: 90000 });
   await page.locator('#pause-button').click();
   await page.locator('#stadium-quality').selectOption('full');
   const full = (await snap(page)).stadium.spectatorCount;
@@ -43,7 +44,7 @@ test('stadium builds locally, preserves dimensions, scales crowd and clears both
   for (const mode of ['broadcast', 'behind']) {
     if ((await snap(page)).camera !== mode) await page.locator('#camera-button').click();
     const portrait = page.viewportSize()!.width / page.viewportSize()!.height < 0.85;
-    const expectedY = mode === 'broadcast' ? (portrait ? 12.07 : 19) : portrait ? 10 : 9.5;
+    const expectedY = mode === 'broadcast' ? (portrait ? 7.27 : 17) : portrait ? 8.7 : 9.5;
     await expect
       .poll(async () => Math.abs((await snap(page)).presentation.cameraPosition[1] - expectedY), {
         timeout: 20000,
@@ -79,6 +80,7 @@ test('native serve, AI return, point score, live display update and next serve',
   await expect(page.locator('#play')).toBeEnabled({ timeout: 45000 });
   await page.locator('#difficulty').selectOption('hard');
   await page.locator('#play').click();
+  await expect(page.locator('#hud')).toBeVisible({ timeout: 90000 });
   const initial = await snap(page),
     flow: any[] = [];
   if (info.project.name === 'mobile-webkit') {
@@ -137,6 +139,7 @@ test('stadium inspection restores gameplay and diagnostic exports include venue 
   await page.goto('/?dev=1');
   await expect(page.locator('#play')).toBeEnabled({ timeout: 45000 });
   await page.locator('#play').click();
+  await expect(page.locator('#hud')).toBeVisible({ timeout: 90000 });
   await page.locator('#dev-toggle').click();
   const before = await snap(page);
   await page.locator('#dev-stadium').selectOption('overview');

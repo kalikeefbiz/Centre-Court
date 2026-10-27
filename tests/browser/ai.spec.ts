@@ -7,11 +7,13 @@ test('difficulty selection, seeded AI overlay and live predictive movement', asy
   for (const d of ['easy', 'normal', 'hard']) {
     await page.locator('#difficulty').selectOption(d);
     await page.locator('#play').click();
+    await expect(page.locator('#hud')).toBeVisible({ timeout: 90000 });
     expect((await snap(page)).ai.difficulty).toBe(d);
     await page.locator('#pause-button').click();
     await page.locator('#menu-pause').click();
   }
   await page.locator('#play').click();
+  await expect(page.locator('#hud')).toBeVisible({ timeout: 90000 });
   await page.locator('#dev-toggle').click();
   await page.locator('#dev-ai').check();
   await page.locator('#dev-seed').fill('8');
@@ -39,6 +41,7 @@ test('ordinary matches hide all AI developer controls', async ({ page }) => {
   await page.goto('/');
   await expect(page.locator('#play')).toBeEnabled({ timeout: 45000 });
   await page.locator('#play').click();
+  await expect(page.locator('#hud')).toBeVisible({ timeout: 90000 });
   await expect(page.locator('#dev-ai-readout')).toHaveCount(0);
   expect(await page.evaluate(() => 'centreCourt' in window)).toBe(false);
 });

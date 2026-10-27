@@ -5,6 +5,7 @@ import { CameraRig } from '../core/camera';
 import { predict } from '../core/ball';
 import { RoyalBall } from './royal-ball';
 import { Kira } from './kira';
+import { ROSTER, type CharacterId } from '../core/roster';
 import { Stadium } from './stadium';
 
 export class Scene {
@@ -13,6 +14,8 @@ export class Scene {
   camera: pc.Entity;
   rig: CameraRig;
   kira: Kira;
+  opponent?: Kira;
+  private preparingMatch = false;
   private ball: pc.Entity;
   royalBall: RoyalBall;
   private playerShadow: pc.Entity;
@@ -22,6 +25,10 @@ export class Scene {
     [];
   private trail: pc.Entity[] = [];
   private history: Vec[] = [];
+  private accents: pc.Entity[] = [];
+  private signatureEvent = 0;
+  private signatureFlash = 0;
+  private signatureColor = '#ffb85e';
   private trailClock = 0;
   private predictionClock = 0;
   private fitPoint = new pc.Vec3();
@@ -75,8 +82,7 @@ export class Scene {
     this.buildArena();
     this.stadium = new Stadium(this.app);
     // Only the AI uses a temporary model. Never create a placeholder human.
-    this.athletes = [this.buildAthlete('#f17b4c', '#1c363d')];
-    this.athletes[0].root.enabled = false;
+    this.athletes = [];
     this.playerShadow = this.shadow('Kira ground shadow', 1.05);
     this.kira = new Kira(this.app);
     this.royalBall = new RoyalBall(this.app);
@@ -96,10 +102,49 @@ export class Scene {
           true,
         ),
       );
+    for (let i = 0; i < 2; i++) {
+      const accent = this.ring('Racket heat accent', '#ffb85e', 0.12, 0.012);
+      accent.enabled = false;
+      this.accents.push(accent);
+    }
     this.app.batcher!.generate();
     this.resize();
     window.addEventListener('resize', () => this.resize());
     this.app.start();
+  }
+  selectCharacter(id: CharacterId) {
+    if (this.kira.character === id) return this.kira.ready;
+    this.kira.destroy();
+    this.kira = new Kira(this.app, id, 0);
+    return this.kira.ready;
+  }
+  async selectOpponent(id: CharacterId) {
+    this.preparingMatch = true;
+    if (this.opponent?.character !== id) {
+      this.opponent?.destroy();
+      this.opponent = new Kira(this.app, id, 1);
+    }
+    await this.opponent!.ready;
+    if (this.opponent!.status === 'ready')
+      await new Promise<void>((resolve) => {
+        let frames = 0;
+        const finish = () => {
+          clearTimeout(timeout);
+          this.app.off('postrender', check);
+          resolve();
+        };
+        const check = () => {
+          const s = this.opponent!.snapshot();
+          if (s.bodyVisible && s.racketVisible && ++frames >= 2) finish();
+        };
+        const timeout = setTimeout(() => {
+          this.opponent!.status = 'error';
+          this.opponent!.error = 'Opponent did not reach rendering camera';
+          finish();
+        }, 45000);
+        this.app.on('postrender', check);
+      });
+    this.preparingMatch = false;
   }
   private material(hex: string, unlit = false) {
     const key = hex + unlit;
@@ -233,91 +278,6 @@ export class Scene {
       [0.04, COURT.netCentre, 0.022],
     );
   }
-  private buildAthlete(shirt: string, shorts: string) {
-    const root = new pc.Entity('AI opponent');
-    this.app.root.addChild(root);
-    this.shape('sphere', 'Torso', shirt, [0, 1.04, 0], [0.58, 0.69, 0.33], false, false, root);
-    this.shape('box', 'Shorts', shorts, [0, 0.67, 0], [0.47, 0.3, 0.34], false, false, root);
-    this.shape('sphere', 'Head', '#be8a65', [0, 1.6, 0], [0.31, 0.36, 0.32], false, false, root);
-    this.shape(
-      'sphere',
-      'Hair',
-      '#232b2b',
-      [0, 1.73, -0.015],
-      [0.32, 0.16, 0.32],
-      false,
-      false,
-      root,
-    );
-    const legs = [-0.16, 0.16].map((x) => {
-      const leg = new pc.Entity('Leg pivot');
-      root.addChild(leg);
-      leg.setLocalPosition(x, 0.65, 0);
-      this.shape('capsule', 'Leg', '#be8a65', [0, -0.25, 0], [0.14, 0.52, 0.14], false, false, leg);
-      this.shape('box', 'Shoe', '#f2f0de', [0, -0.55, 0.07], [0.18, 0.14, 0.33], false, false, leg);
-      return leg;
-    });
-    this.shape(
-      'capsule',
-      'Off arm',
-      '#be8a65',
-      [-0.34, 1.03, 0],
-      [0.13, 0.54, 0.13],
-      false,
-      false,
-      root,
-    ).setLocalEulerAngles(0, 0, -20);
-    const arm = new pc.Entity('Racket arm');
-    root.addChild(arm);
-    arm.setLocalPosition(0.32, 1.25, 0);
-    this.shape(
-      'capsule',
-      'Forearm',
-      '#be8a65',
-      [0.13, -0.2, 0],
-      [0.14, 0.5, 0.14],
-      false,
-      false,
-      arm,
-    ).setLocalEulerAngles(0, 0, 34);
-    this.shape(
-      'box',
-      'Racket handle',
-      '#e9e8d5',
-      [0.3, -0.45, 0],
-      [0.05, 0.4, 0.05],
-      false,
-      false,
-      arm,
-    );
-    const racket = this.ring('Temporary racket frame', '#e5b672', 0.26, 0.025, arm);
-    racket.setLocalEulerAngles(90, 0, 0);
-    racket.setLocalPosition(0.3, -0.89, 0);
-    racket.setLocalScale(0.85, 1, 1.2);
-    for (let i = -2; i <= 2; i++) {
-      this.shape(
-        'box',
-        'Racket string',
-        '#aeb8a6',
-        [0.3 + i * 0.067, -0.89, 0],
-        [0.009, 0.43, 0.009],
-        false,
-        false,
-        arm,
-      );
-      this.shape(
-        'box',
-        'Racket string',
-        '#aeb8a6',
-        [0.3, -0.89 + i * 0.08, 0],
-        [0.36, 0.009, 0.009],
-        false,
-        false,
-        arm,
-      );
-    }
-    return { root, arm, legs, shadow: this.shadow('Athlete shadow', 1.05) };
-  }
   /** Presentation-only isolation; all match state and camera-rig state stay untouched. */
   beginInspection() {
     const entities = [
@@ -325,7 +285,7 @@ export class Scene {
       this.ballShadow,
       this.landing,
       ...this.trail,
-      ...this.athletes.flatMap((a) => [a.root, a.shadow]),
+      ...(this.opponent ? [this.opponent.root] : []),
     ];
     const enabled = entities.map((e) => e.enabled);
     const shadowPosition = this.playerShadow.getPosition().clone();
@@ -426,10 +386,10 @@ export class Scene {
         this.camera.camera!.worldToScreen(new pc.Vec3(p.x, 1.7, p.z)).y -
           this.camera.camera!.worldToScreen(new pc.Vec3(p.x, 0, p.z)).y,
       ),
-      human: 'Kira',
+      human: ROSTER[this.kira.character].name,
       temporaryHumanCount: this.app.root.find((n) => n.name === 'Temporary humanoid athlete')
         .length,
-      opponentCount: this.athletes.length,
+      opponentCount: 1,
     };
   }
   stadiumPresentation() {
@@ -457,7 +417,7 @@ export class Scene {
       courtCorners: [-1, 1].flatMap((x) =>
         [-1, 1].map((z) => project(x * COURT.doublesWidth, 0, z * COURT.halfLength)),
       ),
-      players: [this.kira.root, this.athletes[0].root].map((e) => {
+      players: [this.kira.root, this.opponent?.root ?? this.kira.root].map((e) => {
         const p = e.getPosition();
         return project(p.x, p.y + 0.9, p.z);
       }),
@@ -490,7 +450,7 @@ export class Scene {
       minimum,
       Math.min(
         74,
-        (Math.atan((Math.tan((current * Math.PI) / 360) * extent) / 0.91) * 360) / Math.PI,
+        (Math.atan((Math.tan((current * Math.PI) / 360) * extent) / 0.94) * 360) / Math.PI,
       ),
     );
     camera.fov =
@@ -505,7 +465,8 @@ export class Scene {
   render(match: Match, dt: number, charging = false, intent: 'drive' | 'slice' | 'lob' = 'drive') {
     this.stadium.update(match, dt);
     this.kira.update(match, dt, charging, intent);
-    const menu = match.phase === 'menu';
+    this.opponent?.update(match, dt, false);
+    const menu = match.phase === 'menu' && !this.preparingMatch;
     const resolutionBudget = Math.min(window.devicePixelRatio, menu ? 1.75 : 1.5);
     if (this.app.graphicsDevice.maxPixelRatio !== resolutionBudget) {
       this.app.graphicsDevice.maxPixelRatio = resolutionBudget;
@@ -537,23 +498,7 @@ export class Scene {
     this.ballShadow.enabled = !menu;
     this.playerShadow.setPosition(match.players[0].position.x, 0.06, match.players[0].position.z);
     this.playerShadow.enabled = this.kira.status === 'ready';
-    this.athletes.forEach((a, i) => {
-      a.root.enabled = !menu;
-      a.shadow.enabled = !menu;
-      const athlete = match.players[i + 1],
-        pos = athlete.position;
-      a.root.setPosition(pos.x, 0, pos.z);
-      a.root.setEulerAngles(0, 0, 0);
-      a.shadow.setPosition(pos.x, 0.06, pos.z);
-      a.legs.forEach((leg, j) =>
-        leg.setLocalEulerAngles(Math.sin(athlete.distance * 4 + j * Math.PI) * 24, 0, 0),
-      );
-      a.arm.setLocalEulerAngles(
-        athlete.swing > 0 ? -70 + Math.sin(athlete.swing * 13) * 95 : 0,
-        athlete.swing > 0 ? Math.sin(athlete.swing * 10) * 60 : 0,
-        -12,
-      );
-    });
+    if (this.opponent) this.opponent.root.enabled = true;
     this.predictionClock -= dt;
     if (this.predictionClock <= 0) {
       this.predictionClock = 0.12;
@@ -567,9 +512,46 @@ export class Scene {
       this.history.unshift({ ...p });
       this.history.length = Math.min(6, this.history.length);
     }
+    if (match.phase !== 'paused') this.signatureFlash = Math.max(0, this.signatureFlash - dt);
+    for (const event of match.events)
+      if (event.type === 'signature' && event.id > this.signatureEvent) {
+        this.signatureEvent = event.id;
+        this.signatureFlash = 0.65;
+        this.signatureColor = ROSTER[match.characters[event.side]].color;
+      }
+    if (match.phase !== 'rally' && match.phase !== 'paused') this.signatureFlash = 0;
+    this.accents.forEach((e, i) => {
+      const contact = match.players[i].contact;
+      e.enabled =
+        match.phase === 'rally' &&
+        !!contact &&
+        contact.age < 0.16 &&
+        (match.heat > 0 || this.signatureFlash > 0);
+      if (contact && e.enabled) {
+        e.setPosition(contact.position.x, contact.position.y, contact.position.z);
+        const size = 1 + contact.age * 5;
+        e.setLocalScale(size, size, size);
+        e.render!.material = this.material(
+          this.signatureFlash > 0 ? this.signatureColor : '#ffb85e',
+          true,
+        );
+      }
+    });
     this.trail.forEach((e, i) => {
       const h = this.history[i];
       e.enabled = !!h && match.phase === 'rally';
+      e.render!.material = this.material(
+        this.signatureFlash > 0
+          ? this.signatureColor
+          : match.heat === 2
+            ? i % 2
+              ? '#ef7136'
+              : '#ffbb54'
+            : match.heat === 1
+              ? '#eac77e'
+              : '#d8f19a',
+        true,
+      );
       if (h) e.setPosition(h.x, h.y, h.z);
     });
   }

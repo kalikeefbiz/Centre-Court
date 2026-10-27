@@ -46,11 +46,12 @@ test('native motion blending, readable framing and larger visual ball preserve g
   await page.goto('/?debug');
   await expect(page.locator('#practice')).toBeEnabled({ timeout: 45000 });
   await page.locator('#practice').click();
+  await expect(page.locator('#hud')).toBeVisible({ timeout: 90000 });
   const portrait = page.viewportSize()!.width / page.viewportSize()!.height < 0.85;
   await expect
     .poll(
       async () =>
-        Math.abs((await snap(page)).presentation.cameraPosition[1] - (portrait ? 12.07 : 19)),
+        Math.abs((await snap(page)).presentation.cameraPosition[1] - (portrait ? 7.27 : 17)),
       { timeout: 20000 },
     )
     .toBeLessThan(0.12);
@@ -96,6 +97,7 @@ test('tall portrait wide chase keeps the athlete inside the camera', async ({ pa
   await page.goto('/?debug');
   await expect(page.locator('#practice')).toBeEnabled({ timeout: 45000 });
   await page.locator('#practice').click();
+  await expect(page.locator('#hud')).toBeVisible({ timeout: 90000 });
   await page.keyboard.press('Space');
   await expect.poll(async () => (await snap(page)).contacts).toBeGreaterThanOrEqual(1);
   await page.keyboard.down('KeyD');

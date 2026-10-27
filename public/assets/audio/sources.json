@@ -1,0 +1,163 @@
+{
+  "sources": [
+    {
+      "id": "662263",
+      "page": "https://freesound.org/people/jamesdrake89/sounds/662263/",
+      "preview": "https://cdn.freesound.org/previews/662/662263_4980667-hq.mp3",
+      "license": "CC0-1.0",
+      "author": "jamesdrake89",
+      "title": "Tennis Forehand 2"
+    },
+    {
+      "id": "662265",
+      "page": "https://freesound.org/people/jamesdrake89/sounds/662265/",
+      "preview": "https://cdn.freesound.org/previews/662/662265_4980667-hq.mp3",
+      "license": "CC0-1.0",
+      "author": "jamesdrake89",
+      "title": "Tennis Serves 1"
+    },
+    {
+      "id": "662269",
+      "page": "https://freesound.org/people/jamesdrake89/sounds/662269/",
+      "preview": "https://cdn.freesound.org/previews/662/662269_4980667-hq.mp3",
+      "license": "CC0-1.0",
+      "author": "jamesdrake89",
+      "title": "Tennis Slices 2"
+    },
+    {
+      "id": "533410",
+      "page": "https://freesound.org/people/drivr3joe/sounds/533410/",
+      "preview": "https://cdn.freesound.org/previews/533/533410_890280-hq.mp3",
+      "license": "CC0-1.0",
+      "title": "TennisBallBounce.wav"
+    },
+    {
+      "id": "187343",
+      "page": "https://freesound.org/people/baidonovan/sounds/187343/",
+      "preview": "https://cdn.freesound.org/previews/187/187343_3297044-hq.mp3",
+      "license": "CC0-1.0",
+      "title": "Rubber Shoe Squeak.wav"
+    },
+    {
+      "id": "170501",
+      "page": "https://freesound.org/people/SpliceSound/sounds/170501/",
+      "preview": "https://cdn.freesound.org/previews/170/170501_1480854-hq.mp3",
+      "license": "CC0-1.0",
+      "title": "Footsteps, Tile, Male Tennis Shoes, Fast Pace.wav"
+    }
+  ],
+  "edits": [
+    {
+      "file": "soft-0.wav",
+      "source": "662269",
+      "start_seconds": 0.215,
+      "duration": 0.32,
+      "edits": "mono 24kHz, transient cut, peak normalization -2.85dBFS, edge fades"
+    },
+    {
+      "file": "soft-1.wav",
+      "source": "662269",
+      "start_seconds": 1.57,
+      "duration": 0.32,
+      "edits": "mono 24kHz, transient cut, peak normalization -2.85dBFS, edge fades"
+    },
+    {
+      "file": "soft-2.wav",
+      "source": "662269",
+      "start_seconds": 4.02,
+      "duration": 0.32,
+      "edits": "mono 24kHz, transient cut, peak normalization -2.85dBFS, edge fades"
+    },
+    {
+      "file": "hard-0.wav",
+      "source": "662263",
+      "start_seconds": 0.665,
+      "duration": 0.32,
+      "edits": "mono 24kHz, transient cut, peak normalization -2.85dBFS, edge fades"
+    },
+    {
+      "file": "hard-1.wav",
+      "source": "662263",
+      "start_seconds": 1.325,
+      "duration": 0.32,
+      "edits": "mono 24kHz, transient cut, peak normalization -2.85dBFS, edge fades"
+    },
+    {
+      "file": "hard-2.wav",
+      "source": "662263",
+      "start_seconds": 2.77,
+      "duration": 0.32,
+      "edits": "mono 24kHz, transient cut, peak normalization -2.85dBFS, edge fades"
+    },
+    {
+      "file": "serve-0.wav",
+      "source": "662265",
+      "start_seconds": 0.12,
+      "duration": 0.32,
+      "edits": "mono 24kHz, transient cut, peak normalization -2.85dBFS, edge fades"
+    },
+    {
+      "file": "serve-1.wav",
+      "source": "662265",
+      "start_seconds": 0.89,
+      "duration": 0.32,
+      "edits": "mono 24kHz, transient cut, peak normalization -2.85dBFS, edge fades"
+    },
+    {
+      "file": "serve-2.wav",
+      "source": "662265",
+      "start_seconds": 3.635,
+      "duration": 0.32,
+      "edits": "mono 24kHz, transient cut, peak normalization -2.85dBFS, edge fades"
+    },
+    {
+      "file": "bounce-0.wav",
+      "source": "bounce",
+      "start_seconds": 0.705,
+      "duration": 0.2,
+      "edits": "mono 24kHz, transient cut, peak normalization -2.85dBFS, edge fades"
+    },
+    {
+      "file": "bounce-1.wav",
+      "source": "bounce",
+      "start_seconds": 2.54,
+      "duration": 0.2,
+      "edits": "mono 24kHz, transient cut, peak normalization -2.85dBFS, edge fades"
+    },
+    {
+      "file": "bounce-2.wav",
+      "source": "bounce",
+      "start_seconds": 4.55,
+      "duration": 0.2,
+      "edits": "mono 24kHz, transient cut, peak normalization -2.85dBFS, edge fades"
+    },
+    {
+      "file": "foot-0.wav",
+      "source": "foot",
+      "start_seconds": 0.965,
+      "duration": 0.2,
+      "edits": "mono 24kHz, transient cut, peak normalization -2.85dBFS, edge fades"
+    },
+    {
+      "file": "foot-1.wav",
+      "source": "foot",
+      "start_seconds": 8.34,
+      "duration": 0.2,
+      "edits": "mono 24kHz, transient cut, peak normalization -2.85dBFS, edge fades"
+    },
+    {
+      "file": "foot-2.wav",
+      "source": "foot",
+      "start_seconds": 9.49,
+      "duration": 0.2,
+      "edits": "mono 24kHz, transient cut, peak normalization -2.85dBFS, edge fades"
+    },
+    {
+      "file": "squeak-0.wav",
+      "source": "squeak",
+      "start_seconds": 0.08,
+      "duration": 0.30333333333333334,
+      "edits": "mono 24kHz, transient cut, peak normalization -2.85dBFS, edge fades"
+    }
+  ]
+}

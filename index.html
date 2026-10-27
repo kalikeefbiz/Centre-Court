@@ -28,12 +28,25 @@
         </div>
       </header>
       <section id="menu" class="panel menu-panel">
-        <div class="eyebrow"><span class="tiny-line"></span> BLACKHOUSE SPORTS · PLAY AS KIRA</div>
+        <div class="eyebrow"><span class="tiny-line"></span> BLACKHOUSE SPORTS · THE CIRCUIT</div>
         <h1>OWN<br />THE <em>COURT.</em></h1>
-        <p class="intro">Every point is yours to earn.<br />Kira is ready for the next rally.</p>
+        <p class="intro">Choose your athlete. Find your next rival.</p>
+        <div id="roster" role="group" aria-label="Character roster"></div>
+        <p id="character-profile"></p>
+        <button id="preview-athlete" class="secondary">VIEW ATHLETE ↗</button>
+        <small class="pending-athlete">Jax · The Showman / Trickster · Model pending</small>
         <div class="options">
+          <label>RIVAL<select id="opponent"></select></label>
           <label
-            >OPPONENT<select id="difficulty">
+            >COMPETITION<select id="competition">
+              <option value="exhibition">Exhibition · Choose a rival</option>
+              <option value="circuit">Court circuit · Four rivals</option>
+            </select></label
+          >
+          <p id="circuit-status"></p>
+          <button id="circuit-reset" class="text-button">RESTART CIRCUIT</button>
+          <label
+            >DIFFICULTY<select id="difficulty">
               <option value="easy">Easy · Find your rhythm</option>
               <option value="normal" selected>Normal · Rise to the challenge</option>
               <option value="hard">Hard · Leave nothing behind</option>
@@ -53,10 +66,22 @@
           <span>01 / SINGLES</span><button id="help-button">HOW TO PLAY ↗</button>
         </div>
       </section>
+      <section id="athlete-preview" hidden aria-label="Athlete preview">
+        <div>
+          <h2 id="preview-title"></h2>
+          <p id="preview-archetype"></p>
+        </div>
+        <nav>
+          <button id="preview-front" class="secondary">FRONT</button
+          ><button id="preview-side" class="secondary">SIDE</button
+          ><button id="preview-back" class="secondary">BACK</button
+          ><button id="preview-close" class="primary">BACK TO ROSTER</button>
+        </nav>
+      </section>
       <div id="menu-note">
         <span class="court-badge">HARD COURT</span>
-        <p>KIRA TAKES THE COURT</p>
-        <small>Pink Valkyrie. Real competition.</small>
+        <p><span id="preview-name">KIRA · THE DRIFTER</span></p>
+        <small>Selected athlete · Live 3D preview</small>
       </div>
       <section id="hud" hidden>
         <div class="scoreboard">
@@ -65,13 +90,18 @@
             ><span>SETS&nbsp; GAMES&nbsp; PTS</span>
           </div>
           <div class="score-row you">
-            <span><i id="serve-you" class="serve-dot"></i> KIRA · YOU</span>
+            <span
+              ><i id="serve-you" class="serve-dot"></i>
+              <span id="player-name">KIRA · YOU</span></span
+            >
             <div>
               <b id="sets-you">0</b><b id="games-you">0</b><strong id="points-you">0</strong>
             </div>
           </div>
           <div class="score-row">
-            <span><i id="serve-ai" class="serve-dot"></i> OPPONENT</span>
+            <span
+              ><i id="serve-ai" class="serve-dot"></i> <span id="opponent-name">RICO</span></span
+            >
             <div><b id="sets-ai">0</b><b id="games-ai">0</b><strong id="points-ai">0</strong></div>
           </div>
           <div id="score-description">DEUCE COURT</div>
@@ -79,6 +109,12 @@
         <div class="rally-badge"><span id="rally-count">0</span><small>RALLY</small></div>
         <div id="announcement" role="status" aria-live="polite">FIRST SERVE</div>
         <div id="timing-feedback"></div>
+        <div id="heat-indicator" aria-live="polite" hidden></div>
+        <div id="signature-hud">
+          <label id="signature-label">DRIFT BREAK</label
+          ><progress id="signature-meter" max="100" value="0"></progress
+          ><button id="signature-button" hidden>SIGNATURE</button>
+        </div>
         <div id="desktop-hint">
           WASD MOVE <span>·</span> HOLD SPACE / RELEASE TO HIT <span>·</span> J L AIM
           <span>·</span> TAP SLICE · HOLD POWER · DOUBLE TAP LOB
@@ -123,6 +159,18 @@
               STADIUM SOUND · ON
             </button>
           </div>
+          <label class="audio-setting"
+            >COURT AUDIO
+            <input
+              id="court-volume"
+              aria-label="Court audio volume"
+              type="range"
+              min="0"
+              max="1"
+              step=".05"
+              value=".65"
+          /></label>
+          <button id="court-mute" class="text-button" aria-pressed="false">COURT AUDIO · ON</button>
           <button id="resume" class="primary">RESUME MATCH <span>→</span></button
           ><button id="restart-pause" class="secondary">RESTART MATCH</button
           ><button id="menu-pause" class="text-button">RETURN TO MENU</button>
@@ -136,7 +184,9 @@
           <div class="result-stat">
             <span>LONGEST RALLY</span><strong id="best-rally">0</strong>
           </div>
-          <button id="restart" class="primary">PLAY AGAIN <span>↗</span></button
+          <p id="progress-result"></p>
+          <button id="next-opponent" class="primary" hidden>NEXT RIVAL →</button
+          ><button id="restart" class="primary">REMATCH <span>↗</span></button
           ><button id="menu-result" class="secondary">RETURN TO MENU</button>
         </div>
       </section>
@@ -161,6 +211,11 @@
             volleys and overheads follow the incoming ball.
           </p>
           <p>
+            <b>Signature.</b> Build charge with returns and points. When full, tap SIGNATURE to arm
+            the next successful rally contact. A miss costs no charge. Heat builds at 8 returns and
+            ignites at 12; it changes feedback only.
+          </p>
+          <p>
             <b>Serve diagonally.</b> Hold and release to serve. Two faults lose the point. A net
             cord landing in the correct box is a let. Lines are in.
           </p>
@@ -172,7 +227,7 @@
         </div>
       </section>
       <footer id="footer">
-        <span>BLACKHOUSE®</span><span>BUILT FOR THE GAME.</span><span>GOAL 002D</span>
+        <span>BLACKHOUSE®</span><span>BUILT FOR THE GAME.</span><span>GOAL 008</span>
       </footer>
     </div>
     <div id="loading">CENTRE COURT<span>PREPARING YOUR COURT…</span></div>

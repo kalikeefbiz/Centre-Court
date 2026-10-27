@@ -63,7 +63,10 @@ describe('stadium presentation contract', () => {
     expect(scoreboardState(m).rows[0].points).toBe('6');
     m.score.winner = 1;
     m.phase = 'result';
-    expect(scoreboardState(m).caption).toBe('OPPONENT WINS');
+    expect(scoreboardState(m).caption).toBe('RICO WINS');
+    m.characters = ['nova', 'zuri'];
+    expect(scoreboardState(m).rows.map((r) => r.name)).toEqual(['NOVA', 'ZURI']);
+    expect(scoreboardState(m).caption).toBe('ZURI WINS');
     m.practice = true;
     expect(scoreboardState(m).rows.map((r) => r.points)).toEqual(['—', '—']);
   });

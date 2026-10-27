@@ -10,8 +10,10 @@ import {
 } from './tennis-animation';
 import { clamp } from '../core/court';
 import { ANIMATIONS } from './animation-registry';
+import { ROSTER, type CharacterId } from '../core/roster';
+import type { Side } from '../core/court';
 import type { Match } from '../core/match';
-import { KIRA, locomotionState, type AthleteState } from './athlete-config';
+import { KIRA, ATHLETE_RENDER, locomotionState, type AthleteState } from './athlete-config';
 
 export function load(app: pc.Application, path: string): Promise<pc.ContainerResource> {
   return new Promise((resolve, reject) => {
@@ -32,14 +34,20 @@ export function load(app: pc.Application, path: string): Promise<pc.ContainerRes
     const timeout = window.setTimeout(() => {
       finish(`Timed out loading ${path}`);
       reject(new Error(`Timed out loading ${path}`));
-    }, 30000);
+    }, 120000);
     app.assets.loadFromUrlAndFilename(
       url.href,
       path.split('/').pop()!,
       'container',
       (error, asset) => {
         window.clearTimeout(timeout);
-        if (timing.status === 'error') return; // A late response cannot erase a timeout.
+        if (timing.status === 'error') {
+          if (asset) {
+            asset.unload();
+            app.assets.remove(asset);
+          }
+          return; // A late response cannot erase a timeout.
+        }
         finish(error || !asset?.resource ? String(error ?? 'empty asset') : undefined);
         if (error || !asset?.resource)
           reject(new Error(`${path}: ${String(error ?? 'empty asset')}`));
@@ -49,13 +57,14 @@ export function load(app: pc.Application, path: string): Promise<pc.ContainerRes
   });
 }
 
-export class Kira {
+const references = new Map<pc.ContainerResource, number>();
+export class AthleteRenderer {
   readonly root = new pc.Entity('Kira gameplay position');
   private model!: pc.Entity;
   private hips!: pc.GraphNode;
   private hand!: pc.GraphNode;
   private wristWeight = 1;
-  private readonly carryWrist = new pc.Quat().setFromEulerAngles(...KIRA.carryWristRotation);
+  private readonly carryWrist = new pc.Quat();
   private readonly wrist = new pc.Quat();
   private socket!: pc.Entity;
   private racket!: pc.Entity;
@@ -84,43 +93,67 @@ export class Kira {
   error = '';
   readonly ready: Promise<void>;
   private resources: pc.ContainerResource[] = [];
-  constructor(private app: pc.Application) {
+  private get config() {
+    return ATHLETE_RENDER[this.character === 'jax' ? 'kira' : this.character];
+  }
+  evaluationMs = 0;
+  private disposed = false;
+  constructor(
+    private app: pc.Application,
+    readonly character: CharacterId = 'kira',
+    readonly side: Side = 0,
+  ) {
+    this.root.name = ROSTER[this.character].name + ' gameplay position';
+    this.carryWrist.setFromEulerAngles(...this.config.carryWristRotation);
     app.root.addChild(this.root);
-    this.root.setPosition(0, 0, 11);
-    this.root.setEulerAngles(0, 180, 0);
+    this.root.setPosition(0, 0, this.side === 0 ? 11 : -11);
+    this.root.setEulerAngles(0, this.side === 0 ? 180 : 0, 0);
     this.ready = this.initialize().catch((error: unknown) => {
+      if (this.disposed) return;
       this.status = 'error';
       this.error = String(error);
       this.root.enabled = false;
-      console.error('Kira could not be rendered. Match start is blocked.', error);
+      console.error(
+        `${ROSTER[this.character].name} could not be rendered. Match start is blocked.`,
+        error,
+      );
     });
   }
   private async initialize() {
     const [character, equipment] = await Promise.all([
-      load(this.app, KIRA.characterUrl),
-      load(this.app, KIRA.racketUrl),
+      load(this.app, ROSTER[this.character].asset!),
+      load(this.app, this.config.racketUrl),
     ]);
     this.resources = [character, equipment];
-    const tracks = Object.entries(KIRA.clips).map(([state, name]) => {
+    for (const r of this.resources) references.set(r, (references.get(r) ?? 0) + 1);
+    if (this.disposed) {
+      this.release();
+      return;
+    }
+    const tracks = Object.entries(this.config.clips).map(([state, name]) => {
       const track = character.animations.find((a) => a.resource?.name === name)?.resource;
       if (!(track instanceof pc.AnimTrack)) throw new Error(`Kira is missing ${name}`);
       return { state, track };
     });
     this.model = character.instantiateRenderEntity({ castShadows: false });
     this.root.addChild(this.model);
-    this.hips = this.model.findByName(KIRA.hips)!;
-    const hand = this.model.findByName(KIRA.hand);
+    this.hips = this.model.findByName(this.config.hips)!;
+    const hand = this.model.findByName(this.config.hand);
     if (!hand || !this.hips) throw new Error('Kira skeleton is missing the hand or hips');
     this.hand = hand;
     this.socket = new pc.Entity('Right hand racket grip');
     hand.addChild(this.socket);
-    this.socket.setLocalPosition(...KIRA.gripPosition);
-    this.socket.setLocalEulerAngles(...KIRA.gripRotation);
+    this.socket.setLocalPosition(...this.config.gripPosition);
+    this.socket.setLocalEulerAngles(...this.config.gripRotation);
     this.racket = equipment.instantiateRenderEntity({ castShadows: false });
     this.racket.name = 'Kira production racket';
     this.socket.addChild(this.racket);
-    this.racket.setLocalScale(KIRA.racketScale, KIRA.racketScale, KIRA.racketScale);
-    this.racket.setLocalPosition(...KIRA.racketPosition);
+    this.racket.setLocalScale(
+      this.config.racketScale,
+      this.config.racketScale,
+      this.config.racketScale,
+    );
+    this.racket.setLocalPosition(...this.config.racketPosition);
     this.model.addComponent('anim', { activate: true });
     const spine = this.model.findByName('mixamorig:Spine')!;
     const path: string[] = [];
@@ -176,8 +209,18 @@ export class Kira {
     if (!this.racketMeshes.length) throw new Error('Kira has no racket mesh');
     // A parsed container is not a rendered athlete. Gate play on a real camera
     // render of both meshes; no temporary human exists during loading or failure.
+    if (this.side === 1) {
+      this.status = 'ready';
+      return;
+    }
     await new Promise<void>((resolve, reject) => {
       const check = () => {
+        if (this.disposed) {
+          window.clearTimeout(timeout);
+          this.app.off('postrender', check);
+          resolve();
+          return;
+        }
         if (
           !this.bodyMeshes.some((m) => m.visibleThisFrame) ||
           !this.racketMeshes.some((m) => m.visibleThisFrame)
@@ -194,6 +237,26 @@ export class Kira {
       }, 15000);
       this.app.on('postrender', check);
     });
+  }
+  private release() {
+    for (const r of this.resources) {
+      const count = (references.get(r) ?? 1) - 1;
+      if (count > 0) references.set(r, count);
+      else {
+        references.delete(r);
+        const asset = this.app.assets.list().find((a) => a.resource === r);
+        if (asset) {
+          asset.unload();
+          this.app.assets.remove(asset);
+        }
+      }
+    }
+    this.resources = [];
+  }
+  destroy() {
+    this.disposed = true;
+    this.root.destroy();
+    this.release();
   }
   private meshes(entity: pc.Entity) {
     return (entity.findComponents('render') as pc.RenderComponent[]).flatMap(
@@ -237,16 +300,16 @@ export class Kira {
     }
   }
   private head() {
-    return this.racket.getWorldTransform().transformPoint(new pc.Vec3(...KIRA.sweetSpot));
+    return this.racket.getWorldTransform().transformPoint(new pc.Vec3(...this.config.sweetSpot));
   }
   update(match: Match, dt: number, charging: boolean, intent: 'drive' | 'slice' | 'lob' = 'drive') {
     if (this.status !== 'ready') return;
-    const athlete = match.players[0],
+    const athlete = match.players[this.side],
       m = athlete.locomotion,
       action = athlete.action;
     this.root.setPosition(athlete.position.x, 0, athlete.position.z);
     if (match.phase === 'paused' || match.phase === 'result') return;
-    const serving = match.phase === 'serve' && match.server === 0;
+    const serving = match.phase === 'serve' && match.server === this.side;
     const preparing = charging || serving || !!action;
     const sideSprint = movementWeights(m, this.movementBlend, preparing);
     for (let i = 0; i < BLEND_CHANNELS.length; i++)
@@ -258,7 +321,7 @@ export class Kira {
       player: athlete.position,
       ball: match.ball.position,
       velocity: match.ball.velocity,
-      side: 0,
+      side: this.side,
       bounces: match.bounces,
       intent,
       serving,
@@ -286,7 +349,7 @@ export class Kira {
         : 180;
     const angle = ((targetYaw - this.yaw + 540) % 360) - 180;
     this.yaw += angle * (1 - Math.exp(-dt * (preparing ? 35 : m.braking || m.reversing ? 18 : 14)));
-    this.root.setEulerAngles(0, this.yaw, 0);
+    this.root.setEulerAngles(0, this.yaw + (this.side === 1 ? -180 : 0), 0);
     // Stroke clips have speed zero and consume Match's marker time. The native
     // graph advances the cyclic base and layer blends in one evaluation pass.
     const w = this.movementBlend;
@@ -299,7 +362,9 @@ export class Kira {
       (m.acceleration.x * m.velocity.x + m.acceleration.z * m.velocity.z) / Math.max(0.01, m.speed);
     const cadence = 1 + clamp(effort / 40, -0.12, 0.08);
     const playback = m.speed > 0.1 ? clamp((m.speed / nominal) * cadence, 0.3, 1.8) : 1;
+    const evaluationStart = performance.now();
     this.model.anim!.update(dt * playback);
+    this.evaluationMs = performance.now() - evaluationStart;
     this.clearWrist(dt);
     this.inPlace();
     // Keep the lowest planted foot near its calibrated sole height. Bounded whole-
@@ -416,9 +481,11 @@ export class Kira {
       ),
       scale: this.root.getLocalScale().toArray(),
     };
-    if (this.status !== 'ready') return { status: this.status, error: this.error, ...visibility };
+    if (this.status !== 'ready')
+      return { character: this.character, status: this.status, error: this.error, ...visibility };
     return {
       status: this.status,
+      character: this.character,
       ...visibility,
       state: this.state,
       upperMask: this.upperMask,
@@ -454,3 +521,6 @@ export class Kira {
     };
   }
 }
+
+// Compatibility name for the established inspector and diagnostics.
+export { AthleteRenderer as Kira };

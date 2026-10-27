@@ -1,3 +1,4 @@
+import { ROSTER } from '../core/roster';
 import * as pc from 'playcanvas';
 import type { Match } from '../core/match';
 import { COURT, Random } from '../core/court';
@@ -485,7 +486,7 @@ export function scoreboardState(match: Match) {
   return {
     server: match.server,
     rows: [0, 1].map((i) => ({
-      name: i === 0 ? 'KIRA' : 'OPPONENT',
+      name: ROSTER[match.characters[i]].name.toUpperCase(),
       sets: match.score.sets[i],
       games: match.score.games[i],
       points: match.practice ? '—' : match.score.label(i as 0 | 1),
@@ -495,8 +496,8 @@ export function scoreboardState(match: Match) {
         ? 'WELCOME TO CROWN PAVILION'
         : match.phase === 'result'
           ? match.score.winner === 0
-            ? 'KIRA WINS'
-            : 'OPPONENT WINS'
+            ? `${ROSTER[match.characters[0]].name.toUpperCase()} WINS`
+            : `${ROSTER[match.characters[1]].name.toUpperCase()} WINS`
           : match.practice
             ? 'PRACTICE  /  ENDLESS RALLIES'
             : match.phase === 'rally'

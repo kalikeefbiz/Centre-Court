@@ -174,3 +174,47 @@ describe('GOAL 002C optimized source integrity', () => {
       expect(runtime.length).toBeLessThan(source.length);
     });
 });
+
+describe('GOAL 008 roster derivatives preserve uploaded identity', () => {
+  const paths = [
+    ['dante', 'dante_near_original_24mb'],
+    ['rico', 'Meshy_AI_Crimson_Court_Champio_All_Animations'],
+    ['zuri', 'Meshy_AI_Emerald_Valkyrie_All_Animations'],
+  ];
+  for (const [id, name] of paths)
+    it(`${id} keeps native skin, meshes, materials, images and locomotion`, () => {
+      const { b: source, json: original } = glb(`assets/characters/${id}/${name}.glb`);
+      const { b: runtime, json: g } = glb(
+        `assets/characters/${id}/${id[0].toUpperCase() + id.slice(1)}_Tennis.glb`,
+      );
+      expect(g.meshes).toEqual(original.meshes);
+      expect(g.materials).toEqual(original.materials);
+      expect(g.nodes).toEqual(original.nodes);
+      expect(g.skins).toEqual(original.skins);
+      expect(g.images).toEqual(original.images);
+      expect(g.animations.slice(0, 2)).toEqual(original.animations);
+      expect(g.animations).toHaveLength(13);
+      const a = source.subarray(28 + source.readUInt32LE(12));
+      const b = runtime.subarray(28 + runtime.readUInt32LE(12));
+      expect(Buffer.compare(a, b.subarray(0, a.length))).toBe(0);
+    });
+});
+
+describe('full-resolution Nova delivery', () => {
+  it('reconstructs the exact validated full-detail GLB from a lossless archive', async () => {
+    const { gunzipSync } = await import('node:zlib');
+    const archive = readFileSync('assets/characters/nova/Nova_Fullres_Rigged.glb.gz');
+    expect(archive.length).toBeLessThan(100 * 1024 * 1024);
+    const b = gunzipSync(archive);
+    expect(createHash('sha256').update(b).digest('hex')).toBe(
+      '6a772b90356a83c92ab81d6bffedccc751d4fc2e7d5819cd440f19b9c0aaeb15',
+    );
+    const g = JSON.parse(b.toString('utf8', 20, 20 + b.readUInt32LE(12)));
+    const primitive = g.meshes[0].primitives[0];
+    expect(g.accessors[primitive.indices].count / 3).toBe(102942);
+    expect(g.accessors[primitive.attributes.POSITION].count).toBe(138224);
+    expect(g.skins[0].joints).toHaveLength(74);
+    expect(g.animations).toHaveLength(13);
+    expect(g.images).toHaveLength(3);
+  });
+});

@@ -21,6 +21,7 @@ test('renders a playable court, serves, pauses, switches camera, restarts and re
   await expect(page.locator('h1')).toContainText('THE COURT.');
   await page.screenshot({ path: `test-results/${info.project.name}-menu.png` });
   await page.locator('#play').click();
+  await expect(page.locator('#hud')).toBeVisible({ timeout: 90000 });
   await expect(page.locator('#hud')).toBeVisible();
   expect((await snap(page)).activeCameras).toBe(1);
   await expect.poll(async () => (await snap(page)).drawCalls).toBeGreaterThan(0);
@@ -64,6 +65,7 @@ test('renders a playable court, serves, pauses, switches camera, restarts and re
 });
 test('practice, shot selection, movement and resize remain usable', async ({ page }, info) => {
   await page.locator('#practice').click();
+  await expect(page.locator('#hud')).toBeVisible({ timeout: 90000 });
   await expect(page.locator('#score-description')).toContainText('PRACTICE');
   await expect(page.locator('#shot-intent')).toHaveCount(0);
   await page.keyboard.press('KeyJ');
@@ -109,6 +111,7 @@ test('independent trusted touch pointers move and charge together', async ({
   );
   await page.setViewportSize({ width: 390, height: 844 });
   await page.locator('#practice').click();
+  await expect(page.locator('#hud')).toBeVisible({ timeout: 90000 });
   await page.keyboard.down('Space');
   await page.waitForTimeout(600);
   await page.keyboard.up('Space');
@@ -136,6 +139,7 @@ for (const mode of ['broadcast', 'behind']) {
     test.skip(info.project.name !== 'desktop-chromium', 'Trusted multitouch requires CDP.');
     await page.setViewportSize({ width: 390, height: 844 });
     await page.locator('#practice').click();
+    await expect(page.locator('#hud')).toBeVisible({ timeout: 90000 });
     if (mode === 'behind') await page.locator('#camera-button').click();
     const cdp = await context.newCDPSession(page);
     await cdp.send('Emulation.setTouchEmulationEnabled', { enabled: true, maxTouchPoints: 3 });
@@ -190,6 +194,7 @@ for (const mode of ['broadcast', 'behind']) {
 test('pointer cancellation and interruptions clear only the owned inputs', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.locator('#practice').click();
+  await expect(page.locator('#hud')).toBeVisible({ timeout: 90000 });
   await expect(page.locator('#joystick')).toBeVisible();
   const j = page.locator('#joystick'),
     s = page.locator('#shot-button');
@@ -223,6 +228,7 @@ test('HIT maps slice, double-tap lob and charged power during an actual rally', 
   page,
 }, info) => {
   await page.locator('#practice').click();
+  await expect(page.locator('#hud')).toBeVisible({ timeout: 90000 });
   await page.keyboard.press('Space');
   // Observe the first rally frame, not a later polling interval: serve semantics
   // must already be cleared before the next native pointer event can arrive.

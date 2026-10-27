@@ -27,19 +27,23 @@ export class CameraRig {
     const next = behind
       ? {
           x: player.x * 0.32,
-          y: portrait ? 10 + wide * 0.4 : 9.5,
+          y: portrait ? 8.7 + wide * 0.4 : 9.5,
           z: player.z + (portrait ? 16 + wide * 0.8 : 12),
         }
       : {
           x: portrait
             ? clamp(player.x * 0.2 + ball.x * 0.03, -1.4, 1.4)
             : clamp(ball.x * 0.12, -0.7, 0.7),
-          y: portrait ? 12 + wide * 0.6 + deep * 0.2 : 19,
-          z: portrait ? 28 + wide * 1.1 + deep * 0.7 : 22,
+          y: portrait ? 7.2 + wide * 0.6 + deep * 0.2 : 17,
+          z: portrait ? 27 + wide * 1.1 + deep * 0.7 : 20,
         };
     const target = behind
       ? { x: ball.x * 0.18, y: 0.7, z: portrait ? player.z - 7.5 : -2 }
-      : { x: portrait ? player.x * 0.2 : 0, y: 0, z: portrait ? 4 + deep * 0.7 : 0 };
+      : {
+          x: portrait ? player.x * 0.2 : 0,
+          y: portrait ? 0.45 : 0,
+          z: portrait ? 4.5 + deep * 0.7 : 0,
+        };
     const blend = 1 - Math.exp(-dt * 4);
     for (const key of ['x', 'y', 'z'] as const) {
       this.position[key] += (next[key] - this.position[key]) * blend;

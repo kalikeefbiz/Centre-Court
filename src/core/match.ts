@@ -1,3 +1,5 @@
+import { type CharacterId } from './roster';
+import { METER, heatLevel, signatureShot } from './signature';
 import { selectStroke, inContactZone, shotTarget, CONTACT, type Stroke } from './hitting';
 import { Ball, GRAVITY, type Shot, type BallEvent } from './ball';
 import {
@@ -81,7 +83,36 @@ export const idleControls = (): Controls => ({
   shot: 'drive',
   release: false,
 });
+export interface MatchEvent {
+  id: number;
+  type: 'impact' | 'bounce' | 'net' | 'point' | 'signature' | 'heat';
+  side: Side;
+  strength: number;
+  stroke?: string;
+}
 export class Match {
+  characters: [CharacterId, CharacterId] = ['kira', 'rico'];
+  meters = [0, 0];
+  armed = [false, false];
+  returns = 0;
+  events: MatchEvent[] = [];
+  private eventSequence = 0;
+  get heat() {
+    return this.phase === 'rally' ? heatLevel(this.returns) : 0;
+  }
+  private emit(type: MatchEvent['type'], side: Side, strength = 1, stroke?: string) {
+    this.events.push({ id: ++this.eventSequence, type, side, strength, stroke });
+    if (this.events.length > 64) this.events.shift();
+  }
+  armSignature(side: Side = 0) {
+    if (this.phase !== 'rally' || this.meters[side] < METER.full) return false;
+    this.armed[side] = true;
+    return true;
+  }
+  private credit(side: Side, amount: number) {
+    this.meters[side] = Math.min(METER.full, this.meters[side] + amount);
+  }
+
   phase: Phase = 'menu';
   private beforePause: Phase = 'serve';
   score = new Score();
@@ -147,9 +178,14 @@ export class Match {
       bounces: this.bounces,
       serveFlight: this.serveFlight,
       difficulty: this.difficulty,
+      character: this.characters[1],
     };
   }
   start(difficulty: Difficulty, length: MatchLength, practice = false, seed = 314159) {
+    this.meters = [0, 0];
+    this.armed = [false, false];
+    this.events = [];
+    this.returns = 0;
     this.difficulty = difficulty;
     this.practice = practice;
     this.random = new Random(seed);
@@ -171,6 +207,8 @@ export class Match {
   private prepareServe() {
     this.resetGestureInput();
     this.phase = 'serve';
+    this.returns = 0;
+    this.armed = [false, false];
     this.pointWinner = null;
     for (const p of this.players) {
       resetLocomotion(p.locomotion);
@@ -296,6 +334,7 @@ export class Match {
     p.distance += stepLocomotion(p.locomotion, p.position, side, config, dt);
   }
   private recordContact(side: Side, stroke: Stroke) {
+    this.emit('impact', side, this.players[side].action?.power ?? 0.5, stroke);
     this.players[side].contact = {
       id: ++this.contactSequence,
       stroke,
@@ -512,6 +551,9 @@ export class Match {
     this.ai.conclude();
     this.pointWinner = winner;
     this.totalPoints++;
+    this.credit(winner, METER.point);
+    this.armed = [false, false];
+    this.emit('point', winner);
     this.bestRally = Math.max(this.bestRally, this.contacts);
     this.ball.active = false;
     this.swingWindow = 0;
@@ -625,6 +667,25 @@ export class Match {
         ? (1 - quality) * Math.sign(b.x - p.position.x || 1) * 0.8
         : this.random.range(-error, error);
     target.z += side === 0 ? (power - 0.5) * (1 - quality) * 1.4 : this.random.range(-error, error);
+    let signature = false;
+    if (this.armed[side] && this.meters[side] >= METER.full) {
+      const modified = signatureShot(
+        this.characters[side],
+        side,
+        target,
+        power,
+        shot,
+        this.players[other(side)].position,
+        p.locomotion.speed > 2.5 || Math.abs(p.position.x) > 2.5,
+        this.random.next(),
+      );
+      power = modified.power;
+      shot = modified.shot;
+      this.meters[side] = 0;
+      this.armed[side] = false;
+      signature = true;
+      this.emit('signature', side);
+    }
     const targetX = target.x,
       targetZ = target.z;
     const volley = this.bounces === 0 && shot === 'drive';
@@ -650,6 +711,16 @@ export class Match {
     this.lastHitter = side;
     this.rallyTime = 0;
     this.contacts++;
+    const previousHeat = heatLevel(this.returns);
+    this.returns++;
+    if (!signature)
+      this.credit(
+        side,
+        METER.return +
+          (this.returns >= 8 ? METER.sustained : 0) +
+          (quality >= 0.78 ? METER.clean : 0),
+      );
+    if (heatLevel(this.returns) > previousHeat) this.emit('heat', side, heatLevel(this.returns));
     if (side === 1 && tactic)
       this.ai.afterHit(this.aiContext(), tactic, vec(targetX, COURT.radius, targetZ));
     p.swing = 0.38;
@@ -796,6 +867,7 @@ export class Match {
             quality,
             difficulty: this.difficulty,
             previous: this.ai.tactic?.name,
+            character: this.characters[1],
           },
           this.random,
         );
@@ -822,11 +894,18 @@ export class Match {
         racketPosition(athlete.action, position, 1, athlete.action.racket);
         Object.assign(athlete.action.previousRacket, athlete.action.racket);
         this.aiPendingTactic = tactic;
+        if (quality > 0.55 && (tactic.defensive || Math.abs(user.x) > 1.5 || this.returns >= 8))
+          this.armSignature(1);
       }
     }
     Object.assign(this.previousBall, this.ball.position);
     for (const event of this.ball.step(dt, this.ballEvents)) {
       if (this.phase !== 'rally') break;
+      this.emit(
+        event.type,
+        this.lastHitter,
+        event.type === 'bounce' ? Math.min(1, Math.abs(this.ball.velocity.y) / 7) : 0.5,
+      );
       if (this.lastHitter === 0) this.ai.invalidatePrediction();
       if (event.type === 'net' && !event.grazing) {
         if (this.serveFlight) this.serveFault('NET FAULT');

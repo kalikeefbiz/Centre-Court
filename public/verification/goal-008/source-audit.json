@@ -1,0 +1,364 @@
+{
+  "public/assets/characters/rico/Meshy_AI_Crimson_Court_Champio_All_Animations.glb": {
+    "bytes": 24881944,
+    "sha256": "d3b48c4c026c839dbf9604c2996ec178ee3f375ee660c17e7dd9e969c0156d5c",
+    "triangles": 25600,
+    "primitives": 1,
+    "materials": 1,
+    "textures": [
+      {
+        "size": [
+          4096,
+          4096
+        ],
+        "mode": "RGB"
+      },
+      {
+        "size": [
+          4096,
+          4096
+        ],
+        "mode": "RGB"
+      },
+      {
+        "size": [
+          2048,
+          2048
+        ],
+        "mode": "RGB"
+      }
+    ],
+    "joints": [
+      66
+    ],
+    "clips": [
+      "Running",
+      "Walking"
+    ],
+    "bounds": [
+      [
+        -0.5746783018112183,
+        1.559741313883478e-08,
+        -0.1573261022567749
+      ],
+      [
+        0.5746783018112183,
+        1.7000001668930054,
+        0.1573261320590973
+      ]
+    ]
+  },
+  "public/assets/characters/zuri/Meshy_AI_Emerald_Valkyrie_All_Animations.glb": {
+    "bytes": 22714996,
+    "sha256": "3f83a11a0d8dbfb1ace89dd61e3ec789960d2847f8e7613d4dd3877b005b577b",
+    "triangles": 30672,
+    "primitives": 1,
+    "materials": 1,
+    "textures": [
+      {
+        "size": [
+          4096,
+          4096
+        ],
+        "mode": "RGB"
+      },
+      {
+        "size": [
+          4096,
+          4096
+        ],
+        "mode": "RGB"
+      },
+      {
+        "size": [
+          2048,
+          2048
+        ],
+        "mode": "RGB"
+      }
+    ],
+    "joints": [
+      72
+    ],
+    "clips": [
+      "Running",
+      "Walking"
+    ],
+    "bounds": [
+      [
+        -0.3658449947834015,
+        1.373753555355961e-08,
+        -0.18903453648090363
+      ],
+      [
+        0.36584505438804626,
+        1.7000000476837158,
+        0.18903452157974243
+      ]
+    ]
+  },
+  "public/assets/characters/kira/Meshy_AI_Pink_Rebel_Arena_All_Animations.glb": {
+    "bytes": 9422392,
+    "sha256": "815275554eb626e45cdc0e11f9984165cc6caf18d38a67123cbd3e2b74648858",
+    "triangles": 10396,
+    "primitives": 1,
+    "materials": 1,
+    "textures": [
+      {
+        "size": [
+          2048,
+          2048
+        ],
+        "mode": "RGB"
+      },
+      {
+        "size": [
+          2048,
+          2048
+        ],
+        "mode": "RGB"
+      },
+      {
+        "size": [
+          2048,
+          2048
+        ],
+        "mode": "RGB"
+      }
+    ],
+    "joints": [
+      44
+    ],
+    "clips": [
+      "Running",
+      "Walking",
+      "_01a16d42_9295_73c7_8a05_a5b744b94d9d",
+      "Idle_5"
+    ],
+    "bounds": [
+      [
+        -0.5077303647994995,
+        1.3608977056378535e-08,
+        -0.17200830578804016
+      ],
+      [
+        0.5077303647994995,
+        1.6999999284744263,
+        0.17200830578804016
+      ]
+    ]
+  },
+  "public/assets/characters/kira/Meshy_AI_Pink_Valkyrie_All_Animations.glb": {
+    "bytes": 11837468,
+    "sha256": "ce2272d87a84bb08be0a765ae35354fac1e505a854b0807ed5cc8323b67a237f",
+    "triangles": 13296,
+    "primitives": 1,
+    "materials": 1,
+    "textures": [
+      {
+        "size": [
+          1024,
+          1024
+        ],
+        "mode": "RGB"
+      },
+      {
+        "size": [
+          1024,
+          1024
+        ],
+        "mode": "RGB"
+      },
+      {
+        "size": [
+          1024,
+          1024
+        ],
+        "mode": "RGB"
+      }
+    ],
+    "joints": [
+      74
+    ],
+    "clips": [
+      "Running",
+      "Walking",
+      "_01a16f14_df89_70e4_966f_38087b9b2ef7",
+      "_01a16f17_0702_776b_a578_5ae634002c9e",
+      "_01a16f19_f977_75c8_82d3_00bd61e22843",
+      "_01a16f1f_22af_74e9_af26_8f1aec798eb5",
+      "_01a16f20_14b9_70d3_b4cd_5b3e4d514601",
+      "_01a16f21_3bc1_7312_b0db_d96fda6475ea",
+      "_01a16f27_4128_711d_a437_5651121a8e2c",
+      "_01a16f33_ae88_77f6_8f6a_d4c208041d36",
+      "_01a16f36_0b96_76c3_ac06_6409b3e12e89",
+      "_01a16f37_5a33_7498_91c4_55e2e1439bac",
+      "Idle_7"
+    ],
+    "bounds": [
+      [
+        -0.555450439453125,
+        7.086973230485683e-10,
+        -0.19796878099441528
+      ],
+      [
+        0.555450439453125,
+        1.7000000476837158,
+        0.19796884059906006
+      ]
+    ]
+  },
+  "public/assets/characters/kira/Kira_Midres_Rigged.glb": {
+    "bytes": 63532244,
+    "sha256": "f55979d3991fc1a2647df1fc63be4751c91a743f7498d37726362ae3468fd2d9",
+    "triangles": 30463,
+    "primitives": 1,
+    "materials": 1,
+    "textures": [
+      {
+        "size": [
+          4096,
+          4096
+        ],
+        "mode": "RGB"
+      },
+      {
+        "size": [
+          4096,
+          4096
+        ],
+        "mode": "RGB"
+      },
+      {
+        "size": [
+          4096,
+          4096
+        ],
+        "mode": "RGB"
+      }
+    ],
+    "joints": [
+      74
+    ],
+    "clips": [
+      "Running",
+      "Walking",
+      "_01a16f14_df89_70e4_966f_38087b9b2ef7",
+      "_01a16f17_0702_776b_a578_5ae634002c9e",
+      "_01a16f19_f977_75c8_82d3_00bd61e22843",
+      "_01a16f1f_22af_74e9_af26_8f1aec798eb5",
+      "_01a16f20_14b9_70d3_b4cd_5b3e4d514601",
+      "_01a16f21_3bc1_7312_b0db_d96fda6475ea",
+      "_01a16f27_4128_711d_a437_5651121a8e2c",
+      "_01a16f33_ae88_77f6_8f6a_d4c208041d36",
+      "_01a16f36_0b96_76c3_ac06_6409b3e12e89",
+      "_01a16f37_5a33_7498_91c4_55e2e1439bac",
+      "Idle_7"
+    ],
+    "bounds": [
+      [
+        -0.5425757765769958,
+        0.0,
+        -0.1971077173948288
+      ],
+      [
+        0.5426483154296875,
+        1.7000001668930054,
+        0.2001252919435501
+      ]
+    ]
+  },
+  "public/assets/characters/dante/dante_near_original_24mb.glb": {
+    "bytes": 24561500,
+    "sha256": "926d0cc1bfbaeebee4996bbbed547e2391f53bbc69d36e30ea68142df4ef07ab",
+    "triangles": 30868,
+    "primitives": 1,
+    "materials": 1,
+    "textures": [
+      {
+        "size": [
+          4096,
+          4096
+        ],
+        "mode": "RGB"
+      },
+      {
+        "size": [
+          4096,
+          4096
+        ],
+        "mode": "RGB"
+      },
+      {
+        "size": [
+          2048,
+          2048
+        ],
+        "mode": "RGB"
+      }
+    ],
+    "joints": [
+      66
+    ],
+    "clips": [
+      "Running",
+      "Walking"
+    ],
+    "bounds": [
+      [
+        -0.48178255558013916,
+        2.242666319318687e-08,
+        -0.18126937747001648
+      ],
+      [
+        0.4817826747894287,
+        1.7000000476837158,
+        0.18126940727233887
+      ]
+    ]
+  },
+  "artifacts/goal-008/Nova_Source.glb": {
+    "bytes": 93520036,
+    "sha256": "a6ba172b1f13c2234f9e7c83591af49e6ffe43d842f70d106abd7f9446036331",
+    "triangles": 102942,
+    "primitives": 1,
+    "materials": 1,
+    "textures": [
+      {
+        "size": [
+          4096,
+          4096
+        ],
+        "mode": "RGB"
+      },
+      {
+        "size": [
+          8192,
+          8192
+        ],
+        "mode": "RGB"
+      },
+      {
+        "size": [
+          4096,
+          4096
+        ],
+        "mode": "RGB"
+      }
+    ],
+    "joints": [],
+    "clips": [],
+    "bounds": [
+      [
+        -0.498958021402359,
+        -0.9511340856552124,
+        -0.22703106701374054
+      ],
+      [
+        0.49970701336860657,
+        0.9475979804992676,
+        0.2220909744501114
+      ]
+    ]
+  }
+}

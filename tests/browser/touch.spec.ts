@@ -11,6 +11,7 @@ test('large touch surfaces fit portrait, landscape and simulated safe-area inset
 }, info) => {
   await ready(page);
   await page.locator('#practice').click();
+  await expect(page.locator('#hud')).toBeVisible({ timeout: 90000 });
   await expect(page.locator('#joystick')).toBeVisible();
   for (const [width, height] of [
     [320, 640],
@@ -49,6 +50,7 @@ test('native captured aiming survives leaving HIT, cancellation and deliberate r
   await page.setViewportSize({ width: 390, height: 844 });
   await ready(page);
   await page.locator('#practice').click();
+  await expect(page.locator('#hud')).toBeVisible({ timeout: 90000 });
   await expect(page.locator('#joystick')).toBeVisible();
   const joy = page.locator('#joystick'),
     hit = page.locator('#shot-button');
@@ -108,6 +110,7 @@ test('thumb-sized native touches retain both owners through extended drags', asy
   await page.setViewportSize({ width: 390, height: 844 });
   await ready(page);
   await page.locator('#practice').click();
+  await expect(page.locator('#hud')).toBeVisible({ timeout: 90000 });
   await expect(page.locator('#joystick')).toBeVisible();
   const cdp = await context.newCDPSession(page);
   await cdp.send('Emulation.setTouchEmulationEnabled', { enabled: true, maxTouchPoints: 2 });
@@ -140,6 +143,7 @@ test('double-tap lobs contact real baseline feeds with the rendered racket', asy
 }, info) => {
   await ready(page, true);
   await page.locator('#practice').click();
+  await expect(page.locator('#hud')).toBeVisible({ timeout: 90000 });
   await expect(page.locator('#joystick')).toBeVisible();
   await page.locator('#dev-toggle').click();
   for (const feed of ['Human forehand return', 'Human backhand return']) {

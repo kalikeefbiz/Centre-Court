@@ -1,0 +1,158 @@
+[
+  {
+    "clip": "Idle_7",
+    "frames": 263,
+    "skins": {
+      "Mesh_0": {
+        "finite": true,
+        "max_edge_stretch": 80.04341330146536,
+        "worst_p99_edge_stretch": 1.3057114165351111,
+        "worst_p001_edge_ratio": 0.6055123862694988
+      }
+    }
+  },
+  {
+    "clip": "_01a16f37_5a33_7498_91c4_55e2e1439bac",
+    "frames": 90,
+    "skins": {
+      "Mesh_0": {
+        "finite": true,
+        "max_edge_stretch": 87.87986267842942,
+        "worst_p99_edge_stretch": 1.512769164385699,
+        "worst_p001_edge_ratio": 0.33901196277336243
+      }
+    }
+  },
+  {
+    "clip": "_01a16f36_0b96_76c3_ac06_6409b3e12e89",
+    "frames": 90,
+    "skins": {
+      "Mesh_0": {
+        "finite": true,
+        "max_edge_stretch": 57.46284273435183,
+        "worst_p99_edge_stretch": 1.5477438920033348,
+        "worst_p001_edge_ratio": 0.39922452700395783
+      }
+    }
+  },
+  {
+    "clip": "_01a16f33_ae88_77f6_8f6a_d4c208041d36",
+    "frames": 90,
+    "skins": {
+      "Mesh_0": {
+        "finite": true,
+        "max_edge_stretch": 114.02154616009715,
+        "worst_p99_edge_stretch": 1.534018183345069,
+        "worst_p001_edge_ratio": 0.4678251696287692
+      }
+    }
+  },
+  {
+    "clip": "_01a16f27_4128_711d_a437_5651121a8e2c",
+    "frames": 90,
+    "skins": {
+      "Mesh_0": {
+        "finite": true,
+        "max_edge_stretch": 96.39079116217499,
+        "worst_p99_edge_stretch": 1.5448479688904417,
+        "worst_p001_edge_ratio": 0.3313184234355567
+      }
+    }
+  },
+  {
+    "clip": "_01a16f21_3bc1_7312_b0db_d96fda6475ea",
+    "frames": 90,
+    "skins": {
+      "Mesh_0": {
+        "finite": true,
+        "max_edge_stretch": 158.8435567191175,
+        "worst_p99_edge_stretch": 1.5457803924875961,
+        "worst_p001_edge_ratio": 0.43789081162010646
+      }
+    }
+  },
+  {
+    "clip": "_01a16f20_14b9_70d3_b4cd_5b3e4d514601",
+    "frames": 90,
+    "skins": {
+      "Mesh_0": {
+        "finite": true,
+        "max_edge_stretch": 203.40892703249654,
+        "worst_p99_edge_stretch": 1.5278974430154126,
+        "worst_p001_edge_ratio": 0.4210535989732732
+      }
+    }
+  },
+  {
+    "clip": "_01a16f1f_22af_74e9_af26_8f1aec798eb5",
+    "frames": 90,
+    "skins": {
+      "Mesh_0": {
+        "finite": true,
+        "max_edge_stretch": 114.45513987159956,
+        "worst_p99_edge_stretch": 1.469440809539521,
+        "worst_p001_edge_ratio": 0.44297261125605186
+      }
+    }
+  },
+  {
+    "clip": "_01a16f19_f977_75c8_82d3_00bd61e22843",
+    "frames": 90,
+    "skins": {
+      "Mesh_0": {
+        "finite": true,
+        "max_edge_stretch": 112.14740061439862,
+        "worst_p99_edge_stretch": 1.4826028802489681,
+        "worst_p001_edge_ratio": 0.42930770162426163
+      }
+    }
+  },
+  {
+    "clip": "_01a16f17_0702_776b_a578_5ae634002c9e",
+    "frames": 90,
+    "skins": {
+      "Mesh_0": {
+        "finite": true,
+        "max_edge_stretch": 158.4609546307691,
+        "worst_p99_edge_stretch": 1.5534705087289469,
+        "worst_p001_edge_ratio": 0.34657972674941934
+      }
+    }
+  },
+  {
+    "clip": "_01a16f14_df89_70e4_966f_38087b9b2ef7",
+    "frames": 90,
+    "skins": {
+      "Mesh_0": {
+        "finite": true,
+        "max_edge_stretch": 103.98838909174339,
+        "worst_p99_edge_stretch": 1.5369318823963405,
+        "worst_p001_edge_ratio": 0.45410225545451705
+      }
+    }
+  },
+  {
+    "clip": "Walking",
+    "frames": 31,
+    "skins": {
+      "Mesh_0": {
+        "finite": true,
+        "max_edge_stretch": 77.40886259664373,
+        "worst_p99_edge_stretch": 1.343486997924983,
+        "worst_p001_edge_ratio": 0.5826647035265639
+      }
+    }
+  },
+  {
+    "clip": "Running",
+    "frames": 19,
+    "skins": {
+      "Mesh_0": {
+        "finite": true,
+        "max_edge_stretch": 108.23222684774179,
+        "worst_p99_edge_stretch": 1.4430962783760197,
+        "worst_p001_edge_ratio": 0.3815773780297947
+      }
+    }
+  }
+]

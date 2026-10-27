@@ -7,6 +7,7 @@ export const AI_FEEDS = [
   'Short ball',
   'Human forehand return',
   'Human backhand return',
+  'Human heat signature return',
 ] as const;
 export type AIFeed = (typeof AI_FEEDS)[number];
 /** Explicit developer-only starting fixtures. After launch all motion, contact and scoring
@@ -23,6 +24,10 @@ export function feedAI(match: Match, feed: AIFeed, seed: number) {
     match.ai.reset(1, match.players[1].position);
     match.ball.position = vec(0, 1.3, -9);
     match.ball.launch(vec(0, COURT.radius, 8.8), 'drive', 0.6);
+    if (feed === 'Human heat signature return') {
+      match.returns = 12;
+      match.meters = [100, 100];
+    }
     match.notice = 'DEV FEED · HUMAN BASELINE RETURN';
     return;
   }

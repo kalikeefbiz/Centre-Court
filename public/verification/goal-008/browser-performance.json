@@ -1,0 +1,159 @@
+{
+  "renderer": "Chromium / SwiftShader software WebGL, 390x844, deviceScaleFactor 1; no native iPhone",
+  "results": [
+    {
+      "id": "kira",
+      "loadMs": 7,
+      "frameMedian": 233.3000000000011,
+      "frameP95": 500,
+      "resources": {
+        "assets": 31,
+        "vram": {
+          "tex": 343628020,
+          "vb": 10790064,
+          "ib": 932298,
+          "ub": 4592,
+          "sb": 0
+        },
+        "animationUpdateMs": 0.2999999998137355
+      },
+      "presentation": {
+        "screen": {
+          "x": 292.975952500364,
+          "y": 438.82330086403977
+        },
+        "cameraPosition": [
+          4.399999618530273,
+          2.800001859664917,
+          17.80000114440918
+        ],
+        "rendering": {
+          "fov": 48,
+          "samples": 4,
+          "maxPixelRatio": 1,
+          "width": 390,
+          "height": 844
+        },
+        "athletePixels": 189.17774484601836,
+        "human": "Kira",
+        "temporaryHumanCount": 0,
+        "opponentCount": 1
+      }
+    },
+    {
+      "id": "nova",
+      "loadMs": 12733,
+      "frameMedian": 349.90000000000146,
+      "frameP95": 566.5999999999985,
+      "resources": {
+        "assets": 31,
+        "vram": {
+          "tex": 612063476,
+          "vb": 15904768,
+          "ib": 1984824,
+          "ub": 4592,
+          "sb": 0
+        },
+        "animationUpdateMs": 0.19999999995343387
+      },
+      "presentation": {
+        "screen": {
+          "x": 292.97602806940785,
+          "y": 438.8232922547508
+        },
+        "cameraPosition": [
+          4.400000095367432,
+          2.799999952316284,
+          17.799999237060547
+        ],
+        "rendering": {
+          "fov": 48,
+          "samples": 4,
+          "maxPixelRatio": 1,
+          "width": 390,
+          "height": 844
+        },
+        "athletePixels": 189.1777859612365,
+        "human": "Nova",
+        "temporaryHumanCount": 0,
+        "opponentCount": 1
+      }
+    },
+    {
+      "id": "kira",
+      "loadMs": 13464,
+      "frameMedian": 200.09999999999127,
+      "frameP95": 483.3999999999942,
+      "resources": {
+        "assets": 31,
+        "vram": {
+          "tex": 343628020,
+          "vb": 10790064,
+          "ib": 932298,
+          "ub": 4592,
+          "sb": 0
+        },
+        "animationUpdateMs": 0.19999999995343387
+      },
+      "presentation": {
+        "screen": {
+          "x": 292.97602806940785,
+          "y": 438.8232922547508
+        },
+        "cameraPosition": [
+          4.400000095367432,
+          2.799999952316284,
+          17.799999237060547
+        ],
+        "rendering": {
+          "fov": 48,
+          "samples": 4,
+          "maxPixelRatio": 1,
+          "width": 390,
+          "height": 844
+        },
+        "athletePixels": 189.1777859612365,
+        "human": "Kira",
+        "temporaryHumanCount": 0,
+        "opponentCount": 1
+      }
+    }
+  ],
+  "match": {
+    "presentation": {
+      "screen": {
+        "x": 249.4378068850839,
+        "y": 498.4334508612398
+      },
+      "cameraPosition": [
+        0.36438560485839844,
+        7.269999980926514,
+        27.2450008392334
+      ],
+      "rendering": {
+        "fov": 62.68958684854337,
+        "samples": 4,
+        "maxPixelRatio": 1,
+        "width": 390,
+        "height": 844
+      },
+      "athletePixels": 67.56519069998996,
+      "human": "Kira",
+      "temporaryHumanCount": 0,
+      "opponentCount": 1
+    },
+    "resources": {
+      "assets": 50,
+      "vram": {
+        "tex": 544957968,
+        "vb": 12356980,
+        "ib": 1085898,
+        "ub": 5296,
+        "sb": 0
+      },
+      "animationUpdateMs": 0.10000000009313226
+    },
+    "drawCalls": 27
+  },
+  "errors": []
+}

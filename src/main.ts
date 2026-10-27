@@ -7,9 +7,28 @@ import { Match, FixedClock } from './core/match';
 import { vec } from './core/court';
 import { Scene } from './render/scene';
 import { Input } from './platform/input';
+import { ROSTER, CHARACTER_IDS, AVAILABLE, type CharacterId } from './core/roster';
+import { Competition, ladder } from './core/competition';
+import { CourtAudio } from './platform/court-audio';
 import { StadiumAudio } from './platform/stadium-audio';
 import type { StadiumQuality } from './render/stadium-geometry';
 const stadiumAudio = new StadiumAudio();
+const courtAudio = new CourtAudio();
+let storage: Storage | undefined;
+try {
+  storage = localStorage;
+} catch {
+  /* unavailable */
+}
+const competition = new Competition(storage);
+let selected: CharacterId = competition.save.player;
+let rival: CharacterId = selected === 'rico' ? 'dante' : 'rico';
+let circuitMatch = false;
+let matchId = '';
+let recorded = false;
+let loadingOpponent = false;
+let previewing = false;
+let previewAngle = 'front';
 import type { Difficulty } from './core/ai';
 import type { DeveloperTools } from './dev/tools';
 import type { MatchLength } from './core/scoring';
@@ -48,9 +67,25 @@ const updateCamera = () => {
   $('camera-button').setAttribute('aria-label', `Switch camera: currently ${scene.rig.mode}`);
 };
 updateCamera();
-const start = (practice: boolean) => {
+const start = async (practice: boolean, rematch = false) => {
   stadiumAudio.unlock();
+  courtAudio.unlock();
+  if (loadingOpponent) return;
   if (scene.kira.status !== 'ready' || scene.royalBall.status !== 'ready') return;
+  if (!rematch && $<HTMLSelectElement>('competition').value === 'circuit' && !practice) {
+    if (competition.save.player !== selected) competition.restart(selected);
+    if (competition.save.completed) competition.restart(selected);
+    rival = ladder(selected)[competition.save.stage];
+  } else
+    rival = rematch ? match.characters[1] : ($<HTMLSelectElement>('opponent').value as CharacterId);
+  loadingOpponent = true;
+  await scene.selectOpponent(rival);
+  loadingOpponent = false;
+  if (scene.opponent?.status !== 'ready') return;
+  match.characters = [selected, rival];
+  circuitMatch = !practice && $<HTMLSelectElement>('competition').value === 'circuit';
+  matchId = globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random()}`;
+  recorded = false;
   $('help').hidden = true;
   input.clear();
   clock.reset();
@@ -77,14 +112,87 @@ $('stadium-sound').onclick = () => {
   $('stadium-sound').setAttribute('aria-pressed', String(stadiumAudio.enabled));
   stadiumAudio.unlock();
 };
+const roster = $('roster');
+for (const id of CHARACTER_IDS) {
+  const p = ROSTER[id],
+    button = document.createElement('button');
+  button.textContent = p.name;
+  button.dataset.character = id;
+  button.disabled = !p.available;
+  button.title = p.available ? p.archetype : 'Awaiting character model';
+  button.setAttribute(
+    'aria-label',
+    `${p.name} · ${p.title}${p.available ? '' : ' · Awaiting model'}`,
+  );
+  button.onclick = () => {
+    selected = id;
+    updateRoster();
+    void scene.selectCharacter(id);
+  };
+  roster.append(button);
+}
+function updateRoster() {
+  const p = ROSTER[selected];
+  for (const button of Array.from(roster.querySelectorAll('button')))
+    button.setAttribute('aria-pressed', String(button.dataset.character === selected));
+  setText(
+    'character-profile',
+    `${p.name} · ${p.title} / ${p.archetype}. ${p.description} Signature: ${p.signature}.`,
+  );
+  setText('preview-name', `${p.name.toUpperCase()} · ${p.title.toUpperCase()}`);
+  const select = $<HTMLSelectElement>('opponent');
+  select.replaceChildren();
+  for (const id of AVAILABLE.filter((id) => id !== selected)) {
+    const o = new Option(`${ROSTER[id].name} · ${ROSTER[id].title}`, id);
+    select.add(o);
+  }
+  if (rival === selected) rival = AVAILABLE.find((id) => id !== selected)!;
+  select.value = rival;
+}
+updateRoster();
+if (selected !== 'kira') void scene.selectCharacter(selected);
+$('opponent').onchange = () => {
+  rival = $<HTMLSelectElement>('opponent').value as CharacterId;
+};
+$('circuit-reset').onclick = () => competition.restart(selected);
+$('next-opponent').onclick = () => {
+  $<HTMLSelectElement>('competition').value = 'circuit';
+  void start(false);
+};
+$('signature-button').onpointerdown = (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  match.armSignature();
+};
+$('court-volume').oninput = () =>
+  (courtAudio.volume = Number($<HTMLInputElement>('court-volume').value));
+$('court-mute').onclick = () => {
+  courtAudio.muted = !courtAudio.muted;
+  $('court-mute').textContent = `COURT AUDIO · ${courtAudio.muted ? 'OFF' : 'ON'}`;
+  $('court-mute').setAttribute('aria-pressed', String(courtAudio.muted));
+  courtAudio.unlock();
+};
+$('preview-athlete').onclick = () => {
+  if (scene.kira.status === 'ready') {
+    previewing = true;
+    previewAngle = 'front';
+  }
+};
+$('preview-close').onclick = () => {
+  previewing = false;
+};
+for (const angle of ['front', 'side', 'back'])
+  $('preview-' + angle).onclick = () => {
+    previewAngle = angle === 'back' ? 'rear' : angle;
+  };
 $('asset-retry').onclick = () => location.reload();
 $('play').onclick = () => start(false);
 $('practice').onclick = () => start(true);
 $('pause-button').onclick = togglePause;
 $('resume').onclick = togglePause;
 $('camera-button').onclick = switchCamera;
-$('restart').onclick = () => start(match.practice);
-$('restart-pause').onclick = () => start(match.practice);
+$('restart').onclick = () => start(match.practice, true);
+$('restart-pause').onclick = () => start(match.practice, true);
 $('menu-pause').onclick = menu;
 $('menu-result').onclick = menu;
 $('home-link').onclick = (e) => {
@@ -112,20 +220,47 @@ window.addEventListener('blur', interrupt);
 window.addEventListener('pagehide', interrupt);
 $('court').addEventListener('webglcontextlost', interrupt);
 const renderUI = () => {
-  const ready = scene.kira.status === 'ready' && scene.royalBall.status === 'ready';
-  const failed = scene.kira.status === 'error' || scene.royalBall.status === 'error';
+  const ready =
+    !loadingOpponent && scene.kira.status === 'ready' && scene.royalBall.status === 'ready';
+  const failed =
+    scene.kira.status === 'error' ||
+    scene.royalBall.status === 'error' ||
+    scene.opponent?.status === 'error';
   $<HTMLButtonElement>('play').disabled = !ready;
   $<HTMLButtonElement>('practice').disabled = !ready;
-  $('athlete-status').hidden = ready;
+  $('athlete-status').hidden = ready && !failed;
   $('asset-retry').hidden = !failed;
   setText(
     'athlete-status',
     failed
-      ? 'Kira or Royal Rally ball could not load. Check your connection and retry.'
-      : 'Loading Kira, racket and Royal Rally ball…',
+      ? 'An athlete or ball could not load. Check your connection and retry.'
+      : `Loading ${loadingOpponent ? ROSTER[rival].name : ROSTER[selected].name}, racket and court…`,
   );
-  $('menu').hidden = match.phase !== 'menu';
-  $('menu-note').hidden = match.phase !== 'menu';
+  for (const button of Array.from(roster.querySelectorAll('button')))
+    button.disabled = loadingOpponent || !ROSTER[button.dataset.character as CharacterId].available;
+  const p = ROSTER[match.characters[0]];
+  const save = competition.save;
+  setText(
+    'circuit-status',
+    `${save.wins} wins · ${save.losses} losses · Circuit ${save.completed ? 'complete' : `${save.stage}/4`}${competition.persistent ? '' : ' · Save unavailable; this session only'}`,
+  );
+  $<HTMLSelectElement>('opponent').disabled =
+    loadingOpponent || $<HTMLSelectElement>('competition').value === 'circuit';
+  setText('player-name', `${p.name.toUpperCase()} · YOU`);
+  setText('opponent-name', ROSTER[match.characters[1]].name.toUpperCase());
+  setText('signature-label', `${p.signature.toUpperCase()} · ${Math.floor(match.meters[0])}%`);
+  $<HTMLProgressElement>('signature-meter').value = match.meters[0];
+  $('signature-button').hidden = match.phase !== 'rally' || match.meters[0] < 100;
+  setText('signature-button', match.armed[0] ? 'ARMED · NEXT CONTACT' : 'SIGNATURE');
+  $('signature-button').style.borderColor = p.color;
+  $('heat-indicator').hidden = !match.heat;
+  setText('heat-indicator', match.heat === 2 ? 'RALLY HEAT · FIRE' : 'RALLY HEAT · BUILDING');
+  $('menu').hidden = match.phase !== 'menu' || previewing;
+  $('athlete-preview').hidden = !previewing;
+  $<HTMLButtonElement>('preview-athlete').disabled = scene.kira.status !== 'ready';
+  setText('preview-title', `${ROSTER[selected].name} · ${ROSTER[selected].title}`);
+  setText('preview-archetype', ROSTER[selected].archetype);
+  $('menu-note').hidden = match.phase !== 'menu' || previewing;
   $('footer').hidden = match.phase !== 'menu';
   $('hud').hidden = match.phase === 'menu' || match.phase === 'result';
   $('pause').hidden = match.phase !== 'paused';
@@ -150,6 +285,28 @@ const renderUI = () => {
   setText('announcement', match.notice);
   setText('timing-feedback', match.feedbackTime > 0 ? match.timing : '');
   if (match.phase === 'result') {
+    if (!recorded && !match.practice && match.score.winner !== null) {
+      competition.record(
+        matchId,
+        match.characters[0],
+        match.characters[1],
+        match.score.winner === 0,
+        circuitMatch,
+      );
+      recorded = true;
+    }
+    $('next-opponent').hidden =
+      !circuitMatch || match.score.winner !== 0 || competition.save.completed;
+    setText(
+      'progress-result',
+      circuitMatch
+        ? competition.save.completed
+          ? 'CIRCUIT COMPLETE · All four rivals defeated. Return to the roster to restart.'
+          : match.score.winner === 0
+            ? `Next: ${ROSTER[ladder(selected)[competition.save.stage]].name}`
+            : 'Your circuit position is saved. Rematch to challenge this rival again.'
+        : `${competition.save.wins} wins · ${competition.save.losses} losses`,
+    );
     setText(
       'result-title',
       match.score.winner === 0 ? 'Court conquered.' : 'The next one is yours.',
@@ -179,6 +336,7 @@ scene.app.on('update', (dt: number) => {
   if (!developer?.frozen)
     scene.render(match, Math.min(dt, 0.1), input.charging, input.controls.shot);
   else if (!developer.inspecting) scene.renderComparison(match, Math.min(dt, 0.1));
+  if (previewing && match.phase === 'menu') scene.inspectCamera(previewAngle);
   shotTarget.hidden =
     !input.charging || !!developer?.frozen || (match.phase !== 'serve' && match.phase !== 'rally');
   if (!shotTarget.hidden) {
@@ -209,6 +367,7 @@ scene.app.on('update', (dt: number) => {
   }
   developer?.update(Math.min(dt, 0.1));
   stadiumAudio.update(match);
+  courtAudio.update(match, Math.min(dt, 0.1));
   renderUI();
 });
 $('loading').remove();
@@ -236,7 +395,13 @@ if (
     value: {
       snapshot: () => ({
         build: __BUILD_ID__,
-        release: 'GOAL-007',
+        release: 'GOAL-008',
+        roster: { selected, rival, opponent: scene.opponent?.snapshot() },
+        competition: competition.save,
+        signatures: { meters: [...match.meters], armed: [...match.armed] },
+        heat: match.heat,
+        returns: match.returns,
+        courtAudio: courtAudio.snapshot(),
         developer: developer?.snapshot(),
         presentation: scene.playerPresentation(),
         stadium: scene.stadiumPresentation(),
@@ -290,6 +455,11 @@ if (
         games: [...match.score.games],
         notice: match.notice,
         camera: scene.rig.mode,
+        resources: {
+          assets: scene.app.assets.list().length,
+          vram: { ...scene.app.stats.vram },
+          animationUpdateMs: scene.kira.evaluationMs,
+        },
         drawCalls: scene.app.stats.drawCalls.total,
         fps: scene.app.stats.frame.fps,
         activeCameras: scene.app.root.findComponents('camera').filter((c) => c.enabled).length,

@@ -18,11 +18,12 @@ test('production pixels show textured Kira in a match through both shipped camer
   await page.waitForTimeout(700);
   await page.screenshot({ path: resolve(directory, `${engine}-menu.png`) });
   await page.locator('#play').click();
+  await expect(page.locator('#hud')).toBeVisible({ timeout: 90000 });
   await expect.poll(async () => (await snap(page)).phase).toBe('serve');
   const audit = [];
   for (const mode of ['broadcast', 'behind']) {
     if ((await snap(page)).camera !== mode) await page.locator('#camera-button').click();
-    const y = mode === 'broadcast' ? 19 : 9.5;
+    const y = mode === 'broadcast' ? 17 : 9.5;
     await expect
       .poll(async () => Math.abs((await snap(page)).presentation.cameraPosition[1] - y), {
         timeout: 15000,

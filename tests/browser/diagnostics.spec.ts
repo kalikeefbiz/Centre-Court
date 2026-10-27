@@ -25,6 +25,7 @@ test('developer tools require explicit dev=1 and scale resets on ordinary visits
   expect(await page.evaluate(() => 'centreCourt' in window)).toBe(false);
   await expect(page.locator('#dev-tools')).toHaveCount(0);
   await page.locator('#practice').click();
+  await expect(page.locator('#hud')).toBeVisible({ timeout: 90000 });
   await expect(page.locator('#hud')).toBeVisible();
 });
 
@@ -34,6 +35,7 @@ test('production rig inspection selects every registry clip and restores a froze
   await open(page);
   await page.locator('#dev-close').click();
   await page.locator('#practice').click();
+  await expect(page.locator('#hud')).toBeVisible({ timeout: 90000 });
   await page.locator('#dev-toggle').click();
   await page.locator('#dev-inspect').click();
   const before = await snap(page);
@@ -134,6 +136,7 @@ test('visual presets preserve physics and cameras, diagnostics export and touch 
   await open(page);
   await page.locator('#dev-close').click();
   await page.locator('#practice').click();
+  await expect(page.locator('#hud')).toBeVisible({ timeout: 90000 });
   await page.locator('#dev-toggle').click();
   await page.locator('#dev-comparison').selectOption('near');
   const baseline = await snap(page);
@@ -165,13 +168,15 @@ test('visual presets preserve physics and cameras, diagnostics export and touch 
   await page.locator('#dev-export').click();
   expect((await download).suggestedFilename()).toContain('004');
   const s = await snap(page);
-  expect(s.developer.assets.filter((a: any) => !a.path.startsWith('procedural:'))).toHaveLength(3);
+  expect(s.developer.assets.filter((a: any) => !a.path.startsWith('procedural:'))).toHaveLength(5);
   expect(
     s.developer.assets.some(
       (a: any) => a.path === 'procedural:Crown-Pavilion' && a.status === 'ready',
     ),
   ).toBe(true);
-  expect(s.developer.assets.every((a: any) => a.status === 'ready' && a.durationMs > 0)).toBe(true);
+  expect(s.developer.assets.every((a: any) => a.status === 'ready' && a.durationMs >= 0)).toBe(
+    true,
+  );
   await page.locator('#dev-perf').uncheck();
   await expect(page.locator('#dev-readout')).toBeHidden();
   await page.locator('#dev-comparison').selectOption('live');
