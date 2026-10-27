@@ -1,0 +1,53 @@
+{
+  "scope": "Vertices within17cm of actual upper-arm roots, outside centre torso; three iterations of40% adjacent-weight smoothing, four normalized influences; no geometry/texture/clip edits.",
+  "candidateVertices": 1880,
+  "matchedShoulderEdges": 3720,
+  "acceptedNumerically": true,
+  "before": [
+    {
+      "state": "Forehand",
+      "seconds": 0.9333333333333333,
+      "maxExtensionM": 0.04175570351556626,
+      "p95ExtensionM": 0.006537174408689726,
+      "p99ExtensionM": 0.023470929223088667
+    },
+    {
+      "state": "Serve",
+      "seconds": 1.5333333333333334,
+      "maxExtensionM": 0.1110527714755779,
+      "p95ExtensionM": 0.013862371481442612,
+      "p99ExtensionM": 0.034705142243095156
+    },
+    {
+      "state": "Smash",
+      "seconds": 1.3333333333333333,
+      "maxExtensionM": 0.07014654111913302,
+      "p95ExtensionM": 0.013985598360629363,
+      "p99ExtensionM": 0.03557681243891421
+    }
+  ],
+  "after": [
+    {
+      "state": "Forehand",
+      "seconds": 0.9333333333333333,
+      "maxExtensionM": 0.03192705604487715,
+      "p95ExtensionM": 0.0056927367700603535,
+      "p99ExtensionM": 0.016489409995246264
+    },
+    {
+      "state": "Serve",
+      "seconds": 1.5333333333333334,
+      "maxExtensionM": 0.06280954844919603,
+      "p95ExtensionM": 0.009729339631705664,
+      "p99ExtensionM": 0.019123099428786667
+    },
+    {
+      "state": "Smash",
+      "seconds": 1.3333333333333333,
+      "maxExtensionM": 0.04481239302502796,
+      "p95ExtensionM": 0.009689852472632269,
+      "p99ExtensionM": 0.022080319549380507
+    }
+  ],
+  "visualAcceptance": "REQUIRES_RENDERED_INSPECTION"
+}

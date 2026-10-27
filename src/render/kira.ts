@@ -14,6 +14,13 @@ import { ROSTER, type CharacterId } from '../core/roster';
 import type { Side } from '../core/court';
 import type { Match } from '../core/match';
 import { KIRA, ATHLETE_RENDER, locomotionState, type AthleteState } from './athlete-config';
+import {
+  DEFAULT_RACKET_ID,
+  getRacket,
+  isRacketId,
+  racketAttachment,
+} from './racket-equipment';
+import { AthleteGrip } from './athlete-grip';
 
 export function load(app: pc.Application, path: string): Promise<pc.ContainerResource> {
   return new Promise((resolve, reject) => {
@@ -93,6 +100,10 @@ export class AthleteRenderer {
   error = '';
   readonly ready: Promise<void>;
   private resources: pc.ContainerResource[] = [];
+  private equipmentId: string;
+  private equipmentGeneration = 0;
+  private equipmentChanges = 0;
+  private grip?: AthleteGrip;
   private get config() {
     return ATHLETE_RENDER[this.character === 'jax' ? 'kira' : this.character];
   }
@@ -102,7 +113,9 @@ export class AthleteRenderer {
     private app: pc.Application,
     readonly character: CharacterId = 'kira',
     readonly side: Side = 0,
+    equipment = DEFAULT_RACKET_ID,
   ) {
+    this.equipmentId = getRacket(equipment).id;
     this.root.name = ROSTER[this.character].name + ' gameplay position';
     this.carryWrist.setFromEulerAngles(...this.config.carryWristRotation);
     app.root.addChild(this.root);
@@ -122,7 +135,7 @@ export class AthleteRenderer {
   private async initialize() {
     const [character, equipment] = await Promise.all([
       load(this.app, ROSTER[this.character].asset!),
-      load(this.app, this.config.racketUrl),
+      load(this.app, getRacket(this.equipmentId).assetPath),
     ]);
     this.resources = [character, equipment];
     for (const r of this.resources) references.set(r, (references.get(r) ?? 0) + 1);
@@ -136,6 +149,7 @@ export class AthleteRenderer {
       return { state, track };
     });
     this.model = character.instantiateRenderEntity({ castShadows: false });
+    this.model.enabled = false;
     this.root.addChild(this.model);
     this.hips = this.model.findByName(this.config.hips)!;
     const hand = this.model.findByName(this.config.hand);
@@ -146,14 +160,12 @@ export class AthleteRenderer {
     this.socket.setLocalPosition(...this.config.gripPosition);
     this.socket.setLocalEulerAngles(...this.config.gripRotation);
     this.racket = equipment.instantiateRenderEntity({ castShadows: false });
-    this.racket.name = 'Kira production racket';
+    this.racket.name = getRacket(this.equipmentId).name + ' production racket';
     this.socket.addChild(this.racket);
-    this.racket.setLocalScale(
-      this.config.racketScale,
-      this.config.racketScale,
-      this.config.racketScale,
-    );
-    this.racket.setLocalPosition(...this.config.racketPosition);
+    this.fitEquipment(this.racket, this.equipmentId);
+    this.grip = new AthleteGrip(this.model, this.character, this.socket);
+    await this.grip.ready;
+    if (this.disposed) return;
     this.model.addComponent('anim', { activate: true });
     const spine = this.model.findByName('mixamorig:Spine')!;
     const path: string[] = [];
@@ -196,6 +208,8 @@ export class AthleteRenderer {
     this.model.anim!.update(0.00001);
     this.clearWrist(0);
     this.inPlace();
+    this.grip.apply('Idle');
+    this.model.enabled = true;
     this.bodyMeshes = this.meshes(this.model).filter((m) => !this.meshes(this.racket).includes(m));
     this.racketMeshes = this.meshes(this.racket);
     for (const texture of character.textures) {
@@ -234,27 +248,92 @@ export class AthleteRenderer {
       const timeout = window.setTimeout(() => {
         this.app.off('postrender', check);
         reject(new Error('Kira loaded but did not reach the rendering camera'));
-      }, 15000);
+      // Full-detail textures and the first skinned-material shaders can finish
+      // after parsing on a cold browser. Keep the actual-visibility gate, with
+      // a bounded warm-up rather than rejecting a still-initializing renderer.
+      }, 60000);
       this.app.on('postrender', check);
     });
   }
   private release() {
-    for (const r of this.resources) {
-      const count = (references.get(r) ?? 1) - 1;
-      if (count > 0) references.set(r, count);
-      else {
-        references.delete(r);
-        const asset = this.app.assets.list().find((a) => a.resource === r);
-        if (asset) {
-          asset.unload();
-          this.app.assets.remove(asset);
-        }
+    for (const resource of this.resources) this.releaseResource(resource);
+    this.resources = [];
+  }
+  private fitEquipment(entity: pc.Entity, id: string) {
+    const definition = getRacket(id);
+    const fit = racketAttachment(definition, this.character);
+    entity.setLocalPosition(...fit.position);
+    entity.setLocalRotation(new pc.Quat(...fit.rotation));
+    entity.setLocalScale(fit.scale, fit.scale, fit.scale);
+    // Corrections belong to the hand's socket; they never reach Match's contact
+    // envelope, source stroke data, ball solver or timing windows.
+    const correction = fit.socketCorrection;
+    this.socket.setLocalPosition(
+      this.config.gripPosition[0] + (correction?.position?.[0] ?? 0),
+      this.config.gripPosition[1] + (correction?.position?.[1] ?? 0),
+      this.config.gripPosition[2] + (correction?.position?.[2] ?? 0),
+    );
+    const rotation = new pc.Quat().setFromEulerAngles(...this.config.gripRotation);
+    if (correction?.rotation) rotation.mul(new pc.Quat(...correction.rotation));
+    this.socket.setLocalRotation(rotation);
+    this.grip?.setSocket(this.socket);
+  }
+  /** Replace only the independent equipment entity. Character, skin and native
+   * animation instances remain alive. A saved/default re-equip is a true no-op.
+   */
+  async setEquipment(id: string) {
+    if (!isRacketId(id)) throw new Error('This racket is not available.');
+    await this.ready;
+    if (this.disposed) return; // Superseded roster loads are cancellation, not page errors.
+    if (this.status !== 'ready') throw new Error('Athlete is not ready.');
+    const generation = ++this.equipmentGeneration;
+    if (id === this.equipmentId) return;
+    const equipment = await load(this.app, getRacket(id).assetPath);
+    references.set(equipment, (references.get(equipment) ?? 0) + 1);
+    const release = () => this.releaseResource(equipment);
+    if (this.disposed || generation !== this.equipmentGeneration) {
+      release();
+      return;
+    }
+    let entity: pc.Entity | undefined;
+    let meshes: pc.MeshInstance[];
+    try {
+      entity = equipment.instantiateRenderEntity({ castShadows: false });
+      entity.name = getRacket(id).name + ' production racket';
+      meshes = this.meshes(entity);
+      if (!meshes.length) throw new Error('Racket contains no renderable geometry.');
+      this.fitEquipment(entity, id);
+      this.socket.addChild(entity);
+    } catch (error) {
+      entity?.destroy();
+      release();
+      throw error;
+    }
+    const oldResource = this.resources[1];
+    this.racket.destroy();
+    this.racket = entity;
+    this.racketMeshes = meshes;
+    this.resources[1] = equipment;
+    this.equipmentId = id;
+    this.equipmentChanges++;
+    if (oldResource) this.releaseResource(oldResource);
+  }
+  private releaseResource(resource: pc.ContainerResource) {
+    const count = (references.get(resource) ?? 1) - 1;
+    if (count > 0) references.set(resource, count);
+    else {
+      references.delete(resource);
+      const asset = this.app.assets.list().find((a) => a.resource === resource);
+      if (asset) {
+        asset.unload();
+        this.app.assets.remove(asset);
       }
     }
-    this.resources = [];
   }
   destroy() {
     this.disposed = true;
+    this.equipmentGeneration++;
+    this.grip?.destroy();
     this.root.destroy();
     this.release();
   }
@@ -300,7 +379,32 @@ export class AthleteRenderer {
     }
   }
   private head() {
-    return this.racket.getWorldTransform().transformPoint(new pc.Vec3(...this.config.sweetSpot));
+    return this.racket.getWorldTransform().transformPoint(
+      new pc.Vec3(...getRacket(this.equipmentId).sweetSpot),
+    );
+  }
+  equipmentFrame() {
+    return {
+      hand: this.hand?.getPosition().clone(),
+      grip: this.socket?.getPosition().clone(),
+      head: this.racket ? this.head() : undefined,
+    };
+  }
+  materialDiagnostics() {
+    return this.bodyMeshes.map(({ material }) => {
+      const m = material as pc.StandardMaterial;
+      const maps = [m.diffuseMap, m.normalMap, m.metalnessMap, m.glossMap]
+        .filter((map, i, all) => !!map && all.indexOf(map) === i)
+        .map((map) => ({
+          width: map!.width,
+          height: map!.height,
+          mipmaps: map!.mipmaps,
+          anisotropy: map!.anisotropy,
+          minFilter: map!.minFilter,
+          magFilter: map!.magFilter,
+        }));
+      return { name: m.name, useMetalness: m.useMetalness, metalness: m.metalness, maps };
+    });
   }
   update(match: Match, dt: number, charging: boolean, intent: 'drive' | 'slice' | 'lob' = 'drive') {
     if (this.status !== 'ready') return;
@@ -367,6 +471,9 @@ export class AthleteRenderer {
     this.evaluationMs = performance.now() - evaluationStart;
     this.clearWrist(dt);
     this.inPlace();
+    // Install the paired hand frame/socket inverse before reading the racket
+    // head for CCD, so arm correction observes the preserved physical path.
+    this.grip?.alignFrame();
     // Keep the lowest planted foot near its calibrated sole height. Bounded whole-
     // model correction only: no IK, no changes to athlete collision/travel.
     const left = this.model.findByName('mixamorig:LeftFoot')!.getPosition().y;
@@ -404,6 +511,7 @@ export class AthleteRenderer {
         this.headTarget.set(action.racket.x, action.racket.y, action.racket.z),
       );
     this.contactAge = contact?.age ?? 1;
+    this.grip?.apply(this.state);
   }
   /** Reuse the production rig/registry; never run the match controller during this session. */
   beginInspection() {
@@ -442,6 +550,7 @@ export class AthleteRenderer {
         if (!('contact' in ANIMATIONS[state]))
           this.hand.setLocalRotation(this.hand.getLocalRotation().clone().mul(this.carryWrist));
         this.inPlace();
+        this.grip?.apply(state);
       },
       markers: () => ({
         animationState: this.layer.activeState,
@@ -480,6 +589,10 @@ export class AthleteRenderer {
         (m) => !!m.skinInstance && !!(m.material as pc.StandardMaterial).diffuseMap,
       ),
       scale: this.root.getLocalScale().toArray(),
+      bodyBounds: this.bodyMeshes.map((mesh) => ({
+        centre: mesh.aabb.center.toArray(),
+        halfExtents: mesh.aabb.halfExtents.toArray(),
+      })),
     };
     if (this.status !== 'ready')
       return { character: this.character, status: this.status, error: this.error, ...visibility };
@@ -498,6 +611,14 @@ export class AthleteRenderer {
       textures: this.resources.reduce((n, r) => n + r.textures.length, 0),
       hand: this.socket.parent?.name,
       racketAttached: this.racket.parent === this.socket,
+      equipment: {
+        id: this.equipmentId,
+        assetPath: getRacket(this.equipmentId).assetPath,
+        changes: this.equipmentChanges,
+        animationInstance: this.model.getGuid(),
+        ...racketAttachment(getRacket(this.equipmentId), this.character),
+      },
+      handGrip: this.grip?.snapshot(),
       grip: this.socket.getLocalPosition().toString(),
       racketHead: this.head().toArray(),
       hips: this.hips.getPosition().toArray(),

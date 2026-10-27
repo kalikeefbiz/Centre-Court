@@ -1,0 +1,1322 @@
+[
+  {
+    "character": "kira",
+    "vertexCount": 46890,
+    "patchedHandVertices": 2115,
+    "sourceSha256": "f55979d3991fc1a2647df1fc63be4751c91a743f7498d37726362ae3468fd2d9",
+    "rightHandSourceInfluences": {
+      "mixamorig:RightHand": 312.1946105957031,
+      "mixamorig:RightHandThumb1": 0.040243785828351974,
+      "mixamorig:RightHandThumb2": 0.0,
+      "mixamorig:RightHandThumb3": 0.0,
+      "mixamorig:RightHandThumb4": 0.0,
+      "mixamorig:RightHandPinky1": 94.23066711425781,
+      "mixamorig:RightHandPinky2": 117.2874526977539,
+      "mixamorig:RightHandPinky3": 454.64569091796875,
+      "mixamorig:RightHandPinky4": 0.0,
+      "mixamorig:RightHandRing1": 0.8917292356491089,
+      "mixamorig:RightHandRing2": 0.0,
+      "mixamorig:RightHandRing3": 3.5012471675872803,
+      "mixamorig:RightHandRing4": 0.0,
+      "mixamorig:RightHandIndex1": 0.0,
+      "mixamorig:RightHandIndex2": 0.0,
+      "mixamorig:RightHandIndex3": 0.0,
+      "mixamorig:RightHandIndex4": 0.0,
+      "mixamorig:RightHandMiddle1": 0.0,
+      "mixamorig:RightHandMiddle2": 0.0,
+      "mixamorig:RightHandMiddle3": 0.0,
+      "mixamorig:RightHandMiddle4": 0.0
+    },
+    "fit": {
+      "translation": [
+        0.018,
+        -0.012,
+        0.08
+      ],
+      "fingerScale": [
+        1,
+        1.03,
+        1
+      ]
+    },
+    "fingers": [
+      {
+        "side": "Right",
+        "finger": "Index",
+        "root": [
+          -0.000569,
+          0.118747,
+          0.025183
+        ],
+        "tip": [
+          -0.007098,
+          0.068912,
+          0.025183
+        ],
+        "jointFlexDegrees": [
+          139.99999999999952,
+          66.67078276135457,
+          5.000000000000007
+        ],
+        "tipHandleRadialM": 0.008104660033730721,
+        "fkMaxJointErrorM": 5.622514349686029e-10
+      },
+      {
+        "side": "Right",
+        "finger": "Middle",
+        "root": [
+          0.004923,
+          0.113765,
+          -0.000351
+        ],
+        "tip": [
+          -0.011426,
+          0.063303,
+          -0.000351
+        ],
+        "jointFlexDegrees": [
+          139.99999999999997,
+          80.58062070001348,
+          5.000000000000004
+        ],
+        "tipHandleRadialM": 0.01155175639207999,
+        "fkMaxJointErrorM": 5.158783548071503e-10
+      },
+      {
+        "side": "Right",
+        "finger": "Ring",
+        "root": [
+          0.009042,
+          0.11003,
+          -0.019502
+        ],
+        "tip": [
+          -0.003097,
+          0.070213,
+          -0.019502
+        ],
+        "jointFlexDegrees": [
+          139.99999999998911,
+          79.41068930707793,
+          5.000000000000016
+        ],
+        "tipHandleRadialM": 0.0060637440152867305,
+        "fkMaxJointErrorM": 6.614189875898146e-10
+      },
+      {
+        "side": "Right",
+        "finger": "Pinky",
+        "root": [
+          0.00811,
+          0.101862,
+          -0.038925
+        ],
+        "tip": [
+          0.005748,
+          0.058522,
+          -0.038925
+        ],
+        "jointFlexDegrees": [
+          139.99999999997405,
+          55.996598961777266,
+          15.073858108471356
+        ],
+        "tipHandleRadialM": 0.008660843330686408,
+        "fkMaxJointErrorM": 6.194806549807459e-10
+      },
+      {
+        "side": "Right",
+        "finger": "Thumb",
+        "root": [
+          -0.021506,
+          0.048507,
+          0.033596
+        ],
+        "tip": [
+          -0.004999,
+          0.090446,
+          0.033596
+        ],
+        "jointFlexDegrees": [
+          -48.53051045345363,
+          79.99999999999999,
+          39.99999999999999
+        ],
+        "tipHandleRadialM": 0.02593266357775855,
+        "fkMaxJointErrorM": 5.359170183950835e-10
+      },
+      {
+        "side": "Left",
+        "finger": "Index",
+        "root": [
+          0.000564,
+          0.120876,
+          0.025194
+        ],
+        "tip": [
+          -0.005131,
+          0.070589,
+          0.025194
+        ],
+        "jointFlexDegrees": [
+          139.9999999999999,
+          65.30035044884612,
+          5.000000000001428
+        ],
+        "tipHandleRadialM": 0.007587566441543291,
+        "fkMaxJointErrorM": 8.110325614263818e-10
+      },
+      {
+        "side": "Left",
+        "finger": "Middle",
+        "root": [
+          -0.004909,
+          0.115914,
+          -0.000348
+        ],
+        "tip": [
+          -0.012532,
+          0.060322,
+          -0.000348
+        ],
+        "jointFlexDegrees": [
+          139.99999999999994,
+          67.08997896929068,
+          5.000000000004185
+        ],
+        "tipHandleRadialM": 0.013376424002236919,
+        "fkMaxJointErrorM": 6.786136578245609e-10
+      },
+      {
+        "side": "Left",
+        "finger": "Ring",
+        "root": [
+          -0.009014,
+          0.112193,
+          -0.019504
+        ],
+        "tip": [
+          -0.010307,
+          0.06573,
+          -0.019504
+        ],
+        "jointFlexDegrees": [
+          139.99999999999972,
+          58.616042693912625,
+          5.000000000002015
+        ],
+        "tipHandleRadialM": 0.010332566602811158,
+        "fkMaxJointErrorM": 6.307630081318825e-10
+      },
+      {
+        "side": "Left",
+        "finger": "Pinky",
+        "root": [
+          -0.008072,
+          0.104035,
+          -0.03893
+        ],
+        "tip": [
+          -0.012545,
+          0.061412,
+          -0.03893
+        ],
+        "jointFlexDegrees": [
+          139.99999999999997,
+          64.80170246254383,
+          5.000000000000001
+        ],
+        "tipHandleRadialM": 0.013048163477589246,
+        "fkMaxJointErrorM": 5.878144036291351e-10
+      },
+      {
+        "side": "Left",
+        "finger": "Thumb",
+        "root": [
+          0.021432,
+          0.050612,
+          0.033588
+        ],
+        "tip": [
+          -0.005409,
+          0.089406,
+          0.033588
+        ],
+        "jointFlexDegrees": [
+          34.238103371369775,
+          -83.64967787986281,
+          -28.00902158350588
+        ],
+        "tipHandleRadialM": 0.02499838161868841,
+        "fkMaxJointErrorM": 7.36724552084084e-10
+      }
+    ],
+    "preserved": [
+      "POSITION",
+      "NORMAL",
+      "TANGENT",
+      "TEXCOORD_0",
+      "indices",
+      "materials",
+      "images",
+      "animations",
+      "source GLB bytes"
+    ]
+  },
+  {
+    "character": "nova",
+    "vertexCount": 138224,
+    "patchedHandVertices": 2588,
+    "sourceSha256": "fb904e67374b70bff283809e72f33fb68ab654e9c3502b8dd3391813ada7ceb8",
+    "rightHandSourceInfluences": {
+      "mixamorig:RightHand": 1710.132080078125,
+      "mixamorig:RightHandThumb1": 0.0,
+      "mixamorig:RightHandThumb2": 0.0,
+      "mixamorig:RightHandThumb3": 0.0,
+      "mixamorig:RightHandThumb4": 0.0,
+      "mixamorig:RightHandPinky1": 0.0,
+      "mixamorig:RightHandPinky2": 0.0,
+      "mixamorig:RightHandPinky3": 0.0,
+      "mixamorig:RightHandPinky4": 0.0,
+      "mixamorig:RightHandRing1": 0.0,
+      "mixamorig:RightHandRing2": 0.0,
+      "mixamorig:RightHandRing3": 0.0,
+      "mixamorig:RightHandRing4": 0.0,
+      "mixamorig:RightHandIndex1": 0.0,
+      "mixamorig:RightHandIndex2": 0.0,
+      "mixamorig:RightHandIndex3": 0.0,
+      "mixamorig:RightHandIndex4": 0.0,
+      "mixamorig:RightHandMiddle1": 0.0,
+      "mixamorig:RightHandMiddle2": 0.0,
+      "mixamorig:RightHandMiddle3": 0.0,
+      "mixamorig:RightHandMiddle4": 0.0
+    },
+    "fit": {
+      "translation": [
+        0.065,
+        0.004,
+        0
+      ],
+      "fingerScale": [
+        1,
+        0.7,
+        0.9
+      ]
+    },
+    "fingers": [
+      {
+        "side": "Right",
+        "finger": "Index",
+        "root": [
+          -0.000569,
+          0.080702,
+          0.022665
+        ],
+        "tip": [
+          -0.000786,
+          0.051916,
+          0.022665
+        ],
+        "jointFlexDegrees": [
+          127.4005524770001,
+          49.66408307524588,
+          62.45069654366678
+        ],
+        "tipHandleRadialM": 0.013107940289806212,
+        "fkMaxJointErrorM": 4.618117603283849e-10
+      },
+      {
+        "side": "Right",
+        "finger": "Middle",
+        "root": [
+          0.004923,
+          0.077316,
+          -0.000316
+        ],
+        "tip": [
+          -0.006931,
+          0.051378,
+          -0.000316
+        ],
+        "jointFlexDegrees": [
+          134.66353220544642,
+          73.17308494757735,
+          56.908751630133125
+        ],
+        "tipHandleRadialM": 0.015283971918237027,
+        "fkMaxJointErrorM": 4.162870134006458e-10
+      },
+      {
+        "side": "Right",
+        "finger": "Ring",
+        "root": [
+          0.009042,
+          0.074777,
+          -0.017552
+        ],
+        "tip": [
+          -0.002472,
+          0.051517,
+          -0.017552
+        ],
+        "jointFlexDegrees": [
+          139.99999999999997,
+          77.44615575065895,
+          33.37316838707498
+        ],
+        "tipHandleRadialM": 0.013707416071263986,
+        "fkMaxJointErrorM": 6.430869538977077e-10
+      },
+      {
+        "side": "Right",
+        "finger": "Pinky",
+        "root": [
+          0.00811,
+          0.069226,
+          -0.035032
+        ],
+        "tip": [
+          -0.005216,
+          0.051408,
+          -0.035032
+        ],
+        "jointFlexDegrees": [
+          139.99999999999997,
+          92.17524392124119,
+          31.190158102972216
+        ],
+        "tipHandleRadialM": 0.014558382858882998,
+        "fkMaxJointErrorM": 1.073846337678999e-09
+      },
+      {
+        "side": "Right",
+        "finger": "Thumb",
+        "root": [
+          -0.021506,
+          0.032966,
+          0.030236
+        ],
+        "tip": [
+          -0.022179,
+          0.076539,
+          0.030236
+        ],
+        "jointFlexDegrees": [
+          44.106914674434606,
+          -78.87583609750753,
+          24.77722881170562
+        ],
+        "tipHandleRadialM": 0.025001265689187594,
+        "fkMaxJointErrorM": 6.731687389799889e-10
+      },
+      {
+        "side": "Left",
+        "finger": "Index",
+        "root": [
+          0.000564,
+          0.082148,
+          0.022675
+        ],
+        "tip": [
+          -0.000685,
+          0.051952,
+          0.022675
+        ],
+        "jointFlexDegrees": [
+          134.6051452530467,
+          42.315670745269756,
+          62.052766343271124
+        ],
+        "tipHandleRadialM": 0.013066091115558546,
+        "fkMaxJointErrorM": 7.777240379503958e-10
+      },
+      {
+        "side": "Left",
+        "finger": "Middle",
+        "root": [
+          -0.004909,
+          0.078776,
+          -0.000313
+        ],
+        "tip": [
+          -0.001834,
+          0.051571,
+          -0.000313
+        ],
+        "jointFlexDegrees": [
+          108.52864112769889,
+          63.16034865240772,
+          69.33666678776999
+        ],
+        "tipHandleRadialM": 0.013553807698419776,
+        "fkMaxJointErrorM": 7.548156365566209e-10
+      },
+      {
+        "side": "Left",
+        "finger": "Ring",
+        "root": [
+          -0.009014,
+          0.076247,
+          -0.017554
+        ],
+        "tip": [
+          0.003968,
+          0.055517,
+          -0.017554
+        ],
+        "jointFlexDegrees": [
+          90.86938263916696,
+          52.13101223559975,
+          68.67051990004164
+        ],
+        "tipHandleRadialM": 0.010279118611590468,
+        "fkMaxJointErrorM": 5.318334051063566e-10
+      },
+      {
+        "side": "Left",
+        "finger": "Pinky",
+        "root": [
+          -0.008072,
+          0.070704,
+          -0.035037
+        ],
+        "tip": [
+          0.004101,
+          0.055561,
+          -0.035037
+        ],
+        "jointFlexDegrees": [
+          69.97860266445308,
+          72.39336554505316,
+          70.61042883583193
+        ],
+        "tipHandleRadialM": 0.010291162119727689,
+        "fkMaxJointErrorM": 4.845117672496602e-10
+      },
+      {
+        "side": "Left",
+        "finger": "Thumb",
+        "root": [
+          0.021432,
+          0.034397,
+          0.030229
+        ],
+        "tip": [
+          0.021085,
+          0.078428,
+          0.030229
+        ],
+        "jointFlexDegrees": [
+          44.72775768095452,
+          -58.32281851208856,
+          -16.100852159363555
+        ],
+        "tipHandleRadialM": 0.02499795460466567,
+        "fkMaxJointErrorM": 3.899587539326505e-10
+      }
+    ],
+    "preserved": [
+      "POSITION",
+      "NORMAL",
+      "TANGENT",
+      "TEXCOORD_0",
+      "indices",
+      "materials",
+      "images",
+      "animations",
+      "source GLB bytes"
+    ]
+  },
+  {
+    "character": "dante",
+    "vertexCount": 37050,
+    "patchedHandVertices": 0,
+    "sourceSha256": "806ab3b44a7201902d5ec84aa7d059aba335db5275bbd4088c605b453d9e2edb",
+    "rightHandSourceInfluences": {
+      "mixamorig:RightHand": 462.2945861816406,
+      "mixamorig:RightHandPinky1": 61.88838577270508,
+      "mixamorig:RightHandPinky2": 29.059513092041016,
+      "mixamorig:RightHandPinky3": 198.18145751953125,
+      "mixamorig:RightHandPinky4": 0.0,
+      "mixamorig:RightHandThumb1": 21.59911346435547,
+      "mixamorig:RightHandThumb2": 55.09996795654297,
+      "mixamorig:RightHandThumb3": 212.23733520507812,
+      "mixamorig:RightHandThumb4": 0.0,
+      "mixamorig:RightHandRing1": 79.80196380615234,
+      "mixamorig:RightHandRing2": 58.05840301513672,
+      "mixamorig:RightHandRing3": 188.93084716796875,
+      "mixamorig:RightHandRing4": 0.0,
+      "mixamorig:RightHandIndex1": 97.91802978515625,
+      "mixamorig:RightHandIndex2": 59.3154296875,
+      "mixamorig:RightHandIndex3": 293.26055908203125,
+      "mixamorig:RightHandIndex4": 0.0,
+      "mixamorig:RightHandMiddle1": 95.73509216308594,
+      "mixamorig:RightHandMiddle2": 57.227481842041016,
+      "mixamorig:RightHandMiddle3": 180.3060302734375,
+      "mixamorig:RightHandMiddle4": 0.0
+    },
+    "fit": {
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "fingerScale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "fingers": [
+      {
+        "side": "Right",
+        "finger": "Index",
+        "root": [
+          0.013555,
+          0.114647,
+          0.024004
+        ],
+        "tip": [
+          0.006608,
+          0.064528,
+          0.024004
+        ],
+        "jointFlexDegrees": [
+          139.9999999999497,
+          67.30387504533196,
+          5.000000000089879
+        ],
+        "tipHandleRadialM": 0.006624738938192517,
+        "fkMaxJointErrorM": 6.808309597390989e-10
+      },
+      {
+        "side": "Right",
+        "finger": "Middle",
+        "root": [
+          0.004182,
+          0.11539,
+          -0.001711
+        ],
+        "tip": [
+          -0.01108,
+          0.063662,
+          -0.001711
+        ],
+        "jointFlexDegrees": [
+          139.99999999999997,
+          78.83949244079801,
+          5.000000000000001
+        ],
+        "tipHandleRadialM": 0.011160874307508967,
+        "fkMaxJointErrorM": 4.806014282281348e-10
+      },
+      {
+        "side": "Right",
+        "finger": "Ring",
+        "root": [
+          -0.004775,
+          0.111751,
+          -0.01913
+        ],
+        "tip": [
+          -0.010431,
+          0.065214,
+          -0.01913
+        ],
+        "jointFlexDegrees": [
+          139.99999999999966,
+          65.8900450781346,
+          5.000000000000799
+        ],
+        "tipHandleRadialM": 0.010433112598137402,
+        "fkMaxJointErrorM": 6.872553713107845e-10
+      },
+      {
+        "side": "Right",
+        "finger": "Pinky",
+        "root": [
+          -0.018802,
+          0.100315,
+          -0.029781
+        ],
+        "tip": [
+          -0.011501,
+          0.065222,
+          -0.029781
+        ],
+        "jointFlexDegrees": [
+          139.9999999999867,
+          39.475744702847756,
+          5.00000000054994
+        ],
+        "tipHandleRadialM": 0.011503130914638358,
+        "fkMaxJointErrorM": 5.054448541951723e-10
+      },
+      {
+        "side": "Right",
+        "finger": "Thumb",
+        "root": [
+          0.009276,
+          0.046267,
+          0.031504
+        ],
+        "tip": [
+          -0.005412,
+          0.089408,
+          0.031504
+        ],
+        "jointFlexDegrees": [
+          84.81611003955894,
+          -97.91728075806321,
+          -60.69521339145848
+        ],
+        "tipHandleRadialM": 0.02500080409628765,
+        "fkMaxJointErrorM": 4.727040695664558e-10
+      },
+      {
+        "side": "Left",
+        "finger": "Index",
+        "root": [
+          -0.01036,
+          0.106879,
+          0.024352
+        ],
+        "tip": [
+          -0.013759,
+          0.056834,
+          0.024352
+        ],
+        "jointFlexDegrees": [
+          139.99999999999568,
+          61.887544998385145,
+          5.000000000000001
+        ],
+        "tipHandleRadialM": 0.015999208204312592,
+        "fkMaxJointErrorM": 6.783506347008687e-10
+      },
+      {
+        "side": "Left",
+        "finger": "Middle",
+        "root": [
+          -0.005275,
+          0.103924,
+          0.000211
+        ],
+        "tip": [
+          -0.014549,
+          0.058507,
+          0.000211
+        ],
+        "jointFlexDegrees": [
+          123.54384086089816,
+          93.23781188320373,
+          5.000000000000001
+        ],
+        "tipHandleRadialM": 0.015932083893473125,
+        "fkMaxJointErrorM": 4.0406470270008874e-10
+      },
+      {
+        "side": "Left",
+        "finger": "Ring",
+        "root": [
+          0.002604,
+          0.101808,
+          -0.017964
+        ],
+        "tip": [
+          0.001448,
+          0.053257,
+          -0.017964
+        ],
+        "jointFlexDegrees": [
+          139.99999999999997,
+          44.318507374650856,
+          34.65346938576812
+        ],
+        "tipHandleRadialM": 0.011832405308684688,
+        "fkMaxJointErrorM": 5.694335914185581e-10
+      },
+      {
+        "side": "Left",
+        "finger": "Pinky",
+        "root": [
+          0.016206,
+          0.091609,
+          -0.030291
+        ],
+        "tip": [
+          0.008257,
+          0.062283,
+          -0.030291
+        ],
+        "jointFlexDegrees": [
+          139.99999999999716,
+          76.96379670093299,
+          5.000000000106789
+        ],
+        "tipHandleRadialM": 0.008692768910594915,
+        "fkMaxJointErrorM": 3.865106940049354e-10
+      },
+      {
+        "side": "Left",
+        "finger": "Thumb",
+        "root": [
+          -0.001914,
+          0.040897,
+          0.032776
+        ],
+        "tip": [
+          -0.005409,
+          0.089414,
+          0.032776
+        ],
+        "jointFlexDegrees": [
+          71.11262067804846,
+          -58.352578202782155,
+          -74.67377964980062
+        ],
+        "tipHandleRadialM": 0.025005922552202572,
+        "fkMaxJointErrorM": 8.49466017434946e-10
+      }
+    ],
+    "preserved": [
+      "POSITION",
+      "NORMAL",
+      "TANGENT",
+      "TEXCOORD_0",
+      "indices",
+      "materials",
+      "images",
+      "animations",
+      "source GLB bytes"
+    ]
+  },
+  {
+    "character": "rico",
+    "vertexCount": 30133,
+    "patchedHandVertices": 0,
+    "sourceSha256": "9142d4f3cfb010d00d59e63191d4bbf411823f6df87412d1766f5b514e426a6a",
+    "rightHandSourceInfluences": {
+      "mixamorig:RightHand": 452.8949279785156,
+      "mixamorig:RightHandThumb1": 20.380760192871094,
+      "mixamorig:RightHandThumb2": 24.01744842529297,
+      "mixamorig:RightHandThumb3": 155.85198974609375,
+      "mixamorig:RightHandThumb4": 0.0,
+      "mixamorig:RightHandPinky1": 47.10137176513672,
+      "mixamorig:RightHandPinky2": 26.45001220703125,
+      "mixamorig:RightHandPinky3": 96.46035766601562,
+      "mixamorig:RightHandPinky4": 0.0,
+      "mixamorig:RightHandIndex1": 57.577491760253906,
+      "mixamorig:RightHandIndex2": 36.287261962890625,
+      "mixamorig:RightHandIndex3": 103.39869689941406,
+      "mixamorig:RightHandIndex4": 0.0,
+      "mixamorig:RightHandRing1": 39.531028747558594,
+      "mixamorig:RightHandRing2": 42.19838333129883,
+      "mixamorig:RightHandRing3": 104.1036376953125,
+      "mixamorig:RightHandRing4": 0.0,
+      "mixamorig:RightHandMiddle1": 48.22501754760742,
+      "mixamorig:RightHandMiddle2": 58.986515045166016,
+      "mixamorig:RightHandMiddle3": 118.5819091796875,
+      "mixamorig:RightHandMiddle4": 0.0
+    },
+    "fit": {
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "fingerScale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "fingers": [
+      {
+        "side": "Right",
+        "finger": "Index",
+        "root": [
+          0.000944,
+          0.116446,
+          0.024826
+        ],
+        "tip": [
+          -0.009188,
+          0.066323,
+          0.024826
+        ],
+        "jointFlexDegrees": [
+          139.99999999999997,
+          72.1660712980307,
+          5.000000000000001
+        ],
+        "tipHandleRadialM": 0.009282254950051659,
+        "fkMaxJointErrorM": 4.6149349215765633e-10
+      },
+      {
+        "side": "Right",
+        "finger": "Middle",
+        "root": [
+          0.002266,
+          0.118177,
+          0.00394
+        ],
+        "tip": [
+          -0.009112,
+          0.066163,
+          0.00394
+        ],
+        "jointFlexDegrees": [
+          139.9999999999999,
+          73.4093643912863,
+          5.000000000009107
+        ],
+        "tipHandleRadialM": 0.00918581119247559,
+        "fkMaxJointErrorM": 5.109243629234323e-10
+      },
+      {
+        "side": "Right",
+        "finger": "Ring",
+        "root": [
+          0.007341,
+          0.114779,
+          -0.015023
+        ],
+        "tip": [
+          -0.007468,
+          0.067629,
+          -0.015023
+        ],
+        "jointFlexDegrees": [
+          139.99999999999997,
+          79.96412649817324,
+          5.000000000000001
+        ],
+        "tipHandleRadialM": 0.00791752751340859,
+        "fkMaxJointErrorM": 5.47101947630377e-10
+      },
+      {
+        "side": "Right",
+        "finger": "Pinky",
+        "root": [
+          0.010958,
+          0.102188,
+          -0.032728
+        ],
+        "tip": [
+          0.006763,
+          0.061224,
+          -0.032728
+        ],
+        "jointFlexDegrees": [
+          139.99999999987776,
+          62.81017035795546,
+          8.348217474137051
+        ],
+        "tipHandleRadialM": 0.007745917847554824,
+        "fkMaxJointErrorM": 3.2518917983250643e-10
+      },
+      {
+        "side": "Right",
+        "finger": "Thumb",
+        "root": [
+          -0.017123,
+          0.022797,
+          0.016374
+        ],
+        "tip": [
+          -0.00541,
+          0.08941,
+          0.016374
+        ],
+        "jointFlexDegrees": [
+          73.76771478315743,
+          -67.5865729662557,
+          -67.99585231956691
+        ],
+        "tipHandleRadialM": 0.025002727128020128,
+        "fkMaxJointErrorM": 6.059675130262514e-10
+      },
+      {
+        "side": "Left",
+        "finger": "Index",
+        "root": [
+          -0.000939,
+          0.115998,
+          0.024831
+        ],
+        "tip": [
+          -0.010558,
+          0.064446,
+          0.024831
+        ],
+        "jointFlexDegrees": [
+          139.99999999999997,
+          70.94486623472682,
+          5.000000000000001
+        ],
+        "tipHandleRadialM": 0.010572461048893532,
+        "fkMaxJointErrorM": 3.033520564593121e-10
+      },
+      {
+        "side": "Left",
+        "finger": "Middle",
+        "root": [
+          -0.002272,
+          0.117733,
+          0.003946
+        ],
+        "tip": [
+          -0.010821,
+          0.063833,
+          0.003946
+        ],
+        "jointFlexDegrees": [
+          139.99999999999997,
+          68.9247528781005,
+          5.000000000000114
+        ],
+        "tipHandleRadialM": 0.010883921043501681,
+        "fkMaxJointErrorM": 1.0693284163511682e-09
+      },
+      {
+        "side": "Left",
+        "finger": "Ring",
+        "root": [
+          -0.007355,
+          0.114337,
+          -0.015015
+        ],
+        "tip": [
+          -0.010502,
+          0.064939,
+          -0.015015
+        ],
+        "jointFlexDegrees": [
+          139.9999999999991,
+          61.410833340939476,
+          5.000000000000088
+        ],
+        "tipHandleRadialM": 0.010502512843796673,
+        "fkMaxJointErrorM": 4.665091886788533e-10
+      },
+      {
+        "side": "Left",
+        "finger": "Pinky",
+        "root": [
+          -0.010977,
+          0.10175,
+          -0.032721
+        ],
+        "tip": [
+          -0.014864,
+          0.054233,
+          -0.032721
+        ],
+        "jointFlexDegrees": [
+          139.99999999999983,
+          62.936593154070984,
+          5.000000000000001
+        ],
+        "tipHandleRadialM": 0.018354314448002305,
+        "fkMaxJointErrorM": 5.171370014932055e-10
+      },
+      {
+        "side": "Left",
+        "finger": "Thumb",
+        "root": [
+          0.020742,
+          0.017898,
+          0.01425
+        ],
+        "tip": [
+          -0.00541,
+          0.089407,
+          0.01425
+        ],
+        "jointFlexDegrees": [
+          42.07138565330504,
+          -81.58111816318774,
+          -30.162494255847573
+        ],
+        "tipHandleRadialM": 0.024999048093605973,
+        "fkMaxJointErrorM": 6.294333723699339e-10
+      }
+    ],
+    "preserved": [
+      "POSITION",
+      "NORMAL",
+      "TANGENT",
+      "TEXCOORD_0",
+      "indices",
+      "materials",
+      "images",
+      "animations",
+      "source GLB bytes"
+    ]
+  },
+  {
+    "character": "zuri",
+    "vertexCount": 32987,
+    "patchedHandVertices": 0,
+    "sourceSha256": "8c5cf87b00dff0d1de8609c2831f321953808633089f4ae35b92929a99fc3429",
+    "rightHandSourceInfluences": {
+      "mixamorig:RightHand": 463.66009521484375,
+      "mixamorig:RightHandThumb1": 30.2927188873291,
+      "mixamorig:RightHandThumb2": 19.067550659179688,
+      "mixamorig:RightHandThumb3": 92.7344970703125,
+      "mixamorig:RightHandThumb4": 0.0,
+      "mixamorig:RightHandPinky1": 43.35456848144531,
+      "mixamorig:RightHandPinky2": 33.889129638671875,
+      "mixamorig:RightHandPinky3": 63.68291473388672,
+      "mixamorig:RightHandPinky4": 0.0,
+      "mixamorig:RightHandRing1": 28.25618553161621,
+      "mixamorig:RightHandRing2": 26.8634033203125,
+      "mixamorig:RightHandRing3": 107.6796875,
+      "mixamorig:RightHandRing4": 0.0,
+      "mixamorig:RightHandIndex1": 24.661725997924805,
+      "mixamorig:RightHandIndex2": 23.788145065307617,
+      "mixamorig:RightHandIndex3": 50.60218048095703,
+      "mixamorig:RightHandIndex4": 0.0,
+      "mixamorig:RightHandMiddle1": 37.60211944580078,
+      "mixamorig:RightHandMiddle2": 45.415679931640625,
+      "mixamorig:RightHandMiddle3": 153.50320434570312,
+      "mixamorig:RightHandMiddle4": 0.0
+    },
+    "fit": {
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "fingerScale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "fingers": [
+      {
+        "side": "Right",
+        "finger": "Index",
+        "root": [
+          -0.008135,
+          0.111237,
+          0.018299
+        ],
+        "tip": [
+          -0.014891,
+          0.055096,
+          0.018299
+        ],
+        "jointFlexDegrees": [
+          136.93171983853625,
+          70.39005707746293,
+          5.000000000000001
+        ],
+        "tipHandleRadialM": 0.017883817125080862,
+        "fkMaxJointErrorM": 4.884360883673437e-10
+      },
+      {
+        "side": "Right",
+        "finger": "Middle",
+        "root": [
+          0.001162,
+          0.107648,
+          0.001049
+        ],
+        "tip": [
+          -0.004208,
+          0.050395,
+          0.001049
+        ],
+        "jointFlexDegrees": [
+          139.9999999999984,
+          42.38664914818564,
+          53.98777584997249
+        ],
+        "tipHandleRadialM": 0.015199515100966118,
+        "fkMaxJointErrorM": 7.477842896358222e-10
+      },
+      {
+        "side": "Right",
+        "finger": "Ring",
+        "root": [
+          0.00736,
+          0.105256,
+          -0.010451
+        ],
+        "tip": [
+          0.001339,
+          0.053237,
+          -0.010451
+        ],
+        "jointFlexDegrees": [
+          139.99999999999997,
+          55.4335029908968,
+          26.962165261321413
+        ],
+        "tipHandleRadialM": 0.011838867783795677,
+        "fkMaxJointErrorM": 5.204145610250069e-10
+      },
+      {
+        "side": "Right",
+        "finger": "Pinky",
+        "root": [
+          0.01112,
+          0.098902,
+          -0.03011
+        ],
+        "tip": [
+          0.005984,
+          0.058424,
+          -0.03011
+        ],
+        "jointFlexDegrees": [
+          139.9999999999372,
+          63.87851615024451,
+          11.488309362512647
+        ],
+        "tipHandleRadialM": 0.008891341699951745,
+        "fkMaxJointErrorM": 6.553696617252729e-10
+      },
+      {
+        "side": "Right",
+        "finger": "Thumb",
+        "root": [
+          -0.001495,
+          0.031778,
+          0.029253
+        ],
+        "tip": [
+          -0.005411,
+          0.089408,
+          0.029253
+        ],
+        "jointFlexDegrees": [
+          80.67894165571977,
+          -99.41936006094437,
+          -53.383431688449406
+        ],
+        "tipHandleRadialM": 0.025000382644942545,
+        "fkMaxJointErrorM": 4.754488815198751e-10
+      },
+      {
+        "side": "Left",
+        "finger": "Index",
+        "root": [
+          0.00848,
+          0.111053,
+          0.018142
+        ],
+        "tip": [
+          0.001838,
+          0.053825,
+          0.018142
+        ],
+        "jointFlexDegrees": [
+          139.99999999999997,
+          58.12578774568379,
+          21.462997675219352
+        ],
+        "tipHandleRadialM": 0.011324662954270273,
+        "fkMaxJointErrorM": 7.103537498418875e-10
+      },
+      {
+        "side": "Left",
+        "finger": "Middle",
+        "root": [
+          -0.001658,
+          0.107376,
+          0.001392
+        ],
+        "tip": [
+          -0.014691,
+          0.058533,
+          0.001392
+        ],
+        "jointFlexDegrees": [
+          130.78150210653797,
+          88.76601948922526,
+          5.000000000000001
+        ],
+        "tipHandleRadialM": 0.01605182593731197,
+        "fkMaxJointErrorM": 3.90958519456568e-10
+      },
+      {
+        "side": "Left",
+        "finger": "Ring",
+        "root": [
+          -0.008417,
+          0.104925,
+          -0.009775
+        ],
+        "tip": [
+          -0.014896,
+          0.056652,
+          -0.009775
+        ],
+        "jointFlexDegrees": [
+          128.66738735198894,
+          82.24184807135897,
+          5.000000000000001
+        ],
+        "tipHandleRadialM": 0.017075640269477395,
+        "fkMaxJointErrorM": 9.473715186650603e-10
+      },
+      {
+        "side": "Left",
+        "finger": "Pinky",
+        "root": [
+          -0.013054,
+          0.098784,
+          -0.029314
+        ],
+        "tip": [
+          -0.013716,
+          0.056059,
+          -0.029314
+        ],
+        "jointFlexDegrees": [
+          139.99999999999997,
+          58.17784448481867,
+          5.000000000000001
+        ],
+        "tipHandleRadialM": 0.016373114191609424,
+        "fkMaxJointErrorM": 6.041093502583686e-10
+      },
+      {
+        "side": "Left",
+        "finger": "Thumb",
+        "root": [
+          0.011962,
+          0.0325,
+          0.02508
+        ],
+        "tip": [
+          -0.005411,
+          0.089408,
+          0.02508
+        ],
+        "jointFlexDegrees": [
+          70.58751732972821,
+          -99.80072091882664,
+          -49.0611809140621
+        ],
+        "tipHandleRadialM": 0.025000141354123963,
+        "fkMaxJointErrorM": 6.264142554251756e-10
+      }
+    ],
+    "preserved": [
+      "POSITION",
+      "NORMAL",
+      "TANGENT",
+      "TEXCOORD_0",
+      "indices",
+      "materials",
+      "images",
+      "animations",
+      "source GLB bytes"
+    ]
+  }
+]

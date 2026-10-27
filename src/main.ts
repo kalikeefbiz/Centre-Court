@@ -9,6 +9,8 @@ import { Scene } from './render/scene';
 import { Input } from './platform/input';
 import { ROSTER, CHARACTER_IDS, AVAILABLE, type CharacterId } from './core/roster';
 import { Competition, ladder } from './core/competition';
+import { EquipmentSelection } from './render/racket-equipment';
+import { EquipmentUI } from './platform/equipment-ui';
 import { CourtAudio } from './platform/court-audio';
 import { StadiumAudio } from './platform/stadium-audio';
 import type { StadiumQuality } from './render/stadium-geometry';
@@ -21,6 +23,7 @@ try {
   /* unavailable */
 }
 const competition = new Competition(storage);
+const equipment = new EquipmentSelection(storage);
 let selected: CharacterId = competition.save.player;
 let rival: CharacterId = selected === 'rico' ? 'dante' : 'rico';
 let circuitMatch = false;
@@ -29,6 +32,7 @@ let recorded = false;
 let loadingOpponent = false;
 let previewing = false;
 let previewAngle = 'front';
+let equipmentView: 'athlete' | 'grip' = 'grip';
 import type { Difficulty } from './core/ai';
 import type { DeveloperTools } from './dev/tools';
 import type { MatchLength } from './core/scoring';
@@ -39,7 +43,7 @@ const match = new Match(),
 let scene: Scene;
 let developer: DeveloperTools | undefined;
 try {
-  scene = new Scene($<HTMLCanvasElement>('court'), selected);
+  scene = new Scene($<HTMLCanvasElement>('court'), selected, equipment.selected(selected));
 } catch (error) {
   $('loading').textContent =
     'Your browser could not start 3D rendering. Enable WebGL and reload Centre Court.';
@@ -71,6 +75,24 @@ const updateCamera = () => {
   $('camera-button').setAttribute('aria-label', `Switch camera: currently ${scene.rig.mode}`);
 };
 updateCamera();
+const equipmentUI = new EquipmentUI(document.body, equipment, {
+  character: () => selected,
+  preview: (id) => scene.equipRacket(id),
+  equip: (id) => scene.equipRacket(id),
+  open: () => {
+    previewing = true;
+    equipmentView = 'grip';
+  },
+  close: () => {
+    previewing = false;
+  },
+  view: (mode) => {
+    equipmentView = mode;
+  },
+});
+$('racket-equipment-open').onclick = () => {
+  if (scene.kira.status === 'ready') equipmentUI.open();
+};
 const start = async (practice: boolean, rematch = false) => {
   stadiumAudio.unlock();
   courtAudio.unlock();
@@ -88,7 +110,7 @@ const start = async (practice: boolean, rematch = false) => {
   ).map((element) => ({ element, disabled: element.disabled }));
   pendingControls.forEach(({ element }) => (element.disabled = true));
   try {
-    await scene.selectOpponent(rival);
+    await scene.selectOpponent(rival, equipment.selected(rival));
   } finally {
     loadingOpponent = false;
     pendingControls.forEach(({ element, disabled }) => (element.disabled = disabled));
@@ -139,7 +161,7 @@ for (const id of CHARACTER_IDS) {
   button.onclick = () => {
     selected = id;
     updateRoster();
-    void scene.selectCharacter(id);
+    void scene.selectCharacter(id, equipment.selected(id));
   };
   roster.append(button);
 }
@@ -268,8 +290,10 @@ const renderUI = () => {
   $('heat-indicator').hidden = !match.heat;
   setText('heat-indicator', match.heat === 2 ? 'RALLY HEAT · FIRE' : 'RALLY HEAT · BUILDING');
   $('menu').hidden = match.phase !== 'menu' || previewing;
-  $('athlete-preview').hidden = !previewing;
+  $('athlete-preview').hidden = !previewing || equipmentUI.isOpen;
   $<HTMLButtonElement>('preview-athlete').disabled =
+    loadingOpponent || scene.kira.status !== 'ready';
+  $<HTMLButtonElement>('racket-equipment-open').disabled =
     loadingOpponent || scene.kira.status !== 'ready';
   setText('preview-title', `${ROSTER[selected].name} · ${ROSTER[selected].title}`);
   setText('preview-archetype', ROSTER[selected].archetype);
@@ -347,9 +371,12 @@ scene.app.on('update', (dt: number) => {
   // the resulting phase, even before another rendered frame samples controls.
   input.setContext(match.phase, match.inputEpoch);
   if (!developer?.frozen)
-    scene.render(match, Math.min(dt, 0.1), input.charging, input.controls.shot);
+    scene.render(match, Math.min(dt, 0.1), input.charging, input.controls.shot, previewing);
   else if (!developer.inspecting) scene.renderComparison(match, Math.min(dt, 0.1));
-  if (previewing && match.phase === 'menu') scene.inspectCamera(previewAngle, true);
+  if (previewing && match.phase === 'menu') {
+    if (equipmentUI.isOpen) scene.equipmentCamera(equipmentView);
+    else scene.inspectCamera(previewAngle, true);
+  }
   shotTarget.hidden =
     !input.charging || !!developer?.frozen || (match.phase !== 'serve' && match.phase !== 'rally');
   if (!shotTarget.hidden) {
@@ -408,7 +435,8 @@ if (
     value: {
       snapshot: () => ({
         build: __BUILD_ID__,
-        release: 'GOAL-008',
+        release: 'GOAL-009',
+        equipment: { ...equipmentUI.snapshot(), saved: equipment.snapshot() },
         roster: { selected, rival, opponent: scene.opponent?.snapshot() },
         competition: competition.save,
         signatures: { meters: [...match.meters], armed: [...match.armed] },

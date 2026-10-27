@@ -1291,7 +1291,8 @@ h1 em {
   text-align: right;
   font-size: 10px;
 }
-#menu #preview-athlete {
+#menu #preview-athlete,
+#menu #racket-equipment-open {
   min-height: 36px;
   padding: 8px;
   margin: 2px 0 8px;

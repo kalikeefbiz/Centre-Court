@@ -1,0 +1,31 @@
+{
+  "sourceSha256": "a6ba172b1f13c2234f9e7c83591af49e6ffe43d842f70d106abd7f9446036331",
+  "sourceVertices": 138224,
+  "runtimeVertices": 138224,
+  "sourceTriangles": 102942,
+  "runtimeTriangles": 102942,
+  "normalizationScale": 0.8953343629837036,
+  "normalizationOffsetY": 0.8515830039978027,
+  "maximumPositionResidualM": 0.0,
+  "indicesIdentical": true,
+  "normalsIdentical": true,
+  "uvIdentical": true,
+  "materialsIdentical": true,
+  "images": [
+    {
+      "bytes": 19278087,
+      "identical": true,
+      "sha256": "84745d2796f80fe5e41ce121f198368793a79c33a5708816e6cb29af3ef07e41"
+    },
+    {
+      "bytes": 60735146,
+      "identical": true,
+      "sha256": "015d401cb3443184893df42a9af2ab044921167aeb75f9fc7dbc38eb3a8a5c11"
+    },
+    {
+      "bytes": 7846555,
+      "identical": true,
+      "sha256": "e5c5a0d435b6479d3b36f90de3226a573b1e32b199d1ab0784d60e97d5fb9703"
+    }
+  ]
+}

@@ -7,6 +7,7 @@ import { RoyalBall } from './royal-ball';
 import { Kira } from './kira';
 import { ROSTER, type CharacterId } from '../core/roster';
 import { Stadium } from './stadium';
+import { DEFAULT_RACKET_ID } from './racket-equipment';
 
 export class Scene {
   app: pc.Application;
@@ -36,9 +37,12 @@ export class Scene {
   private courtBatch: number;
   private athleteBatch: number;
   private materials = new Map<string, pc.StandardMaterial>();
+  private readonly characterFill: pc.Entity;
+  private characterPresentation = false;
   constructor(
     public canvas: HTMLCanvasElement,
     initialCharacter: CharacterId = 'kira',
+    initialRacket = DEFAULT_RACKET_ID,
   ) {
     this.app = new pc.Application(canvas, {
       graphicsDeviceOptions: {
@@ -82,12 +86,24 @@ export class Scene {
     });
     sun.setEulerAngles(48, -30, 0);
     this.app.root.addChild(sun);
+    // A modest unshadowed fill is reserved for cosmetic inspection. The match
+    // keeps its established lighting, resolution budget and court composition.
+    this.characterFill = new pc.Entity('Character presentation fill');
+    this.characterFill.addComponent('light', {
+      type: 'directional',
+      color: new pc.Color(0.76, 0.86, 1),
+      intensity: 0.35,
+      castShadows: false,
+    });
+    this.characterFill.setEulerAngles(25, 145, 0);
+    this.characterFill.enabled = false;
+    this.app.root.addChild(this.characterFill);
     this.buildArena();
     this.stadium = new Stadium(this.app);
     // Only the AI uses a temporary model. Never create a placeholder human.
     this.athletes = [];
     this.playerShadow = this.shadow('Kira ground shadow', 1.05);
-    this.kira = new Kira(this.app, initialCharacter);
+    this.kira = new Kira(this.app, initialCharacter, 0, initialRacket);
     this.royalBall = new RoyalBall(this.app);
     this.ball = this.royalBall.root;
     this.ballShadow = this.shadow('Ball ground shadow', 0.075);
@@ -115,18 +131,25 @@ export class Scene {
     window.addEventListener('resize', () => this.resize());
     this.app.start();
   }
-  selectCharacter(id: CharacterId) {
-    if (this.kira.character === id) return this.kira.ready;
+  selectCharacter(id: CharacterId, equipment = DEFAULT_RACKET_ID) {
+    if (this.kira.character === id)
+      return this.kira.status === 'ready' ? this.kira.setEquipment(equipment) : this.kira.ready;
     this.kira.destroy();
-    this.kira = new Kira(this.app, id, 0);
+    this.kira = new Kira(this.app, id, 0, equipment);
     return this.kira.ready;
   }
-  async selectOpponent(id: CharacterId) {
-    if (this.opponent?.character === id && this.opponent.status === 'ready') return;
+  equipRacket(id: string) {
+    return this.kira.setEquipment(id);
+  }
+  async selectOpponent(id: CharacterId, equipment = DEFAULT_RACKET_ID) {
+    if (this.opponent?.character === id && this.opponent.status === 'ready') {
+      await this.opponent.setEquipment(equipment);
+      return;
+    }
     this.preparingMatch = true;
     if (this.opponent?.character !== id) {
       this.opponent?.destroy();
-      this.opponent = new Kira(this.app, id, 1);
+      this.opponent = new Kira(this.app, id, 1, equipment);
     }
     await this.opponent!.ready;
     if (this.opponent!.status === 'ready')
@@ -351,6 +374,25 @@ export class Scene {
       this.camera.lookAt(target);
     }
   }
+  /** A dedicated cosmetic close-up reuses the live selected rig and racket.
+   * It never changes CameraRig's saved gameplay framing or loads another model.
+   */
+  equipmentCamera(mode: 'athlete' | 'grip') {
+    if (mode === 'athlete') {
+      this.inspectCamera('quarter', true);
+      return;
+    }
+    const { grip, head } = this.kira.equipmentFrame();
+    if (!grip || !head) return;
+    const portrait = innerWidth < 600 && innerHeight > innerWidth;
+    const direction = head.clone().sub(grip);
+    const target = grip.clone().add(direction.mulScalar(0.3));
+    // Side/front view keeps the palm, handle and frame visible; on a phone the
+    // lower half is reserved for equipment controls rather than covering them.
+    this.camera.setPosition(target.x + 0.72, target.y + 0.26, target.z - 0.95);
+    this.camera.lookAt(target.x, target.y - (portrait ? 0.3 : 0), target.z);
+    this.camera.camera!.fov = 42;
+  }
   inspectionBall(position?: number[]) {
     this.ball.enabled = !!position && this.royalBall.status === 'ready';
     if (position) this.ball.setPosition(position[0], position[1], position[2]);
@@ -385,6 +427,10 @@ export class Scene {
         maxPixelRatio: this.app.graphicsDevice.maxPixelRatio,
         width: this.canvas.width,
         height: this.canvas.height,
+        toneMapping: this.camera.camera!.toneMapping,
+        gammaCorrection: this.camera.camera!.gammaCorrection,
+        exposure: this.app.scene.exposure,
+        characterPresentation: this.characterPresentation,
       },
       athletePixels: Math.abs(
         this.camera.camera!.worldToScreen(new pc.Vec3(p.x, 1.7, p.z)).y -
@@ -394,6 +440,7 @@ export class Scene {
       temporaryHumanCount: this.app.root.find((n) => n.name === 'Temporary humanoid athlete')
         .length,
       opponentCount: this.opponent ? 1 : 0,
+      materials: this.kira.materialDiagnostics(),
     };
   }
   stadiumPresentation() {
@@ -472,7 +519,21 @@ export class Scene {
   resize() {
     this.app.resizeCanvas();
   }
-  render(match: Match, dt: number, charging = false, intent: 'drive' | 'slice' | 'lob' = 'drive') {
+  render(
+    match: Match,
+    dt: number,
+    charging = false,
+    intent: 'drive' | 'slice' | 'lob' = 'drive',
+    inspectCharacter = false,
+  ) {
+    const presentation = inspectCharacter && match.phase === 'menu';
+    if (presentation !== this.characterPresentation) {
+      this.characterPresentation = presentation;
+      this.characterFill.enabled = presentation;
+      const ambient = presentation ? [0.32, 0.36, 0.4] : [0.48, 0.54, 0.59];
+      this.app.scene.ambientLight.set(ambient[0], ambient[1], ambient[2]);
+      this.camera.camera!.toneMapping = presentation ? pc.TONEMAP_NEUTRAL : pc.TONEMAP_LINEAR;
+    }
     this.stadium.update(match, dt);
     this.kira.update(match, dt, charging, intent);
     this.opponent?.update(match, dt, false);

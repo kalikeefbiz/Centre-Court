@@ -7,3 +7,7 @@ playwright-report/
 artifacts/
 # Full-resolution animated Nova is reconstructed losslessly from the committed archive at build time.
 public/assets/characters/nova/Nova_Fullres_Rigged.glb
+
+# Local Python authoring caches.
+__pycache__/
+*.pyc
