@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { createHash } from 'node:crypto';
 import { createReadStream, closeSync, openSync, readFileSync, readSync } from 'node:fs';
+import { gunzipSync } from 'node:zlib';
 import * as pc from 'playcanvas';
 import { AVAILABLE, ROSTER } from '../src/core/roster';
 import { GRIP_PATCH_PATHS, validateGripPatch, type GripPatch } from '../src/render/grip-config';
@@ -36,8 +37,16 @@ describe('GOAL 009 hand calibration provenance and bounded skin data', () => {
       const patch = patchFor(id);
       validateGripPatch(patch, id);
       const path = `public/${ROSTER[id].asset!}`;
-      expect(await sha256(path)).toBe(patch.sourceSha256);
-      const gltf = header(path);
+      // Unit checks precede prebuild in CI. Nova is versioned losslessly as gzip,
+      // so inspect that authoritative payload without depending on build output.
+      const nova = id === 'nova'
+        ? gunzipSync(readFileSync('assets/characters/nova/Nova_Fullres_Rigged.glb.gz'))
+        : null;
+      expect(nova ? createHash('sha256').update(nova).digest('hex') : await sha256(path))
+        .toBe(patch.sourceSha256);
+      const gltf = nova
+        ? JSON.parse(nova.subarray(20, 20 + nova.readUInt32LE(12)).toString('utf8'))
+        : header(path);
       const primitive = gltf.meshes[0].primitives[0];
       expect(patch.vertexCount).toBe(gltf.accessors[primitive.attributes.POSITION].count);
       const jointNames: string[] = gltf.skins[0].joints.map((index: number) => gltf.nodes[index].name);
