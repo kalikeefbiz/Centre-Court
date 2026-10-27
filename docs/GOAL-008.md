@@ -172,3 +172,27 @@ release on switching, not total browser/OS residency. The Kira/Rico match used
 544,957,968 texture bytes. Native Safari memory pressure, GPU timings, thermal
 stability and sustained match frame times remain unmeasured. Detailed JSON is in
 `public/verification/goal-008/browser-performance.json`.
+
+### Acceptance records
+
+The isolated full local suite passed 175 tests before the final real-rally
+integration case was added. The added test uses the existing scripted player and
+ordinary Controls to produce 12+ legal returns, meter growth and point-end heat
+reset; it passes. The final focused run passed 25 asset/gameplay/scoreboard tests.
+The final CI suite therefore contains 176 tests. The existing Pages workflow is
+the authoritative full unit/build/Chromium/WebKit gate for the final commit.
+
+Four local Chromium acceptance scenarios passed: requested roster loading and
+recorded audio, separate Signature input/heat UI, save recovery across reload,
+and both match cameras. The final roster scenario additionally exercises a real
+serve from every available athlete and the unobscured character preview. Browser
+results for the final commit are reported in the final handoff and GitHub Actions.
+
+Khronos glTF Validator reports **zero errors and two warnings** for each of Dante,
+Rico, Zuri and Nova. Both warnings are inherited conventions: runtime-generated
+tangent space and a non-root skinned mesh. Zero-weight joint indices were
+canonicalized after validation without changing any weighted deformation.
+All thirteen Nova clips were swept at 30 Hz (1,213 samples); coordinates remain
+finite. The largest observed edge extension (~0.336 m in an extreme smash) and
+worst-strain view are preserved explicitly; this is why Nova remains a beta rig,
+not a claim of final artist-approved skinning.

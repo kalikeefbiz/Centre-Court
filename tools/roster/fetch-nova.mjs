@@ -3,7 +3,7 @@ import { gunzipSync } from 'node:zlib';
 import { existsSync, mkdirSync, writeFileSync, readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 const file = 'public/assets/characters/nova/Nova_Fullres_Rigged.glb';
-const sha = '6a772b90356a83c92ab81d6bffedccc751d4fc2e7d5819cd440f19b9c0aaeb15';
+const sha = 'fb904e67374b70bff283809e72f33fb68ab654e9c3502b8dd3391813ada7ceb8';
 if (!existsSync(file)) {
   mkdirSync('public/assets/characters/nova', { recursive: true });
   writeFileSync(

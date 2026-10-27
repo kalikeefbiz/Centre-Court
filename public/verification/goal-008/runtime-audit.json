@@ -138,7 +138,7 @@
   "nova": {
     "path": "public/assets/characters/nova/Nova_Fullres_Rigged.glb",
     "bytes": 112206444,
-    "sha256": "6a772b90356a83c92ab81d6bffedccc751d4fc2e7d5819cd440f19b9c0aaeb15",
+    "sha256": "fb904e67374b70bff283809e72f33fb68ab654e9c3502b8dd3391813ada7ceb8",
     "triangles": 102942,
     "materials": 1,
     "primitives": 1,

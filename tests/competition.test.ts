@@ -166,3 +166,31 @@ describe('signature balance in the authoritative ballistic solver', () => {
       }
   });
 });
+
+describe('integrated real rally loop', () => {
+  it('builds heat and meters through ordinary controls and removes heat at point end', async () => {
+    const { scriptedPlayer } = await import('./support/scripted');
+    let heated: Match | undefined;
+    for (const seed of [700, 701, 702, 703]) {
+      const m = new Match();
+      m.start('hard', 'standard', false, seed);
+      const memory = { target: vec(0, 0, 10.8) };
+      for (let frame = 0; frame < 12000 && m.phase !== 'result'; frame++) {
+        m.tick(FIXED_DT, scriptedPlayer(m, frame, memory, 'neutral'));
+        if (m.heat === 2) {
+          heated = m;
+          break;
+        }
+      }
+      if (heated) break;
+    }
+    expect(heated).toBeDefined();
+    expect(heated!.returns).toBeGreaterThanOrEqual(12);
+    expect(heated!.events.some((e) => e.type === 'heat' && e.strength === 2)).toBe(true);
+    expect(heated!.meters[0] + heated!.meters[1]).toBeGreaterThan(0);
+    for (let frame = 0; frame < 5000 && heated!.phase === 'rally'; frame++)
+      heated!.tick(FIXED_DT, idleControls());
+    expect(heated!.phase).not.toBe('rally');
+    expect(heated!.heat).toBe(0);
+  });
+});

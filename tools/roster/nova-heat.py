@@ -48,6 +48,7 @@ for idx,p in enumerate(positions):
  if not keep:raise RuntimeError(f'Unweighted heat vertex {idx}')
  total=sum(w for j,w in keep)
  for k,(j,w) in enumerate(keep):joints[idx,k]=j;weights[idx,k]=w/total
+joints[weights==0]=0
 assert np.allclose(weights.sum(axis=1),1,atol=1e-6)
 primitive['attributes']['JOINTS_0']=g.append_array(joints,5123,'VEC4');primitive['attributes']['WEIGHTS_0']=g.append_array(weights,5126,'VEC4')
 g.save(file)

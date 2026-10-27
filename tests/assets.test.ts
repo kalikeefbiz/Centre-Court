@@ -207,7 +207,7 @@ describe('full-resolution Nova delivery', () => {
     expect(archive.length).toBeLessThan(100 * 1024 * 1024);
     const b = gunzipSync(archive);
     expect(createHash('sha256').update(b).digest('hex')).toBe(
-      '6a772b90356a83c92ab81d6bffedccc751d4fc2e7d5819cd440f19b9c0aaeb15',
+      'fb904e67374b70bff283809e72f33fb68ab654e9c3502b8dd3391813ada7ceb8',
     );
     const g = JSON.parse(b.toString('utf8', 20, 20 + b.readUInt32LE(12)));
     const primitive = g.meshes[0].primitives[0];

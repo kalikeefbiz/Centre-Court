@@ -1165,11 +1165,12 @@
     }
   ],
   "intermediate_surface_candidate_sha256": "de0fa049ecaec5ad6e71f8e850e64965006037777ed27f5523ca64ef26813d65",
-  "final_runtime_sha256": "6a772b90356a83c92ab81d6bffedccc751d4fc2e7d5819cd440f19b9c0aaeb15",
+  "final_runtime_sha256": "fb904e67374b70bff283809e72f33fb68ab654e9c3502b8dd3391813ada7ceb8",
   "final_weight_method": "Blender bone heat on 18mm voxel proxy; barycentric surface weight transfer; normalized top four. Proxy never exported; source full-detail topology and images retained.",
   "known_limitations": [
     "Rigid palm/fingers; individual finger weighting unfinished",
     "Extreme shoulder/armband strain requires artist refinement; experimental rig",
     "No native iPhone hardware validation"
-  ]
+  ],
+  "zero_weight_joint_indices_canonicalized": true
 }

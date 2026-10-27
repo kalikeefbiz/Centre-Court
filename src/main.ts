@@ -51,7 +51,11 @@ const setText = (id: string, text: string) => {
 const togglePause = () => {
   if (developer?.frozen) return;
   if (!$('help').hidden) return;
-  match.phase === 'paused' ? match.resume() : match.pause();
+  if (match.phase === 'paused') {
+    courtAudio.unlock();
+    stadiumAudio.unlock();
+    match.resume();
+  } else match.pause();
   input.clear();
   clock.reset();
 };
