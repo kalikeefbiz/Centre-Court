@@ -73,6 +73,11 @@ test('practice, shot selection, movement and resize remain usable', async ({ pag
     await page.keyboard.down('Space');
     await page.waitForTimeout(600);
     await page.keyboard.up('Space');
+    // Movement is enabled after serve contact. Software GL can take several
+    // seconds to evaluate/render the first animated frame after model upload.
+    await expect
+      .poll(async () => (await snap(page)).contacts, { timeout: 30000 })
+      .toBeGreaterThan(0);
     await page.keyboard.down('KeyA');
     await expect.poll(async () => (await snap(page)).players[0].x).toBeLessThan(1.2);
     await page.keyboard.up('KeyA');
@@ -81,6 +86,9 @@ test('practice, shot selection, movement and resize remain usable', async ({ pag
     await shot.dispatchEvent('pointerdown', { pointerId: 2, pointerType: 'touch' });
     await page.waitForTimeout(600);
     await shot.dispatchEvent('pointerup', { pointerId: 2, pointerType: 'touch' });
+    await expect
+      .poll(async () => (await snap(page)).contacts, { timeout: 30000 })
+      .toBeGreaterThan(0);
     const joystick = page.locator('#joystick'),
       box = (await joystick.boundingBox())!;
     await joystick.dispatchEvent('pointerdown', {

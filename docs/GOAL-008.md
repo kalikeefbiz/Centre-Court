@@ -204,3 +204,11 @@ bounding corners. The unchanged failing camera case and three related desktop
 camera/serve-flow cases pass locally after correction. Three mobile WebKit roster,
 Signature and save scenarios also pass after the final preview-caption adjustment.
 Signature contact announcements now include the athlete and move name.
+
+A second complete CI run passed the corrected camera case and 62 other cases,
+with one practice-test timeout and four established skips. Its retained trace
+shows valid left input but delayed first-frame/serve evaluation under software
+GL; real racket contact occurred at the end of the movement assertion window.
+The practice regression now waits for recorded serve contact before pressing
+movement, on both browsers, rather than measuring movement during the toss.
+No input or simulation behavior was changed for this timing correction.
