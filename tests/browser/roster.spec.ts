@@ -114,4 +114,29 @@ test('versioned circuit status survives reload and recovers invalid data', async
   await page.evaluate(() => localStorage.setItem('centre-court-circuit-v1', 'malformed'));
   await page.reload();
   await expect(page.locator('#circuit-status')).toContainText('0 wins');
+  const characterRequests: string[] = [];
+  page.on('request', (request) => {
+    if (request.url().includes('/assets/characters/')) characterRequests.push(request.url());
+  });
+  await page.route('**/assets/characters/nova/**', (route) =>
+    route.fulfill({ status: 404, body: 'Intentional load fixture' }),
+  );
+  await page.evaluate(() =>
+    localStorage.setItem(
+      'centre-court-circuit-v1',
+      JSON.stringify({
+        version: 1,
+        player: 'nova',
+        stage: 0,
+        wins: 0,
+        losses: 0,
+        completed: false,
+        results: [],
+      }),
+    ),
+  );
+  await page.reload();
+  await expect.poll(async () => (await snap(page)).kira.character).toBe('nova');
+  await expect.poll(() => characterRequests.some((url) => url.includes('/nova/'))).toBe(true);
+  expect(characterRequests.some((url) => url.includes('/kira/'))).toBe(false);
 });

@@ -39,7 +39,7 @@ const match = new Match(),
 let scene: Scene;
 let developer: DeveloperTools | undefined;
 try {
-  scene = new Scene($<HTMLCanvasElement>('court'));
+  scene = new Scene($<HTMLCanvasElement>('court'), selected);
 } catch (error) {
   $('loading').textContent =
     'Your browser could not start 3D rendering. Enable WebGL and reload Centre Court.';
@@ -154,7 +154,7 @@ function updateRoster() {
   select.value = rival;
 }
 updateRoster();
-if (selected !== 'kira') void scene.selectCharacter(selected);
+
 $('opponent').onchange = () => {
   rival = $<HTMLSelectElement>('opponent').value as CharacterId;
 };

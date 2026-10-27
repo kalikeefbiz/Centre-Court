@@ -36,7 +36,10 @@ export class Scene {
   private courtBatch: number;
   private athleteBatch: number;
   private materials = new Map<string, pc.StandardMaterial>();
-  constructor(public canvas: HTMLCanvasElement) {
+  constructor(
+    public canvas: HTMLCanvasElement,
+    initialCharacter: CharacterId = 'kira',
+  ) {
     this.app = new pc.Application(canvas, {
       graphicsDeviceOptions: {
         alpha: false,
@@ -84,7 +87,7 @@ export class Scene {
     // Only the AI uses a temporary model. Never create a placeholder human.
     this.athletes = [];
     this.playerShadow = this.shadow('Kira ground shadow', 1.05);
-    this.kira = new Kira(this.app);
+    this.kira = new Kira(this.app, initialCharacter);
     this.royalBall = new RoyalBall(this.app);
     this.ball = this.royalBall.root;
     this.ballShadow = this.shadow('Ball ground shadow', 0.075);
@@ -119,6 +122,7 @@ export class Scene {
     return this.kira.ready;
   }
   async selectOpponent(id: CharacterId) {
+    if (this.opponent?.character === id && this.opponent.status === 'ready') return;
     this.preparingMatch = true;
     if (this.opponent?.character !== id) {
       this.opponent?.destroy();
@@ -389,7 +393,7 @@ export class Scene {
       human: ROSTER[this.kira.character].name,
       temporaryHumanCount: this.app.root.find((n) => n.name === 'Temporary humanoid athlete')
         .length,
-      opponentCount: 1,
+      opponentCount: this.opponent ? 1 : 0,
     };
   }
   stadiumPresentation() {
