@@ -475,7 +475,11 @@ export class AthleteRenderer {
       const previous = fullBody ? this.fullBodyState : this.upperState;
       const motionId = action?.id ?? anticipation?.id ?? -1;
       if (stroke !== previous || (motionId !== -1 && motionId !== this.actionId)) {
-        selected.transition(stroke, 0.055);
+        // A different player-selected clip must settle from anticipation before
+        // its earliest contact window, including fixed ticks batched into a frame.
+        // Compatible prepared actions retain their ID and never enter this branch.
+        const handover = action && this.actionId < -1 && stroke !== previous;
+        selected.transition(stroke, handover ? 0.035 : 0.055);
         if (fullBody) this.fullBodyState = stroke;
         else this.upperState = stroke;
       }
