@@ -2,6 +2,7 @@ import * as pc from 'playcanvas';
 import { COURT } from '../core/court';
 import { validBallScale } from '../dev/metrics';
 import { load } from './kira';
+import { sharedAssets } from '../app/assets';
 export const ROYAL_BALL = {
   url: 'assets/balls/royal-rally/Meshy_AI_Royal_Rally_1024220842_texture.glb',
   diameter: 0.067,
@@ -18,12 +19,20 @@ export class RoyalBall {
     // Parent scales the already normalized model. Physics never reads this entity.
     this.root.setLocalScale(value, value, value);
   }
+  readonly ready: Promise<void>;
+  private resource?: pc.ContainerResource;
+  private disposed = false;
   private meshes: pc.MeshInstance[] = [];
-  constructor(app: pc.Application) {
+  constructor(private app: pc.Application) {
     app.root.addChild(this.root);
     this.setVisualScale(this.visualScale);
-    load(app, ROYAL_BALL.url)
+    this.ready = load(app, ROYAL_BALL.url)
       .then((resource) => {
+        if (this.disposed) {
+          sharedAssets(app).release(resource);
+          return;
+        }
+        this.resource = resource;
         const model = resource.instantiateRenderEntity({ castShadows: false });
         this.root.addChild(model);
         const scale = ROYAL_BALL.diameter / ROYAL_BALL.sourceDiameter;
@@ -39,8 +48,18 @@ export class RoyalBall {
       .catch((error) => {
         this.status = 'error';
         this.error = String(error);
-        console.error(error);
+        this.root.children.slice().forEach((child) => (child as pc.Entity).destroy());
+        if (this.resource) sharedAssets(app).release(this.resource);
+        this.resource = undefined;
       });
+  }
+  destroy() {
+    if (this.disposed) return;
+    this.disposed = true;
+    this.root.destroy();
+    if (this.resource) sharedAssets(this.app).release(this.resource);
+    this.resource = undefined;
+    this.meshes = [];
   }
   snapshot() {
     return {

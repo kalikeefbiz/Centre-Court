@@ -1337,3 +1337,57 @@ h1 em {
 #athlete-preview #preview-close {
   grid-column: 1/-1;
 }
+
+#transition {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: #142e3b;
+  color: #f3f0de;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+}
+#transition[hidden] {
+  display: none;
+}
+#transition h2 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(42px, 10vw, 80px);
+  margin: 12px 0;
+}
+.loading-brand {
+  letter-spacing: 0.3em;
+  color: #b4cc61;
+}
+#transition button {
+  margin-top: 24px;
+}
+
+.menu-audio {
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.menu-audio summary {
+  cursor: pointer;
+  padding: 8px 0;
+}
+.menu-audio button {
+  width: 100%;
+  margin: 6px 0;
+  min-height: 44px;
+}
+.menu-audio label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.menu-audio input {
+  min-height: 44px;
+  max-width: 55%;
+}

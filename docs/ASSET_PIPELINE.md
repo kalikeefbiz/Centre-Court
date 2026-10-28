@@ -106,3 +106,13 @@ FullBody layer for serves/explicit cosmetic preview. No action layer owns ordina
 stationary idle. Inactive weights fade to exactly zero; action clocks remain
 Match-owned. The supplied source clips, rigs, corrected skin/bind data and grip
 frames remain unchanged. See [the hotfix evidence](GOAL-009-HOTFIX.md).
+
+## GOAL 010 resource ownership (supersedes loader policy above)
+
+Container acquisition/release now routes through `src/app/assets.ts`, backed by
+the native AssetRegistry. Acquisitions reserve references before await; failed
+partial actor loads release successes. The selected rig survives menu panels and
+match entry; opponents are session instances and are destroyed on exit. Small
+common containers and at most one unused ordinary character stay warm; unused
+Nova is unloaded immediately, preserving full fidelity. Initial ordinary menu
+loads only the selected athlete/racket. Ball and stadium are lazy match assets.

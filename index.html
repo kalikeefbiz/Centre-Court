@@ -63,6 +63,24 @@
         <button id="asset-retry" class="secondary" hidden>RETRY ASSET LOADING</button>
         <button id="play" class="primary" disabled>PLAY MATCH <span>↗</span></button
         ><button id="practice" class="secondary" disabled>PRACTICE MODE <span>→</span></button>
+        <details class="menu-audio">
+          <summary>AUDIO PREFERENCES</summary>
+          <button id="menu-court-mute" class="secondary" aria-pressed="false">
+            COURT AUDIO · ON
+          </button>
+          <label
+            >COURT VOLUME<input
+              id="menu-court-volume"
+              type="range"
+              min="0"
+              max="1"
+              step=".05"
+              value=".65"
+          /></label>
+          <button id="menu-stadium-sound" class="secondary" aria-pressed="true">
+            STADIUM SOUND · ON
+          </button>
+        </details>
         <div class="menu-foot">
           <span>01 / SINGLES</span><button id="help-button">HOW TO PLAY ↗</button>
         </div>
@@ -228,9 +246,16 @@
         </div>
       </section>
       <footer id="footer">
-        <span>BLACKHOUSE®</span><span>BUILT FOR THE GAME.</span><span>GOAL 009</span>
+        <span>BLACKHOUSE®</span><span>BUILT FOR THE GAME.</span><span>GOAL 010</span>
       </footer>
     </div>
+    <section id="transition" hidden role="status" aria-live="polite">
+      <p class="loading-brand">BLACKHOUSE</p>
+      <h2>CENTRE COURT</h2>
+      <p id="load-status">Preparing your athlete…</p>
+      <button id="load-cancel" class="secondary" hidden>RETURN TO MENU</button>
+      <button id="context-reload" class="secondary" hidden>RELOAD CENTRE COURT</button>
+    </section>
     <div id="loading">CENTRE COURT<span>PREPARING YOUR COURT…</span></div>
     <script type="module" src="/src/main.ts"></script>
   </body>

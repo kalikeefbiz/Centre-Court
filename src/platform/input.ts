@@ -16,6 +16,24 @@ function capture(element: HTMLElement, event: PointerEvent) {
   }
 }
 export class Input {
+  private handlers: (() => void)[] = [];
+  get handlerCount() {
+    return this.handlers.length;
+  }
+  private listen<K extends keyof (WindowEventMap & DocumentEventMap)>(
+    target: EventTarget,
+    type: K,
+    callback: (event: (WindowEventMap & DocumentEventMap)[K]) => void,
+    options?: boolean | AddEventListenerOptions,
+  ) {
+    target.addEventListener(type, callback as EventListener, options);
+    this.handlers.push(() => target.removeEventListener(type, callback as EventListener, options));
+  }
+  dispose() {
+    this.enabled = false;
+    this.clear();
+    this.handlers.splice(0).forEach((remove) => remove());
+  }
   controls: Controls = idleControls();
   readonly gesture = new ShotGesture();
   get pointers() {
@@ -56,7 +74,7 @@ export class Input {
     private onCamera: () => void,
     private now: () => number = () => performance.now() / 1000,
   ) {
-    window.addEventListener('keydown', (e) => {
+    this.listen(window, 'keydown', (e) => {
       if (e.target instanceof HTMLSelectElement || e.target instanceof HTMLInputElement) return;
       if (['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.code))
         e.preventDefault();
@@ -70,7 +88,7 @@ export class Input {
       if (e.code === 'Digit2') this.override = 'slice';
       if (e.code === 'Digit3') this.override = 'lob';
     });
-    window.addEventListener('keyup', (e) => {
+    this.listen(window, 'keyup', (e) => {
       this.keys.delete(e.code);
       if (e.code === 'Space') {
         this.release('keyboard', this.eventTime(e));
@@ -88,7 +106,7 @@ export class Input {
       document.querySelector<HTMLElement>('#stick')!.style.transform =
         `translate(${this.joy.x * g.travel}px,${this.joy.z * g.travel}px)`;
     };
-    joystick.addEventListener('pointerdown', (e) => {
+    this.listen(joystick, 'pointerdown', (e) => {
       if (
         this.joyPointer !== null ||
         !this.enabled ||
@@ -126,12 +144,12 @@ export class Input {
       document.querySelector<HTMLElement>('#stick')!.style.transform = '';
       e.stopPropagation();
     };
-    joystick.addEventListener('pointermove', moveJoy);
-    joystick.addEventListener('pointerup', stopJoy);
-    joystick.addEventListener('pointercancel', stopJoy);
-    joystick.addEventListener('lostpointercapture', stopJoy);
+    this.listen(joystick, 'pointermove', moveJoy);
+    this.listen(joystick, 'pointerup', stopJoy);
+    this.listen(joystick, 'pointercancel', stopJoy);
+    this.listen(joystick, 'lostpointercapture', stopJoy);
     const button = document.querySelector<HTMLElement>('#shot-button')!;
-    button.addEventListener('pointerdown', (e) => {
+    this.listen(button, 'pointerdown', (e) => {
       if (
         this.shotPointer !== null ||
         this.charging ||
@@ -165,9 +183,9 @@ export class Input {
       this.release(e.pointerId, this.eventTime(e));
       e.stopPropagation();
     };
-    button.addEventListener('pointermove', moveShot);
-    button.addEventListener('pointerup', endShot);
-    button.addEventListener('click', (e) => {
+    this.listen(button, 'pointermove', moveShot);
+    this.listen(button, 'pointerup', endShot);
+    this.listen(button, 'click', (e) => {
       if (e.detail === 0 && !this.charging && this.now() - this.lastSpaceUp > 0.04) {
         this.begin('keyboard', 0, 0, 'keyboard', this.eventTime(e));
         this.release('keyboard', this.eventTime(e));
@@ -183,29 +201,30 @@ export class Input {
         e.stopPropagation();
       }
     };
-    button.addEventListener('pointercancel', cancelShot);
-    button.addEventListener('lostpointercapture', cancelShot);
-    canvas.addEventListener('pointermove', (e) => {
+    this.listen(button, 'pointercancel', cancelShot);
+    this.listen(button, 'lostpointercapture', cancelShot);
+    this.listen(canvas, 'pointermove', (e) => {
       if (e.pointerType === 'mouse' && this.enabled && this.shotPointer === null) {
         this.mouseAim = clamp((e.clientX / innerWidth - 0.5) * 2.8, -1, 1);
         if (this.chargeOwner === e.pointerId) this.gesture.move(e.clientX, e.clientY);
       }
     });
-    canvas.addEventListener('pointerdown', (e) => {
+    this.listen(canvas, 'pointerdown', (e) => {
       if (e.pointerType === 'mouse' && e.button === 0 && this.enabled) {
         capture(canvas, e);
         this.begin(e.pointerId, e.clientX, e.clientY, 'canvas', this.eventTime(e));
       }
     });
-    canvas.addEventListener('pointerup', (e) => {
+    this.listen(canvas, 'pointerup', (e) => {
       if (e.pointerType === 'mouse') this.release(e.pointerId, this.eventTime(e));
     });
-    canvas.addEventListener('pointercancel', cancelShot);
-    canvas.addEventListener('lostpointercapture', cancelShot);
+    this.listen(canvas, 'pointercancel', cancelShot);
+    this.listen(canvas, 'lostpointercapture', cancelShot);
     // Pointer capture is primary. Owned-ID routing also survives an unavailable
     // initial capture: leaving the element is neither a release nor a cancel.
     // Element handlers stop propagation, so each event is processed once.
-    window.addEventListener(
+    this.listen(
+      window,
       'pointermove',
       (e) => {
         moveJoy(e);
@@ -213,21 +232,21 @@ export class Input {
       },
       { passive: false },
     );
-    window.addEventListener('pointerup', (e) => {
+    this.listen(window, 'pointerup', (e) => {
       stopJoy(e);
       endShot(e);
       if (e.pointerId === this.chargeOwner) this.release(e.pointerId, this.eventTime(e));
     });
-    window.addEventListener('pointercancel', (e) => {
+    this.listen(window, 'pointercancel', (e) => {
       stopJoy(e);
       cancelShot(e);
     });
-    document.addEventListener('visibilitychange', () => {
+    this.listen(document, 'visibilitychange', () => {
       if (document.hidden) this.clear();
     });
-    window.addEventListener('pagehide', () => this.clear());
-    window.addEventListener('blur', () => this.clear());
-    window.addEventListener('contextmenu', (e) => {
+    this.listen(window, 'pagehide', () => this.clear());
+    this.listen(window, 'blur', () => this.clear());
+    this.listen(window, 'contextmenu', (e) => {
       if (this.enabled) e.preventDefault();
     });
   }

@@ -49,6 +49,7 @@ test('Valkyrie and Royal Rally render, prepare, contact, move in place and freez
   await page.keyboard.up('KeyW');
   await page.locator('#pause-button').click();
   await page.locator('#restart-pause').click();
+  await expect(page.locator('#hud')).toBeVisible({ timeout: 90000 });
   await expect.poll(async () => (await snap(page)).kira.contactId).toBe(-1);
   expect((await snap(page)).totalPoints).toBe(0);
   expect(errors).toEqual([]);
@@ -60,6 +61,10 @@ for (const asset of ['characters/kira', 'equipment/rackets', 'balls/royal-rally'
       route.fulfill({ status: 404, body: 'Asset unavailable' }),
     );
     await page.goto('/?debug');
+    if (asset.startsWith('balls')) {
+      await expect(page.locator('#play')).toBeEnabled({ timeout: 45000 });
+      await page.locator('#play').click();
+    }
     await expect
       .poll(
         async () =>
@@ -97,7 +102,10 @@ test('delayed GLBs cannot start either mode with a temporary human', async ({ pa
     await route.continue();
   });
   await page.goto('/?debug');
-  await expect.poll(() => blocked).toBe(3);
+  // The lightweight menu requests the selected rig and racket, not the ball.
+  await expect.poll(() => blocked).toBe(2);
+  expect((await snap(page)).royalBall.status).toBe('not-loaded');
+  expect((await snap(page)).lifecycle.state).toBe('MENU_LOADING');
   await expect(page.locator('#play')).toBeDisabled();
   await expect(page.locator('#practice')).toBeDisabled();
   expect((await snap(page)).kira.status).toBe('loading');

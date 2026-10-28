@@ -33,7 +33,7 @@ export default defineConfig({
         this.emitFile({
           type: 'asset',
           fileName: 'release.json',
-          source: JSON.stringify({ release: 'GOAL-009', commit: buildId, assetRevision }),
+          source: JSON.stringify({ release: 'GOAL-010', commit: buildId, assetRevision }),
         });
       },
     },

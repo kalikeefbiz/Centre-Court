@@ -83,3 +83,15 @@ memory or loading SLA was found in the reviewed evidence. The historical
 checklist discusses 60/30 fps budgets; those are comparison targets, not measured
 acceptance. Agree scenario/device targets when the next performance GOAL needs
 them, then measure. No optimization is authorized by this infrastructure GOAL.
+
+## GOAL 010 lifecycle measurement
+
+The ordinary menu now excludes arena rendering and all match simulation. It loads
+only the selected rig/racket; full stadium and ball load lazily at first match.
+One renderer/device/camera persists, and one unused ordinary character container
+may remain warm (unused Nova is evicted immediately). Entity/asset/owner counters,
+pending frame-readiness handlers, input handler count, session IDs and native
+VRAM counters are exposed in opt-in diagnostics. See [GOAL-010](GOAL-010.md) and
+its checked-in measurements; bounded caches are distinguished from session leaks.
+Physical-device/thermal/driver-memory acceptance remains separate from desktop
+Chromium and mobile-profile Linux WebKit automation.

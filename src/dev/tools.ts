@@ -34,6 +34,7 @@ export class DeveloperTools {
   private recent = new FrameWindow();
   private capture = new FrameWindow();
   private last = performance.now();
+  private readonly menuMatch: Match;
   private paintAt = 0;
   private instantMs = 0;
   private captureStart = 0;
@@ -69,6 +70,7 @@ export class DeveloperTools {
     private resetInput: () => void,
     private cameraChanged: () => void,
   ) {
+    this.menuMatch = match;
     this.root.id = 'dev-tools';
     this.root.setAttribute('aria-label', 'Development diagnostics');
     this.root.innerHTML = `
@@ -262,6 +264,18 @@ export class DeveloperTools {
   private checked(id: string) {
     return (this.el(id) as HTMLInputElement).checked;
   }
+  endSession() {
+    this.match = this.menuMatch;
+    if (this.inspecting) this.inspect(false);
+    this.comparison = 'live';
+    this.stadiumView = 'gameplay';
+    (this.el('dev-comparison') as HTMLSelectElement).value = 'live';
+    (this.el('dev-stadium') as HTMLSelectElement).value = 'gameplay';
+  }
+  bindMatch(match: Match) {
+    this.endSession();
+    this.match = match;
+  }
   private panel(open: boolean) {
     this.el('dev-panel').hidden = !open;
     this.el('dev-toggle').setAttribute('aria-expanded', String(open));
@@ -287,6 +301,7 @@ export class DeveloperTools {
     } else {
       this.session?.restore();
       this.restoreScene?.();
+      this.restoreScene = undefined;
       this.session = undefined;
     }
     this.inspecting = active;
@@ -305,7 +320,8 @@ export class DeveloperTools {
       `${this.timeline.time.toFixed(3)} / ${clip.duration.toFixed(3)} s`;
     (this.el('dev-time') as HTMLInputElement).max = String(clip.duration);
     (this.el('dev-loop') as HTMLInputElement).checked = this.timeline.loop;
-    this.el('dev-play').textContent = this.timeline.playing ? 'Pause' : 'Play';
+    const playLabel = this.timeline.playing ? 'Pause' : 'Play';
+    if (this.el('dev-play').textContent !== playLabel) this.el('dev-play').textContent = playLabel;
     this.el('dev-contact').textContent =
       'contact' in clip
         ? `Estimated contact: ${clip.contact.toFixed(3)} s · frame ${clip.contactFrame} at 30 fps · ${clip.confidence} mapping confidence. Calibration, not a GLB event.`
@@ -456,7 +472,9 @@ export class DeveloperTools {
         (this.el('dev-time') as HTMLInputElement).value = String(this.timeline.time);
         this.el('dev-position').textContent =
           `${this.timeline.time.toFixed(3)} / ${ANIMATIONS[this.timeline.state].duration.toFixed(3)} s`;
-        this.el('dev-play').textContent = this.timeline.playing ? 'Pause' : 'Play';
+        const playLabel = this.timeline.playing ? 'Pause' : 'Play';
+        if (this.el('dev-play').textContent !== playLabel)
+          this.el('dev-play').textContent = playLabel;
       }
       this.el('dev-assets').textContent = assetTimings
         .map(

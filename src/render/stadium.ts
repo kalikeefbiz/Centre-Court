@@ -404,6 +404,13 @@ export class Stadium {
     this.reducedCrowd.enabled = q === 'reduced';
     this.reducedSeating.enabled = q === 'reduced';
   }
+  resetSession() {
+    this.clock = this.reaction = this.lastPoints = 0;
+    this.lastPhase = 'menu';
+    this.boardKey = '';
+    this.boardState = null;
+    this.crowdGroups.forEach((group) => group.setLocalPosition(0, 0, 0));
+  }
   update(match: Match, dt: number) {
     this.clock += dt;
     if (match.totalPoints > this.lastPoints) this.reaction = match.bestRally >= 8 ? 2.2 : 1.3;

@@ -53,6 +53,7 @@ test('renders a playable court, serves, pauses, switches camera, restarts and re
   await page.screenshot({ path: `test-results/${info.project.name}-game.png` });
   await page.locator('#pause-button').click();
   await page.locator('#restart-pause').click();
+  await expect(page.locator('#hud')).toBeVisible({ timeout: 90000 });
   expect((await snap(page)).phase).toBe('serve');
   expect((await snap(page)).totalPoints).toBe(0);
   await page.locator('#pause-button').click();

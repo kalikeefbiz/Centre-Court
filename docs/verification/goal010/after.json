@@ -1,0 +1,340 @@
+{
+  "browser": "156.0.8078.4",
+  "viewport": "390x844 DPR1 SwiftShader",
+  "menuMs": 3084,
+  "menuFrames": {
+    "meanMs": 138.07166666667908,
+    "p95Ms": 236.1000000005588
+  },
+  "errors": [],
+  "candidate": "GOAL-010 shipping working tree",
+  "menuResources": {
+    "assets": 25,
+    "vram": {
+      "tex": 335588924,
+      "vb": 2716312,
+      "ib": 210702,
+      "ub": 1808,
+      "sb": 0
+    },
+    "animationUpdateMs": 0.2999999998137355
+  },
+  "menuDrawCalls": 4,
+  "initialLifecycle": {
+    "state": "MENU",
+    "suspended": false,
+    "contextLost": false,
+    "error": "",
+    "sessions": 0,
+    "steps": 0,
+    "updateLoops": 1,
+    "applications": 1,
+    "allocatedSessions": 0,
+    "timings": {
+      "menuReadyMs": 2854,
+      "matchLoadMs": 0,
+      "returnMs": 2560.5
+    },
+    "updateMs": 0.7000000001862645,
+    "menuFrames": {
+      "samples": 126,
+      "fps": 18.66709808404461,
+      "averageMs": 53.57019047619047,
+      "stddevMs": 40.09290444797968,
+      "p95Ms": 100,
+      "maxMs": 100,
+      "over33Ms": 58
+    },
+    "matchFrames": {
+      "samples": 0,
+      "fps": 0,
+      "averageMs": 0,
+      "stddevMs": 0,
+      "p95Ms": 0,
+      "maxMs": 0,
+      "over33Ms": 0
+    },
+    "entities": 85,
+    "actors": 1,
+    "loadedActors": 1,
+    "frameHandlers": 0,
+    "assets": {
+      "requests": 2,
+      "reused": 0,
+      "pending": 0,
+      "containers": [
+        {
+          "path": "assets/characters/kira/Kira_Midres_Rigged.glb",
+          "owners": 1,
+          "loaded": true
+        },
+        {
+          "path": "assets/equipment/rackets/Meshy_AI_Pink_and_Black_Tennis_1024095819_texture.glb",
+          "owners": 1,
+          "loaded": true
+        }
+      ]
+    },
+    "inputHandlers": 25
+  },
+  "cycles": [
+    {
+      "loadMs": 12409,
+      "returnMs": 529,
+      "frame": {
+        "meanMs": 284.90333333333643,
+        "p95Ms": 504.79999999981374
+      },
+      "menuResources": {
+        "assets": 50,
+        "vram": {
+          "tex": 544954608,
+          "vb": 12356980,
+          "ib": 1085898,
+          "ub": 6400,
+          "sb": 0
+        },
+        "animationUpdateMs": 0.09999999962747097
+      },
+      "lifecycle": {
+        "state": "MENU",
+        "suspended": false,
+        "contextLost": false,
+        "error": "",
+        "sessions": 0,
+        "steps": 0,
+        "updateLoops": 1,
+        "applications": 1,
+        "allocatedSessions": 0,
+        "timings": {
+          "menuReadyMs": 2854,
+          "matchLoadMs": 11593.5,
+          "returnMs": 0.40000000037252903
+        },
+        "updateMs": 1.099999999627471,
+        "menuFrames": {
+          "samples": 128,
+          "fps": 18.41767959108147,
+          "averageMs": 54.29565624999999,
+          "stddevMs": 40.193054857236696,
+          "p95Ms": 100,
+          "maxMs": 100,
+          "over33Ms": 60
+        },
+        "matchFrames": {
+          "samples": 83,
+          "fps": 13.07107198538558,
+          "averageMs": 76.50481927710854,
+          "stddevMs": 37.22591047253924,
+          "p95Ms": 100,
+          "maxMs": 100,
+          "over33Ms": 60
+        },
+        "entities": 219,
+        "actors": 1,
+        "loadedActors": 1,
+        "frameHandlers": 0,
+        "assets": {
+          "requests": 4,
+          "reused": 1,
+          "pending": 0,
+          "containers": [
+            {
+              "path": "assets/characters/kira/Kira_Midres_Rigged.glb",
+              "owners": 1,
+              "loaded": true
+            },
+            {
+              "path": "assets/equipment/rackets/Meshy_AI_Pink_and_Black_Tennis_1024095819_texture.glb",
+              "owners": 1,
+              "loaded": true
+            },
+            {
+              "path": "assets/balls/royal-rally/Meshy_AI_Royal_Rally_1024220842_texture.glb",
+              "owners": 1,
+              "loaded": true
+            },
+            {
+              "path": "assets/characters/rico/Rico_Tennis.glb",
+              "owners": 0,
+              "loaded": true
+            }
+          ]
+        },
+        "inputHandlers": 25
+      }
+    },
+    {
+      "loadMs": 763,
+      "returnMs": 703,
+      "frame": {
+        "meanMs": 241.88666666666978,
+        "p95Ms": 485.79999999981374
+      },
+      "menuResources": {
+        "assets": 50,
+        "vram": {
+          "tex": 544954608,
+          "vb": 12356980,
+          "ib": 1085898,
+          "ub": 6400,
+          "sb": 0
+        },
+        "animationUpdateMs": 0.39999999944120646
+      },
+      "lifecycle": {
+        "state": "MENU",
+        "suspended": false,
+        "contextLost": false,
+        "error": "",
+        "sessions": 0,
+        "steps": 0,
+        "updateLoops": 1,
+        "applications": 1,
+        "allocatedSessions": 0,
+        "timings": {
+          "menuReadyMs": 2854,
+          "matchLoadMs": 254.70000000018626,
+          "returnMs": 0.7999999998137355
+        },
+        "updateMs": 0.900000000372529,
+        "menuFrames": {
+          "samples": 130,
+          "fps": 18.182214884688396,
+          "averageMs": 54.998799999999996,
+          "stddevMs": 40.27741808133268,
+          "p95Ms": 100,
+          "maxMs": 100,
+          "over33Ms": 62
+        },
+        "matchFrames": {
+          "samples": 148,
+          "fps": 11.74631142011316,
+          "averageMs": 85.13310810810823,
+          "stddevMs": 31.188016124773217,
+          "p95Ms": 100,
+          "maxMs": 100,
+          "over33Ms": 123
+        },
+        "entities": 219,
+        "actors": 1,
+        "loadedActors": 1,
+        "frameHandlers": 0,
+        "assets": {
+          "requests": 4,
+          "reused": 3,
+          "pending": 0,
+          "containers": [
+            {
+              "path": "assets/characters/kira/Kira_Midres_Rigged.glb",
+              "owners": 1,
+              "loaded": true
+            },
+            {
+              "path": "assets/equipment/rackets/Meshy_AI_Pink_and_Black_Tennis_1024095819_texture.glb",
+              "owners": 1,
+              "loaded": true
+            },
+            {
+              "path": "assets/balls/royal-rally/Meshy_AI_Royal_Rally_1024220842_texture.glb",
+              "owners": 1,
+              "loaded": true
+            },
+            {
+              "path": "assets/characters/rico/Rico_Tennis.glb",
+              "owners": 0,
+              "loaded": true
+            }
+          ]
+        },
+        "inputHandlers": 25
+      }
+    },
+    {
+      "loadMs": 1349,
+      "returnMs": 609,
+      "frame": {
+        "meanMs": 222.20666666667287,
+        "p95Ms": 440.59999999962747
+      },
+      "menuResources": {
+        "assets": 50,
+        "vram": {
+          "tex": 544954608,
+          "vb": 12356980,
+          "ib": 1085898,
+          "ub": 6400,
+          "sb": 0
+        },
+        "animationUpdateMs": 0.20000000018626451
+      },
+      "lifecycle": {
+        "state": "MENU",
+        "suspended": false,
+        "contextLost": false,
+        "error": "",
+        "sessions": 0,
+        "steps": 0,
+        "updateLoops": 1,
+        "applications": 1,
+        "allocatedSessions": 0,
+        "timings": {
+          "menuReadyMs": 2854,
+          "matchLoadMs": 492.20000000018626,
+          "returnMs": 0.599999999627471
+        },
+        "updateMs": 0.7000000001862645,
+        "menuFrames": {
+          "samples": 132,
+          "fps": 17.959564856070415,
+          "averageMs": 55.68063636363636,
+          "stddevMs": 40.34735563061004,
+          "p95Ms": 100,
+          "maxMs": 100,
+          "over33Ms": 64
+        },
+        "matchFrames": {
+          "samples": 214,
+          "fps": 11.464633747810193,
+          "averageMs": 87.22476635514025,
+          "stddevMs": 28.875112876610444,
+          "p95Ms": 100,
+          "maxMs": 100,
+          "over33Ms": 184
+        },
+        "entities": 219,
+        "actors": 1,
+        "loadedActors": 1,
+        "frameHandlers": 0,
+        "assets": {
+          "requests": 4,
+          "reused": 5,
+          "pending": 0,
+          "containers": [
+            {
+              "path": "assets/characters/kira/Kira_Midres_Rigged.glb",
+              "owners": 1,
+              "loaded": true
+            },
+            {
+              "path": "assets/equipment/rackets/Meshy_AI_Pink_and_Black_Tennis_1024095819_texture.glb",
+              "owners": 1,
+              "loaded": true
+            },
+            {
+              "path": "assets/balls/royal-rally/Meshy_AI_Royal_Rally_1024220842_texture.glb",
+              "owners": 1,
+              "loaded": true
+            },
+            {
+              "path": "assets/characters/rico/Rico_Tennis.glb",
+              "owners": 0,
+              "loaded": true
+            }
+          ]
+        },
+        "inputHandlers": 25
+      }
+    }
+  ]
+}

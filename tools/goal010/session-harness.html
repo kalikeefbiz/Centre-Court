@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#101e23" />
+    <meta
+      name="description"
+      content="Centre Court by BlackHouse. Play arcade singles tennis against AI in your browser."
+    />
+    <title>Centre Court — BlackHouse</title>
+  </head>
+  <body>
+    <canvas id="court" aria-label="Centre Court 3D tennis court"></canvas>
+    <div id="app">
+      <header class="topbar">
+        <a class="brand" href="#" id="home-link"
+          ><span class="brand-icon">Ⅱ</span> CENTRE COURT <small>BY BLACKHOUSE</small></a
+        >
+        <div class="top-right">
+          <span class="live-label"><i></i> COURT 01</span
+          ><button id="camera-button" class="icon-button" aria-label="Switch camera">
+            ▣ <span>Broadcast</span></button
+          ><button id="pause-button" class="icon-button" aria-label="Pause match">Ⅱ</button>
+        </div>
+      </header>
+      <section id="menu" class="panel menu-panel">
+        <div class="eyebrow"><span class="tiny-line"></span> BLACKHOUSE SPORTS · THE CIRCUIT</div>
+        <h1>OWN<br />THE <em>COURT.</em></h1>
+        <p class="intro">Choose your athlete. Find your next rival.</p>
+        <div id="roster" role="group" aria-label="Character roster"></div>
+        <p id="character-profile"></p>
+        <button id="preview-athlete" class="secondary">VIEW ATHLETE ↗</button>
+        <button id="racket-equipment-open" class="secondary" disabled>RACKET EQUIPMENT ↗</button>
+        <small class="pending-athlete">Jax · The Showman / Trickster · Model pending</small>
+        <div class="options">
+          <label>RIVAL<select id="opponent"></select></label>
+          <label
+            >COMPETITION<select id="competition">
+              <option value="exhibition">Exhibition · Choose a rival</option>
+              <option value="circuit">Court circuit · Four rivals</option>
+            </select></label
+          >
+          <p id="circuit-status"></p>
+          <button id="circuit-reset" class="text-button">RESTART CIRCUIT</button>
+          <label
+            >DIFFICULTY<select id="difficulty">
+              <option value="easy">Easy · Find your rhythm</option>
+              <option value="normal" selected>Normal · Rise to the challenge</option>
+              <option value="hard">Hard · Leave nothing behind</option>
+            </select></label
+          ><label
+            >MATCH FORMAT<select id="length">
+              <option value="short">Quick set · First to 2 games</option>
+              <option value="standard">Standard · Best of 3 sets</option>
+            </select></label
+          >
+        </div>
+        <p id="athlete-status" role="status" aria-live="polite">Loading Kira and her racket…</p>
+        <button id="asset-retry" class="secondary" hidden>RETRY ASSET LOADING</button>
+        <button id="play" class="primary" disabled>PLAY MATCH <span>↗</span></button
+        ><button id="practice" class="secondary" disabled>PRACTICE MODE <span>→</span></button>
+        <details class="menu-audio">
+          <summary>AUDIO PREFERENCES</summary>
+          <button id="menu-court-mute" class="secondary" aria-pressed="false">
+            COURT AUDIO · ON
+          </button>
+          <label
+            >COURT VOLUME<input
+              id="menu-court-volume"
+              type="range"
+              min="0"
+              max="1"
+              step=".05"
+              value=".65"
+          /></label>
+          <button id="menu-stadium-sound" class="secondary" aria-pressed="true">
+            STADIUM SOUND · ON
+          </button>
+        </details>
+        <div class="menu-foot">
+          <span>01 / SINGLES</span><button id="help-button">HOW TO PLAY ↗</button>
+        </div>
+      </section>
+      <section id="athlete-preview" hidden aria-label="Athlete preview">
+        <div>
+          <h2 id="preview-title"></h2>
+          <p id="preview-archetype"></p>
+        </div>
+        <nav>
+          <button id="preview-front" class="secondary">FRONT</button
+          ><button id="preview-side" class="secondary">SIDE</button
+          ><button id="preview-back" class="secondary">BACK</button
+          ><button id="preview-close" class="primary">BACK TO ROSTER</button>
+        </nav>
+      </section>
+      <div id="menu-note">
+        <span class="court-badge">HARD COURT</span>
+        <p><span id="preview-name">KIRA · THE DRIFTER</span></p>
+        <small>Selected athlete · Live 3D preview</small>
+      </div>
+      <section id="hud" hidden>
+        <div class="scoreboard">
+          <div class="score-head">
+            <span>SINGLES <b id="difficulty-label">NORMAL</b></span
+            ><span>SETS&nbsp; GAMES&nbsp; PTS</span>
+          </div>
+          <div class="score-row you">
+            <span
+              ><i id="serve-you" class="serve-dot"></i>
+              <span id="player-name">KIRA · YOU</span></span
+            >
+            <div>
+              <b id="sets-you">0</b><b id="games-you">0</b><strong id="points-you">0</strong>
+            </div>
+          </div>
+          <div class="score-row">
+            <span
+              ><i id="serve-ai" class="serve-dot"></i> <span id="opponent-name">RICO</span></span
+            >
+            <div><b id="sets-ai">0</b><b id="games-ai">0</b><strong id="points-ai">0</strong></div>
+          </div>
+          <div id="score-description">DEUCE COURT</div>
+        </div>
+        <div class="rally-badge"><span id="rally-count">0</span><small>RALLY</small></div>
+        <div id="announcement" role="status" aria-live="polite">FIRST SERVE</div>
+        <div id="timing-feedback"></div>
+        <div id="heat-indicator" aria-live="polite" hidden></div>
+        <div id="signature-hud">
+          <label id="signature-label">DRIFT BREAK</label
+          ><progress id="signature-meter" max="100" value="0"></progress
+          ><button id="signature-button" hidden>SIGNATURE</button>
+        </div>
+        <div id="desktop-hint">
+          WASD MOVE <span>·</span> HOLD SPACE / RELEASE TO HIT <span>·</span> J L AIM
+          <span>·</span> TAP SLICE · HOLD POWER · DOUBLE TAP LOB
+        </div>
+        <div id="shot-target" aria-hidden="true" hidden>
+          <svg viewBox="0 0 28 28">
+            <circle cx="14" cy="14" r="8" />
+            <path d="M14 0v7m0 14v7M0 14h7m14 0h7" />
+          </svg>
+          <span>AIM</span>
+        </div>
+        <div id="touch-controls">
+          <div id="joystick" role="group" aria-label="Movement joystick">
+            <div id="stick"></div>
+            <span>MOVE</span>
+          </div>
+          <div class="shot-controls">
+            <button
+              id="shot-button"
+              aria-label="Tap for slice; hold and release for power; double tap for lob; drag to aim"
+            >
+              <span id="shot-name">HIT</span
+              ><small id="aim-feedback">TAP SLICE · HOLD POWER · 2× LOB</small>
+            </button>
+            <div class="power-track"><i id="power-fill"></i><span></span></div>
+          </div>
+        </div>
+      </section>
+      <section id="pause" class="modal-wrap" hidden>
+        <div class="modal">
+          <div class="eyebrow">TAKE A BREATH</div>
+          <h2>Play paused.</h2>
+          <p>Your court will be right here.</p>
+          <div class="venue-settings">
+            <label
+              >STADIUM DETAIL<select id="stadium-quality">
+                <option value="full">Full crowd</option>
+                <option value="reduced">Reduced crowd · mobile</option>
+              </select></label
+            >
+            <button id="stadium-sound" class="text-button" aria-pressed="true">
+              STADIUM SOUND · ON
+            </button>
+          </div>
+          <label class="audio-setting"
+            >COURT AUDIO
+            <input
+              id="court-volume"
+              aria-label="Court audio volume"
+              type="range"
+              min="0"
+              max="1"
+              step=".05"
+              value=".65"
+          /></label>
+          <button id="court-mute" class="text-button" aria-pressed="false">COURT AUDIO · ON</button>
+          <button id="resume" class="primary">RESUME MATCH <span>→</span></button
+          ><button id="restart-pause" class="secondary">RESTART MATCH</button
+          ><button id="menu-pause" class="text-button">RETURN TO MENU</button>
+        </div>
+      </section>
+      <section id="results" class="modal-wrap" hidden>
+        <div class="modal">
+          <div class="eyebrow">MATCH COMPLETE</div>
+          <h2 id="result-title">Court conquered.</h2>
+          <p id="result-score"></p>
+          <div class="result-stat">
+            <span>LONGEST RALLY</span><strong id="best-rally">0</strong>
+          </div>
+          <p id="progress-result"></p>
+          <button id="next-opponent" class="primary" hidden>NEXT RIVAL →</button
+          ><button id="restart" class="primary">REMATCH <span>↗</span></button
+          ><button id="menu-result" class="secondary">RETURN TO MENU</button>
+        </div>
+      </section>
+      <section id="help" class="modal-wrap" hidden>
+        <div class="modal help-modal">
+          <div class="eyebrow">FIND YOUR RHYTHM</div>
+          <h2>Make the next shot.</h2>
+          <p>
+            <b>Move into range.</b> Use WASD / arrows, or the left joystick. Track the ball’s shadow
+            and the landing ring.
+          </p>
+          <p>
+            <b>One HIT control.</b> Tap for slice, hold and release for power, or double tap for a
+            lob. Space and the left mouse button use the same gestures. Start your swing before the
+            ball reaches your racket. Drag while pressing to aim; the power bar shows your charge.
+            Your thumb can travel beyond HIT while aiming; only release commits the shot.
+          </p>
+          <p>
+            <b>Place your return.</b> Drag from HIT to aim left / right and up / down for depth. J /
+            L aim on desktop. I / K change depth on desktop. Mouse position across the court sets
+            aim. Desktop keys 1 Drive, 2 Slice, or 3 Lob override the next shot. Forehand, backhand,
+            volleys and overheads follow the incoming ball.
+          </p>
+          <p>
+            <b>Signature.</b> Build charge with returns and points. When full, tap SIGNATURE to arm
+            the next successful rally contact. A miss costs no charge. Heat builds at 8 returns and
+            ignites at 12; it changes feedback only.
+          </p>
+          <p>
+            <b>Serve diagonally.</b> Hold and release to serve. Two faults lose the point. A net
+            cord landing in the correct box is a let. Lines are in.
+          </p>
+          <p class="muted">
+            Quick set: first to 2 games, win by 2, tiebreak at 2–2. Standard: best of 3 sets,
+            tiebreak at 6–6. Practice runs endless rallies. Escape pauses. C changes camera.
+          </p>
+          <button id="help-close" class="primary">LET’S PLAY <span>→</span></button>
+        </div>
+      </section>
+      <footer id="footer">
+        <span>BLACKHOUSE®</span><span>BUILT FOR THE GAME.</span><span>GOAL 010</span>
+      </footer>
+    </div>
+    <section id="transition" hidden role="status" aria-live="polite">
+      <p class="loading-brand">BLACKHOUSE</p>
+      <h2>CENTRE COURT</h2>
+      <p id="load-status">Preparing your athlete…</p>
+      <button id="load-cancel" class="secondary" hidden>RETURN TO MENU</button>
+      <button id="context-reload" class="secondary" hidden>RELOAD CENTRE COURT</button>
+    </section>
+    <div id="loading">CENTRE COURT<span>PREPARING YOUR COURT…</span></div>
+    <script type="module" src="/tools/goal010/session-harness.ts"></script>
+  </body>
+</html>

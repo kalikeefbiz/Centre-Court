@@ -1,5 +1,4 @@
 import * as pc from 'playcanvas';
-import { assetTimings } from '../dev/metrics';
 import { selectStroke } from '../core/hitting';
 import {
   tennisGraph,
@@ -18,49 +17,11 @@ import { KIRA, ATHLETE_RENDER, locomotionState, type AthleteState } from './athl
 import { DEFAULT_RACKET_ID, getRacket, isRacketId, racketAttachment } from './racket-equipment';
 import { AthleteGrip } from './athlete-grip';
 
-export function load(app: pc.Application, path: string): Promise<pc.ContainerResource> {
-  return new Promise((resolve, reject) => {
-    const url = new URL(import.meta.env.BASE_URL + path, document.baseURI);
-    url.searchParams.set('v', __KIRA_ASSET_REVISION__);
-    const timing = {
-      path,
-      status: 'loading' as 'loading' | 'ready' | 'error',
-      startMs: performance.now(),
-    };
-    assetTimings.push(timing);
-    const finish = (error?: string) =>
-      Object.assign(timing, {
-        status: error ? 'error' : 'ready',
-        durationMs: performance.now() - timing.startMs,
-        ...(error ? { error } : {}),
-      });
-    const timeout = window.setTimeout(() => {
-      finish(`Timed out loading ${path}`);
-      reject(new Error(`Timed out loading ${path}`));
-    }, 120000);
-    app.assets.loadFromUrlAndFilename(
-      url.href,
-      path.split('/').pop()!,
-      'container',
-      (error, asset) => {
-        window.clearTimeout(timeout);
-        if (timing.status === 'error') {
-          if (asset) {
-            asset.unload();
-            app.assets.remove(asset);
-          }
-          return; // A late response cannot erase a timeout.
-        }
-        finish(error || !asset?.resource ? String(error ?? 'empty asset') : undefined);
-        if (error || !asset?.resource)
-          reject(new Error(`${path}: ${String(error ?? 'empty asset')}`));
-        else resolve(asset.resource as pc.ContainerResource);
-      },
-    );
-  });
+import { sharedAssets } from '../app/assets';
+export function load(app: pc.Application, path: string) {
+  return sharedAssets(app).acquire(path);
 }
 
-const references = new Map<pc.ContainerResource, number>();
 export class AthleteRenderer {
   readonly root = new pc.Entity('Kira gameplay position');
   private model!: pc.Entity;
@@ -106,6 +67,7 @@ export class AthleteRenderer {
   }
   evaluationMs = 0;
   private disposed = false;
+  private cancelVisibility?: () => void;
   constructor(
     private app: pc.Application,
     readonly character: CharacterId = 'kira',
@@ -122,6 +84,9 @@ export class AthleteRenderer {
       if (this.disposed) return;
       this.status = 'error';
       this.error = String(error);
+      this.root.children.slice().forEach((child) => (child as pc.Entity).destroy());
+      this.grip?.destroy();
+      this.release();
       this.root.enabled = false;
       console.error(
         `${ROSTER[this.character].name} could not be rendered. Match start is blocked.`,
@@ -130,12 +95,17 @@ export class AthleteRenderer {
     });
   }
   private async initialize() {
-    const [character, equipment] = await Promise.all([
+    const acquired = await Promise.allSettled([
       load(this.app, ROSTER[this.character].asset!),
       load(this.app, getRacket(this.equipmentId).assetPath),
     ]);
-    this.resources = [character, equipment];
-    for (const r of this.resources) references.set(r, (references.get(r) ?? 0) + 1);
+    this.resources = acquired.flatMap((r) => (r.status === 'fulfilled' ? [r.value] : []));
+    const failed = acquired.find((r) => r.status === 'rejected');
+    if (failed?.status === 'rejected') {
+      this.release();
+      throw failed.reason;
+    }
+    const [character, equipment] = this.resources;
     if (this.disposed) {
       this.release();
       return;
@@ -239,10 +209,18 @@ export class AthleteRenderer {
       return;
     }
     await new Promise<void>((resolve, reject) => {
+      const cleanup = () => {
+        window.clearTimeout(timeout);
+        this.app.off('postrender', check);
+        this.cancelVisibility = undefined;
+      };
+      this.cancelVisibility = () => {
+        cleanup();
+        resolve();
+      };
       const check = () => {
         if (this.disposed) {
-          window.clearTimeout(timeout);
-          this.app.off('postrender', check);
+          cleanup();
           resolve();
           return;
         }
@@ -251,13 +229,12 @@ export class AthleteRenderer {
           !this.racketMeshes.some((m) => m.visibleThisFrame)
         )
           return;
-        window.clearTimeout(timeout);
-        this.app.off('postrender', check);
+        cleanup();
         this.status = 'ready';
         resolve();
       };
       const timeout = window.setTimeout(() => {
-        this.app.off('postrender', check);
+        cleanup();
         reject(new Error('Kira loaded but did not reach the rendering camera'));
         // Full-detail textures and the first skinned-material shaders can finish
         // after parsing on a cold browser. Keep the actual-visibility gate, with
@@ -300,7 +277,6 @@ export class AthleteRenderer {
     const generation = ++this.equipmentGeneration;
     if (id === this.equipmentId) return;
     const equipment = await load(this.app, getRacket(id).assetPath);
-    references.set(equipment, (references.get(equipment) ?? 0) + 1);
     const release = () => this.releaseResource(equipment);
     if (this.disposed || generation !== this.equipmentGeneration) {
       release();
@@ -330,19 +306,11 @@ export class AthleteRenderer {
     if (oldResource) this.releaseResource(oldResource);
   }
   private releaseResource(resource: pc.ContainerResource) {
-    const count = (references.get(resource) ?? 1) - 1;
-    if (count > 0) references.set(resource, count);
-    else {
-      references.delete(resource);
-      const asset = this.app.assets.list().find((a) => a.resource === resource);
-      if (asset) {
-        asset.unload();
-        this.app.assets.remove(asset);
-      }
-    }
+    sharedAssets(this.app).release(resource);
   }
   destroy() {
     this.disposed = true;
+    this.cancelVisibility?.();
     this.equipmentGeneration++;
     this.grip?.destroy();
     this.root.destroy();
@@ -416,6 +384,47 @@ export class AthleteRenderer {
         }));
       return { name: m.name, useMetalness: m.useMetalness, metalness: m.metalness, maps };
     });
+  }
+  resetSession() {
+    this.lastContact = -1;
+    this.contactPose = null;
+    this.actionId = -1;
+    this.contactAge = 1;
+    this.contactError = 0;
+    this.yaw = 180;
+    this.groundOffset = 0;
+    this.movementBlend = [1, 0, 0, 0, 0, 0, 0];
+    if (this.status !== 'ready') return;
+    this.model.anim!.findAnimationLayer('Stroke')!.weight = 0;
+    this.model.anim!.findAnimationLayer('FullBody')!.weight = 0;
+    this.upperState = this.fullBodyState = 'Idle';
+  }
+  /** Cosmetic idle/inspection only: no Match, ball prediction or movement runtime. */
+  updateMenu(dt: number, presenting = false) {
+    if (this.status !== 'ready') return;
+    this.root.setPosition(0, 0, 11);
+    this.root.setEulerAngles(0, 180, 0);
+    const anim = this.model.anim!;
+    for (let i = 0; i < BLEND_CHANNELS.length; i++)
+      anim.setFloat('weight' + BLEND_CHANNELS[i], i === 0 ? 1 : 0);
+    if (this.layer.activeState !== 'Locomotion') this.layer.transition('Locomotion', 0.12);
+    const upper = anim.findAnimationLayer('Stroke')!;
+    const body = anim.findAnimationLayer('FullBody')!;
+    upper.weight = 0;
+    if (presenting) {
+      if (this.fullBodyState !== 'ForehandVolley') body.transition('ForehandVolley', 0.055);
+      this.fullBodyState = this.state = 'ForehandVolley';
+      body.activeStateCurrentTime = ANIMATIONS.ForehandVolley.prepare;
+    } else this.state = 'Idle';
+    body.weight += ((presenting ? 1 : 0) - body.weight) * (1 - Math.exp(-dt * 35));
+    if (!presenting && body.weight < 0.0001) body.weight = 0;
+    const start = performance.now();
+    anim.update(dt);
+    this.evaluationMs = performance.now() - start;
+    this.clearWrist(dt);
+    this.inPlace();
+    this.grip?.alignFrame();
+    this.grip?.apply(this.state);
   }
   update(
     match: Match,

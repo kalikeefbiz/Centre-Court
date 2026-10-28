@@ -93,3 +93,13 @@ the discovery tree or its main history. Existing docs and workflows are preserve
 No owner approval of every current feature, physical-device compatibility,
 current live Pages content, unlisted branches, or Nova's internal rig can be
 inferred from this inspection. These require direct evidence when relevant.
+
+## GOAL 010 lifecycle (supersedes startup/update description above)
+
+The application controller is now `src/app/lifecycle.ts`; `MatchSession` owns
+Match/FixedClock only during match loading/play/results. The ordinary initial
+menu has no Match, opponent, ball or stadium. One Scene/Application/camera persists;
+its menu preview has an independent cosmetic update, while the arena is lazily
+cached on a separate rendering layer. `src/app/assets.ts` owns deduplicated,
+reference-counted containers with a bounded character cache. See
+[GOAL-010](GOAL-010.md) for transition/cleanup rules and measured validation.

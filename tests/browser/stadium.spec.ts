@@ -10,6 +10,9 @@ test('stadium builds locally, preserves dimensions, scales crowd and clears both
   page.on('pageerror', (e) => errors.push(e.message));
   await page.goto('/?debug');
   await expect(page.locator('#play')).toBeEnabled({ timeout: 45000 });
+  expect((await snap(page)).stadium.status).toBe('not-loaded');
+  await page.locator('#play').click();
+  await expect(page.locator('#hud')).toBeVisible({ timeout: 90000 });
   let s = await snap(page);
   expect(s.stadium.status).toBe('ready');
   expect(s.stadium.sections).toBe(24);
@@ -26,8 +29,6 @@ test('stadium builds locally, preserves dimensions, scales crowd and clears both
   expect(s.stadium.renderedCourt.surface).toEqual([10.97, 0.025, 23.77]);
   expect(s.stadium.renderedCourt.lines).toHaveLength(11);
   expect(s.stadium.renderedCourt.netPosts.map((p: number[]) => p[0])).toEqual([-5.03, 5.03]);
-  await page.locator('#play').click();
-  await expect(page.locator('#hud')).toBeVisible({ timeout: 90000 });
   await page.locator('#pause-button').click();
   await page.locator('#stadium-quality').selectOption('full');
   const full = (await snap(page)).stadium.spectatorCount;

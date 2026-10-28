@@ -1,0 +1,85 @@
+{
+  "browser": "156.0.8078.4",
+  "viewport": "390x844 DPR1 SwiftShader",
+  "menuMs": 6061,
+  "menuFrames": {
+    "meanMs": 164.3049999999998,
+    "p95Ms": 366.1000000000058
+  },
+  "errors": [],
+  "menuResources": {
+    "assets": 31,
+    "vram": {
+      "tex": 343628020,
+      "vb": 10790064,
+      "ib": 932298,
+      "ub": 4592,
+      "sb": 0
+    },
+    "animationUpdateMs": 0.1999999999825377
+  },
+  "menuDrawCalls": 18,
+  "cycles": [
+    {
+      "loadMs": 9199,
+      "returnMs": 1020,
+      "frame": {
+        "meanMs": 250.87833333333305,
+        "p95Ms": 478.8999999999942
+      },
+      "menuResources": {
+        "assets": 50,
+        "vram": {
+          "tex": 544957968,
+          "vb": 12356980,
+          "ib": 1085898,
+          "ub": 5296,
+          "sb": 0
+        },
+        "animationUpdateMs": 0.29999999998835847
+      },
+      "opponentCount": 1
+    },
+    {
+      "loadMs": 797,
+      "returnMs": 765,
+      "frame": {
+        "meanMs": 224.125,
+        "p95Ms": 423.69999999998254
+      },
+      "menuResources": {
+        "assets": 50,
+        "vram": {
+          "tex": 544957968,
+          "vb": 12356980,
+          "ib": 1085898,
+          "ub": 5296,
+          "sb": 0
+        },
+        "animationUpdateMs": 0.29999999998835847
+      },
+      "opponentCount": 1
+    },
+    {
+      "loadMs": 828,
+      "returnMs": 755,
+      "frame": {
+        "meanMs": 237.01166666666637,
+        "p95Ms": 474.19999999998254
+      },
+      "menuResources": {
+        "assets": 50,
+        "vram": {
+          "tex": 544957968,
+          "vb": 12356980,
+          "ib": 1085898,
+          "ub": 5296,
+          "sb": 0
+        },
+        "animationUpdateMs": 0.29999999998835847
+      },
+      "opponentCount": 1
+    }
+  ],
+  "commit": "719fe3b20267e6c661c97f55b879d861981d9642"
+}

@@ -5,6 +5,7 @@ export class StadiumAudio {
   private context?: AudioContext;
   private bed?: GainNode;
   private buffer?: AudioBuffer;
+  private sources = new Set<AudioBufferSourceNode>();
   private points = 0;
   private contacts = 0;
   private active = false;
@@ -67,9 +68,11 @@ export class StadiumAudio {
       gain.gain.linearRampToValueAtTime(0.18, t + 0.1);
       gain.gain.exponentialRampToValueAtTime(0.001, t + duration);
       source.connect(filter).connect(gain).connect(c.destination);
+      this.sources.add(source);
       source.start(t);
       source.stop(t + duration);
       source.onended = () => {
+        this.sources.delete(source);
         source.disconnect();
         filter.disconnect();
         gain.disconnect();
@@ -78,6 +81,25 @@ export class StadiumAudio {
     }
     this.points = match.totalPoints;
     this.contacts = match.contacts;
+  }
+  stop() {
+    this.active = false;
+    if (this.context && this.bed) {
+      this.bed.gain.cancelScheduledValues(this.context.currentTime);
+      this.bed.gain.setValueAtTime(0, this.context.currentTime);
+    }
+    for (const source of this.sources) {
+      try {
+        source.stop();
+      } catch {
+        /* ended */
+      }
+    }
+    this.sources.clear();
+  }
+  resetSession() {
+    this.stop();
+    this.points = this.contacts = 0;
   }
   snapshot() {
     return {

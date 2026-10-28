@@ -22,7 +22,7 @@ export class CourtAudio {
   private stepClock = [0, 0];
   private voiceClock = [0, 0];
   private active = new Set<AudioBufferSourceNode>();
-  private lastMatch?: Match;
+  private tones = new Set<OscillatorNode>();
   played: Record<string, number> = {};
   unlock() {
     try {
@@ -94,9 +94,11 @@ export class CourtAudio {
     g.gain.setValueAtTime(volume, c.currentTime);
     g.gain.exponentialRampToValueAtTime(0.001, c.currentTime + duration);
     o.connect(g).connect(this.master!);
+    this.tones.add(o);
     o.start();
     o.stop(c.currentTime + duration);
     o.onended = () => {
+      this.tones.delete(o);
       o.disconnect();
       g.disconnect();
     };
@@ -112,7 +114,6 @@ export class CourtAudio {
     else void this.decode(file);
   }
   update(match: Match, dt: number) {
-    this.lastMatch = match;
     const enabled =
       ['serve', 'rally', 'pointOver', 'result'].includes(match.phase) && !document.hidden;
     if (this.master && this.context)
@@ -176,13 +177,42 @@ export class CourtAudio {
       }
     }
   }
+  stop() {
+    if (this.master && this.context) {
+      this.master.gain.cancelScheduledValues(this.context.currentTime);
+      this.master.gain.setValueAtTime(0, this.context.currentTime);
+    }
+    for (const source of this.active) {
+      try {
+        source.stop();
+      } catch {
+        /* ended */
+      }
+    }
+    this.active.clear();
+    for (const tone of this.tones) {
+      try {
+        tone.stop();
+      } catch {
+        /* ended */
+      }
+    }
+    this.tones.clear();
+  }
+  resetSession() {
+    this.stop();
+    this.lastEvent = 0;
+    this.distance = [0, 0];
+    this.stepClock = [0, 0];
+    this.voiceClock = [0, 0];
+  }
   snapshot() {
     return {
       state: this.context?.state ?? 'locked',
       volume: this.volume,
       muted: this.muted,
       decoded: this.buffers.size,
-      active: this.active.size,
+      active: this.active.size + this.tones.size,
       played: { ...this.played },
       voiceStatus: 'Awaiting licensed character performances',
     };

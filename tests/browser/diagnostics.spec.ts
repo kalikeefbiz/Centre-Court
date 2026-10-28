@@ -109,9 +109,23 @@ test('production rig inspection selects every registry clip and restores a froze
   expect(slow).toBeGreaterThan(0);
   expect(slow).toBeLessThan(0.4);
   await page.locator('#dev-play').click();
+  // Observe the UI's pause acknowledgement before sampling its frozen clock;
+  // WebKit may deliver activation after the pointer action has completed.
+  await expect(page.locator('#dev-play')).toHaveText('Play');
   const frozen = (await snap(page)).developer.timeline.time;
   await page.waitForTimeout(250);
   expect((await snap(page)).developer.timeline.time).toBe(frozen);
+  // Repeated native activation must survive the diagnostic refresh without
+  // replacing an unchanged button label beneath WebKit's pointer target.
+  for (let i = 0; i < 3; i++) {
+    await page.locator('#dev-play').click();
+    await expect(page.locator('#dev-play')).toHaveText('Pause');
+    await page.locator('#dev-play').click();
+    await expect(page.locator('#dev-play')).toHaveText('Play');
+    const time = (await snap(page)).developer.timeline.time;
+    await page.waitForTimeout(100);
+    expect((await snap(page)).developer.timeline.time).toBe(time);
+  }
   await page.locator('#dev-time').fill('1.2');
   expect((await snap(page)).developer.timeline.time).toBeCloseTo(1.2);
   await page.locator('#dev-markers').check();
@@ -168,11 +182,17 @@ test('visual presets preserve physics and cameras, diagnostics export and touch 
   await page.locator('#dev-export').click();
   expect((await download).suggestedFilename()).toContain('004');
   const s = await snap(page);
-  // Preserve the original five GLB load records; the new selected-athlete hand
-  // calibrations are separate lightweight assets, not extra character models.
-  expect(s.developer.assets.filter((a: any) => a.path.endsWith('.glb'))).toHaveLength(5);
-  expect(s.developer.assets.filter((a: any) => a.path.endsWith('.json')).map((a: any) => a.path).sort())
-    .toEqual(['assets/characters/grips/kira.json', 'assets/characters/grips/rico.json']);
+  // Selected player, opponent, ball and one shared racket container. The old
+  // fifth load was a duplicate racket request; ownership now deduplicates it.
+  const containers = s.developer.assets.filter((a: any) => a.path.endsWith('.glb'));
+  expect(containers).toHaveLength(4);
+  expect(new Set(containers.map((a: any) => a.path)).size).toBe(4);
+  expect(
+    s.developer.assets
+      .filter((a: any) => a.path.endsWith('.json'))
+      .map((a: any) => a.path)
+      .sort(),
+  ).toEqual(['assets/characters/grips/kira.json', 'assets/characters/grips/rico.json']);
   expect(
     s.developer.assets.some(
       (a: any) => a.path === 'procedural:Crown-Pavilion' && a.status === 'ready',
@@ -220,6 +240,10 @@ for (const path of ['characters/kira', 'equipment/rackets', 'balls/royal-rally']
       r.fulfill({ status: 404, body: 'Missing diagnostic asset' }),
     );
     await page.goto('/?dev=1');
+    if (path.startsWith('balls')) {
+      await expect(page.locator('#play')).toBeEnabled({ timeout: 45000 });
+      await page.locator('#play').click();
+    }
     await expect(page.locator('#asset-retry')).toBeVisible({ timeout: 45000 });
     await expect
       .poll(async () => (await snap(page)).developer?.assets.some((a: any) => a.status === 'error'))

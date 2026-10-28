@@ -1,5 +1,5 @@
 import * as pc from 'playcanvas';
-import { Match } from '../core/match';
+import type { Match } from '../core/match';
 import { COURT, type Vec } from '../core/court';
 import { CameraRig } from '../core/camera';
 import { predict } from '../core/ball';
@@ -7,21 +7,29 @@ import { RoyalBall } from './royal-ball';
 import { Kira } from './kira';
 import { ROSTER, type CharacterId } from '../core/roster';
 import { Stadium } from './stadium';
+import { checkCancelled } from '../app/lifecycle';
 import { DEFAULT_RACKET_ID } from './racket-equipment';
 
 export class Scene {
+  static applications = 0;
   app: pc.Application;
-  stadium: Stadium;
+  stadium!: Stadium;
+  private arenaLayer: pc.Layer;
+  private arenaReady = false;
+  private menuFloor: pc.Entity;
+  private cameraLayers: number[];
+  private matchView = false;
   camera: pc.Entity;
   rig: CameraRig;
   kira: Kira;
   opponent?: Kira;
   private preparingMatch = false;
-  private ball: pc.Entity;
-  royalBall: RoyalBall;
+  pendingFrameChecks = 0;
+  private ball!: pc.Entity;
+  royalBall!: RoyalBall;
   private playerShadow: pc.Entity;
-  private ballShadow: pc.Entity;
-  private landing: pc.Entity;
+  private ballShadow!: pc.Entity;
+  private landing!: pc.Entity;
   private athletes: { root: pc.Entity; arm: pc.Entity; legs: pc.Entity[]; shadow: pc.Entity }[] =
     [];
   private trail: pc.Entity[] = [];
@@ -52,6 +60,7 @@ export class Scene {
         preserveDrawingBuffer: false,
       },
     });
+    Scene.applications++;
     this.app.graphicsDevice.maxPixelRatio = Math.min(window.devicePixelRatio, 1.75);
     this.app.setCanvasFillMode(pc.FILLMODE_FILL_WINDOW);
     this.app.setCanvasResolution(pc.RESOLUTION_AUTO);
@@ -60,7 +69,11 @@ export class Scene {
     this.app.scene.fog.color = new pc.Color(0.28, 0.36, 0.43);
     this.app.scene.fog.start = 65;
     this.app.scene.fog.end = 150;
-    this.courtBatch = this.app.batcher!.addGroup('Arena static', false, 100)!.id;
+    this.arenaLayer = new pc.Layer({ name: 'Match environment' });
+    this.app.scene.layers.insertOpaque(this.arenaLayer, 1);
+    this.courtBatch = this.app.batcher!.addGroup('Arena static', false, 100, undefined, [
+      this.arenaLayer.id,
+    ])!.id;
     this.athleteBatch = this.app.batcher!.addGroup('Athletes dynamic', true, 50)!.id;
     this.camera = new pc.Entity('Single active rendering camera');
     this.camera.addComponent('camera', {
@@ -69,6 +82,7 @@ export class Scene {
       nearClip: 0.1,
       farClip: 160,
     });
+    this.cameraLayers = [...this.camera.camera!.layers];
     this.app.root.addChild(this.camera);
     let storage: Storage | undefined;
     try {
@@ -79,6 +93,7 @@ export class Scene {
     this.rig = new CameraRig(storage);
     const sun = new pc.Entity('Soft stadium light');
     sun.addComponent('light', {
+      layers: [pc.LAYERID_WORLD, this.arenaLayer.id],
       type: 'directional',
       color: new pc.Color(1, 0.94, 0.82),
       intensity: 1.35,
@@ -98,12 +113,39 @@ export class Scene {
     this.characterFill.setEulerAngles(25, 145, 0);
     this.characterFill.enabled = false;
     this.app.root.addChild(this.characterFill);
-    this.buildArena();
-    this.stadium = new Stadium(this.app);
-    // Only the AI uses a temporary model. Never create a placeholder human.
-    this.athletes = [];
     this.playerShadow = this.shadow('Kira ground shadow', 1.05);
     this.kira = new Kira(this.app, initialCharacter, 0, initialRacket);
+    this.menuFloor = this.shape(
+      'box',
+      'Menu presentation plinth',
+      '#294f5c',
+      [0, -0.1, 11],
+      [40, 0.12, 40],
+      false,
+    );
+    this.renderMenu(0);
+    this.resize();
+    window.addEventListener('resize', () => this.resize());
+    this.app.start();
+  }
+  /** Procedural arena/ball are a reusable renderer cache, allocated only on
+   * first match. They never own gameplay, and the menu excludes their layer. */
+  ensureArena() {
+    if (this.arenaReady) {
+      if (this.royalBall.status === 'error') {
+        this.royalBall.destroy();
+        this.royalBall = new RoyalBall(this.app);
+        this.ball = this.royalBall.root;
+      }
+      return;
+    }
+    this.arenaReady = true;
+    this.buildArena();
+    this.stadium = new Stadium(this.app);
+    for (const r of this.stadium.root.findComponents('render') as pc.RenderComponent[])
+      r.layers = [this.arenaLayer.id];
+    // Only the AI uses a temporary model. Never create a placeholder human.
+    this.athletes = [];
     this.royalBall = new RoyalBall(this.app);
     this.ball = this.royalBall.root;
     this.ballShadow = this.shadow('Ball ground shadow', 0.075);
@@ -127,12 +169,105 @@ export class Scene {
       this.accents.push(accent);
     }
     this.app.batcher!.generate();
-    this.resize();
-    window.addEventListener('resize', () => this.resize());
-    this.app.start();
+  }
+  async prepareMatch(id: CharacterId, equipment: string, signal: AbortSignal) {
+    this.ensureArena();
+    this.menuFloor.enabled = false;
+    this.setMatchView(true);
+    this.kira.resetSession();
+    this.characterFill.enabled = false;
+    this.characterPresentation = false;
+    this.camera.camera!.toneMapping = pc.TONEMAP_LINEAR;
+    this.camera.setPosition(0, 17, 24);
+    this.camera.lookAt(0, 0, 0);
+    await Promise.all([
+      this.kira.ready,
+      this.royalBall.ready,
+      this.selectOpponent(id, equipment, signal),
+    ]);
+    checkCancelled(signal);
+    if (
+      this.kira.status !== 'ready' ||
+      this.royalBall.status !== 'ready' ||
+      this.opponent?.status !== 'ready'
+    )
+      throw new Error('An athlete or ball could not load. Check your connection and retry.');
+  }
+  confirmFrame(signal: AbortSignal) {
+    return new Promise<void>((resolve, reject) => {
+      this.pendingFrameChecks++;
+      let finished = false;
+      const finish = (error?: Error) => {
+        if (finished) return;
+        finished = true;
+        this.pendingFrameChecks--;
+        clearTimeout(timer);
+        this.app.off('postrender', check);
+        signal.removeEventListener('abort', abort);
+        error ? reject(error) : resolve();
+      };
+      const check = () => {
+        if (
+          this.kira.snapshot().bodyVisible &&
+          this.kira.snapshot().racketVisible &&
+          this.opponent?.snapshot().bodyVisible &&
+          this.opponent.snapshot().racketVisible &&
+          this.royalBall.snapshot().visible
+        )
+          finish();
+      };
+      const abort = () => finish(new DOMException('Loading cancelled', 'AbortError'));
+      const timer = setTimeout(
+        () => finish(new Error('Court did not reach the rendering camera')),
+        45000,
+      );
+      signal.addEventListener('abort', abort, { once: true });
+      this.app.on('postrender', check);
+      if (signal.aborted) abort();
+    });
+  }
+  endMatch() {
+    this.stadium?.resetSession();
+    this.preparingMatch = false;
+    this.opponent?.destroy();
+    this.opponent = undefined;
+    this.kira.resetSession();
+    this.history = [];
+    this.trailClock = this.predictionClock = 0;
+    this.signatureEvent = this.signatureFlash = 0;
+    for (const entity of [this.ball, this.ballShadow, this.landing, ...this.trail, ...this.accents])
+      if (entity) entity.enabled = false;
+    this.renderMenu(0);
+  }
+  private setMatchView(active: boolean) {
+    if (active === this.matchView) return;
+    this.matchView = active;
+    // Preserve native depth/skybox/immediate layers (including diagnostics),
+    // and avoid rebuilding camera-layer membership on every rendered frame.
+    this.camera.camera!.layers = active
+      ? [...this.cameraLayers, this.arenaLayer.id]
+      : this.cameraLayers;
+  }
+  renderMenu(dt: number, presenting = false) {
+    this.setMatchView(false);
+    this.menuFloor && (this.menuFloor.enabled = true);
+    this.characterPresentation = presenting;
+    this.characterFill.enabled = presenting;
+    this.camera.camera!.toneMapping = presenting ? pc.TONEMAP_NEUTRAL : pc.TONEMAP_LINEAR;
+    const budget = Math.min(devicePixelRatio, 1.75);
+    if (this.app.graphicsDevice.maxPixelRatio !== budget) {
+      this.app.graphicsDevice.maxPixelRatio = budget;
+      this.resize();
+    }
+    this.kira.updateMenu(dt, presenting);
+    this.playerShadow.setPosition(0, 0.06, 11);
+    this.playerShadow.enabled = this.kira.status === 'ready';
+    this.camera.camera!.fov = 48;
+    this.camera.setPosition(4.4, 2.8, 17.8);
+    this.camera.lookAt(-1.1, 0.9, 11);
   }
   selectCharacter(id: CharacterId, equipment = DEFAULT_RACKET_ID) {
-    if (this.kira.character === id)
+    if (this.kira.character === id && this.kira.status !== 'error')
       return this.kira.status === 'ready' ? this.kira.setEquipment(equipment) : this.kira.ready;
     this.kira.destroy();
     this.kira = new Kira(this.app, id, 0, equipment);
@@ -141,37 +276,53 @@ export class Scene {
   equipRacket(id: string) {
     return this.kira.setEquipment(id);
   }
-  async selectOpponent(id: CharacterId, equipment = DEFAULT_RACKET_ID) {
-    if (this.opponent?.character === id && this.opponent.status === 'ready') {
-      await this.opponent.setEquipment(equipment);
-      return;
-    }
+  async selectOpponent(
+    id: CharacterId,
+    equipment = DEFAULT_RACKET_ID,
+    signal = new AbortController().signal,
+  ) {
+    checkCancelled(signal);
     this.preparingMatch = true;
-    if (this.opponent?.character !== id) {
-      this.opponent?.destroy();
-      this.opponent = new Kira(this.app, id, 1, equipment);
-    }
-    await this.opponent!.ready;
-    if (this.opponent!.status === 'ready')
-      await new Promise<void>((resolve) => {
+    this.opponent?.destroy();
+    const actor = new Kira(this.app, id, 1, equipment);
+    this.opponent = actor;
+    const cancel = () => {
+      actor.destroy();
+    };
+    signal.addEventListener('abort', cancel, { once: true });
+    try {
+      await actor.ready;
+      checkCancelled(signal);
+      if (actor.status !== 'ready') throw new Error(actor.error);
+      await new Promise<void>((resolve, reject) => {
+        this.pendingFrameChecks++;
+        let finished = false;
         let frames = 0;
-        const finish = () => {
+        const finish = (error?: Error) => {
+          if (finished) return;
+          finished = true;
+          this.pendingFrameChecks--;
           clearTimeout(timeout);
           this.app.off('postrender', check);
-          resolve();
+          signal.removeEventListener('abort', abort);
+          error ? reject(error) : resolve();
         };
+        const abort = () => finish(new DOMException('Loading cancelled', 'AbortError'));
         const check = () => {
-          const s = this.opponent!.snapshot();
+          const s = actor.snapshot();
           if (s.bodyVisible && s.racketVisible && ++frames >= 2) finish();
         };
-        const timeout = setTimeout(() => {
-          this.opponent!.status = 'error';
-          this.opponent!.error = 'Opponent did not reach rendering camera';
-          finish();
-        }, 45000);
+        const timeout = setTimeout(
+          () => finish(new Error('Opponent did not reach rendering camera')),
+          45000,
+        );
+        signal.addEventListener('abort', abort, { once: true });
         this.app.on('postrender', check);
       });
-    this.preparingMatch = false;
+    } finally {
+      signal.removeEventListener('abort', cancel);
+      if (this.opponent === actor) this.preparingMatch = false;
+    }
   }
   private material(hex: string, unlit = false) {
     const key = hex + unlit;
@@ -200,6 +351,7 @@ export class Scene {
     const e = new pc.Entity(name);
     e.addComponent('render', {
       type,
+      layers: batch ? [this.arenaLayer.id] : [pc.LAYERID_WORLD],
       material: this.material(color, unlit),
       castShadows: false,
       receiveShadows: false,
@@ -400,7 +552,12 @@ export class Scene {
       if (outward.length() < 0.1) outward.set(1, 0, -1);
       outward.normalize().mulScalar(0.65);
       this.camera.setPosition(target.x + outward.x, target.y + 0.2, target.z + outward.z);
-    } else this.camera.setPosition(target.x + 0.72 * distance, target.y + 0.26 * distance, target.z - 0.95 * distance);
+    } else
+      this.camera.setPosition(
+        target.x + 0.72 * distance,
+        target.y + 0.26 * distance,
+        target.z - 0.95 * distance,
+      );
     this.camera.lookAt(target.x, target.y - (portrait && reserveControls ? 0.22 : 0), target.z);
     this.camera.camera!.fov = 42;
   }
@@ -460,7 +617,7 @@ export class Scene {
       return { x: p.x / this.canvas.clientWidth, y: p.y / this.canvas.clientHeight };
     };
     return {
-      ...this.stadium.snapshot(),
+      ...(this.stadium?.snapshot() ?? { status: 'not-loaded' }),
       renderedCourt: {
         surface: this.app.root.findByName('Playing surface')?.getLocalScale().toArray(),
         lines: this.app.root
@@ -525,7 +682,7 @@ export class Scene {
       required > current ? required : current + (required - current) * (1 - Math.exp(-dt * 3));
   }
   ballPresentation() {
-    return this.ball.getPosition().toArray();
+    return this.ball?.getPosition().toArray() ?? [0, 0, 0];
   }
   resize() {
     this.app.resizeCanvas();
@@ -537,6 +694,8 @@ export class Scene {
     intent: 'drive' | 'slice' | 'lob' = 'drive',
     inspectCharacter = false,
   ) {
+    this.setMatchView(true);
+    this.menuFloor.enabled = false;
     const presentation = inspectCharacter && match.phase === 'menu';
     if (presentation !== this.characterPresentation) {
       this.characterPresentation = presentation;
