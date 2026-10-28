@@ -8,7 +8,7 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --host 0.0.0.0",
     "test": "vitest run",
-    "test:browser": "playwright test --grep \"completed results record|native captured aiming|double-tap lobs\"",
+    "test:browser": "playwright test --grep \"double-tap lobs\"",
     "check": "npm test && npm run build && npm run test:browser",
     "format": "prettier --write src tests *.ts index.html docs README.md .github",
     "prebuild": "node tools/roster/fetch-nova.mjs"

@@ -191,6 +191,8 @@ test('double-tap lobs contact real baseline feeds with the rendered racket', asy
                 velocity: s.velocity,
                 kira: s.kira,
                 input: s.input,
+                locomotion: s.locomotion[0],
+                anticipation: s.anticipation,
               });
               return;
             }
@@ -219,6 +221,13 @@ test('double-tap lobs contact real baseline feeds with the rendered racket', asy
     expect(result.velocity.y).toBeGreaterThan(6);
     expect(Math.abs(result.contact.timing)).toBeLessThan(0.064);
     expect(result.kira.racketAttached).toBe(true);
+    console.log('LOB_PATH_DIAGNOSTIC', JSON.stringify({
+      feed, contact: result.contact, action: result.action,
+      root: result.kira.root, head: result.kira.racketHead,
+      contactPose: result.kira.contactPose, layerTime: result.kira.strokeTime,
+      layerState: result.kira.strokeState, error: result.kira.contactError,
+      yaw: result.kira.yaw, movement: result.locomotion, prediction: result.anticipation
+    }));
     expect(result.kira.contactError).toBeLessThan(0.55);
     console.log(
       'RENDERED_LOB_CONTACT',
