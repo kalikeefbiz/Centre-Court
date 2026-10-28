@@ -57,7 +57,17 @@ for (const character of ['kira', 'zuri', 'dante', 'rico', 'nova']) {
         }
       }, mode);
       expect(prepared).toBeTruthy();
-      await page.evaluate(() => (window as any).idleHarness.render());
+      const renderedBefore = await page.evaluate(() => (window as any).idleHarness.render());
+      await page.waitForFunction(
+        (before) => (window as any).idleHarness.renderedFrames() > before,
+        renderedBefore,
+      );
+      await page.evaluate(
+        () =>
+          new Promise<void>((resolve) =>
+            requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
+          ),
+      );
       await page.screenshot({
         path: `test-results/${info.project.name}-${character}-${mode}-anticipation.png`,
       });
@@ -89,7 +99,17 @@ for (const character of ['kira', 'zuri', 'dante', 'rico', 'nova']) {
       expect(c.racketAttached).toBe(true);
       expect(Math.abs(c.handGrip.equipmentFrameError)).toBeLessThan(0.000001);
       expect(result.contact.contactError).toBeLessThan(0.5);
-      await page.evaluate(() => (window as any).idleHarness.render());
+      const contactFrameBefore = await page.evaluate(() => (window as any).idleHarness.render());
+      await page.waitForFunction(
+        (before) => (window as any).idleHarness.renderedFrames() > before,
+        contactFrameBefore,
+      );
+      await page.evaluate(
+        () =>
+          new Promise<void>((resolve) =>
+            requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
+          ),
+      );
       await page.screenshot({
         path: `test-results/${info.project.name}-${character}-${mode}-prepared-return.png`,
       });

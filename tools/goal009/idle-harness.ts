@@ -19,6 +19,8 @@ const light = new pc.Entity();
 light.addComponent('light', { type: 'directional', intensity: 1.2 });
 light.setEulerAngles(40, 30, 0);
 app.root.addChild(light);
+let renderedFrames = 0;
+app.on('postrender', () => renderedFrames++);
 app.start();
 app.autoRender = false;
 let renderer: AthleteRenderer;
@@ -208,6 +210,10 @@ const api = {
   },
   render() {
     app.renderNextFrame = true;
+    return renderedFrames;
+  },
+  renderedFrames() {
+    return renderedFrames;
   },
 };
 (window as any).idleHarness = api;

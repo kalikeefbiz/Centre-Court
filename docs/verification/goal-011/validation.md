@@ -39,9 +39,18 @@ early/late miss scenarios to both Off and Standard (same 219-test suite count).
 
 Native evidence: `native-anticipation.json` records all five athletes in both modes
 and engines, layer times, 78 ms committed leads, grip state and observed contact
-path error. The five `*-webkit-preparation.png` files show the actual native
-preparation before input. `consecutive-points.json` retains compact real-rule
+path error. The five `*-chromium-preparation.png` files show the native preparation
+before input on Chromium. WebKit offscreen-harness images contained only the
+background even after render/compositor waits and were excluded; they are not
+visual acceptance evidence. WebKit native pose/grip assertions and production
+browser regression coverage are recorded separately from rendered image proof. `consecutive-points.json` retains compact real-rule
 three-point flows for both engines. The three-point browser test has a scoped
 180 s deadline because it now includes three full flights and software-GL loading
 (the Chromium run took approximately 120 s); assertions and simulation timing
 are unchanged.
+
+Capture follow-up: all five WebKit native cases passed again (26.7 s); an
+additional Kira capture check passed. Those checks did not resolve the empty
+harness screenshots, so only Chromium screenshots are retained. Capture now
+waits for a native postrender event and two compositor frames. No production
+code, assets, contact behavior or physics changed in this follow-up.
