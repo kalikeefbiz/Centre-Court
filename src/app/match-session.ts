@@ -1,3 +1,4 @@
+import { type AssistanceMode } from '../core/anticipation';
 import { Match, FixedClock, type Controls } from '../core/match';
 import type { CharacterId } from '../core/roster';
 import type { Difficulty } from '../core/ai';
@@ -8,6 +9,7 @@ export interface MatchConfig {
   racket: string;
   rivalRacket: string;
   difficulty: Difficulty;
+  assistance?: AssistanceMode;
   length: MatchLength;
   practice: boolean;
   circuit: boolean;
@@ -27,6 +29,7 @@ export class MatchSession {
     private cleanup: () => void,
   ) {
     MatchSession.active++;
+    this.match.assistanceMode = config.assistance ?? 'standard';
     this.match.characters = [config.player, config.rival];
     this.match.start(config.difficulty, config.length, config.practice);
   }
@@ -57,6 +60,7 @@ export class MatchSession {
     this.disposed = true;
     MatchSession.active--;
     this.clock.reset();
+    this.match.menu();
     this.cleanup();
   }
 }

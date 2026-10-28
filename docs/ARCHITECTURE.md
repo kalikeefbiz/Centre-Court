@@ -103,3 +103,8 @@ its menu preview has an independent cosmetic update, while the arena is lazily
 cached on a separate rendering layer. `src/app/assets.ts` owns deduplicated,
 reference-counted containers with a bounded character cache. See
 [GOAL-010](GOAL-010.md) for transition/cleanup rules and measured validation.
+
+GOAL 011 adds a Match-owned `HumanAnticipation` controller, read only by the human
+rally renderer, plus a snapshotted/persisted Footwork preference. It owns no
+listeners/timers/entities and clears on pause/point/menu/session disposal.
+`release.json` now labels GOAL-011. See [GOAL-011](GOAL-011.md).

@@ -67,6 +67,7 @@ export type AIState =
 export interface Interception {
   target: Vec;
   contact: Vec | null;
+  contactVelocity?: Vec | null;
   time: number;
   bounce: Vec | null;
   bounceTime: number | null;
@@ -117,6 +118,7 @@ export function planInterception(
     backwardSpeed: (speed * HUMAN_LOCOMOTION.backwardSpeed) / HUMAN_LOCOMOTION.forwardSpeed,
     acceleration,
   },
+  lateralStance = 0,
 ): Interception {
   scratch.copyFrom(ball);
   let count = bounces,
@@ -124,6 +126,7 @@ export function planInterception(
     bounceTime: number | null = null;
   let best: Vec | null = null,
     contact: Vec | null = null,
+    contactVelocity: Vec | null = null,
     contactTime = 0,
     bestCost = Infinity;
   let fallback: Vec | null = null,
@@ -157,7 +160,7 @@ export function planInterception(
     if (p.z >= -0.15 || (serve && count === 0) || (count === 0 && player.z < -7 && p.y < 1.9))
       continue;
     // Stand behind the contact, leaving the same forward racket window as the human.
-    target.x = p.x;
+    target.x = p.x - Math.sign(p.x - player.x) * lateralStance;
     target.z = p.z - 0.55;
     hitContext.bounces = count;
     if (!legal(target) || !inContactZone(hitContext)) continue;
@@ -196,12 +199,15 @@ export function planInterception(
       Object.assign(best, target);
       contact ??= vec();
       Object.assign(contact, p);
+      contactVelocity ??= vec();
+      Object.assign(contactVelocity, scratch.velocity);
       contactTime = time;
     }
   }
   return {
     target: best ?? fallback ?? vec(clamp(ball.position.x, -4, 4), 0, -11),
     contact,
+    contactVelocity,
     time: contactTime,
     bounce,
     bounceTime,

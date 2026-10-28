@@ -1,3 +1,4 @@
+import { assistanceMode } from './core/anticipation';
 import '@fontsource/barlow/latin-400.css';
 import '@fontsource/barlow/latin-600.css';
 import '@fontsource/barlow/latin-800.css';
@@ -170,6 +171,19 @@ lifecycle = new Lifecycle<MatchSession, MatchConfig>({
     stadiumAudio.stop();
   },
 });
+const assistanceSelect = $<HTMLSelectElement>('assistance');
+try {
+  assistanceSelect.value = assistanceMode(localStorage.getItem('centre-court-footwork-v1'));
+} catch {
+  /* Private storage may be unavailable. */
+}
+assistanceSelect.onchange = () => {
+  try {
+    localStorage.setItem('centre-court-footwork-v1', assistanceMode(assistanceSelect.value));
+  } catch {
+    /* Session preference remains usable. */
+  }
+};
 const start = async (practice: boolean, rematch = false) => {
   if (!['MENU', 'MATCH', 'RESULTS'].includes(lifecycle.state)) return;
   if (scene.kira.status !== 'ready') return;
@@ -202,6 +216,7 @@ const start = async (practice: boolean, rematch = false) => {
     racket: equipment.selected(selected),
     rivalRacket: equipment.selected(rival),
     difficulty,
+    assistance: assistanceMode(assistanceSelect.value),
     length,
     practice,
     circuit,
@@ -653,6 +668,12 @@ if (
             pointers: input.pointers,
             held: input.held,
             provisional: input.gesture.provisional,
+          },
+          anticipation: match.anticipation.snapshot(),
+          accessibility: {
+            ...match.accessibility,
+            misses: { ...match.accessibility.misses },
+            mode: match.assistanceMode,
           },
           ai: match.ai.snapshot(match.difficulty, match.initialSeed),
           lastHitter: match.lastHitter,

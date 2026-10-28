@@ -436,7 +436,9 @@ export class AthleteRenderer {
     if (this.status !== 'ready') return;
     const athlete = match.players[this.side],
       m = athlete.locomotion,
-      action = athlete.action;
+      action = athlete.action,
+      anticipation =
+        this.side === 0 && match.phase === 'rally' ? match.anticipation.preparation : null;
     this.root.setPosition(athlete.position.x, 0, athlete.position.z);
     if (match.phase === 'paused' || match.phase === 'result') return;
     const serving = match.phase === 'serve' && match.server === this.side;
@@ -444,7 +446,7 @@ export class AthleteRenderer {
     // Reuse a verified volley pose for cosmetic inspection, without moving the
     // authoritative player or changing any match/animation contact timing.
     const presenting = presentationPose && match.phase === 'menu';
-    const preparing = charging || serving || !!action || presenting;
+    const preparing = charging || serving || !!action || !!anticipation || presenting;
     const sideSprint = movementWeights(m, this.movementBlend, preparing);
     for (let i = 0; i < BLEND_CHANNELS.length; i++)
       this.model.anim!.setFloat('weight' + BLEND_CHANNELS[i], clamp(this.movementBlend[i], 0, 1));
@@ -461,21 +463,26 @@ export class AthleteRenderer {
       serving,
     });
     // Idle/locomotion belongs exclusively to Base. Only explicit charging,
-    // serve setup, an authoritative action, or cosmetic inspection owns a shot.
-    const stroke = action?.stroke ?? (presenting ? 'ForehandVolley' : preparing ? context : null);
+    // serve setup, rally anticipation, an authoritative action, or inspection owns a shot.
+    const stroke =
+      action?.stroke ??
+      anticipation?.stroke ??
+      (presenting ? 'ForehandVolley' : preparing ? context : null);
     const fullBody = presenting || serving || action?.stroke === 'Serve';
     const body = this.model.anim!.findAnimationLayer('FullBody')!;
     const selected = fullBody ? body : upper;
     if (stroke) {
       const previous = fullBody ? this.fullBodyState : this.upperState;
-      if (stroke !== previous || (action && action.id !== this.actionId)) {
+      const motionId = action?.id ?? anticipation?.id ?? -1;
+      if (stroke !== previous || (motionId !== -1 && motionId !== this.actionId)) {
         selected.transition(stroke, 0.055);
         if (fullBody) this.fullBodyState = stroke;
         else this.upperState = stroke;
       }
-      this.actionId = action?.id ?? -1;
+      this.actionId = motionId;
       selected.activeStateCurrentTime =
         action?.clipTime ??
+        anticipation?.clipTime ??
         (presenting ? ANIMATIONS.ForehandVolley.prepare : serving ? 0 : ANIMATIONS[stroke].prepare);
       this.state = stroke;
     } else this.actionId = -1;

@@ -78,3 +78,13 @@ default is 2.25× while the collision radius remains regulation-sized.
 Changes crossing these areas require a combined plan and a single owner for
 shared files. Historical goal evidence and outstanding manual checks are indexed
 in [GOAL_HISTORY](GOAL_HISTORY.md) and [PROJECT_BASELINE](PROJECT_BASELINE.md).
+
+## GOAL 011 human preparation and assistance
+
+Human rally preparation now lives in `core/anticipation.ts`, separate from
+committed strokes. It reuses deterministic interception and native clip markers;
+compatible input continues the prepared source time with a 78–130 ms lead.
+Off/Light/Standard steering requests go through the unchanged locomotion integrator;
+Standard is the persisted menu default. AI policy, physics, gestures and contact
+limits remain unchanged. See [GOAL-011](GOAL-011.md) for policy constants, lifecycle,
+measured benefits, low-wide-ball/controller trade-offs and acceptance limits.

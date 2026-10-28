@@ -2,7 +2,9 @@
 // an application entry or part of the production bundle.
 import * as pc from 'playcanvas';
 import { AthleteRenderer } from '../../src/render/kira';
-import { Match } from '../../src/core/match';
+import { inContactZone } from '../../src/core/hitting';
+import { type AssistanceMode } from '../../src/core/anticipation';
+import { idleControls, FIXED_DT, Match } from '../../src/core/match';
 import { createStroke, advanceStroke } from '../../src/core/stroke';
 import { createLocomotion } from '../../src/core/locomotion';
 import { vec } from '../../src/core/court';
@@ -65,6 +67,13 @@ const api = {
     return {
       ...renderer.snapshot(),
       phase: match.phase,
+      anticipation: match.anticipation.snapshot(),
+      action: match.players[0].action ? { ...match.players[0].action } : null,
+      contacts: match.contacts,
+      lastHitter: match.lastHitter,
+      totalPoints: match.totalPoints,
+      position: { ...match.players[0].position },
+      accessibility: { ...match.accessibility },
       transitions: [...transitions],
       layers: model.anim!.layers.map((l) => ({
         name: l.name,
@@ -81,6 +90,46 @@ const api = {
         }),
       ),
     };
+  },
+  incoming(mode: AssistanceMode = 'standard') {
+    match.start('easy', 'short', true, 11011);
+    renderer.resetSession();
+    match.assistanceMode = mode;
+    match.phase = 'rally';
+    match.lastHitter = 1;
+    match.contacts = 1;
+    match.repositionPlayer(0, vec(-0.3, 0, 11.5));
+    match.ball.position = vec(0, 1.3, -9);
+    match.ball.launch(vec(0, 0.0335, 8.8), 'drive', 0.5);
+    return api.sample();
+  },
+  rallyStep(autoHit = false, count = 1) {
+    for (let i = 0; i < count; i++) {
+      const c = idleControls();
+      if (autoHit && match.lastHitter === 1 && !match.players[0].action) {
+        const future = match.ball.clone();
+        let bounces = match.bounces;
+        for (let j = 0; j < 9; j++)
+          for (const e of future.step(FIXED_DT)) if (e.type === 'bounce') bounces++;
+        if (
+          bounces <= 1 &&
+          inContactZone({
+            player: match.players[0].position,
+            ball: future.position,
+            velocity: future.velocity,
+            side: 0,
+            bounces,
+            intent: 'drive',
+          })
+        ) {
+          c.release = true;
+          c.power = 0.65;
+        }
+      }
+      match.tick(FIXED_DT, c);
+      renderer.update(match, FIXED_DT, false);
+    }
+    return api.sample();
   },
   phase(phase: any, server = renderer.side) {
     match.phase = phase;

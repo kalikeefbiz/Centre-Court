@@ -1,3 +1,10 @@
+import {
+  HumanAnticipation,
+  steerInterception,
+  type AssistanceMode,
+  type ReturnMiss,
+} from './anticipation';
+import { ANIMATIONS } from '../render/animation-registry';
 import { ROSTER, type CharacterId } from './roster';
 import { METER, heatLevel, signatureShot } from './signature';
 import { selectStroke, inContactZone, shotTarget, CONTACT, type Stroke } from './hitting';
@@ -39,7 +46,6 @@ import {
   requestMovement,
   stepLocomotion,
   HUMAN_LOCOMOTION,
-  FOOTWORK_ASSIST,
   PLAYER_BOUNDS,
   type LocomotionState,
   type LocomotionConfig,
@@ -91,6 +97,21 @@ export interface MatchEvent {
   stroke?: string;
 }
 export class Match {
+  assistanceMode: AssistanceMode = 'standard';
+  anticipation = new HumanAnticipation();
+  accessibility = {
+    lastMiss: null as ReturnMiss | null,
+    misses: {} as Partial<Record<ReturnMiss, number>>,
+    assistedTicks: 0,
+    movedAway: false,
+    input: false,
+    reached: false,
+  };
+  private miss(reason: ReturnMiss) {
+    if (this.accessibility.lastMiss) return;
+    this.accessibility.lastMiss = reason;
+    this.accessibility.misses[reason] = (this.accessibility.misses[reason] ?? 0) + 1;
+  }
   characters: [CharacterId, CharacterId] = ['kira', 'rico'];
   meters = [0, 0];
   armed = [false, false];
@@ -182,6 +203,15 @@ export class Match {
     };
   }
   start(difficulty: Difficulty, length: MatchLength, practice = false, seed = 314159) {
+    this.anticipation.reset();
+    this.accessibility = {
+      lastMiss: null,
+      misses: {},
+      assistedTicks: 0,
+      movedAway: false,
+      input: false,
+      reached: false,
+    };
     this.meters = [0, 0];
     this.armed = [false, false];
     this.events = [];
@@ -205,6 +235,9 @@ export class Match {
     this.noticeId++;
   }
   private prepareServe() {
+    this.anticipation.reset();
+    this.accessibility.lastMiss = null;
+    this.accessibility.movedAway = this.accessibility.input = this.accessibility.reached = false;
     this.resetGestureInput();
     this.phase = 'serve';
     this.returns = 0;
@@ -242,6 +275,7 @@ export class Match {
   }
   pause() {
     if (this.phase === 'rally' || this.phase === 'serve' || this.phase === 'pointOver') {
+      this.anticipation.reset();
       this.resetGestureInput();
       this.beforePause = this.phase;
       this.phase = 'paused';
@@ -252,6 +286,8 @@ export class Match {
     if (this.phase === 'paused') this.phase = this.beforePause;
   }
   menu() {
+    this.anticipation.reset();
+    this.resetGestureInput();
     this.phase = 'menu';
     this.repositionPlayer(0, vec(0, 0, 11));
     this.repositionPlayer(1, vec(0, 0, -11));
@@ -261,6 +297,7 @@ export class Match {
   }
   /** Intentional placement (serve setup/developer fixtures), never gameplay travel. */
   repositionPlayer(side: Side, position: Vec) {
+    if (side === 0) this.anticipation.reset();
     this.players[side].action = null;
     this.players[side].contact = null;
     this.players[side].swing = 0;
@@ -268,6 +305,7 @@ export class Match {
     resetLocomotion(this.players[side].locomotion);
   }
   private clearMovement() {
+    this.anticipation.reset();
     this.resetGestureInput();
     for (const p of this.players) resetLocomotion(p.locomotion);
   }
@@ -418,6 +456,14 @@ export class Match {
   ) {
     const athlete = this.players[side];
     if (athlete.action || this.lastHitter === side || this.phase !== 'rally') return false;
+    const prep = side === 0 ? this.anticipation.preparation : null;
+    const candidate = intent === 'drive' ? prep : null;
+    const originalLead = lead;
+    if (candidate && this.swingCommitted) {
+      const a = ANIMATIONS[candidate.stroke];
+      const progress = clamp((candidate.clipTime - a.prepare) / (a.contact - a.prepare), 0, 0.4);
+      lead = Math.max(0.075, lead * (1 - progress));
+    }
     if (
       Math.hypot(
         this.ball.position.x - athlete.position.x,
@@ -457,9 +503,20 @@ export class Match {
       intent,
     };
     if (!inContactZone(c)) return false;
-    const stroke = selectStroke(c);
+    const selectedStroke = selectStroke(c);
+    const compatible =
+      candidate &&
+      (candidate.stroke === selectedStroke ||
+        (Math.abs(future.position.x - projected.x) < 0.45 &&
+          (((candidate.stroke === 'Forehand' || candidate.stroke === 'Backhand') &&
+            (selectedStroke === 'Forehand' || selectedStroke === 'Backhand')) ||
+            ((candidate.stroke === 'ForehandVolley' || candidate.stroke === 'BackhandVolley') &&
+              (selectedStroke === 'ForehandVolley' || selectedStroke === 'BackhandVolley')))));
+    if (candidate && !compatible && lead !== originalLead)
+      return this.beginStrokeWithoutPreparation(side, intent, power, aim, depth, originalLead);
+    const stroke = compatible ? candidate.stroke : selectedStroke;
     const action = createStroke(
-      ++this.actionSequence,
+      compatible ? candidate.id : ++this.actionSequence,
       stroke,
       athlete.position,
       side,
@@ -470,12 +527,25 @@ export class Match {
       intent,
       athlete.locomotion.velocity,
       lead,
+      compatible ? candidate.clipTime : undefined,
     );
+    if (side === 0) this.anticipation.preparation = null;
     racketPosition(action, athlete.position, side, action.racket);
     Object.assign(action.previousRacket, action.racket);
     athlete.action = action;
     athlete.stroke = stroke.toUpperCase();
     return true;
+  }
+  private beginStrokeWithoutPreparation(
+    side: Side,
+    intent: Controls['shot'],
+    power: number,
+    aim: number,
+    depth: number,
+    lead: number,
+  ): boolean {
+    this.anticipation.preparation = null;
+    return this.beginStroke(side, intent, power, aim, depth, lead);
   }
   private tickStrokes(dt: number) {
     for (const side of ATHLETE_SIDES) {
@@ -519,8 +589,29 @@ export class Match {
         action.age > action.contactAt + STRIKE.window
       ) {
         action.missed = true;
-        if (side === 0) {
-          this.timing = 'MISSED · PREPARE EARLIER OR MOVE INTO REACH';
+        if (side === 0 && this.phase === 'rally') {
+          const p = athlete.position,
+            b = this.ball.position;
+          const current = selectStroke({
+            player: p,
+            ball: b,
+            velocity: this.ball.velocity,
+            side: 0,
+            bounces: this.bounces,
+            intent: action.intent,
+          });
+          const wrongFamily =
+            action.prepared && (current === 'Smash') !== (action.stroke === 'Smash');
+          this.miss(
+            wrongFamily
+              ? 'incompatible-preparation'
+              : this.canHit(0, action.intent)
+                ? 'racket-path'
+                : Math.hypot(p.x - b.x, p.z - b.z) > CONTACT.ground.radius
+                  ? 'too-far'
+                  : 'contact-timing',
+          );
+          this.timing = 'MISSED · CHECK TIMING AND REACH';
           this.feedbackTime = 1.3;
         }
       }
@@ -547,6 +638,16 @@ export class Match {
   }
   private endPoint(winner: Side, reason: string) {
     if (this.phase !== 'rally') return; // Point resolution is idempotent.
+    if (winner === 1 && this.lastHitter === 1)
+      this.miss(
+        this.accessibility.movedAway
+          ? 'moved-away'
+          : this.accessibility.input
+            ? 'late-input'
+            : this.accessibility.reached
+              ? 'late-input'
+              : 'too-far',
+      );
     this.clearMovement();
     this.ai.conclude();
     this.pointWinner = winner;
@@ -709,6 +810,11 @@ export class Match {
     );
     this.bounces = 0;
     this.lastHitter = side;
+    this.anticipation.reset();
+    if (side === 1) {
+      this.accessibility.lastMiss = null;
+      this.accessibility.movedAway = this.accessibility.input = this.accessibility.reached = false;
+    }
     this.rallyTime = 0;
     this.contacts++;
     const previousHeat = heatLevel(this.returns);
@@ -782,27 +888,31 @@ export class Match {
     }
     this.rallyTime += dt;
 
-    // Limited X-only footwork assistance; no Z movement or automatic shots.
     const b = this.ball.position,
       user = this.players[0].position;
+    this.anticipation.update(
+      dt,
+      this.ball,
+      user,
+      this.players[0].locomotion.velocity,
+      this.contacts,
+      this.bounces,
+      this.serveFlight,
+      this.lastHitter === 1,
+      !this.players[0].action,
+    );
+    if (this.lastHitter === 1 && this.canHit(0)) this.accessibility.reached = true;
+    const prediction = this.anticipation.prediction;
     if (
-      Math.hypot(c.x, c.z) < FOOTWORK_ASSIST.inputThreshold &&
-      this.lastHitter === 1 &&
-      b.z > 4 &&
-      Math.abs(b.z - user.z) < 3 &&
-      Math.abs(b.x - user.x) < 3.2
-    ) {
-      requestMovement(
-        this.players[0].locomotion,
-        clamp((b.x - user.x) * FOOTWORK_ASSIST.gain, -1, 1),
-        0,
-        0,
-        HUMAN_LOCOMOTION,
-        FOOTWORK_ASSIST.speed / HUMAN_LOCOMOTION.lateralSpeed,
-      );
-    } else {
-      requestMovement(this.players[0].locomotion, c.x, c.z, 0, HUMAN_LOCOMOTION);
-    }
+      prediction &&
+      Math.hypot(c.x, c.z) >= 0.1 &&
+      c.x * (prediction.target.x - user.x) + c.z * (prediction.target.z - user.z) < -0.1
+    )
+      this.accessibility.movedAway = true;
+    if (
+      steerInterception(this.players[0].locomotion, user, c.x, c.z, prediction, this.assistanceMode)
+    )
+      this.accessibility.assistedTicks++;
     this.move(0, HUMAN_LOCOMOTION, dt);
     if (c.release) {
       this.swingGestureId = 0;
@@ -816,6 +926,7 @@ export class Match {
       this.players[0].swing = 0.3;
     }
     if (this.swingWindow > 0) {
+      this.accessibility.input = true;
       if (
         this.beginStroke(
           0,
@@ -835,7 +946,14 @@ export class Match {
         this.swingWindow -= dt;
         this.swingDelay = Math.max(STRIKE.lead, this.swingDelay - dt);
         if (this.swingWindow <= 0) {
-          this.timing = 'MISSED · PREPARE EARLIER OR MOVE INTO REACH';
+          this.miss(
+            this.accessibility.movedAway
+              ? 'moved-away'
+              : this.accessibility.reached
+                ? 'late-input'
+                : 'too-far',
+          );
+          this.timing = 'MISSED · CHECK TIMING AND REACH';
           this.feedbackTime = 1.2;
         }
       }
@@ -911,6 +1029,7 @@ export class Match {
         event.type === 'bounce' ? Math.min(1, Math.abs(this.ball.velocity.y) / 7) : 0.5,
       );
       if (this.lastHitter === 0) this.ai.invalidatePrediction();
+      else this.anticipation.invalidate();
       if (event.type === 'net' && !event.grazing) {
         if (this.serveFlight) this.serveFault('NET FAULT');
         else this.endPoint(other(this.lastHitter), 'NET');

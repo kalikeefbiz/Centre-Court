@@ -40,4 +40,6 @@ it('reproducible scripted-player comparison and decision budget', () => {
       ),
     );
   }
-}, 30000);
+  // Two deterministic interception controllers now run in each of 90 long matches.
+  // Keep the per-decision budgets above; allow the bounded aggregate workload on CI.
+}, 90000);

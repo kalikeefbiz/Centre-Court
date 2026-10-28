@@ -1,0 +1,2932 @@
+[
+  {
+    "character": "zuri",
+    "project": "desktop-chromium",
+    "evidence": [
+      {
+        "mode": "standard",
+        "prepared": {
+          "stroke": "Forehand",
+          "clipTime": 0.7733333333333333,
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 0.975009999999999,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7733333333333333,
+              "weight": 0.9999999999999986,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ]
+        },
+        "committed": {
+          "stroke": "Forehand",
+          "clipStart": 0.7733333333333333,
+          "lead": 0.078,
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 0.9833433333333323,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7904273504273505,
+              "weight": 0.9999999999999989,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ]
+        },
+        "contactError": 0.09282978697890451,
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "8c5cf87b00dff0d1de8609c2831f321953808633089f4ae35b92929a99fc3429",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.8589069224591818
+        },
+        "recovery": {
+          "phase": "menu",
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 17.798992503663786,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7733333333333333,
+              "weight": 0,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ],
+          "totalPoints": 1
+        }
+      },
+      {
+        "mode": "off",
+        "prepared": {
+          "stroke": "Forehand",
+          "clipTime": 0.7733333333333333,
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 18.77399250366373,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7733333333333333,
+              "weight": 0.9999999999999986,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ]
+        },
+        "committed": {
+          "stroke": "Forehand",
+          "clipStart": 0.7733333333333333,
+          "lead": 0.078,
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 18.782325836997064,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7904273504273505,
+              "weight": 0.9999999999999989,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ]
+        },
+        "contactError": 0.09313006801031722,
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "8c5cf87b00dff0d1de8609c2831f321953808633089f4ae35b92929a99fc3429",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.8594947548098618
+        },
+        "recovery": {
+          "phase": "menu",
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 35.848992503662764,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7733333333333333,
+              "weight": 0,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ],
+          "totalPoints": 1
+        }
+      }
+    ],
+    "errors": []
+  },
+  {
+    "character": "rico",
+    "project": "desktop-chromium",
+    "evidence": [
+      {
+        "mode": "standard",
+        "prepared": {
+          "stroke": "Forehand",
+          "clipTime": 0.7733333333333333,
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 0.975009999999999,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7733333333333333,
+              "weight": 0.9999999999999986,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ]
+        },
+        "committed": {
+          "stroke": "Forehand",
+          "clipStart": 0.7733333333333333,
+          "lead": 0.078,
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 0.9833433333333323,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7904273504273505,
+              "weight": 0.9999999999999989,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ]
+        },
+        "contactError": 0.08103329523730264,
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "9142d4f3cfb010d00d59e63191d4bbf411823f6df87412d1766f5b514e426a6a",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.9533094409692097
+        },
+        "recovery": {
+          "phase": "menu",
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 17.798992503663786,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7733333333333333,
+              "weight": 0,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ],
+          "totalPoints": 1
+        }
+      },
+      {
+        "mode": "off",
+        "prepared": {
+          "stroke": "Forehand",
+          "clipTime": 0.7733333333333333,
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 18.77399250366373,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7733333333333333,
+              "weight": 0.9999999999999986,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ]
+        },
+        "committed": {
+          "stroke": "Forehand",
+          "clipStart": 0.7733333333333333,
+          "lead": 0.078,
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 18.782325836997064,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7904273504273505,
+              "weight": 0.9999999999999989,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ]
+        },
+        "contactError": 0.08084899180353594,
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "9142d4f3cfb010d00d59e63191d4bbf411823f6df87412d1766f5b514e426a6a",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.9536125328140223
+        },
+        "recovery": {
+          "phase": "menu",
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 35.848992503662764,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7733333333333333,
+              "weight": 0,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ],
+          "totalPoints": 1
+        }
+      }
+    ],
+    "errors": []
+  },
+  {
+    "character": "nova",
+    "project": "desktop-chromium",
+    "evidence": [
+      {
+        "mode": "standard",
+        "prepared": {
+          "stroke": "Forehand",
+          "clipTime": 0.7733333333333333,
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 0.975009999999999,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7733333333333333,
+              "weight": 0.9999999999999986,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ]
+        },
+        "committed": {
+          "stroke": "Forehand",
+          "clipStart": 0.7733333333333333,
+          "lead": 0.078,
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 0.9833433333333323,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7904273504273505,
+              "weight": 0.9999999999999989,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ]
+        },
+        "contactError": 0.01060279071379642,
+        "grip": {
+          "ready": true,
+          "correctedVertices": 4157,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 1880,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "fb904e67374b70bff283809e72f33fb68ab654e9c3502b8dd3391813ada7ceb8",
+          "bindFit": {
+            "translation": [
+              0.065,
+              0.004,
+              0
+            ],
+            "fingerScale": [
+              1,
+              0.7,
+              0.9
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.9913340099058178
+        },
+        "recovery": {
+          "phase": "menu",
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 17.798992503663786,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7733333333333333,
+              "weight": 0,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ],
+          "totalPoints": 1
+        }
+      },
+      {
+        "mode": "off",
+        "prepared": {
+          "stroke": "Forehand",
+          "clipTime": 0.7733333333333333,
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 18.77399250366373,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7733333333333333,
+              "weight": 0.9999999999999986,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ]
+        },
+        "committed": {
+          "stroke": "Forehand",
+          "clipStart": 0.7733333333333333,
+          "lead": 0.078,
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 18.782325836997064,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7904273504273505,
+              "weight": 0.9999999999999989,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ]
+        },
+        "contactError": 0.008292601646925983,
+        "grip": {
+          "ready": true,
+          "correctedVertices": 4157,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 1880,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "fb904e67374b70bff283809e72f33fb68ab654e9c3502b8dd3391813ada7ceb8",
+          "bindFit": {
+            "translation": [
+              0.065,
+              0.004,
+              0
+            ],
+            "fingerScale": [
+              1,
+              0.7,
+              0.9
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.9913729646401632
+        },
+        "recovery": {
+          "phase": "menu",
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 35.848992503662764,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7733333333333333,
+              "weight": 0,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ],
+          "totalPoints": 1
+        }
+      }
+    ],
+    "errors": []
+  },
+  {
+    "character": "kira",
+    "project": "desktop-chromium",
+    "evidence": [
+      {
+        "mode": "standard",
+        "prepared": {
+          "stroke": "Forehand",
+          "clipTime": 0.7733333333333333,
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 0.975009999999999,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7733333333333333,
+              "weight": 0.9999999999999986,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ]
+        },
+        "committed": {
+          "stroke": "Forehand",
+          "clipStart": 0.7733333333333333,
+          "lead": 0.078,
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 0.9833433333333323,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7904273504273505,
+              "weight": 0.9999999999999989,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ]
+        },
+        "contactError": 0.09329488995721458,
+        "grip": {
+          "ready": true,
+          "correctedVertices": 2115,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "f55979d3991fc1a2647df1fc63be4751c91a743f7498d37726362ae3468fd2d9",
+          "bindFit": {
+            "translation": [
+              0.018,
+              -0.012,
+              0.08
+            ],
+            "fingerScale": [
+              1,
+              1.03,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.9104004786625254
+        },
+        "recovery": {
+          "phase": "menu",
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 17.798992503663786,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7733333333333333,
+              "weight": 0,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ],
+          "totalPoints": 1
+        }
+      },
+      {
+        "mode": "off",
+        "prepared": {
+          "stroke": "Forehand",
+          "clipTime": 0.7733333333333333,
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 18.77399250366373,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7733333333333333,
+              "weight": 0.9999999999999986,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ]
+        },
+        "committed": {
+          "stroke": "Forehand",
+          "clipStart": 0.7733333333333333,
+          "lead": 0.078,
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 18.782325836997064,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7904273504273505,
+              "weight": 0.9999999999999989,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ]
+        },
+        "contactError": 0.09571620362031041,
+        "grip": {
+          "ready": true,
+          "correctedVertices": 2115,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "f55979d3991fc1a2647df1fc63be4751c91a743f7498d37726362ae3468fd2d9",
+          "bindFit": {
+            "translation": [
+              0.018,
+              -0.012,
+              0.08
+            ],
+            "fingerScale": [
+              1,
+              1.03,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.9104392633044386
+        },
+        "recovery": {
+          "phase": "menu",
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 35.848992503662764,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7733333333333333,
+              "weight": 0,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ],
+          "totalPoints": 1
+        }
+      }
+    ],
+    "errors": []
+  },
+  {
+    "character": "dante",
+    "project": "desktop-chromium",
+    "evidence": [
+      {
+        "mode": "standard",
+        "prepared": {
+          "stroke": "Forehand",
+          "clipTime": 0.7733333333333333,
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 0.975009999999999,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7733333333333333,
+              "weight": 0.9999999999999986,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ]
+        },
+        "committed": {
+          "stroke": "Forehand",
+          "clipStart": 0.7733333333333333,
+          "lead": 0.078,
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 0.9833433333333323,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7904273504273505,
+              "weight": 0.9999999999999989,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ]
+        },
+        "contactError": 0.08049746793867313,
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "806ab3b44a7201902d5ec84aa7d059aba335db5275bbd4088c605b453d9e2edb",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.929231156439247
+        },
+        "recovery": {
+          "phase": "menu",
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 17.798992503663786,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7733333333333333,
+              "weight": 0,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ],
+          "totalPoints": 1
+        }
+      },
+      {
+        "mode": "off",
+        "prepared": {
+          "stroke": "Forehand",
+          "clipTime": 0.7733333333333333,
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 18.77399250366373,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7733333333333333,
+              "weight": 0.9999999999999986,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ]
+        },
+        "committed": {
+          "stroke": "Forehand",
+          "clipStart": 0.7733333333333333,
+          "lead": 0.078,
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 18.782325836997064,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7904273504273505,
+              "weight": 0.9999999999999989,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ]
+        },
+        "contactError": 0.0809918809476257,
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "806ab3b44a7201902d5ec84aa7d059aba335db5275bbd4088c605b453d9e2edb",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.9300966554240577
+        },
+        "recovery": {
+          "phase": "menu",
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 35.848992503662764,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7733333333333333,
+              "weight": 0,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ],
+          "totalPoints": 1
+        }
+      }
+    ],
+    "errors": []
+  },
+  {
+    "character": "kira",
+    "project": "mobile-webkit",
+    "evidence": [
+      {
+        "mode": "standard",
+        "prepared": {
+          "stroke": "Forehand",
+          "clipTime": 0.7733333333333333,
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 0.975009999999999,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7733333333333333,
+              "weight": 0.9999999999999986,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ]
+        },
+        "committed": {
+          "stroke": "Forehand",
+          "clipStart": 0.7733333333333333,
+          "lead": 0.078,
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 0.9833433333333323,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7904273504273505,
+              "weight": 0.9999999999999989,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ]
+        },
+        "contactError": 0.09329488995721458,
+        "grip": {
+          "ready": true,
+          "correctedVertices": 2115,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "f55979d3991fc1a2647df1fc63be4751c91a743f7498d37726362ae3468fd2d9",
+          "bindFit": {
+            "translation": [
+              0.018,
+              -0.012,
+              0.08
+            ],
+            "fingerScale": [
+              1,
+              1.03,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.9104004786625254
+        },
+        "recovery": {
+          "phase": "menu",
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 17.798992503663786,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7733333333333333,
+              "weight": 0,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ],
+          "totalPoints": 1
+        }
+      },
+      {
+        "mode": "off",
+        "prepared": {
+          "stroke": "Forehand",
+          "clipTime": 0.7733333333333333,
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 18.77399250366373,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7733333333333333,
+              "weight": 0.9999999999999986,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ]
+        },
+        "committed": {
+          "stroke": "Forehand",
+          "clipStart": 0.7733333333333333,
+          "lead": 0.078,
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 18.782325836997064,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7904273504273505,
+              "weight": 0.9999999999999989,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ]
+        },
+        "contactError": 0.09571620362031041,
+        "grip": {
+          "ready": true,
+          "correctedVertices": 2115,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "f55979d3991fc1a2647df1fc63be4751c91a743f7498d37726362ae3468fd2d9",
+          "bindFit": {
+            "translation": [
+              0.018,
+              -0.012,
+              0.08
+            ],
+            "fingerScale": [
+              1,
+              1.03,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.9104392633044386
+        },
+        "recovery": {
+          "phase": "menu",
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 35.848992503662764,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7733333333333333,
+              "weight": 0,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ],
+          "totalPoints": 1
+        }
+      }
+    ],
+    "errors": []
+  },
+  {
+    "character": "zuri",
+    "project": "mobile-webkit",
+    "evidence": [
+      {
+        "mode": "standard",
+        "prepared": {
+          "stroke": "Forehand",
+          "clipTime": 0.7733333333333333,
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 0.975009999999999,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7733333333333333,
+              "weight": 0.9999999999999986,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ]
+        },
+        "committed": {
+          "stroke": "Forehand",
+          "clipStart": 0.7733333333333333,
+          "lead": 0.078,
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 0.9833433333333323,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7904273504273505,
+              "weight": 0.9999999999999989,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ]
+        },
+        "contactError": 0.09282978697890451,
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "8c5cf87b00dff0d1de8609c2831f321953808633089f4ae35b92929a99fc3429",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.8589069224591818
+        },
+        "recovery": {
+          "phase": "menu",
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 17.798992503663786,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7733333333333333,
+              "weight": 0,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ],
+          "totalPoints": 1
+        }
+      },
+      {
+        "mode": "off",
+        "prepared": {
+          "stroke": "Forehand",
+          "clipTime": 0.7733333333333333,
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 18.77399250366373,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7733333333333333,
+              "weight": 0.9999999999999986,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ]
+        },
+        "committed": {
+          "stroke": "Forehand",
+          "clipStart": 0.7733333333333333,
+          "lead": 0.078,
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 18.782325836997064,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7904273504273505,
+              "weight": 0.9999999999999989,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ]
+        },
+        "contactError": 0.09313006801031722,
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "8c5cf87b00dff0d1de8609c2831f321953808633089f4ae35b92929a99fc3429",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.8594947548098618
+        },
+        "recovery": {
+          "phase": "menu",
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 35.848992503662764,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7733333333333333,
+              "weight": 0,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ],
+          "totalPoints": 1
+        }
+      }
+    ],
+    "errors": []
+  },
+  {
+    "character": "rico",
+    "project": "mobile-webkit",
+    "evidence": [
+      {
+        "mode": "standard",
+        "prepared": {
+          "stroke": "Forehand",
+          "clipTime": 0.7733333333333333,
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 0.975009999999999,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7733333333333333,
+              "weight": 0.9999999999999986,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ]
+        },
+        "committed": {
+          "stroke": "Forehand",
+          "clipStart": 0.7733333333333333,
+          "lead": 0.078,
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 0.9833433333333323,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7904273504273505,
+              "weight": 0.9999999999999989,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ]
+        },
+        "contactError": 0.08103329523730264,
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "9142d4f3cfb010d00d59e63191d4bbf411823f6df87412d1766f5b514e426a6a",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.9533094409692097
+        },
+        "recovery": {
+          "phase": "menu",
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 17.798992503663786,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7733333333333333,
+              "weight": 0,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ],
+          "totalPoints": 1
+        }
+      },
+      {
+        "mode": "off",
+        "prepared": {
+          "stroke": "Forehand",
+          "clipTime": 0.7733333333333333,
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 18.77399250366373,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7733333333333333,
+              "weight": 0.9999999999999986,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ]
+        },
+        "committed": {
+          "stroke": "Forehand",
+          "clipStart": 0.7733333333333333,
+          "lead": 0.078,
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 18.782325836997064,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7904273504273505,
+              "weight": 0.9999999999999989,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ]
+        },
+        "contactError": 0.08084899180353594,
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "9142d4f3cfb010d00d59e63191d4bbf411823f6df87412d1766f5b514e426a6a",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.9536125328140223
+        },
+        "recovery": {
+          "phase": "menu",
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 35.848992503662764,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7733333333333333,
+              "weight": 0,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ],
+          "totalPoints": 1
+        }
+      }
+    ],
+    "errors": []
+  },
+  {
+    "character": "dante",
+    "project": "mobile-webkit",
+    "evidence": [
+      {
+        "mode": "standard",
+        "prepared": {
+          "stroke": "Forehand",
+          "clipTime": 0.7733333333333333,
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 0.975009999999999,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7733333333333333,
+              "weight": 0.9999999999999986,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ]
+        },
+        "committed": {
+          "stroke": "Forehand",
+          "clipStart": 0.7733333333333333,
+          "lead": 0.078,
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 0.9833433333333323,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7904273504273505,
+              "weight": 0.9999999999999989,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ]
+        },
+        "contactError": 0.08049746793867313,
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "806ab3b44a7201902d5ec84aa7d059aba335db5275bbd4088c605b453d9e2edb",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.929231156439247
+        },
+        "recovery": {
+          "phase": "menu",
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 17.798992503663786,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7733333333333333,
+              "weight": 0,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ],
+          "totalPoints": 1
+        }
+      },
+      {
+        "mode": "off",
+        "prepared": {
+          "stroke": "Forehand",
+          "clipTime": 0.7733333333333333,
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 18.77399250366373,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7733333333333333,
+              "weight": 0.9999999999999986,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ]
+        },
+        "committed": {
+          "stroke": "Forehand",
+          "clipStart": 0.7733333333333333,
+          "lead": 0.078,
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 18.782325836997064,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7904273504273505,
+              "weight": 0.9999999999999989,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ]
+        },
+        "contactError": 0.0809918809476257,
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "806ab3b44a7201902d5ec84aa7d059aba335db5275bbd4088c605b453d9e2edb",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.9300966554240577
+        },
+        "recovery": {
+          "phase": "menu",
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 35.848992503662764,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7733333333333333,
+              "weight": 0,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ],
+          "totalPoints": 1
+        }
+      }
+    ],
+    "errors": []
+  },
+  {
+    "character": "nova",
+    "project": "mobile-webkit",
+    "evidence": [
+      {
+        "mode": "standard",
+        "prepared": {
+          "stroke": "Forehand",
+          "clipTime": 0.7733333333333333,
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 0.975009999999999,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7733333333333333,
+              "weight": 0.9999999999999986,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ]
+        },
+        "committed": {
+          "stroke": "Forehand",
+          "clipStart": 0.7733333333333333,
+          "lead": 0.078,
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 0.9833433333333323,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7904273504273505,
+              "weight": 0.9999999999999989,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ]
+        },
+        "contactError": 0.01060279071379642,
+        "grip": {
+          "ready": true,
+          "correctedVertices": 4157,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 1880,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "fb904e67374b70bff283809e72f33fb68ab654e9c3502b8dd3391813ada7ceb8",
+          "bindFit": {
+            "translation": [
+              0.065,
+              0.004,
+              0
+            ],
+            "fingerScale": [
+              1,
+              0.7,
+              0.9
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.9913340099058178
+        },
+        "recovery": {
+          "phase": "menu",
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 17.798992503663786,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7733333333333333,
+              "weight": 0,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ],
+          "totalPoints": 1
+        }
+      },
+      {
+        "mode": "off",
+        "prepared": {
+          "stroke": "Forehand",
+          "clipTime": 0.7733333333333333,
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 18.77399250366373,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7733333333333333,
+              "weight": 0.9999999999999986,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ]
+        },
+        "committed": {
+          "stroke": "Forehand",
+          "clipStart": 0.7733333333333333,
+          "lead": 0.078,
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 18.782325836997064,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7904273504273505,
+              "weight": 0.9999999999999989,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ]
+        },
+        "contactError": 0.008292601646925983,
+        "grip": {
+          "ready": true,
+          "correctedVertices": 4157,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 1880,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "fb904e67374b70bff283809e72f33fb68ab654e9c3502b8dd3391813ada7ceb8",
+          "bindFit": {
+            "translation": [
+              0.065,
+              0.004,
+              0
+            ],
+            "fingerScale": [
+              1,
+              0.7,
+              0.9
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.9913729646401632
+        },
+        "recovery": {
+          "phase": "menu",
+          "layers": [
+            {
+              "name": "Base",
+              "state": "Locomotion",
+              "time": 35.848992503662764,
+              "weight": 1,
+              "mask": null,
+              "transitioning": false
+            },
+            {
+              "name": "Stroke",
+              "state": "Forehand",
+              "time": 0.7733333333333333,
+              "weight": 0,
+              "mask": {
+                "target_character/mixamorig:Hips/mixamorig:Spine": {
+                  "children": true
+                }
+              },
+              "transitioning": false
+            },
+            {
+              "name": "FullBody",
+              "state": "Serve",
+              "time": 0,
+              "weight": 0,
+              "mask": null,
+              "transitioning": false
+            }
+          ],
+          "totalPoints": 1
+        }
+      }
+    ],
+    "errors": []
+  }
+]

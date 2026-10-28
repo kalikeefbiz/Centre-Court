@@ -464,6 +464,8 @@ export class DeveloperTools {
       const pos = (p?: { x: number; z: number } | null) =>
         p ? `${p.x.toFixed(2)}, ${p.z.toFixed(2)}` : '—';
       this.aiReadout.textContent = `AI · ${a.difficulty} · ${a.state}\nBounce ${pos(a.prediction?.bounce)} · ${a.prediction?.bounceTime?.toFixed(2) ?? '—'} s\nIntercept ${pos(a.target)} · ${a.prediction?.reachable ? 'reachable' : 'unconfirmed'}\nRecovery ${pos(a.recovery)}\n${a.tactic?.name ?? 'awaiting shot'} · aim ${a.tactic?.aim.toFixed(2) ?? '—'}\nReaction ${a.reactionDelay.toFixed(2)} s · confidence ${a.confidence.toFixed(2)}\nUtility ${a.tactic?.utility.toFixed(2) ?? '—'} · seed ${a.seed}\nDecisions ${a.averageDecisionMs.toFixed(3)} ms avg`;
+      const human = this.match.anticipation.snapshot();
+      this.aiReadout.textContent += `\nHUMAN · ${this.match.assistanceMode} · ${human.preparation?.stroke ?? 'ready'}\nIntercept ${pos(human.prediction?.target)} · ${human.prediction?.time.toFixed(2) ?? '—'} s\nLast miss ${this.match.accessibility.lastMiss ?? '—'} · ${human.averageDecisionMs.toFixed(3)} ms avg`;
     }
     this.paintAt = now + 250;
     (this.el('dev-inspect') as HTMLButtonElement).disabled = this.scene.kira.status !== 'ready';
@@ -544,6 +546,11 @@ export class DeveloperTools {
         games: [...this.match.score.games],
       },
       aiOverlayVisible: !this.aiReadout.hidden,
+      anticipation: this.match.anticipation.snapshot(),
+      accessibility: {
+        ...this.match.accessibility,
+        misses: { ...this.match.accessibility.misses },
+      },
       ai: this.match.ai.snapshot(this.match.difficulty, this.match.initialSeed),
       inspecting: this.inspecting,
       frozen: this.frozen,

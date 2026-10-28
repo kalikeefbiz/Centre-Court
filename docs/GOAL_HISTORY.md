@@ -39,3 +39,12 @@ and per-athlete cosmetic selection/persistence. Retained all source GLBs, textur
 13 clips, authoritative gameplay and the existing Pages workflow. Final work ran
 as one coordinator after preserving the five specialists' earlier contributions.
 See [GOAL-009](GOAL-009.md) for actual rendered evidence, limits and release checks.
+
+## GOAL 011 — predictive preparation and interception
+
+Based on `6959d67`. Match-owned human anticipation continues compatible native
+stroke clips into player-committed returns; Off/Light/Standard predictive steering
+uses the established locomotion model. Added persisted Footwork preference and
+miss diagnostics while retaining GOAL 009 rigs/grips and GOAL 010 ownership.
+See [GOAL-011](GOAL-011.md) for seeded measurements, explicit trade-offs, regression
+checks, deployment evidence and physical iPhone Safari acceptance still pending.

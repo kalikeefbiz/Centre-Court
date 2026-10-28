@@ -302,17 +302,22 @@ describe('match lifecycle, controls and shared AI integration', () => {
       expect(a.players[0].locomotion).toEqual(b.players[0].locomotion);
     }
   });
-  it('routes the existing X-only footwork assist through the same velocity integrator', () => {
+  it('routes predictive two-dimensional footwork through the shared integrator', () => {
     const m = rally();
     const p = m.players[0];
     m.lastHitter = 1;
-    m.ball.position = vec(p.position.x + 1, 1, p.position.z - 1);
+    m.bounces = 1;
+    m.ball.active = true;
+    m.ball.position = vec(p.position.x + 0.4, 1.4, p.position.z - 3);
+    m.ball.velocity = vec(0, 0, 9);
     const z = p.position.z;
     m.tick(FIXED_DT, idleControls());
     expect(p.locomotion.speed).toBeGreaterThan(0);
     expect(p.locomotion.speed).toBeLessThanOrEqual(CONFIG.lateralAcceleration! * FIXED_DT + 1e-9);
-    expect(p.locomotion.desiredVelocity.x).toBeCloseTo(1.8, 10);
-    expect(p.position.z).toBe(z);
+    expect(
+      Math.hypot(p.locomotion.desiredVelocity.x, p.locomotion.desiredVelocity.z),
+    ).toBeLessThanOrEqual(3.6);
+    expect(p.position.z).not.toBe(z);
   });
   it('clears velocity, desired motion and flags on reposition, new point, restart and menu', () => {
     const m = rally();

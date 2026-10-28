@@ -77,6 +77,8 @@ test('stadium builds locally, preserves dimensions, scales crowd and clears both
 test('native serve, AI return, point score, live display update and next serve', async ({
   page,
 }, info) => {
+  // Three natural points include slow software-WebGL loading and full ball flights.
+  test.setTimeout(180000);
   await page.goto('/?debug');
   await expect(page.locator('#play')).toBeEnabled({ timeout: 45000 });
   await page.locator('#difficulty').selectOption('hard');
@@ -126,6 +128,23 @@ test('native serve, AI return, point score, live display update and next serve',
   );
   expect(continued.stadium.boardUpdates).toBeGreaterThan(initial.stadium.boardUpdates);
   expect(continued.royalBall.collisionRadius).toBe(0.0335);
+  // GOAL 011: consecutive natural points must discard old interception/prep
+  // before the next real serve; no fixture scoring or ball repositioning.
+  for (const point of [2, 3]) {
+    expect((await snap(page)).anticipation.preparation).toBeNull();
+    await page.keyboard.down('Space');
+    await page.waitForTimeout(650);
+    await page.keyboard.up('Space');
+    await expect
+      .poll(async () => (await snap(page)).totalPoints, { timeout: 30000 })
+      .toBeGreaterThanOrEqual(point);
+    await expect.poll(async () => (await snap(page)).phase, { timeout: 15000 }).toBe('serve');
+    const next = await snap(page);
+    expect(next.anticipation.prediction).toBeNull();
+    expect(next.actions[0]).toBeNull();
+    flow.push(next);
+  }
+
   mkdirSync('test-results/stadium', { recursive: true });
   await page.screenshot({ path: `test-results/stadium/${info.project.name}-continued.png` });
   writeFileSync(

@@ -22,6 +22,8 @@ export interface StrokeAction {
   stroke: Stroke;
   age: number;
   clipTime: number;
+  clipStart: number;
+  prepared: boolean;
   contactAt: number;
   rate: number;
   phase: StrokePhase;
@@ -66,6 +68,7 @@ export function createStroke(
   intent: StrokeAction['intent'],
   velocity?: Vec,
   lead: number = STRIKE.lead,
+  clipStart?: number,
 ): StrokeAction {
   const a = ANIMATIONS[stroke];
   const serve = stroke === 'Serve',
@@ -85,9 +88,11 @@ export function createStroke(
     id,
     stroke,
     age: 0,
-    clipTime: serve ? 0 : a.prepare,
+    clipTime: clipStart ?? (serve ? 0 : a.prepare),
+    clipStart: clipStart ?? (serve ? 0 : a.prepare),
+    prepared: clipStart !== undefined,
     contactAt,
-    rate: serve ? a.contact / contactAt : (a.contact - a.prepare) / contactAt,
+    rate: serve ? a.contact / contactAt : (a.contact - (clipStart ?? a.prepare)) / contactAt,
     phase: 'preparation',
     contacted: false,
     missed: false,
@@ -108,7 +113,9 @@ export function createStroke(
 /** Warp is a bounded contact reach, not movement of the athlete or ball. */
 export function racketPosition(action: StrokeAction, player: Vec, side: Side, out: Vec) {
   sampleRig(action.stroke, action.clipTime, out);
-  const weight = clamp(1 - Math.abs(action.age - action.contactAt) / 0.32, 0, 1);
+  const weight =
+    clamp(1 - Math.abs(action.age - action.contactAt) / 0.32, 0, 1) *
+    (action.prepared ? clamp(action.age / action.contactAt, 0, 1) : 1);
   out.x = player.x + out.x * sign(side) + action.warp.x * weight;
   out.y += action.warp.y * weight;
   out.z = player.z + out.z * sign(side) + action.warp.z * weight;
@@ -118,10 +125,7 @@ export function advanceStroke(action: StrokeAction, dt: number, player: Vec, sid
   Object.assign(action.previousRacket, action.racket);
   action.age += dt;
   const a = ANIMATIONS[action.stroke];
-  action.clipTime = Math.min(
-    a.end,
-    (action.stroke === 'Serve' ? 0 : a.prepare) + action.age * action.rate,
-  );
+  action.clipTime = Math.min(a.end, action.clipStart + action.age * action.rate);
   const relative = action.age - action.contactAt;
   action.phase =
     relative < -0.065

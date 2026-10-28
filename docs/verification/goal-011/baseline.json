@@ -1,0 +1,109 @@
+{
+  "environment": "Node Linux; 120 seeded feeds (11011), fixed 120 Hz, 250ms reaction / 70% stick / neutral final metre / release at 75ms predicted reach. Preparation-delay proxy: missed return with 75ms zone available but 133ms zone unavailable. Rally: existing mixed scripted player, seeds 1100–1105, easy AI, up to 900s/match. Wall-clock timings are cloud CPU only.",
+  "feeds": [
+    {
+      "mode": "off",
+      "scenarios": 120,
+      "reachable": 120,
+      "returned": 40,
+      "returnPercent": 33.33333333333333,
+      "reached": 117,
+      "preparationDelayProxyMisses": 77,
+      "misses": {
+        "timing-or-path": 77,
+        "position": 3
+      },
+      "averageTickMs": 0.0031830958064514863
+    },
+    {
+      "mode": "light",
+      "scenarios": 120,
+      "reachable": 120,
+      "returned": 40,
+      "returnPercent": 33.33333333333333,
+      "reached": 117,
+      "preparationDelayProxyMisses": 77,
+      "misses": {
+        "timing-or-path": 77,
+        "position": 3
+      },
+      "averageTickMs": 0.0025628411059908335
+    },
+    {
+      "mode": "standard",
+      "scenarios": 120,
+      "reachable": 120,
+      "returned": 40,
+      "returnPercent": 33.33333333333333,
+      "reached": 117,
+      "preparationDelayProxyMisses": 77,
+      "misses": {
+        "timing-or-path": 77,
+        "position": 3
+      },
+      "averageTickMs": 0.0016752929953918335
+    }
+  ],
+  "rally": {
+    "difficulty": "easy",
+    "games": 6,
+    "seeds": [
+      1100,
+      1105
+    ],
+    "points": 67,
+    "completedMatches": 6,
+    "aiReturns": 427,
+    "aiLegalReturns": 395,
+    "incoming": 450,
+    "returnContactRate": 0.9488888888888889,
+    "legalReturnRate": 0.8777777777777778,
+    "rally": {
+      "mean": 13.537313432835822,
+      "median": 3,
+      "p90": 43,
+      "max": 101,
+      "distribution": {
+        "one": 0,
+        "twoToFour": 40,
+        "fiveToEight": 4,
+        "ninePlus": 23
+      }
+    },
+    "outcomes": {
+      "aiWinners": 12,
+      "playerWinners": 23,
+      "aiErrors": 32,
+      "aiUnforcedErrors": 21,
+      "aiPressureErrors": 11,
+      "playerErrors": 0
+    },
+    "approaches": 11,
+    "defensive": 132,
+    "shots": {
+      "deep neutral": 110,
+      "crosscourt": 179,
+      "slice recovery": 132,
+      "volley": 6
+    },
+    "directions": {
+      "left": 302,
+      "right": 15,
+      "centre": 110
+    },
+    "coverage": {
+      "minX": -4.1371622036661675,
+      "maxX": 3.9154778491655535,
+      "minZ": -12.73923378763747,
+      "maxZ": -4.076696393009289
+    },
+    "performance": {
+      "ticks": 161271,
+      "averageTickMs": 0.0027684414184820302,
+      "decisions": 2374,
+      "averageDecisionMs": 0.03481118407750661,
+      "maxDecisionMs": 0.4068449999999757
+    }
+  },
+  "earlyRallyFailureRate": 0
+}
