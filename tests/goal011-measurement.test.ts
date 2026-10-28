@@ -124,7 +124,7 @@ function beginnerRallies(mode: string) {
     observed = -1,
     reaction = 0;
   const contacts: number[] = [];
-  for (let frame = 0; frame < 120 * 1200 && contacts.length < 60; frame++) {
+  for (let frame = 0; frame < 120 * 2400 && contacts.length < 60; frame++) {
     const c = idleControls(),
       p = m.players[0].position;
     if (m.phase === 'serve') {

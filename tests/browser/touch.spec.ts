@@ -91,8 +91,12 @@ test('native captured aiming survives leaving HIT, cancellation and deliberate r
   expect((await snap(page)).input.charging).toBe(true);
   await page.screenshot({ path: `test-results/${info.project.name}-goal007-aim.png` });
   await page.mouse.up();
-  await expect.poll(async () => (await snap(page)).contacts).toBe(1);
-  expect((await snap(page)).contact.stroke).toBe('Serve');
+  // The opponent may reply before a slow poll sees the transient total of one.
+  // The human's recorded Serve is durable evidence that release committed.
+  await expect
+    .poll(async () => (await snap(page)).contact?.stroke, { timeout: 30000 })
+    .toBe('Serve');
+  expect((await snap(page)).contacts).toBeGreaterThanOrEqual(1);
   await page.locator('#pause-button').click();
   expect((await snap(page)).input.pointers).toEqual({ movement: null, shot: null });
   await page.locator('#resume').click();

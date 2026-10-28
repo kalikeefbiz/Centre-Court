@@ -1,0 +1,4762 @@
+[
+  {
+    "character": "zuri",
+    "project": "desktop-chromium",
+    "lobCadences": [
+      {
+        "x": -0.4,
+        "ticks": 1,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.450905625529699,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 58.6550902356009
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "8c5cf87b00dff0d1de8609c2831f321953808633089f4ae35b92929a99fc3429",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.7347490859876656
+        }
+      },
+      {
+        "x": -0.4,
+        "ticks": 2,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.4221877327079962,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 59.70202288673097
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "8c5cf87b00dff0d1de8609c2831f321953808633089f4ae35b92929a99fc3429",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.7789404365854932
+        }
+      },
+      {
+        "x": -0.4,
+        "ticks": 4,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.42586662749337106,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 60.79512679949372
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "8c5cf87b00dff0d1de8609c2831f321953808633089f4ae35b92929a99fc3429",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.8060242717345548
+        }
+      },
+      {
+        "x": -0.4,
+        "ticks": 6,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.30788139345366294,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 59.80102360836473
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "8c5cf87b00dff0d1de8609c2831f321953808633089f4ae35b92929a99fc3429",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.9405861134911415
+        }
+      },
+      {
+        "x": -0.4,
+        "ticks": 12,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.31083181546746697,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 59.79855070333365
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "8c5cf87b00dff0d1de8609c2831f321953808633089f4ae35b92929a99fc3429",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.932845374876146
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 1,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.5281127140047096,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 52.0143657024879
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "8c5cf87b00dff0d1de8609c2831f321953808633089f4ae35b92929a99fc3429",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.5280927473226321
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 2,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.47960243455640006,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 55.1103664766216
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "8c5cf87b00dff0d1de8609c2831f321953808633089f4ae35b92929a99fc3429",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.5655551146877265
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 4,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.4823624900925415,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 57.680457302955574
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "8c5cf87b00dff0d1de8609c2831f321953808633089f4ae35b92929a99fc3429",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.5932720420710034
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 6,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.26542032760129314,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 52.67655582353874
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "8c5cf87b00dff0d1de8609c2831f321953808633089f4ae35b92929a99fc3429",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.7402951125788412
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 12,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.2678449099922499,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 52.600782097342204
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "8c5cf87b00dff0d1de8609c2831f321953808633089f4ae35b92929a99fc3429",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.734423691304497
+        }
+      }
+    ]
+  },
+  {
+    "character": "kira",
+    "project": "mobile-webkit",
+    "lobCadences": [
+      {
+        "x": -0.4,
+        "ticks": 1,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.4520335561035942,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 57.29842457869801
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 2115,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "f55979d3991fc1a2647df1fc63be4751c91a743f7498d37726362ae3468fd2d9",
+          "bindFit": {
+            "translation": [
+              0.018,
+              -0.012,
+              0.08
+            ],
+            "fingerScale": [
+              1,
+              1.03,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.7004613330675881
+        }
+      },
+      {
+        "x": -0.4,
+        "ticks": 2,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.42293638342205836,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 58.376605188278944
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 2115,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "f55979d3991fc1a2647df1fc63be4751c91a743f7498d37726362ae3468fd2d9",
+          "bindFit": {
+            "translation": [
+              0.018,
+              -0.012,
+              0.08
+            ],
+            "fingerScale": [
+              1,
+              1.03,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.7464186989266831
+        }
+      },
+      {
+        "x": -0.4,
+        "ticks": 4,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.4250759449089051,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 59.85871385996446
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 2115,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "f55979d3991fc1a2647df1fc63be4751c91a743f7498d37726362ae3468fd2d9",
+          "bindFit": {
+            "translation": [
+              0.018,
+              -0.012,
+              0.08
+            ],
+            "fingerScale": [
+              1,
+              1.03,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.7757284385253145
+        }
+      },
+      {
+        "x": -0.4,
+        "ticks": 6,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.3023207766315728,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 61.35815501630382
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 2115,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "f55979d3991fc1a2647df1fc63be4751c91a743f7498d37726362ae3468fd2d9",
+          "bindFit": {
+            "translation": [
+              0.018,
+              -0.012,
+              0.08
+            ],
+            "fingerScale": [
+              1,
+              1.03,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.9300723953116417
+        }
+      },
+      {
+        "x": -0.4,
+        "ticks": 12,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.3078154099119332,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 61.53975164961329
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 2115,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "f55979d3991fc1a2647df1fc63be4751c91a743f7498d37726362ae3468fd2d9",
+          "bindFit": {
+            "translation": [
+              0.018,
+              -0.012,
+              0.08
+            ],
+            "fingerScale": [
+              1,
+              1.03,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.9174108785011468
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 1,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.5367343833296365,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 47.657891532271535
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 2115,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "f55979d3991fc1a2647df1fc63be4751c91a743f7498d37726362ae3468fd2d9",
+          "bindFit": {
+            "translation": [
+              0.018,
+              -0.012,
+              0.08
+            ],
+            "fingerScale": [
+              1,
+              1.03,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.49539542445376206
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 2,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.48530028520867796,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 50.57759420189822
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 2115,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "f55979d3991fc1a2647df1fc63be4751c91a743f7498d37726362ae3468fd2d9",
+          "bindFit": {
+            "translation": [
+              0.018,
+              -0.012,
+              0.08
+            ],
+            "fingerScale": [
+              1,
+              1.03,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.5334149047177194
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 4,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.48710271773457664,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 56.144420124675506
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 2115,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "f55979d3991fc1a2647df1fc63be4751c91a743f7498d37726362ae3468fd2d9",
+          "bindFit": {
+            "translation": [
+              0.018,
+              -0.012,
+              0.08
+            ],
+            "fingerScale": [
+              1,
+              1.03,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.5542395471234327
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 6,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.2611544606144198,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 56.38449761579145
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 2115,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "f55979d3991fc1a2647df1fc63be4751c91a743f7498d37726362ae3468fd2d9",
+          "bindFit": {
+            "translation": [
+              0.018,
+              -0.012,
+              0.08
+            ],
+            "fingerScale": [
+              1,
+              1.03,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.7056601929832237
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 12,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.26321123226900345,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 56.37304702247845
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 2115,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "f55979d3991fc1a2647df1fc63be4751c91a743f7498d37726362ae3468fd2d9",
+          "bindFit": {
+            "translation": [
+              0.018,
+              -0.012,
+              0.08
+            ],
+            "fingerScale": [
+              1,
+              1.03,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.7004426978958127
+        }
+      }
+    ]
+  },
+  {
+    "character": "zuri",
+    "project": "mobile-webkit",
+    "lobCadences": [
+      {
+        "x": -0.4,
+        "ticks": 1,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.450905625529699,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 58.6550902356009
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "8c5cf87b00dff0d1de8609c2831f321953808633089f4ae35b92929a99fc3429",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.7347490859876656
+        }
+      },
+      {
+        "x": -0.4,
+        "ticks": 2,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.4221877327079962,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 59.70202288673097
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "8c5cf87b00dff0d1de8609c2831f321953808633089f4ae35b92929a99fc3429",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.7789404365854932
+        }
+      },
+      {
+        "x": -0.4,
+        "ticks": 4,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.42586662749337106,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 60.79512679949372
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "8c5cf87b00dff0d1de8609c2831f321953808633089f4ae35b92929a99fc3429",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.8060242717345548
+        }
+      },
+      {
+        "x": -0.4,
+        "ticks": 6,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.30788139345366294,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 59.80102360836473
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "8c5cf87b00dff0d1de8609c2831f321953808633089f4ae35b92929a99fc3429",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.9405861134911415
+        }
+      },
+      {
+        "x": -0.4,
+        "ticks": 12,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.31083181546746697,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 59.79855070333365
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "8c5cf87b00dff0d1de8609c2831f321953808633089f4ae35b92929a99fc3429",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.932845374876146
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 1,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.5281127140047096,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 52.0143657024879
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "8c5cf87b00dff0d1de8609c2831f321953808633089f4ae35b92929a99fc3429",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.5280927473226321
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 2,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.47960243455640006,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 55.1103664766216
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "8c5cf87b00dff0d1de8609c2831f321953808633089f4ae35b92929a99fc3429",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.5655551146877265
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 4,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.4823624900925415,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 57.680457302955574
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "8c5cf87b00dff0d1de8609c2831f321953808633089f4ae35b92929a99fc3429",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.5932720420710034
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 6,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.26542032760129314,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 52.67655582353874
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "8c5cf87b00dff0d1de8609c2831f321953808633089f4ae35b92929a99fc3429",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.7402951125788412
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 12,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.2678449099922499,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 52.600782097342204
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "8c5cf87b00dff0d1de8609c2831f321953808633089f4ae35b92929a99fc3429",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.734423691304497
+        }
+      }
+    ]
+  },
+  {
+    "character": "rico",
+    "project": "desktop-chromium",
+    "lobCadences": [
+      {
+        "x": -0.4,
+        "ticks": 1,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.4399461428764909,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 59.71798389298097
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "9142d4f3cfb010d00d59e63191d4bbf411823f6df87412d1766f5b514e426a6a",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.632166249161908
+        }
+      },
+      {
+        "x": -0.4,
+        "ticks": 2,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.41338459134278116,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 60.644546453858084
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "9142d4f3cfb010d00d59e63191d4bbf411823f6df87412d1766f5b514e426a6a",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.6828532814100706
+        }
+      },
+      {
+        "x": -0.4,
+        "ticks": 4,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.41821814839819604,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 62.081518697005535
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "9142d4f3cfb010d00d59e63191d4bbf411823f6df87412d1766f5b514e426a6a",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.7132226939151359
+        }
+      },
+      {
+        "x": -0.4,
+        "ticks": 6,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.30181127784283623,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 63.15253006128928
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "9142d4f3cfb010d00d59e63191d4bbf411823f6df87412d1766f5b514e426a6a",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.8890422736115536
+        }
+      },
+      {
+        "x": -0.4,
+        "ticks": 12,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.30387995243637594,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 63.2200434463877
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "9142d4f3cfb010d00d59e63191d4bbf411823f6df87412d1766f5b514e426a6a",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.8809552548870453
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 1,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.5317007808813591,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 55.94826971657796
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "9142d4f3cfb010d00d59e63191d4bbf411823f6df87412d1766f5b514e426a6a",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.4020314505279441
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 2,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.4838173272210792,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 58.38003102339166
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "9142d4f3cfb010d00d59e63191d4bbf411823f6df87412d1766f5b514e426a6a",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.44217033540166556
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 4,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.48700039082477564,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 61.976079710560114
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "9142d4f3cfb010d00d59e63191d4bbf411823f6df87412d1766f5b514e426a6a",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.47108440837150956
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 6,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.2709621651456086,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 58.8452550208501
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "9142d4f3cfb010d00d59e63191d4bbf411823f6df87412d1766f5b514e426a6a",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.6446567415641332
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 12,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.27381439846624883,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 58.8684847510408
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "9142d4f3cfb010d00d59e63191d4bbf411823f6df87412d1766f5b514e426a6a",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.637834100825252
+        }
+      }
+    ]
+  },
+  {
+    "character": "rico",
+    "project": "mobile-webkit",
+    "lobCadences": [
+      {
+        "x": -0.4,
+        "ticks": 1,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.4399461428764909,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 59.71798389298097
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "9142d4f3cfb010d00d59e63191d4bbf411823f6df87412d1766f5b514e426a6a",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.632166249161908
+        }
+      },
+      {
+        "x": -0.4,
+        "ticks": 2,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.41338459134278116,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 60.644546453858084
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "9142d4f3cfb010d00d59e63191d4bbf411823f6df87412d1766f5b514e426a6a",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.6828532814100706
+        }
+      },
+      {
+        "x": -0.4,
+        "ticks": 4,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.41821814839819604,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 62.081518697005535
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "9142d4f3cfb010d00d59e63191d4bbf411823f6df87412d1766f5b514e426a6a",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.7132226939151359
+        }
+      },
+      {
+        "x": -0.4,
+        "ticks": 6,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.30181127784283623,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 63.15253006128928
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "9142d4f3cfb010d00d59e63191d4bbf411823f6df87412d1766f5b514e426a6a",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.8890422736115536
+        }
+      },
+      {
+        "x": -0.4,
+        "ticks": 12,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.30387995243637594,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 63.2200434463877
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "9142d4f3cfb010d00d59e63191d4bbf411823f6df87412d1766f5b514e426a6a",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.8809552548870453
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 1,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.5317007808813591,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 55.94826971657796
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "9142d4f3cfb010d00d59e63191d4bbf411823f6df87412d1766f5b514e426a6a",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.4020314505279441
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 2,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.4838173272210792,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 58.38003102339166
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "9142d4f3cfb010d00d59e63191d4bbf411823f6df87412d1766f5b514e426a6a",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.44217033540166556
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 4,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.48700039082477564,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 61.976079710560114
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "9142d4f3cfb010d00d59e63191d4bbf411823f6df87412d1766f5b514e426a6a",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.47108440837150956
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 6,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.2709621651456086,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 58.8452550208501
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "9142d4f3cfb010d00d59e63191d4bbf411823f6df87412d1766f5b514e426a6a",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.6446567415641332
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 12,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.27381439846624883,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 58.8684847510408
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "9142d4f3cfb010d00d59e63191d4bbf411823f6df87412d1766f5b514e426a6a",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.637834100825252
+        }
+      }
+    ]
+  },
+  {
+    "character": "dante",
+    "project": "mobile-webkit",
+    "lobCadences": [
+      {
+        "x": -0.4,
+        "ticks": 1,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.4315570790938677,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 51.698509385049405
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "806ab3b44a7201902d5ec84aa7d059aba335db5275bbd4088c605b453d9e2edb",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.833353304985042
+        }
+      },
+      {
+        "x": -0.4,
+        "ticks": 2,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.4046557982909679,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 52.85801726463187
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "806ab3b44a7201902d5ec84aa7d059aba335db5275bbd4088c605b453d9e2edb",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.8737790392997836
+        }
+      },
+      {
+        "x": -0.4,
+        "ticks": 4,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.4067467194486224,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 56.41779850880373
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "806ab3b44a7201902d5ec84aa7d059aba335db5275bbd4088c605b453d9e2edb",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.8974662864601356
+        }
+      },
+      {
+        "x": -0.4,
+        "ticks": 6,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.28985288496870887,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 61.494909011771725
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "806ab3b44a7201902d5ec84aa7d059aba335db5275bbd4088c605b453d9e2edb",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 1.0216554057783123
+        }
+      },
+      {
+        "x": -0.4,
+        "ticks": 12,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.29353413480686497,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 61.521253187303664
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "806ab3b44a7201902d5ec84aa7d059aba335db5275bbd4088c605b453d9e2edb",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 1.0131735331926786
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 1,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.5374006922729127,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 47.88953890931091
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "806ab3b44a7201902d5ec84aa7d059aba335db5275bbd4088c605b453d9e2edb",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.6257415609458753
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 2,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.4913628433439459,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 51.00789096865227
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "806ab3b44a7201902d5ec84aa7d059aba335db5275bbd4088c605b453d9e2edb",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.6597398950249469
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 4,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.4930006220397126,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 57.23287057362807
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "806ab3b44a7201902d5ec84aa7d059aba335db5275bbd4088c605b453d9e2edb",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.6815943070689483
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 6,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.2839918469325381,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 54.828183109582746
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "806ab3b44a7201902d5ec84aa7d059aba335db5275bbd4088c605b453d9e2edb",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.8122842128913719
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 12,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.2870264901123111,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 54.742856288927925
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "806ab3b44a7201902d5ec84aa7d059aba335db5275bbd4088c605b453d9e2edb",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.8066402926432905
+        }
+      }
+    ]
+  },
+  {
+    "character": "nova",
+    "project": "mobile-webkit",
+    "lobCadences": [
+      {
+        "x": -0.4,
+        "ticks": 1,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.36151677107998176,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 54.7507296804599
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 4157,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 1880,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "fb904e67374b70bff283809e72f33fb68ab654e9c3502b8dd3391813ada7ceb8",
+          "bindFit": {
+            "translation": [
+              0.065,
+              0.004,
+              0
+            ],
+            "fingerScale": [
+              1,
+              0.7,
+              0.9
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.8016649054255213
+        }
+      },
+      {
+        "x": -0.4,
+        "ticks": 2,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.3339284166111629,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 55.838897287357696
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 4157,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 1880,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "fb904e67374b70bff283809e72f33fb68ab654e9c3502b8dd3391813ada7ceb8",
+          "bindFit": {
+            "translation": [
+              0.065,
+              0.004,
+              0
+            ],
+            "fingerScale": [
+              1,
+              0.7,
+              0.9
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.859320942755648
+        }
+      },
+      {
+        "x": -0.4,
+        "ticks": 4,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.336303697230693,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 57.53401172981037
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 4157,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 1880,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "fb904e67374b70bff283809e72f33fb68ab654e9c3502b8dd3391813ada7ceb8",
+          "bindFit": {
+            "translation": [
+              0.065,
+              0.004,
+              0
+            ],
+            "fingerScale": [
+              1,
+              0.7,
+              0.9
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.8953116506094997
+        }
+      },
+      {
+        "x": -0.4,
+        "ticks": 6,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.22720300608317434,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 58.50543005389382
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 4157,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 1880,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "fb904e67374b70bff283809e72f33fb68ab654e9c3502b8dd3391813ada7ceb8",
+          "bindFit": {
+            "translation": [
+              0.065,
+              0.004,
+              0
+            ],
+            "fingerScale": [
+              1,
+              0.7,
+              0.9
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 1.0680975764666327
+        }
+      },
+      {
+        "x": -0.4,
+        "ticks": 12,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.23228946044017326,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 58.772701954898686
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 4157,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 1880,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "fb904e67374b70bff283809e72f33fb68ab654e9c3502b8dd3391813ada7ceb8",
+          "bindFit": {
+            "translation": [
+              0.065,
+              0.004,
+              0
+            ],
+            "fingerScale": [
+              1,
+              0.7,
+              0.9
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 1.0548260108233198
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 1,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.44990417617655165,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 43.80927196218278
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 4157,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 1880,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "fb904e67374b70bff283809e72f33fb68ab654e9c3502b8dd3391813ada7ceb8",
+          "bindFit": {
+            "translation": [
+              0.065,
+              0.004,
+              0
+            ],
+            "fingerScale": [
+              1,
+              0.7,
+              0.9
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.560430466384562
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 2,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.400896050915876,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 46.63569035673423
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 4157,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 1880,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "fb904e67374b70bff283809e72f33fb68ab654e9c3502b8dd3391813ada7ceb8",
+          "bindFit": {
+            "translation": [
+              0.065,
+              0.004,
+              0
+            ],
+            "fingerScale": [
+              1,
+              0.7,
+              0.9
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.6116031277253065
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 4,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.4024954329791919,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 52.53418095587711
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 4157,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 1880,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "fb904e67374b70bff283809e72f33fb68ab654e9c3502b8dd3391813ada7ceb8",
+          "bindFit": {
+            "translation": [
+              0.065,
+              0.004,
+              0
+            ],
+            "fingerScale": [
+              1,
+              0.7,
+              0.9
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.6407779887243985
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 6,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.193766927524384,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 53.90157383659174
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 4157,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 1880,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "fb904e67374b70bff283809e72f33fb68ab654e9c3502b8dd3391813ada7ceb8",
+          "bindFit": {
+            "translation": [
+              0.065,
+              0.004,
+              0
+            ],
+            "fingerScale": [
+              1,
+              0.7,
+              0.9
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.8195872750661855
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 12,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.1958888733931647,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 53.93890181366585
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 4157,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 1880,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "fb904e67374b70bff283809e72f33fb68ab654e9c3502b8dd3391813ada7ceb8",
+          "bindFit": {
+            "translation": [
+              0.065,
+              0.004,
+              0
+            ],
+            "fingerScale": [
+              1,
+              0.7,
+              0.9
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.8136937947622244
+        }
+      }
+    ]
+  },
+  {
+    "character": "nova",
+    "project": "desktop-chromium",
+    "lobCadences": [
+      {
+        "x": -0.4,
+        "ticks": 1,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.36151677107998176,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 54.7507296804599
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 4157,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 1880,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "fb904e67374b70bff283809e72f33fb68ab654e9c3502b8dd3391813ada7ceb8",
+          "bindFit": {
+            "translation": [
+              0.065,
+              0.004,
+              0
+            ],
+            "fingerScale": [
+              1,
+              0.7,
+              0.9
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.8016649054255213
+        }
+      },
+      {
+        "x": -0.4,
+        "ticks": 2,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.3339284166111629,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 55.838897287357696
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 4157,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 1880,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "fb904e67374b70bff283809e72f33fb68ab654e9c3502b8dd3391813ada7ceb8",
+          "bindFit": {
+            "translation": [
+              0.065,
+              0.004,
+              0
+            ],
+            "fingerScale": [
+              1,
+              0.7,
+              0.9
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.859320942755648
+        }
+      },
+      {
+        "x": -0.4,
+        "ticks": 4,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.336303697230693,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 57.53401172981037
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 4157,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 1880,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "fb904e67374b70bff283809e72f33fb68ab654e9c3502b8dd3391813ada7ceb8",
+          "bindFit": {
+            "translation": [
+              0.065,
+              0.004,
+              0
+            ],
+            "fingerScale": [
+              1,
+              0.7,
+              0.9
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.8953116506094997
+        }
+      },
+      {
+        "x": -0.4,
+        "ticks": 6,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.22720300608317434,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 58.50543005389382
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 4157,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 1880,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "fb904e67374b70bff283809e72f33fb68ab654e9c3502b8dd3391813ada7ceb8",
+          "bindFit": {
+            "translation": [
+              0.065,
+              0.004,
+              0
+            ],
+            "fingerScale": [
+              1,
+              0.7,
+              0.9
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 1.0680975764666327
+        }
+      },
+      {
+        "x": -0.4,
+        "ticks": 12,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.23228946044017326,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 58.772701954898686
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 4157,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 1880,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "fb904e67374b70bff283809e72f33fb68ab654e9c3502b8dd3391813ada7ceb8",
+          "bindFit": {
+            "translation": [
+              0.065,
+              0.004,
+              0
+            ],
+            "fingerScale": [
+              1,
+              0.7,
+              0.9
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 1.0548260108233198
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 1,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.44990417617655165,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 43.80927196218278
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 4157,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 1880,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "fb904e67374b70bff283809e72f33fb68ab654e9c3502b8dd3391813ada7ceb8",
+          "bindFit": {
+            "translation": [
+              0.065,
+              0.004,
+              0
+            ],
+            "fingerScale": [
+              1,
+              0.7,
+              0.9
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.560430466384562
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 2,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.400896050915876,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 46.63569035673423
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 4157,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 1880,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "fb904e67374b70bff283809e72f33fb68ab654e9c3502b8dd3391813ada7ceb8",
+          "bindFit": {
+            "translation": [
+              0.065,
+              0.004,
+              0
+            ],
+            "fingerScale": [
+              1,
+              0.7,
+              0.9
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.6116031277253065
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 4,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.4024954329791919,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 52.53418095587711
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 4157,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 1880,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "fb904e67374b70bff283809e72f33fb68ab654e9c3502b8dd3391813ada7ceb8",
+          "bindFit": {
+            "translation": [
+              0.065,
+              0.004,
+              0
+            ],
+            "fingerScale": [
+              1,
+              0.7,
+              0.9
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.6407779887243985
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 6,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.193766927524384,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 53.90157383659174
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 4157,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 1880,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "fb904e67374b70bff283809e72f33fb68ab654e9c3502b8dd3391813ada7ceb8",
+          "bindFit": {
+            "translation": [
+              0.065,
+              0.004,
+              0
+            ],
+            "fingerScale": [
+              1,
+              0.7,
+              0.9
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.8195872750661855
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 12,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.1958888733931647,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 53.93890181366585
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 4157,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 1880,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "fb904e67374b70bff283809e72f33fb68ab654e9c3502b8dd3391813ada7ceb8",
+          "bindFit": {
+            "translation": [
+              0.065,
+              0.004,
+              0
+            ],
+            "fingerScale": [
+              1,
+              0.7,
+              0.9
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.8136937947622244
+        }
+      }
+    ]
+  },
+  {
+    "character": "kira",
+    "project": "desktop-chromium",
+    "lobCadences": [
+      {
+        "x": -0.4,
+        "ticks": 1,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.4520335561035942,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 57.29842457869801
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 2115,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "f55979d3991fc1a2647df1fc63be4751c91a743f7498d37726362ae3468fd2d9",
+          "bindFit": {
+            "translation": [
+              0.018,
+              -0.012,
+              0.08
+            ],
+            "fingerScale": [
+              1,
+              1.03,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.7004613330675881
+        }
+      },
+      {
+        "x": -0.4,
+        "ticks": 2,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.42293638342205836,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 58.376605188278944
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 2115,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "f55979d3991fc1a2647df1fc63be4751c91a743f7498d37726362ae3468fd2d9",
+          "bindFit": {
+            "translation": [
+              0.018,
+              -0.012,
+              0.08
+            ],
+            "fingerScale": [
+              1,
+              1.03,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.7464186989266831
+        }
+      },
+      {
+        "x": -0.4,
+        "ticks": 4,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.4250759449089051,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 59.85871385996446
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 2115,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "f55979d3991fc1a2647df1fc63be4751c91a743f7498d37726362ae3468fd2d9",
+          "bindFit": {
+            "translation": [
+              0.018,
+              -0.012,
+              0.08
+            ],
+            "fingerScale": [
+              1,
+              1.03,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.7757284385253145
+        }
+      },
+      {
+        "x": -0.4,
+        "ticks": 6,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.3023207766315728,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 61.35815501630382
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 2115,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "f55979d3991fc1a2647df1fc63be4751c91a743f7498d37726362ae3468fd2d9",
+          "bindFit": {
+            "translation": [
+              0.018,
+              -0.012,
+              0.08
+            ],
+            "fingerScale": [
+              1,
+              1.03,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.9300723953116417
+        }
+      },
+      {
+        "x": -0.4,
+        "ticks": 12,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.3078154099119332,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 61.53975164961329
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 2115,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "f55979d3991fc1a2647df1fc63be4751c91a743f7498d37726362ae3468fd2d9",
+          "bindFit": {
+            "translation": [
+              0.018,
+              -0.012,
+              0.08
+            ],
+            "fingerScale": [
+              1,
+              1.03,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.9174108785011468
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 1,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.5367343833296365,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 47.657891532271535
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 2115,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "f55979d3991fc1a2647df1fc63be4751c91a743f7498d37726362ae3468fd2d9",
+          "bindFit": {
+            "translation": [
+              0.018,
+              -0.012,
+              0.08
+            ],
+            "fingerScale": [
+              1,
+              1.03,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.49539542445376206
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 2,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.48530028520867796,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 50.57759420189822
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 2115,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "f55979d3991fc1a2647df1fc63be4751c91a743f7498d37726362ae3468fd2d9",
+          "bindFit": {
+            "translation": [
+              0.018,
+              -0.012,
+              0.08
+            ],
+            "fingerScale": [
+              1,
+              1.03,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.5334149047177194
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 4,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.48710271773457664,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 56.144420124675506
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 2115,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "f55979d3991fc1a2647df1fc63be4751c91a743f7498d37726362ae3468fd2d9",
+          "bindFit": {
+            "translation": [
+              0.018,
+              -0.012,
+              0.08
+            ],
+            "fingerScale": [
+              1,
+              1.03,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.5542395471234327
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 6,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.2611544606144198,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 56.38449761579145
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 2115,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "f55979d3991fc1a2647df1fc63be4751c91a743f7498d37726362ae3468fd2d9",
+          "bindFit": {
+            "translation": [
+              0.018,
+              -0.012,
+              0.08
+            ],
+            "fingerScale": [
+              1,
+              1.03,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.7056601929832237
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 12,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.26321123226900345,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 56.37304702247845
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 2115,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "f55979d3991fc1a2647df1fc63be4751c91a743f7498d37726362ae3468fd2d9",
+          "bindFit": {
+            "translation": [
+              0.018,
+              -0.012,
+              0.08
+            ],
+            "fingerScale": [
+              1,
+              1.03,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.7004426978958127
+        }
+      }
+    ]
+  },
+  {
+    "character": "dante",
+    "project": "desktop-chromium",
+    "lobCadences": [
+      {
+        "x": -0.4,
+        "ticks": 1,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.4315570790938677,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 51.698509385049405
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "806ab3b44a7201902d5ec84aa7d059aba335db5275bbd4088c605b453d9e2edb",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.833353304985042
+        }
+      },
+      {
+        "x": -0.4,
+        "ticks": 2,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.4046557982909679,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 52.85801726463187
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "806ab3b44a7201902d5ec84aa7d059aba335db5275bbd4088c605b453d9e2edb",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.8737790392997836
+        }
+      },
+      {
+        "x": -0.4,
+        "ticks": 4,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.4067467194486224,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 56.41779850880373
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "806ab3b44a7201902d5ec84aa7d059aba335db5275bbd4088c605b453d9e2edb",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.8974662864601356
+        }
+      },
+      {
+        "x": -0.4,
+        "ticks": 6,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.28985288496870887,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 61.494909011771725
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "806ab3b44a7201902d5ec84aa7d059aba335db5275bbd4088c605b453d9e2edb",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 1.0216554057783123
+        }
+      },
+      {
+        "x": -0.4,
+        "ticks": 12,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.29353413480686497,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 61.521253187303664
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "806ab3b44a7201902d5ec84aa7d059aba335db5275bbd4088c605b453d9e2edb",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 1.0131735331926786
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 1,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.5374006922729127,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 47.88953890931091
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "806ab3b44a7201902d5ec84aa7d059aba335db5275bbd4088c605b453d9e2edb",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.6257415609458753
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 2,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.4913628433439459,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 51.00789096865227
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "806ab3b44a7201902d5ec84aa7d059aba335db5275bbd4088c605b453d9e2edb",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.6597398950249469
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 4,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.4930006220397126,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 57.23287057362807
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "806ab3b44a7201902d5ec84aa7d059aba335db5275bbd4088c605b453d9e2edb",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.6815943070689483
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 6,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.2839918469325381,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 54.828183109582746
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "806ab3b44a7201902d5ec84aa7d059aba335db5275bbd4088c605b453d9e2edb",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.8122842128913719
+        }
+      },
+      {
+        "x": 0.4,
+        "ticks": 12,
+        "stroke": "Lob",
+        "contacted": true,
+        "error": 0.2870264901123111,
+        "correction": {
+          "passes": 6,
+          "maxArmDegrees": 54.742856288927925
+        },
+        "grip": {
+          "ready": true,
+          "correctedVertices": 0,
+          "skinInstancesPatched": 1,
+          "correctedShoulderVertices": 0,
+          "fingerJoints": 20,
+          "digits": 5,
+          "handFrame": [
+            0,
+            0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "socketCompensation": [
+            0,
+            -0.7071067811865476,
+            0,
+            0.7071067811865476
+          ],
+          "equipmentFrameError": 0,
+          "sourceSha256": "806ab3b44a7201902d5ec84aa7d059aba335db5275bbd4088c605b453d9e2edb",
+          "bindFit": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "fingerScale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "secondaryHandContact": false,
+          "secondaryHandDistance": 0.8066402926432905
+        }
+      }
+    ]
+  }
+]

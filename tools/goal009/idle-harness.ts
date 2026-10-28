@@ -1,3 +1,5 @@
+import { ShotGesture } from '../../src/core/shot-gesture';
+import { feedAI } from '../../src/dev/ai-feeds';
 // Test-only native renderer harness. Vite serves this in source mode; it is not
 // an application entry or part of the production bundle.
 import * as pc from 'playcanvas';
@@ -92,6 +94,37 @@ const api = {
         }),
       ),
     };
+  },
+  lobProbe(x: number, frameTicks = 2) {
+    match = new Match();
+    match.start('normal', 'short', true);
+    renderer.resetSession();
+    for (let i = 0; i < 60; i++) renderer.update(match, 1 / 60, false);
+    feedAI(match, x < 0 ? 'Human forehand return' : 'Human backhand return', 314159);
+    let fired = false,
+      result: any;
+    for (let frame = 0; frame < 1000 && match.phase === 'rally'; frame++) {
+      const c = idleControls();
+      if (!fired && match.ball.position.z >= 7.4 && match.ball.position.z < 10.5) {
+        fired = true;
+        const g = new ShotGesture();
+        g.down(1);
+        g.up(1.03);
+        g.down(1.07);
+        g.up(1.1);
+        c.gestures = g.drain();
+      }
+      for (let i = 0; i < frameTicks; i++) {
+        match.tick(FIXED_DT, c);
+        c.gestures = undefined;
+      }
+      renderer.update(match, Math.min(frameTicks * FIXED_DT, 0.05), false, 'lob');
+      if (match.lastHitter === 0) {
+        result = api.sample();
+        break;
+      }
+    }
+    return result ?? { phase: match.phase, fired, miss: match.timing };
   },
   incoming(mode: AssistanceMode = 'standard') {
     match.start('easy', 'short', true, 11011);

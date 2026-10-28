@@ -1,7 +1,7 @@
 import { Ball, type BallEvent } from './ball';
 import { planInterception, type Interception } from './ai';
 import { vec, type Vec, clamp } from './court';
-import { selectStroke, type Stroke } from './hitting';
+import { selectStroke, CONTACT, type Stroke } from './hitting';
 import {
   HUMAN_LOCOMOTION,
   requestMovement,
@@ -178,8 +178,18 @@ export function steerInterception(
   requestMovement(s, x, z, 0, HUMAN_LOCOMOTION);
   const policy = ASSISTANCE[mode];
   if (!policy.speed || !prediction?.reachable || prediction.time <= 0) return false;
-  const dx = prediction.target.x - position.x,
-    dz = prediction.target.z - position.z;
+  const dx = prediction.target.x - position.x;
+  const contact = prediction.contact;
+  // Suppress a settling-sized retreat from a ground contact already in reach.
+  // The forecast's tiny Z change must not pull the athlete away while correcting X.
+  // Larger corrections and explicit manual retreat remain available.
+  const alreadyInReach =
+    contact &&
+    contact.z < position.z &&
+    contact.y <= CONTACT.ground.maxHeight &&
+    Math.hypot(contact.x - position.x, contact.z - position.z) < CONTACT.ground.radius;
+  const retreat = prediction.target.z - position.z;
+  const dz = alreadyInReach && retreat > 0 && retreat < 0.06 ? 0 : retreat;
   const distance = Math.hypot(dx, dz),
     input = Math.hypot(x, z);
   if (distance < 0.06) return false;

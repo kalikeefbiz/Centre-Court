@@ -94,21 +94,21 @@ human playtesting or physical-phone performance.
 | Return percentage                           |       33.3% |       90.0% |          100% |             100% |
 | Reached a 75 ms predicted zone / 120        |         117 |         109 |           120 |              120 |
 | Preparation-delay proxy misses              |          77 |           1 |             0 |                0 |
-| Beginner rally average contacts (60 points) |        8.40 |       11.80 |         10.77 |            11.85 |
-| Beginner failures ≤4 contacts               | 27/60 (45%) | 27/60 (45%) |   27/60 (45%) |    23/60 (38.3%) |
+| Beginner rally average contacts (60 points) |        8.40 |       11.80 |         14.20 |            15.07 |
+| Beginner failures ≤4 contacts               | 27/60 (45%) | 27/60 (45%) | 20/60 (33.3%) |    23/60 (38.3%) |
 
-Feeds use seed 11011, identical launches, 250 ms reaction, 70% joystick, neutral
+Feeds use ordinary drive returns, seed 11011, identical launches, 250 ms reaction, 70% joystick, neutral
 within the final metre, and one release at predicted 75 ms reach. The proxy counts
 failed returns with a 75 ms zone opportunity but no 133 ms zone opportunity; it
 is **not** a measured animation-delay diagnosis. Beginner matches use the same
 movement/release constraints, seed 11011, easy AI and 60 actual concluded practice
-points. The 120 feeds intentionally cover reachable ordinary balls, so 100%
+points (2400 simulated-second cap; all modes completed 60). The 120 feeds intentionally cover reachable ordinary balls, so 100%
 there does not imply guaranteed contact. Unreachable, moving-away, early/late
 and no-input tests retain misses.
 
 Trade-offs: the established more capable mixed controller (six match attempts,
-seeds 1100–1105) averages **13.54 → 12.28** contacts, median 3 → 3, p90 43 → 39;
-≤4-contact failures 40/67 → 33/53. Assistance therefore did not improve every
+seeds 1100–1105) averages **13.54 → 12.24** contacts, median 3 → 4, p90 43 → 33;
+≤4-contact failures 40/67 → 30/55. Assistance therefore did not improve every
 controller/workload. Near-ground/extreme-side probes in the unchanged 90-case
 lob/slice/drive harness return **89 → 86** per intent, with all three intents
 remaining equivalent; conservative predictive reach rejects some low wide balls
@@ -116,14 +116,38 @@ that the old lateral chase could recover. No forgiveness/physics adjustment was
 used to hide that regression. Light and Standard tie on the easy feed workload
 but differ in steering tests and beginner match outcomes.
 
-Existing performance workload (one warmup, five repetitions, Node Linux cloud):
-median simulation tick **0.00191 → 0.00301 ms**, below its existing 0.1 ms budget.
-The return-feed Standard average is 0.00445 ms/tick vs original 0.00168 ms/tick;
-short workloads include JIT/order noise. These are CPU timings, not frame times,
-thermal measurements or mobile promises. The shared AI comparison keeps its
+Final matched performance workload (one warmup, five repetitions, same Debian 13 / Node 24 cloud runner):
+median idle simulation tick **0.00239 → 0.00232 ms**, with overlapping ranges
+(baseline 0.00147–0.00277; revised 0.00201–0.00305 ms). No idle CPU improvement is
+claimed from that noisy difference. Active Standard return-feed cost is
+**0.00135 → 0.00471 ms/tick**; the additional predictor has a measurable cost,
+still below the existing 0.1 ms tick budget. These are CPU timings, not frame
+times, thermal measurements or mobile promises. These simulation timings exclude
+the added renderer convergence work; its frame cost remains unmeasured on hardware. Matched raw reports are saved
+alongside the original pre-edit baseline. The final paired run used the exact
+baseline checkout and final steering policy on the same host; the restored
+workspace replaced the initially attempted CI remeasurement.
+The shared AI comparison keeps its
 per-decision budget; its 90-match aggregate timeout is 90 s because the workload
 now runs two predictors and measured 28.8 s alone / 44–52 s under contention.
 Assertions, match count, seeds and per-call budgets are preserved.
+
+Final regression fixes: the GOAL 010 source launcher mirrors the new Footwork
+field, preventing an absent-element startup error in its test page. Serving
+coverage observes the human's recorded Serve, since the global contact total
+may already include an AI reply when a slow poll runs.
+
+For a different shot intent after automatic preparation, native layer handover
+uses 35 ms rather than 55 ms. The existing arm-only CCD can take up to six
+convergence passes only for that handover, retaining the old two-pass aggregate
+rotation bound (2 × 35 degrees per joint) and stopping early on convergence.
+Other strokes and opponent corrections keep two passes. It follows the sampled
+physical racket path, with no direct racket/ball jump, new skeletal system,
+changed marker, or contact-forgiveness increase. A deterministic native probe
+covers both sides at 120/60/30/20/10 Hz for all five athletes; observed maximum
+error is 0.538 m, within the existing 0.55 m rendered-path regression limit.
+Assistance also suppresses a sub-6 cm retreat when the predicted ground contact
+is already in reach; larger corrections and manual retreat remain available.
 
 ## Verification and acceptance
 

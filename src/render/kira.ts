@@ -43,6 +43,8 @@ export class AthleteRenderer {
     head: number[];
   } | null = null;
   private actionId = -1;
+  private anticipatedHandover = -1;
+  private pathCorrection = { passes: 0, maxArmDegrees: 0 };
   private movementBlend = [1, 0, 0, 0, 0, 0, 0];
   private yaw = 180;
   private groundOffset = 0;
@@ -389,6 +391,8 @@ export class AthleteRenderer {
     this.lastContact = -1;
     this.contactPose = null;
     this.actionId = -1;
+    this.anticipatedHandover = -1;
+    this.pathCorrection = { passes: 0, maxArmDegrees: 0 };
     this.contactAge = 1;
     this.contactError = 0;
     this.yaw = 180;
@@ -475,7 +479,12 @@ export class AthleteRenderer {
       const previous = fullBody ? this.fullBodyState : this.upperState;
       const motionId = action?.id ?? anticipation?.id ?? -1;
       if (stroke !== previous || (motionId !== -1 && motionId !== this.actionId)) {
-        selected.transition(stroke, 0.055);
+        // A different player-selected clip must settle from anticipation before
+        // its earliest contact window, including fixed ticks batched into a frame.
+        // Compatible prepared actions retain their ID and never enter this branch.
+        const handover = this.side === 0 && action && this.actionId < -1 && stroke !== previous;
+        this.anticipatedHandover = handover && action ? action.id : -1;
+        selected.transition(stroke, handover ? 0.035 : 0.055);
         if (fullBody) this.fullBodyState = stroke;
         else this.upperState = stroke;
       }
@@ -534,7 +543,33 @@ export class AthleteRenderer {
       this.headTarget.set(action.racket.x, action.racket.y, action.racket.z);
       // Existing bounded arm correction now follows the physical swing path
       // throughout wind-up/contact, rather than snapping after launch.
-      for (let i = 0; i < 2; i++) this.alignContact(this.headTarget, 1);
+      const handover = this.anticipatedHandover === action.id;
+      const joints = handover
+        ? ['mixamorig:RightArm', 'mixamorig:RightForeArm'].map((name) =>
+            this.model.findByName(name)!,
+          )
+        : [];
+      const source = joints.map((joint) => joint.getLocalRotation().clone());
+      // More convergence for a different intent after anticipation, without
+      // exceeding the old two-pass aggregate bound (2 × 35 degrees per joint).
+      const limit = 2 * 0.6109;
+      this.pathCorrection = { passes: 0, maxArmDegrees: 0 };
+      for (let i = 0; i < (handover ? 6 : 2); i++) {
+        this.alignContact(this.headTarget, 1);
+        joints.forEach((joint, j) => {
+          const q = joint.getLocalRotation(),
+            base = source[j];
+          const dot = Math.abs(q.x * base.x + q.y * base.y + q.z * base.z + q.w * base.w);
+          const angle = 2 * Math.acos(clamp(dot, 0, 1));
+          if (angle > limit) joint.setLocalRotation(new pc.Quat().slerp(base, q, limit / angle));
+          this.pathCorrection.maxArmDegrees = Math.max(
+            this.pathCorrection.maxArmDegrees,
+            (Math.min(angle, limit) * 180) / Math.PI,
+          );
+        });
+        this.pathCorrection.passes++;
+        if (handover && i >= 1 && this.head().distance(this.headTarget) < 0.1) break;
+      }
     }
     const contact = athlete.contact;
     if (!contact) {
@@ -681,6 +716,7 @@ export class AthleteRenderer {
         : null,
       contactId: this.lastContact,
       contactError: this.contactError,
+      pathCorrection: { ...this.pathCorrection },
       contactAge: this.contactAge,
       contactQuality: this.observedContactQuality,
       blendWeights: [...this.movementBlend],

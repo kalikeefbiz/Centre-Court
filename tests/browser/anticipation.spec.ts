@@ -150,6 +150,36 @@ for (const character of ['kira', 'zuri', 'dante', 'rico', 'nova']) {
         },
       });
     }
+    const lobCadences = await page.evaluate(() => {
+      const h = (window as any).idleHarness;
+      return [-0.4, 0.4].flatMap((x) =>
+        [1, 2, 4, 6, 12].map((ticks) => {
+          const s = h.lobProbe(x, ticks);
+          return {
+            x,
+            ticks,
+            stroke: s.action?.stroke,
+            contacted: s.action?.contacted,
+            error: s.contactError,
+            correction: s.pathCorrection,
+            grip: s.handGrip,
+          };
+        }),
+      );
+    });
+    for (const sample of lobCadences) {
+      expect(sample.stroke).toBe('Lob');
+      expect(sample.contacted).toBe(true);
+      expect(sample.error).toBeLessThan(0.55);
+      expect(sample.correction.passes).toBeLessThanOrEqual(6);
+      expect(sample.correction.maxArmDegrees).toBeLessThanOrEqual(70.01);
+      expect(sample.grip.ready).toBe(true);
+      expect(Math.abs(sample.grip.equipmentFrameError)).toBeLessThan(0.000001);
+    }
+    writeFileSync(
+      info.outputPath('lob-cadences.json'),
+      JSON.stringify({ character, project: info.project.name, lobCadences }, null, 2),
+    );
     writeFileSync(
       info.outputPath('anticipation.json'),
       JSON.stringify({ character, project: info.project.name, evidence, errors }, null, 2),

@@ -287,3 +287,39 @@ it('records bounded diagnostic miss reasons without emitting contact events', ()
   expect(far.accessibility.lastMiss).toBe('too-far');
   expect(far.events.some((e) => e.type === 'impact')).toBe(false);
 });
+
+it('keeps a reachable ground contact and preserves manual or necessary retreat', () => {
+  const s = createLocomotion(),
+    p = vec(0, 0, 10);
+  const plan = {
+    target: vec(0, 0, 10.05),
+    contact: vec(0, 1, 9.5),
+    time: 0.3,
+    bounce: null,
+    bounceTime: null,
+    reachable: true,
+    confidence: 1,
+  };
+  steerInterception(s, p, 0, 0, plan, 'standard');
+  expect(s.desiredVelocity).toEqual(vec());
+  steerInterception(s, p, 0, 1, plan, 'standard');
+  expect(s.desiredVelocity.z).toBeCloseTo(HUMAN_LOCOMOTION.backwardSpeed, 8);
+  steerInterception(
+    s,
+    p,
+    0,
+    0,
+    { ...plan, contact: vec(0, 1, 10.5), target: vec(0, 0, 11.05) },
+    'standard',
+  );
+  expect(s.desiredVelocity.z).toBeGreaterThan(0);
+  steerInterception(
+    s,
+    p,
+    0,
+    0,
+    { ...plan, contact: vec(0, 1, 9.75), target: vec(0, 0, 10.3) },
+    'standard',
+  );
+  expect(s.desiredVelocity.z).toBeGreaterThan(0);
+});
