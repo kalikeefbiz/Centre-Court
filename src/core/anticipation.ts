@@ -180,15 +180,14 @@ export function steerInterception(
   if (!policy.speed || !prediction?.reachable || prediction.time <= 0) return false;
   const dx = prediction.target.x - position.x;
   const contact = prediction.contact;
-  // Do not retreat out of a ground-height contact that is already in reach.
-  // A predicted later contact can otherwise pull the athlete away from an
-  // earlier player-committed return. Manual retreat remains authoritative.
+  // Suppress a settling-sized retreat from a ground contact already in reach.
+  // The forecast's tiny Z change must not pull the athlete away while correcting X.
+  // Larger corrections and explicit manual retreat remain available.
   const alreadyInReach = contact && contact.z < position.z &&
     contact.y <= CONTACT.ground.maxHeight &&
     Math.hypot(contact.x - position.x, contact.z - position.z) < CONTACT.ground.radius;
-  const dz = alreadyInReach
-    ? Math.min(0, prediction.target.z - position.z)
-    : prediction.target.z - position.z;
+  const retreat = prediction.target.z - position.z;
+  const dz = alreadyInReach && retreat > 0 && retreat < 0.06 ? 0 : retreat;
   const distance = Math.hypot(dx, dz),
     input = Math.hypot(x, z);
   if (distance < 0.06) return false;

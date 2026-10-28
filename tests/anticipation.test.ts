@@ -298,4 +298,6 @@ it('keeps a reachable ground contact and preserves manual or necessary retreat',
   expect(s.desiredVelocity.z).toBeCloseTo(HUMAN_LOCOMOTION.backwardSpeed,8);
   steerInterception(s,p,0,0,{...plan,contact:vec(0,1,10.5),target:vec(0,0,11.05)},'standard');
   expect(s.desiredVelocity.z).toBeGreaterThan(0);
+  steerInterception(s,p,0,0,{...plan,contact:vec(0,1,9.75),target:vec(0,0,10.3)},'standard');
+  expect(s.desiredVelocity.z).toBeGreaterThan(0);
 });
