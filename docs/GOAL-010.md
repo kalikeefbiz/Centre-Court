@@ -207,3 +207,20 @@ through `.github/workflows/pages.yml` on main. No separate site, manual historic
 verified-Kira bypass or alternative deployment pipeline is used. `release.json`
 identifies GOAL-010 and the deployed Git commit. The final handoff records the
 exact commit, Actions run and observed production verification after publication.
+
+## Final interaction review
+
+The existing camera preference remains selectable in MENU and RESULTS as well
+as MATCH. Menu framing stays independent: changing the saved gameplay camera
+neither activates a session nor replaces/repositions the selected preview.
+The focused native control check passed in both engines (**2 passed**).
+Late loading of developer tools may initialize their explicit inspection assets,
+but may only reset the menu scene while the application is actually in a menu
+state; it cannot tear down an in-flight or active match.
+
+Measurements and stress records were captured from the precommit candidate
+working tree. Vite embeds `git HEAD`, so their embedded build field identifies
+the parent commit at measurement time; it is not a claim that the baseline
+contained this refactor. The candidate designation and source changes are recorded
+here. The normal final-commit CI and live `release.json` supply the committed
+release identity, which the final handoff verifies separately.

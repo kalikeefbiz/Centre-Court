@@ -71,7 +71,7 @@ const togglePause = () => {
   clock.reset();
 };
 const switchCamera = () => {
-  if (lifecycle.state !== 'MATCH' || developer?.inspecting) return;
+  if (!['MENU', 'MATCH', 'RESULTS'].includes(lifecycle.state) || developer?.inspecting) return;
   scene.rig.switch(scene.rig.mode === 'broadcast' ? 'behind' : 'broadcast');
   updateCamera();
 };
@@ -545,7 +545,7 @@ renderUI();
 if (new URLSearchParams(location.search).get('dev') === '1') {
   void import('./dev/tools').then(({ DeveloperTools }) => {
     scene.ensureArena();
-    scene.endMatch();
+    if (['MENU', 'MENU_LOADING'].includes(lifecycle.state)) scene.endMatch();
     developer = new DeveloperTools(
       scene,
       new Match(), // Developer-only inspection context; never ticked by the app.

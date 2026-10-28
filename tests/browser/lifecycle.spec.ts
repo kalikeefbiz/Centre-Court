@@ -227,3 +227,21 @@ test('native WebGL context loss restores to a paused session where supported', a
   await expect.poll(async () => (await snap(page)).kira.bodyVisible).toBe(true);
   expect((await snap(page)).activeCameras).toBe(1);
 });
+
+test('menu camera preference changes without activating gameplay or replacing its preview', async ({
+  page,
+}) => {
+  await page.goto('/?debug');
+  await ready(page);
+  const before = await snap(page);
+  await page.locator('#camera-button').click();
+  await expect.poll(async () => (await snap(page)).camera).not.toBe(before.camera);
+  const after = await snap(page);
+  expect(after.lifecycle.state).toBe('MENU');
+  expect(after.lifecycle.sessions).toBe(0);
+  expect(after.stadium.status).toBe('not-loaded');
+  expect(after.kira.equipment.animationInstance).toBe(before.kira.equipment.animationInstance);
+  expect(after.presentation.cameraPosition).toEqual(before.presentation.cameraPosition);
+  await page.locator('#camera-button').click();
+  await expect.poll(async () => (await snap(page)).camera).toBe(before.camera);
+});
