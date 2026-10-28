@@ -165,19 +165,11 @@ The [evidence gallery](https://kalikeefbiz.github.io/Centre-Court/verification/g
 distinguishes Blender, actual browser inspector poses and the actual match capture.
 
 
-## Stationary ready posture
+## Stationary ready posture — superseded by the post-integration hotfix
 
-The actual source-idle captures expose clothing occlusion on Zuri and Dante.
-The normal stationary renderer now reuses the existing ForehandVolley preparation
-on the upper-body layer, with native locomotion legs. Motion, charging, serving
-and real actions take precedence. Source clips and the inspector's original-idle
-sample remain unchanged. The five-rig matrix check places each prepared hand
-about 32 cm or more forward of its torso, rather than inside casual-idle clothing.
-See `graphics/ready-pose.json` and the focused actual Zuri ready-state capture.
-The 65 inspector captures precede only this stationary controller refinement;
-their hand calibration and exact source-clip evaluation are unchanged.
-
-The focused normal stationary Zuri browser check passes with native Locomotion
-legs, no action and zero speed. The recorded match timing precedes this last
-stationary-controller refinement; it establishes a rendered high-resolution
-workload observation, not final frame-stability/device acceptance.
+The initial stationary ForehandVolley reuse caused an inappropriate raised-racket
+pose and a movement-cutoff discontinuity in physical playtesting. The corrective
+[animation ownership hotfix](GOAL-009-HOTFIX.md) removes that gameplay override,
+uses an Idle-derived ready carry and separates native rally/serve layer ownership.
+Earlier single-pose evidence below the original release did not establish temporal
+idle stability. Grip/skin corrections and explicit cosmetic preview are preserved.

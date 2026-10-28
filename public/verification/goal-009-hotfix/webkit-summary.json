@@ -1,0 +1,140 @@
+{
+  "method": "Actual production rigs, Linux WebKit 27.2 with iPhone 13 profile, 60Hz fixed presentation steps. Not physical iPhone Safari.",
+  "athletes": [
+    {
+      "character": "kira",
+      "sides": [
+        {
+          "side": 0,
+          "frames": 360,
+          "seconds": 6,
+          "maximumIdleHandStepMetres": 0.002032960881311888,
+          "idleTransitions": [],
+          "idleStrokeWeight": 0,
+          "idleFullBodyWeight": 0,
+          "allStrokesRecovered": true,
+          "skinInstancesPatched": 1
+        },
+        {
+          "side": 1,
+          "frames": 360,
+          "seconds": 6,
+          "maximumIdleHandStepMetres": 0.002032960881311888,
+          "idleTransitions": [],
+          "idleStrokeWeight": 0,
+          "idleFullBodyWeight": 0,
+          "allStrokesRecovered": true,
+          "skinInstancesPatched": 1
+        }
+      ]
+    },
+    {
+      "character": "zuri",
+      "sides": [
+        {
+          "side": 0,
+          "frames": 360,
+          "seconds": 6,
+          "maximumIdleHandStepMetres": 0.002440122755477126,
+          "idleTransitions": [],
+          "idleStrokeWeight": 0,
+          "idleFullBodyWeight": 0,
+          "allStrokesRecovered": true,
+          "skinInstancesPatched": 1
+        },
+        {
+          "side": 1,
+          "frames": 360,
+          "seconds": 6,
+          "maximumIdleHandStepMetres": 0.002440122755477126,
+          "idleTransitions": [],
+          "idleStrokeWeight": 0,
+          "idleFullBodyWeight": 0,
+          "allStrokesRecovered": true,
+          "skinInstancesPatched": 1
+        }
+      ]
+    },
+    {
+      "character": "dante",
+      "sides": [
+        {
+          "side": 0,
+          "frames": 360,
+          "seconds": 6,
+          "maximumIdleHandStepMetres": 0.0024489543447140764,
+          "idleTransitions": [],
+          "idleStrokeWeight": 0,
+          "idleFullBodyWeight": 0,
+          "allStrokesRecovered": true,
+          "skinInstancesPatched": 1
+        },
+        {
+          "side": 1,
+          "frames": 360,
+          "seconds": 6,
+          "maximumIdleHandStepMetres": 0.0024489543447140764,
+          "idleTransitions": [],
+          "idleStrokeWeight": 0,
+          "idleFullBodyWeight": 0,
+          "allStrokesRecovered": true,
+          "skinInstancesPatched": 1
+        }
+      ]
+    },
+    {
+      "character": "rico",
+      "sides": [
+        {
+          "side": 0,
+          "frames": 360,
+          "seconds": 6,
+          "maximumIdleHandStepMetres": 0.0018761867651219846,
+          "idleTransitions": [],
+          "idleStrokeWeight": 0,
+          "idleFullBodyWeight": 0,
+          "allStrokesRecovered": true,
+          "skinInstancesPatched": 1
+        },
+        {
+          "side": 1,
+          "frames": 360,
+          "seconds": 6,
+          "maximumIdleHandStepMetres": 0.0018761867651219846,
+          "idleTransitions": [],
+          "idleStrokeWeight": 0,
+          "idleFullBodyWeight": 0,
+          "allStrokesRecovered": true,
+          "skinInstancesPatched": 1
+        }
+      ]
+    },
+    {
+      "character": "nova",
+      "sides": [
+        {
+          "side": 0,
+          "frames": 360,
+          "seconds": 6,
+          "maximumIdleHandStepMetres": 0.0020668516405012985,
+          "idleTransitions": [],
+          "idleStrokeWeight": 0,
+          "idleFullBodyWeight": 0,
+          "allStrokesRecovered": true,
+          "skinInstancesPatched": 1
+        },
+        {
+          "side": 1,
+          "frames": 360,
+          "seconds": 6,
+          "maximumIdleHandStepMetres": 0.0020668516405012985,
+          "idleTransitions": [],
+          "idleStrokeWeight": 0,
+          "idleFullBodyWeight": 0,
+          "allStrokesRecovered": true,
+          "skinInstancesPatched": 1
+        }
+      ]
+    }
+  ]
+}

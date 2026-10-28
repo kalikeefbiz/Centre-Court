@@ -19,7 +19,7 @@ test('production roster loads only requested athletes, animates both sides, and 
       .toBe('ready');
     const s = await snap(page);
     expect(s.kira.character).toBe(id);
-    await expect.poll(async () => (await snap(page)).kira.state).toBe('ForehandVolley');
+    await expect.poll(async () => (await snap(page)).kira.state).toBe('Idle');
     expect(s.kira.texturedSkin).toBe(true);
     expect(s.kira.racketAttached).toBe(true);
     expect(s.kira.clips).toHaveLength(13);

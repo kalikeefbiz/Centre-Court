@@ -4,6 +4,7 @@ import { selectStroke } from '../core/hitting';
 import {
   tennisGraph,
   shuffleCycle,
+  readyIdle,
   SHUFFLE_CYCLES,
   BLEND_CHANNELS,
   movementWeights,
@@ -14,12 +15,7 @@ import { ROSTER, type CharacterId } from '../core/roster';
 import type { Side } from '../core/court';
 import type { Match } from '../core/match';
 import { KIRA, ATHLETE_RENDER, locomotionState, type AthleteState } from './athlete-config';
-import {
-  DEFAULT_RACKET_ID,
-  getRacket,
-  isRacketId,
-  racketAttachment,
-} from './racket-equipment';
+import { DEFAULT_RACKET_ID, getRacket, isRacketId, racketAttachment } from './racket-equipment';
 import { AthleteGrip } from './athlete-grip';
 
 export function load(app: pc.Application, path: string): Promise<pc.ContainerResource> {
@@ -90,6 +86,7 @@ export class AthleteRenderer {
   private yaw = 180;
   private groundOffset = 0;
   private upperState: AthleteState = 'Serve';
+  private fullBodyState: AthleteState = 'Serve';
   private upperMask: Record<string, { children: boolean }> = {};
   private headTarget = new pc.Vec3();
   private observedContactQuality = 0;
@@ -152,7 +149,9 @@ export class AthleteRenderer {
     this.root.addChild(this.model);
     // Disabling this entity tears down PlayCanvas SkinInstances. Keep its
     // skeleton alive while calibration loads; hide only the render meshes.
-    this.meshes(this.model).forEach((mesh) => { mesh.visible = false; });
+    this.meshes(this.model).forEach((mesh) => {
+      mesh.visible = false;
+    });
     this.hips = this.model.findByName(this.config.hips)!;
     const hand = this.model.findByName(this.config.hand);
     if (!hand || !this.hips) throw new Error('Kira skeleton is missing the hand or hips');
@@ -162,7 +161,9 @@ export class AthleteRenderer {
     this.socket.setLocalPosition(...this.config.gripPosition);
     this.socket.setLocalEulerAngles(...this.config.gripRotation);
     this.racket = equipment.instantiateRenderEntity({ castShadows: false });
-    this.meshes(this.racket).forEach((mesh) => { mesh.visible = false; });
+    this.meshes(this.racket).forEach((mesh) => {
+      mesh.visible = false;
+    });
     this.racket.name = getRacket(this.equipmentId).name + ' production racket';
     this.socket.addChild(this.racket);
     this.fitEquipment(this.racket, this.equipmentId);
@@ -192,12 +193,14 @@ export class AthleteRenderer {
       );
       if ('contact' in ANIMATIONS[state as AthleteState])
         this.model.anim!.assignAnimation(state, track, 'Stroke', 0, false);
+      if (state === 'Serve' || state === 'ForehandVolley')
+        this.model.anim!.assignAnimation(state, track, 'FullBody', 0, false);
     }
     const named = Object.fromEntries(tracks.map((t) => [t.state, t.track]));
     const left = shuffleCycle(named.ShuffleLeft, ...SHUFFLE_CYCLES.ShuffleLeft);
     const right = shuffleCycle(named.ShuffleRight, ...SHUFFLE_CYCLES.ShuffleRight);
     for (const [name, track] of [
-      ['Idle', named.Idle, 1],
+      ['Idle', readyIdle(named.Idle), 1],
       ['Walk', named.Walk, named.Walk.duration / 0.6],
       ['Run', named.Run, named.Run.duration / 0.6],
       ['Left', left, left.duration / 0.6],
@@ -206,13 +209,18 @@ export class AthleteRenderer {
       ['BackwardRun', named.Run, -named.Run.duration / 0.6],
     ] as const)
       this.model.anim!.assignAnimation('Locomotion.' + name, track, 'Base', 1, true);
+    // Set once through the public API as well as graph data: PlayCanvas's
+    // layer.mask getter otherwise stays null even when its binder is masked.
+    this.model.anim!.findAnimationLayer('Stroke')!.mask = this.upperMask;
     this.model.anim!.playing = false;
     this.layer.transition('Locomotion', 0);
     this.model.anim!.update(0.00001);
     this.clearWrist(0);
     this.inPlace();
     this.grip.apply('Idle');
-    this.meshes(this.model).forEach((mesh) => { mesh.visible = true; });
+    this.meshes(this.model).forEach((mesh) => {
+      mesh.visible = true;
+    });
     this.bodyMeshes = this.meshes(this.model).filter((m) => !this.meshes(this.racket).includes(m));
     this.racketMeshes = this.meshes(this.racket);
     for (const texture of character.textures) {
@@ -251,9 +259,9 @@ export class AthleteRenderer {
       const timeout = window.setTimeout(() => {
         this.app.off('postrender', check);
         reject(new Error('Kira loaded but did not reach the rendering camera'));
-      // Full-detail textures and the first skinned-material shaders can finish
-      // after parsing on a cold browser. Keep the actual-visibility gate, with
-      // a bounded warm-up rather than rejecting a still-initializing renderer.
+        // Full-detail textures and the first skinned-material shaders can finish
+        // after parsing on a cold browser. Keep the actual-visibility gate, with
+        // a bounded warm-up rather than rejecting a still-initializing renderer.
       }, 60000);
       this.app.on('postrender', check);
     });
@@ -382,9 +390,9 @@ export class AthleteRenderer {
     }
   }
   private head() {
-    return this.racket.getWorldTransform().transformPoint(
-      new pc.Vec3(...getRacket(this.equipmentId).sweetSpot),
-    );
+    return this.racket
+      .getWorldTransform()
+      .transformPoint(new pc.Vec3(...getRacket(this.equipmentId).sweetSpot));
   }
   equipmentFrame() {
     return {
@@ -409,7 +417,13 @@ export class AthleteRenderer {
       return { name: m.name, useMetalness: m.useMetalness, metalness: m.metalness, maps };
     });
   }
-  update(match: Match, dt: number, charging: boolean, intent: 'drive' | 'slice' | 'lob' = 'drive', presentationPose = false) {
+  update(
+    match: Match,
+    dt: number,
+    charging: boolean,
+    intent: 'drive' | 'slice' | 'lob' = 'drive',
+    presentationPose = false,
+  ) {
     if (this.status !== 'ready') return;
     const athlete = match.players[this.side],
       m = athlete.locomotion,
@@ -437,25 +451,33 @@ export class AthleteRenderer {
       intent,
       serving,
     });
-    // Keep the stationary ready hand ahead of the torso rather than buried in
-    // the supplied casual-idle clothing pose. Legs retain authoritative native
-    // locomotion; a real preparation/action immediately takes precedence.
-    const readyPose = !preparing && m.speed < 0.15;
-    const stroke = action?.stroke ?? (presenting || readyPose ? 'ForehandVolley' : preparing ? context : null);
+    // Idle/locomotion belongs exclusively to Base. Only explicit charging,
+    // serve setup, an authoritative action, or cosmetic inspection owns a shot.
+    const stroke = action?.stroke ?? (presenting ? 'ForehandVolley' : preparing ? context : null);
     const fullBody = presenting || serving || action?.stroke === 'Serve';
+    const body = this.model.anim!.findAnimationLayer('FullBody')!;
+    const selected = fullBody ? body : upper;
     if (stroke) {
-      if (stroke !== this.upperState || (action && action.id !== this.actionId)) {
-        upper.transition(stroke, 0.055);
-        this.upperState = stroke;
-        this.actionId = action?.id ?? -1;
+      const previous = fullBody ? this.fullBodyState : this.upperState;
+      if (stroke !== previous || (action && action.id !== this.actionId)) {
+        selected.transition(stroke, 0.055);
+        if (fullBody) this.fullBodyState = stroke;
+        else this.upperState = stroke;
       }
-      const expectedMask = fullBody ? null : this.upperMask;
-      if (upper.mask !== expectedMask) upper.mask = expectedMask as unknown as object;
-      const fade = action ? clamp((action.contactAt + 0.58 - action.age) / 0.18, 0, 1) : 1;
-      upper.weight += (fade - upper.weight) * (1 - Math.exp(-dt * 35));
-      upper.activeStateCurrentTime = action?.clipTime ?? (presenting || readyPose ? ANIMATIONS.ForehandVolley.prepare : serving ? 0 : ANIMATIONS[stroke].prepare);
+      this.actionId = action?.id ?? -1;
+      selected.activeStateCurrentTime =
+        action?.clipTime ??
+        (presenting ? ANIMATIONS.ForehandVolley.prepare : serving ? 0 : ANIMATIONS[stroke].prepare);
       this.state = stroke;
-    } else upper.weight += (0 - upper.weight) * (1 - Math.exp(-dt * 22));
+    } else this.actionId = -1;
+    const fade = action ? clamp((action.contactAt + 0.58 - action.age) / 0.18, 0, 1) : 1;
+    for (const layer of [upper, body]) {
+      const target = stroke && layer === selected ? fade : 0;
+      layer.weight += (target - layer.weight) * (1 - Math.exp(-dt * (target ? 35 : 22)));
+      // End recovery exactly: an invisible action must not retain influence or
+      // a stale full-body mask. Both layer masks stay fixed for their lifetime.
+      if (!target && layer.weight < 0.0001) layer.weight = 0;
+    }
     const targetYaw =
       !preparing && m.speed > 0.2 && m.velocity.z <= 0.1 && sideSprint > 0
         ? 180 +
@@ -489,7 +511,7 @@ export class AthleteRenderer {
     // model correction only: no IK, no changes to athlete collision/travel.
     const left = this.model.findByName('mixamorig:LeftFoot')!.getPosition().y;
     const right = this.model.findByName('mixamorig:RightFoot')!.getPosition().y;
-    const correction = fullBody ? 0 : clamp(0.165 - Math.min(left, right), -0.055, 0.035);
+    const correction = (1 - body.weight) * clamp(0.165 - Math.min(left, right), -0.055, 0.035);
     this.groundOffset += (correction - this.groundOffset) * (1 - Math.exp(-dt * 25));
     this.model.translateLocal(0, this.groundOffset, 0);
     if (action) {
@@ -513,7 +535,7 @@ export class AthleteRenderer {
         id: contact.id,
         state: contact.stroke,
         time: action?.clipTime ?? ANIMATIONS[contact.stroke].contact,
-        transitioning: upper.transitioning,
+        transitioning: selected.transitioning,
         head: this.head().toArray(),
       };
     }
@@ -528,8 +550,11 @@ export class AthleteRenderer {
   beginInspection() {
     if (this.status !== 'ready') throw new Error('Kira is not ready');
     const upper = this.model.anim!.findAnimationLayer('Stroke')!;
+    const body = this.model.anim!.findAnimationLayer('FullBody')!;
     const upperWeight = upper.weight;
+    const bodyWeight = body.weight;
     upper.weight = 0;
+    body.weight = 0;
     const savedState = this.layer.activeState;
     const savedTime = this.layer.activeStateCurrentTime;
     const nodes: pc.GraphNode[] = [];
@@ -580,6 +605,7 @@ export class AthleteRenderer {
       }),
       restore: () => {
         upper.weight = upperWeight;
+        body.weight = bodyWeight;
         this.layer.transition(savedState, 0);
         this.layer.activeStateCurrentTime = savedTime;
         this.model.anim!.update(0.000001);
@@ -643,7 +669,12 @@ export class AthleteRenderer {
       contactQuality: this.observedContactQuality,
       blendWeights: [...this.movementBlend],
       nativeState: this.layer.activeState,
-      strokeTime: this.model.anim!.findAnimationLayer('Stroke')!.activeStateCurrentTime,
+      strokeTime: this.model.anim!.findAnimationLayer(
+        this.state === 'Serve' ? 'FullBody' : 'Stroke',
+      )!.activeStateCurrentTime,
+      strokeState: this.model.anim!.findAnimationLayer('Stroke')!.activeState,
+      fullBodyState: this.model.anim!.findAnimationLayer('FullBody')!.activeState,
+      fullBodyLayerWeight: this.model.anim!.findAnimationLayer('FullBody')!.weight,
       strokeLayerWeight: this.model.anim!.findAnimationLayer('Stroke')!.weight,
       shuffleCycles: SHUFFLE_CYCLES,
       yaw: this.yaw,

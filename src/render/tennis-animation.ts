@@ -74,6 +74,38 @@ export function shuffleCycle(track: pc.AnimTrack, start: number, end: number) {
     curves,
   );
 }
+/** A ready carry derived only from Idle: bend the dominant elbow forward.
+ * Native blending owns this pose; no held action frame or per-frame bone delta.
+ * Source tracks remain available unchanged to inspection and contact sampling.
+ */
+export function readyIdle(track: pc.AnimTrack) {
+  const outputs = [...track.outputs];
+  const bend = new pc.Quat().setFromEulerAngles(60, 0, 0);
+  for (const curve of track.curves) {
+    if (
+      !curve.paths.some(
+        (p) =>
+          p.entityPath.at(-1) === 'mixamorig:RightForeArm' && p.propertyPath[0] === 'localRotation',
+      )
+    )
+      continue;
+    const source = track.outputs[curve.output];
+    const data = Array.from(source.data);
+    for (let i = 0; i < data.length; i += 4) {
+      const q = new pc.Quat(data[i], data[i + 1], data[i + 2], data[i + 3]).mul(bend);
+      data.splice(i, 4, q.x, q.y, q.z, q.w);
+    }
+    outputs[curve.output] = new pc.AnimData(source.components, data);
+  }
+  return new pc.AnimTrack(
+    track.name + ':ready',
+    track.duration,
+    track.inputs,
+    outputs,
+    track.curves,
+  );
+}
+
 export const BLEND_CHANNELS = [
   'Idle',
   'Walk',
@@ -144,6 +176,16 @@ export function tennisGraph(
         weight: 0,
         mask,
         states: [{ name: 'START' }, ...states.filter((s) => !s.loop)],
+        transitions: [{ from: 'START', to: 'Serve' }],
+      },
+      {
+        name: 'FullBody',
+        weight: 0,
+        states: [
+          { name: 'START' },
+          { name: 'Serve', loop: false },
+          { name: 'ForehandVolley', loop: false },
+        ],
         transitions: [{ from: 'START', to: 'Serve' }],
       },
     ],

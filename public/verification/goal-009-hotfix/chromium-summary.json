@@ -1,0 +1,278 @@
+{
+  "baseline": "69f0434",
+  "method": "Actual production AthleteRenderer and GLBs. Linux Chromium. 60Hz fixed presentation steps; 360 consecutive idle frames per side. No physical iPhone claim.",
+  "athletes": [
+    {
+      "character": "kira",
+      "sides": [
+        {
+          "side": 0,
+          "frames": 360,
+          "seconds": 6,
+          "maximumIdleHandStepMetres": 0.002032960881311888,
+          "maximumThresholdHandStepMetres": 0.015612806853519162,
+          "idleTransitions": [],
+          "idleStrokeWeight": 0,
+          "idleFullBodyWeight": 0,
+          "recoveryStates": {
+            "Forehand": "Idle",
+            "Backhand": "Idle",
+            "ForehandVolley": "Idle",
+            "BackhandVolley": "Idle",
+            "Lob": "Idle",
+            "Slice": "Idle",
+            "Smash": "Idle"
+          },
+          "skinInstancesPatched": 1,
+          "gripFrameError": 0,
+          "attachment": true,
+          "heldRepeatCount": 120
+        },
+        {
+          "side": 1,
+          "frames": 360,
+          "seconds": 6,
+          "maximumIdleHandStepMetres": 0.002032960881311888,
+          "maximumThresholdHandStepMetres": 0.015612806853519162,
+          "idleTransitions": [],
+          "idleStrokeWeight": 0,
+          "idleFullBodyWeight": 0,
+          "recoveryStates": {
+            "Forehand": "Idle",
+            "Backhand": "Idle",
+            "ForehandVolley": "Idle",
+            "BackhandVolley": "Idle",
+            "Lob": "Idle",
+            "Slice": "Idle",
+            "Smash": "Idle"
+          },
+          "skinInstancesPatched": 1,
+          "gripFrameError": 0,
+          "attachment": true,
+          "heldRepeatCount": 120
+        }
+      ]
+    },
+    {
+      "character": "zuri",
+      "sides": [
+        {
+          "side": 0,
+          "frames": 360,
+          "seconds": 6,
+          "maximumIdleHandStepMetres": 0.002440122755477126,
+          "maximumThresholdHandStepMetres": 0.020444814641104366,
+          "idleTransitions": [],
+          "idleStrokeWeight": 0,
+          "idleFullBodyWeight": 0,
+          "recoveryStates": {
+            "Forehand": "Idle",
+            "Backhand": "Idle",
+            "ForehandVolley": "Idle",
+            "BackhandVolley": "Idle",
+            "Lob": "Idle",
+            "Slice": "Idle",
+            "Smash": "Idle"
+          },
+          "skinInstancesPatched": 1,
+          "gripFrameError": 0,
+          "attachment": true,
+          "heldRepeatCount": 120
+        },
+        {
+          "side": 1,
+          "frames": 360,
+          "seconds": 6,
+          "maximumIdleHandStepMetres": 0.002440122755477126,
+          "maximumThresholdHandStepMetres": 0.020444814641104366,
+          "idleTransitions": [],
+          "idleStrokeWeight": 0,
+          "idleFullBodyWeight": 0,
+          "recoveryStates": {
+            "Forehand": "Idle",
+            "Backhand": "Idle",
+            "ForehandVolley": "Idle",
+            "BackhandVolley": "Idle",
+            "Lob": "Idle",
+            "Slice": "Idle",
+            "Smash": "Idle"
+          },
+          "skinInstancesPatched": 1,
+          "gripFrameError": 0,
+          "attachment": true,
+          "heldRepeatCount": 120
+        }
+      ]
+    },
+    {
+      "character": "dante",
+      "sides": [
+        {
+          "side": 0,
+          "frames": 360,
+          "seconds": 6,
+          "maximumIdleHandStepMetres": 0.0024489543447140764,
+          "maximumThresholdHandStepMetres": 0.01968080493368484,
+          "idleTransitions": [],
+          "idleStrokeWeight": 0,
+          "idleFullBodyWeight": 0,
+          "recoveryStates": {
+            "Forehand": "Idle",
+            "Backhand": "Idle",
+            "ForehandVolley": "Idle",
+            "BackhandVolley": "Idle",
+            "Lob": "Idle",
+            "Slice": "Idle",
+            "Smash": "Idle"
+          },
+          "skinInstancesPatched": 1,
+          "gripFrameError": 0,
+          "attachment": true,
+          "heldRepeatCount": 120
+        },
+        {
+          "side": 1,
+          "frames": 360,
+          "seconds": 6,
+          "maximumIdleHandStepMetres": 0.0024489543447140764,
+          "maximumThresholdHandStepMetres": 0.01968080493368484,
+          "idleTransitions": [],
+          "idleStrokeWeight": 0,
+          "idleFullBodyWeight": 0,
+          "recoveryStates": {
+            "Forehand": "Idle",
+            "Backhand": "Idle",
+            "ForehandVolley": "Idle",
+            "BackhandVolley": "Idle",
+            "Lob": "Idle",
+            "Slice": "Idle",
+            "Smash": "Idle"
+          },
+          "skinInstancesPatched": 1,
+          "gripFrameError": 0,
+          "attachment": true,
+          "heldRepeatCount": 120
+        }
+      ]
+    },
+    {
+      "character": "rico",
+      "sides": [
+        {
+          "side": 0,
+          "frames": 360,
+          "seconds": 6,
+          "maximumIdleHandStepMetres": 0.0018761867651219846,
+          "maximumThresholdHandStepMetres": 0.013891741122273156,
+          "idleTransitions": [],
+          "idleStrokeWeight": 0,
+          "idleFullBodyWeight": 0,
+          "recoveryStates": {
+            "Forehand": "Idle",
+            "Backhand": "Idle",
+            "ForehandVolley": "Idle",
+            "BackhandVolley": "Idle",
+            "Lob": "Idle",
+            "Slice": "Idle",
+            "Smash": "Idle"
+          },
+          "skinInstancesPatched": 1,
+          "gripFrameError": 0,
+          "attachment": true,
+          "heldRepeatCount": 120
+        },
+        {
+          "side": 1,
+          "frames": 360,
+          "seconds": 6,
+          "maximumIdleHandStepMetres": 0.0018761867651219846,
+          "maximumThresholdHandStepMetres": 0.013891741122273156,
+          "idleTransitions": [],
+          "idleStrokeWeight": 0,
+          "idleFullBodyWeight": 0,
+          "recoveryStates": {
+            "Forehand": "Idle",
+            "Backhand": "Idle",
+            "ForehandVolley": "Idle",
+            "BackhandVolley": "Idle",
+            "Lob": "Idle",
+            "Slice": "Idle",
+            "Smash": "Idle"
+          },
+          "skinInstancesPatched": 1,
+          "gripFrameError": 0,
+          "attachment": true,
+          "heldRepeatCount": 120
+        }
+      ]
+    },
+    {
+      "character": "nova",
+      "sides": [
+        {
+          "side": 0,
+          "frames": 360,
+          "seconds": 6,
+          "maximumIdleHandStepMetres": 0.0020668516405012985,
+          "maximumThresholdHandStepMetres": 0.018771195578140155,
+          "idleTransitions": [],
+          "idleStrokeWeight": 0,
+          "idleFullBodyWeight": 0,
+          "recoveryStates": {
+            "Forehand": "Idle",
+            "Backhand": "Idle",
+            "ForehandVolley": "Idle",
+            "BackhandVolley": "Idle",
+            "Lob": "Idle",
+            "Slice": "Idle",
+            "Smash": "Idle"
+          },
+          "skinInstancesPatched": 1,
+          "gripFrameError": 0,
+          "attachment": true,
+          "heldRepeatCount": 120
+        },
+        {
+          "side": 1,
+          "frames": 360,
+          "seconds": 6,
+          "maximumIdleHandStepMetres": 0.0020668516405012985,
+          "maximumThresholdHandStepMetres": 0.018771195578140155,
+          "idleTransitions": [],
+          "idleStrokeWeight": 0,
+          "idleFullBodyWeight": 0,
+          "recoveryStates": {
+            "Forehand": "Idle",
+            "Backhand": "Idle",
+            "ForehandVolley": "Idle",
+            "BackhandVolley": "Idle",
+            "Lob": "Idle",
+            "Slice": "Idle",
+            "Smash": "Idle"
+          },
+          "skinInstancesPatched": 1,
+          "gripFrameError": 0,
+          "attachment": true,
+          "heldRepeatCount": 120
+        }
+      ]
+    }
+  ],
+  "ab": [
+    {
+      "mode": "integrated",
+      "maximumThresholdHandStepMetres": 0.5239964414712868,
+      "heldHandHeightMetres": 1.6208314895629883
+    },
+    {
+      "mode": "without-grip",
+      "maximumThresholdHandStepMetres": 0.5239964414712868,
+      "heldHandHeightMetres": 1.6208314895629883
+    },
+    {
+      "mode": "without-forced-stroke",
+      "maximumThresholdHandStepMetres": 0.08904640315404612,
+      "heldHandHeightMetres": 0.8439228534698486
+    }
+  ]
+}

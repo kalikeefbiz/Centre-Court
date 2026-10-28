@@ -97,3 +97,12 @@ asset task with assigned output paths. The infrastructure GOAL executes none.
 Historical 17.2 MB runtime totals and older 1024 px texture statements in
 `LIMITATIONS.md`/older README sections describe earlier assets; they are not the
 current Kira figures. See [PERFORMANCE](PERFORMANCE.md) for measurement limits.
+
+## GOAL 009 post-integration animation ownership update
+
+Current `AthleteRenderer` uses a native Base locomotion blend with an Idle-derived
+ready elbow bend, fixed Spine-masked Stroke layer, and independent unmasked
+FullBody layer for serves/explicit cosmetic preview. No action layer owns ordinary
+stationary idle. Inactive weights fade to exactly zero; action clocks remain
+Match-owned. The supplied source clips, rigs, corrected skin/bind data and grip
+frames remain unchanged. See [the hotfix evidence](GOAL-009-HOTFIX.md).
